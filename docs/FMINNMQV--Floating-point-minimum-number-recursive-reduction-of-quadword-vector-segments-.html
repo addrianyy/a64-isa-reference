@@ -1,0 +1,231 @@
+<html>
+ <head>  <link rel="stylesheet" href="../def-style.css"></head> 
+ <body> 
+  <h2>FMINNMQV</h2> 
+  <p>Floating-point minimum number recursive reduction of quadword vector segments</p> 
+  <p>Floating-point minimum number of the same element numbers from each 128-bit source vector segment using a recursive pairwise reduction, placing each result into the corresponding element number of the 128-bit SIMD&amp;FP destination register. Inactive elements in the source vector are treated as the default NaN.</p> 
+  <h3><a id="iclass_sve2"></a>SVE2<span><br></br>(FEAT_SVE2p1) </span></h3> 
+  <p></p> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td colspan="2">size</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td colspan="3">Pg</td> 
+      <td colspan="5">Zn</td> 
+      <td colspan="5">Vd</td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4></h4> 
+   <a id="fminnmqv_z_p_z_"></a> 
+   <p>FMINNMQV <a title="Destination SIMD&amp;FP register (field &quot;Vd&quot;)" class="document-topic">&lt;Vd&gt;</a>.<a title="Arrangement specifier (field &quot;size&quot;) [2D,4S,8H]" class="document-topic">&lt;T&gt;</a>, <a title="Governing scalable predicate register P0-P7 (field &quot;Pg&quot;)" class="document-topic">&lt;Pg&gt;</a>, <a title="Source scalable vector register (field &quot;Zn&quot;)" class="document-topic">&lt;Zn&gt;</a>.<a title="Size specifier (field &quot;size&quot;) [D,H,S]" class="document-topic">&lt;Tb&gt;</a></p> 
+  </div> 
+  <pre>if !<a title="function: boolean HaveSVE2p1()" class="document-topic">HaveSVE2p1</a>() &amp;&amp; !<a title="function: boolean HaveSME2p1()" class="document-topic">HaveSME2p1</a>() then UNDEFINED;
+if size == '00' then UNDEFINED;
+constant integer esize = 8 &lt;&lt; <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(size);
+integer g = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Pg);
+integer n = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Zn);
+integer d = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Vd);</pre> 
+  <div></div> 
+  <h3>Assembler Symbols</h3> 
+  <div> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Vd&gt;</td> 
+      <td><a id="sa_vd"></a> <p>Is the name of the destination SIMD&amp;FP register, encoded in the "Vd" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;T&gt;</td> 
+      <td><a id="sa_t"></a> <p>Is an arrangement specifier, encoded in <q>size</q>: </p> 
+       <table> 
+        <thead> 
+         <tr> 
+          <th>size</th> 
+          <th>&lt;T&gt;</th> 
+         </tr> 
+        </thead> 
+        <tbody> 
+         <tr> 
+          <td>00</td> 
+          <td>RESERVED</td> 
+         </tr> 
+         <tr> 
+          <td>01</td> 
+          <td>8H</td> 
+         </tr> 
+         <tr> 
+          <td>10</td> 
+          <td>4S</td> 
+         </tr> 
+         <tr> 
+          <td>11</td> 
+          <td>2D</td> 
+         </tr> 
+        </tbody> 
+       </table> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Pg&gt;</td> 
+      <td><a id="sa_pg"></a> <p>Is the name of the governing scalable predicate register P0-P7, encoded in the "Pg" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Zn&gt;</td> 
+      <td><a id="sa_zn"></a> <p>Is the name of the source scalable vector register, encoded in the "Zn" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Tb&gt;</td> 
+      <td><a id="sa_tb"></a> <p>Is the size specifier, encoded in <q>size</q>: </p> 
+       <table> 
+        <thead> 
+         <tr> 
+          <th>size</th> 
+          <th>&lt;Tb&gt;</th> 
+         </tr> 
+        </thead> 
+        <tbody> 
+         <tr> 
+          <td>00</td> 
+          <td>RESERVED</td> 
+         </tr> 
+         <tr> 
+          <td>01</td> 
+          <td>H</td> 
+         </tr> 
+         <tr> 
+          <td>10</td> 
+          <td>S</td> 
+         </tr> 
+         <tr> 
+          <td>11</td> 
+          <td>D</td> 
+         </tr> 
+        </tbody> 
+       </table> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div></div> 
+  <div> 
+   <a id="execute"></a> 
+   <h3>Operation</h3> 
+   <pre><a title="function: CheckSVEEnabled()" class="document-topic">CheckSVEEnabled</a>();
+constant integer VL = <a title="accessor: integer CurrentVL" class="document-topic">CurrentVL</a>;
+constant integer PL = VL DIV 8;
+constant integer segments = VL DIV 128;
+constant integer elempersegment = 128 DIV esize;
+bits(PL) mask = <a title="accessor: bits(width) P[integer n, integer width]" class="document-topic">P</a>[g, PL];
+bits(VL) operand = if <a title="function: boolean AnyActiveElement(bits(N) mask, integer esize)" class="document-topic">AnyActiveElement</a>(mask, esize) then <a title="accessor: bits(width) Z[integer n, integer width]" class="document-topic">Z</a>[n, VL] else <a title="function: bits(N) Zeros(integer N)" class="document-topic">Zeros</a>(VL);
+bits(esize) identity = <a title="function: bits(N) FPDefaultNaN(integer N)" class="document-topic">FPDefaultNaN</a>(esize);
+bits(128) result = <a title="function: bits(N) Zeros(integer N)" class="document-topic">Zeros</a>(128);
+
+constant integer p2bits = <a title="function: integer CeilPow2(integer x)" class="document-topic">CeilPow2</a>(segments*esize);
+constant integer p2elems = p2bits DIV esize;
+
+for e = 0 to elempersegment-1
+    bits(p2bits) stmp;
+    bits(esize) dtmp;
+    for s = 0 to p2elems-1
+        if s &lt; segments &amp;&amp; <a title="function: boolean ActivePredicateElement(bits(N) pred, integer e, integer esize)" class="document-topic">ActivePredicateElement</a>(mask, s * elempersegment + e, esize) then
+            <a title="accessor: Elem[bits(N) &amp;vector, integer e, integer size] = bits(size) value" class="document-topic">Elem</a>[stmp, s, esize] = <a title="accessor: bits(size) Elem[bits(N) vector, integer e, integer size]" class="document-topic">Elem</a>[operand, s * elempersegment + e, esize];
+        else
+            <a title="accessor: Elem[bits(N) &amp;vector, integer e, integer size] = bits(size) value" class="document-topic">Elem</a>[stmp, s, esize] = identity;
+    dtmp = <a title="function: bits(esize) Reduce(ReduceOp op, bits(N) input, integer esize)" class="document-topic">Reduce</a>(<a title="enumeration ReduceOp {ReduceOp_FMINNUM, ReduceOp_FMAXNUM, ReduceOp_FMIN, ReduceOp_FMAX, ReduceOp_FADD, ReduceOp_ADD}" class="document-topic">ReduceOp_FMINNUM</a>, stmp, esize);
+    <a title="accessor: Elem[bits(N) &amp;vector, integer e, integer size] = bits(size) value" class="document-topic">Elem</a>[result, e, esize] = dtmp;
+<a title="accessor: V[integer n, integer width] = bits(width) value" class="document-topic">V</a>[d, 128] = result;</pre> 
+  </div>  
+ </body>
+</html>

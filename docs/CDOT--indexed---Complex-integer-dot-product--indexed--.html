@@ -1,0 +1,337 @@
+<html>
+ <head>  <link rel="stylesheet" href="../def-style.css"></head> 
+ <body> 
+  <h2>CDOT (indexed)</h2> 
+  <p>Complex integer dot product (indexed)</p> 
+  <p>The complex integer dot product instructions delimit the source vectors into pairs of 8-bit or 16-bit signed integer complex numbers. Within each pair, the complex numbers in the first source vector are multiplied by the corresponding complex numbers in the second source vector and the resulting wide real or wide imaginary part of the product is accumulated into a 32-bit or 64-bit destination vector element which overlaps all four of the elements that comprise a pair of complex number values in the first source vector.</p> 
+  <p>As a result each instruction implicitly deinterleaves the real and imaginary components of their complex number inputs, so that the destination vector accumulates 4×wide real sums or 4×wide imaginary sums.</p> 
+  <p>The complex numbers in the second source vector are rotated by 0, 90, 180 or 270 degrees in the direction from the positive real axis towards the positive imaginary axis, when considered in polar representation, by performing the following transformations prior to the dot product operations:</p> 
+  <ul> 
+   <li> If the rotation is #0, the imaginary parts of the complex numbers in the second source vector are negated. The destination vector therefore accumulates the real parts of a complex dot product. </li> 
+   <li> If the rotation is #90, the real and imaginary parts of the complex numbers the second source vector are swapped. The destination vector therefore accumulates the imaginary parts of a complex dot product. </li> 
+   <li> If the rotation is #180, there is no transformation. The destination vector therefore accumulates the real parts of a complex conjugate dot product. </li> 
+   <li> If the rotation is #270, the real parts of the complex numbers in the second source vector are negated and then swapped with the imaginary parts. The destination vector therefore accumulates the imaginary parts of a complex conjugate dot product. </li> 
+  </ul> 
+  <p></p> 
+  <p>The indexed form of these instructions select a single pair of complex numbers within each 128-bit segment of the second source vector as the multiplier for all pairs of complex numbers within the corresponding 128-bit segment of the first source vector. The complex number pairs within the second source vector are specified using an immediate index which selects the same complex number pair position within each 128-bit vector segment. The index range is from 0 to one less than the number of complex number pairs per 128-bit segment, encoded in 1 or 2 bits depending on the size of the complex number pair.</p> 
+  <p>Each complex number is represented in a vector register as an even/odd pair of elements with the real part in the even-numbered element and the imaginary part in the odd-numbered element.</p> 
+  <p> It has encodings from 2 classes: <a class="document-topic">32-bit</a> and <a class="document-topic">64-bit</a> </p> 
+  <h3><a id="iclass_of_words"></a>32-bit</h3> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td colspan="2">i2</td> 
+      <td colspan="3">Zm</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td colspan="2">rot</td> 
+      <td colspan="5">Zn</td> 
+      <td colspan="5">Zda</td> 
+     </tr> 
+     <tr> 
+      <td colspan="8"></td> 
+      <td>size&lt;1&gt;</td> 
+      <td>size&lt;0&gt;</td> 
+      <td></td> 
+      <td colspan="2"></td> 
+      <td colspan="3"></td> 
+      <td colspan="4"></td> 
+      <td colspan="2"></td> 
+      <td colspan="5"></td> 
+      <td colspan="5"></td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4></h4> 
+   <a id="cdot_z_zzzi_s"></a> 
+   <p>CDOT <a title="Third source and destination scalable vector register (field &quot;Zda&quot;)" class="document-topic">&lt;Zda&gt;</a>.S, <a title="First source scalable vector register (field &quot;Zn&quot;)" class="document-topic">&lt;Zn&gt;</a>.B, <a title="Second source scalable vector register Z0-Z7 (field &quot;Zm&quot;)" class="document-topic">&lt;Zm&gt;</a>.B[<a title="Immediate index of a 32-bit group of four 8-bit values within each 128-bit vector segment [0-3] (field &quot;i2&quot;)" class="document-topic">&lt;imm&gt;</a>], <a title="Const specifier (field &quot;rot&quot;) [#0,#90,#180,#270]" class="document-topic">&lt;const&gt;</a></p> 
+  </div> 
+  <pre>if !<a title="function: boolean HaveSVE2()" class="document-topic">HaveSVE2</a>() &amp;&amp; !<a title="function: boolean HaveSME()" class="document-topic">HaveSME</a>() then UNDEFINED;
+constant integer esize = 32;
+integer index = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(i2);
+integer n = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Zn);
+integer m = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Zm);
+integer da = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Zda);
+integer sel_a = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(rot&lt;0&gt;);
+integer sel_b = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(NOT(rot&lt;0&gt;));
+boolean sub_i = (rot&lt;0&gt; == rot&lt;1&gt;);</pre> 
+  <h3><a id="iclass_of_doublewords"></a>64-bit</h3> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>i1</td> 
+      <td colspan="4">Zm</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td colspan="2">rot</td> 
+      <td colspan="5">Zn</td> 
+      <td colspan="5">Zda</td> 
+     </tr> 
+     <tr> 
+      <td colspan="8"></td> 
+      <td>size&lt;1&gt;</td> 
+      <td>size&lt;0&gt;</td> 
+      <td></td> 
+      <td></td> 
+      <td colspan="4"></td> 
+      <td colspan="4"></td> 
+      <td colspan="2"></td> 
+      <td colspan="5"></td> 
+      <td colspan="5"></td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4></h4> 
+   <a id="cdot_z_zzzi_d"></a> 
+   <p>CDOT <a title="Third source and destination scalable vector register (field &quot;Zda&quot;)" class="document-topic">&lt;Zda&gt;</a>.D, <a title="First source scalable vector register (field &quot;Zn&quot;)" class="document-topic">&lt;Zn&gt;</a>.H, <a title="Second source scalable vector register Z0-Z15 (field &quot;Zm&quot;)" class="document-topic">&lt;Zm&gt;</a>.H[<a title="Immediate index of a 64-bit group of four 16-bit values within each 128-bit vector segment [0-1] (field &quot;i1&quot;)" class="document-topic">&lt;imm&gt;</a>], <a title="Const specifier (field &quot;rot&quot;) [#0,#90,#180,#270]" class="document-topic">&lt;const&gt;</a></p> 
+  </div> 
+  <pre>if !<a title="function: boolean HaveSVE2()" class="document-topic">HaveSVE2</a>() &amp;&amp; !<a title="function: boolean HaveSME()" class="document-topic">HaveSME</a>() then UNDEFINED;
+constant integer esize = 64;
+integer index = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(i1);
+integer n = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Zn);
+integer m = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Zm);
+integer da = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Zda);
+integer sel_a = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(rot&lt;0&gt;);
+integer sel_b = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(NOT(rot&lt;0&gt;));
+boolean sub_i = (rot&lt;0&gt; == rot&lt;1&gt;);</pre> 
+  <div></div> 
+  <h3>Assembler Symbols</h3> 
+  <div> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Zda&gt;</td> 
+      <td><a id="sa_zda"></a> <p>Is the name of the third source and destination scalable vector register, encoded in the "Zda" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Zn&gt;</td> 
+      <td><a id="sa_zn"></a> <p>Is the name of the first source scalable vector register, encoded in the "Zn" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Zm&gt;</td> 
+      <td><a id="sa_zm_1"></a> <p>For the 32-bit variant: is the name of the second source scalable vector register Z0-Z7, encoded in the "Zm" field.</p> </td> 
+     </tr> 
+     <tr> 
+      <td></td> 
+      <td><a id="sa_zm"></a> <p>For the 64-bit variant: is the name of the second source scalable vector register Z0-Z15, encoded in the "Zm" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;imm&gt;</td> 
+      <td><a id="sa_imm_1"></a> <p>For the 32-bit variant: is the immediate index of a 32-bit group of four 8-bit values within each 128-bit vector segment, in the range 0 to 3, encoded in the "i2" field.</p> </td> 
+     </tr> 
+     <tr> 
+      <td></td> 
+      <td><a id="sa_imm"></a> <p>For the 64-bit variant: is the immediate index of a 64-bit group of four 16-bit values within each 128-bit vector segment, in the range 0 to 1, encoded in the "i1" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;const&gt;</td> 
+      <td><a id="sa_const"></a> <p>Is the const specifier, encoded in <q>rot</q>: </p> 
+       <table> 
+        <thead> 
+         <tr> 
+          <th>rot</th> 
+          <th>&lt;const&gt;</th> 
+         </tr> 
+        </thead> 
+        <tbody> 
+         <tr> 
+          <td>00</td> 
+          <td>#0</td> 
+         </tr> 
+         <tr> 
+          <td>01</td> 
+          <td>#90</td> 
+         </tr> 
+         <tr> 
+          <td>10</td> 
+          <td>#180</td> 
+         </tr> 
+         <tr> 
+          <td>11</td> 
+          <td>#270</td> 
+         </tr> 
+        </tbody> 
+       </table> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div></div> 
+  <div> 
+   <a id="execute"></a> 
+   <h3>Operation</h3> 
+   <pre><a title="function: CheckSVEEnabled()" class="document-topic">CheckSVEEnabled</a>();
+constant integer VL = <a title="accessor: integer CurrentVL" class="document-topic">CurrentVL</a>;
+constant integer elements = VL DIV esize;
+constant integer eltspersegment = 128 DIV esize;
+bits(VL) operand1 = <a title="accessor: bits(width) Z[integer n, integer width]" class="document-topic">Z</a>[n, VL];
+bits(VL) operand2 = <a title="accessor: bits(width) Z[integer n, integer width]" class="document-topic">Z</a>[m, VL];
+bits(VL) operand3 = <a title="accessor: bits(width) Z[integer n, integer width]" class="document-topic">Z</a>[da, VL];
+bits(VL) result;
+
+for e = 0 to elements-1
+    integer segmentbase = e - (e MOD eltspersegment);
+    integer s = segmentbase + index;
+    bits(esize) res = <a title="accessor: bits(size) Elem[bits(N) vector, integer e, integer size]" class="document-topic">Elem</a>[operand3, e, esize];
+    for i = 0 to 1
+        integer elt1_r = <a title="function: integer SInt(bits(N) x)" class="document-topic">SInt</a>(<a title="accessor: bits(size) Elem[bits(N) vector, integer e, integer size]" class="document-topic">Elem</a>[operand1, 4 * e + 2 * i + 0, esize DIV 4]);
+        integer elt1_i = <a title="function: integer SInt(bits(N) x)" class="document-topic">SInt</a>(<a title="accessor: bits(size) Elem[bits(N) vector, integer e, integer size]" class="document-topic">Elem</a>[operand1, 4 * e + 2 * i + 1, esize DIV 4]);
+        integer elt2_a = <a title="function: integer SInt(bits(N) x)" class="document-topic">SInt</a>(<a title="accessor: bits(size) Elem[bits(N) vector, integer e, integer size]" class="document-topic">Elem</a>[operand2, 4 * s + 2 * i + sel_a, esize DIV 4]);
+        integer elt2_b = <a title="function: integer SInt(bits(N) x)" class="document-topic">SInt</a>(<a title="accessor: bits(size) Elem[bits(N) vector, integer e, integer size]" class="document-topic">Elem</a>[operand2, 4 * s + 2 * i + sel_b, esize DIV 4]);
+        if sub_i then
+            res = (res + (elt1_r * elt2_a)) - (elt1_i * elt2_b);
+        else
+            res = res + (elt1_r * elt2_a) + (elt1_i * elt2_b);
+    <a title="accessor: Elem[bits(N) &amp;vector, integer e, integer size] = bits(size) value" class="document-topic">Elem</a>[result, e, esize] = res;
+
+<a title="accessor: Z[integer n, integer width] = bits(width) value" class="document-topic">Z</a>[da, VL] = result;</pre> 
+  </div> 
+  <h3>Operational information</h3> 
+  <p> This instruction might be immediately preceded in program order by a <span>MOVPRFX</span> instruction. The <span>MOVPRFX</span> instruction must conform to all of the following requirements, otherwise the behavior of the <span>MOVPRFX</span> and this instruction is <small>unpredictable</small>: </p> 
+  <ul> 
+   <li>The <span>MOVPRFX</span> instruction must be unpredicated.</li> 
+   <li>The <span>MOVPRFX</span> instruction must specify the same destination register as this instruction.</li> 
+   <li>The destination register must not refer to architectural register state referenced by any other source operand register of this instruction.</li> 
+  </ul>  
+ </body>
+</html>

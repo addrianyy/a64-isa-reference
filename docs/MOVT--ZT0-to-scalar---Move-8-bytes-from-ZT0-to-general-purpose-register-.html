@@ -1,0 +1,126 @@
+<html>
+ <head>  <link rel="stylesheet" href="../def-style.css"></head> 
+ <body> 
+  <h2>MOVT (ZT0 to scalar)</h2> 
+  <p>Move 8 bytes from ZT0 to general-purpose register</p> 
+  <p>Move 8 bytes to a general-purpose register from the ZT0 register at the byte offset specified by the immediate index. This instruction is UNDEFINED in Non-debug state.</p> 
+  <h3><a id="iclass_mortlach2"></a>SME2<span><br></br>(FEAT_SME2) </span></h3> 
+  <p></p> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td colspan="3">off3</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td colspan="5">Rt</td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4></h4> 
+   <a id="movt_r_zt_"></a> 
+   <p>MOVT <a title="64-bit general-purpose register to be transferred (field &quot;Rt&quot;)" class="document-topic">&lt;Xt&gt;</a>, ZT0[<a title="Immediate byte offset, multiple of 8 in the range of 0 to 56 (field &quot;off3&quot;)" class="document-topic">&lt;offs&gt;</a>]</p> 
+  </div> 
+  <pre>if !<a title="function: boolean HaveSME2()" class="document-topic">HaveSME2</a>() || !<a title="function: boolean Halted()" class="document-topic">Halted</a>() then UNDEFINED;
+integer t = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Rt);
+integer offset = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(off3);</pre> 
+  <div></div> 
+  <h3>Assembler Symbols</h3> 
+  <div> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Xt&gt;</td> 
+      <td><a id="sa_xt"></a> <p>Is the 64-bit name of the general-purpose register to be transferred, encoded in the "Rt" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;offs&gt;</td> 
+      <td><a id="sa_offs"></a> <p>Is the immediate byte offset, a multiple of 8 in the range of 0 to 56, encoded in the "off3" field as &lt;offs&gt;/8.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div></div> 
+  <div> 
+   <a id="execute"></a> 
+   <h3>Operation</h3> 
+   <pre><a title="function: CheckSMEEnabled()" class="document-topic">CheckSMEEnabled</a>();
+<a title="function: CheckSMEZT0Enabled()" class="document-topic">CheckSMEZT0Enabled</a>();
+bits(512) operand = <a title="accessor: bits(width) ZT0[integer width]" class="document-topic">ZT0</a>[512];
+
+<a title="accessor: X[integer n, integer width] = bits(width) value" class="document-topic">X</a>[t, 64] = <a title="accessor: bits(size) Elem[bits(N) vector, integer e, integer size]" class="document-topic">Elem</a>[operand, offset, 64];</pre> 
+  </div>  
+ </body>
+</html>

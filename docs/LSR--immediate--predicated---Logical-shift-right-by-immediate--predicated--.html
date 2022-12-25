@@ -1,0 +1,235 @@
+<html>
+ <head>  <link rel="stylesheet" href="../def-style.css"></head> 
+ <body> 
+  <h2>LSR (immediate, predicated)</h2> 
+  <p>Logical shift right by immediate (predicated)</p> 
+  <p>Shift right by immediate, inserting zeroes, each active element of the source vector, and destructively place the results in the corresponding elements of the source vector. The immediate shift amount is an unsigned value in the range 1 to number of bits per element. Inactive elements in the destination vector register remain unmodified.</p> 
+  <p></p> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td colspan="2">tszh</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td colspan="3">Pg</td> 
+      <td colspan="2">tszl</td> 
+      <td colspan="3">imm3</td> 
+      <td colspan="5">Zdn</td> 
+     </tr> 
+     <tr> 
+      <td colspan="8"></td> 
+      <td colspan="2"></td> 
+      <td colspan="2"></td> 
+      <td></td> 
+      <td></td> 
+      <td>L</td> 
+      <td>U</td> 
+      <td colspan="3"></td> 
+      <td colspan="3"></td> 
+      <td colspan="2"></td> 
+      <td colspan="3"></td> 
+      <td colspan="5"></td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4></h4> 
+   <a id="lsr_z_p_zi_"></a> 
+   <p>LSR <a title="Source and destination scalable vector register (field &quot;Zdn&quot;)" class="document-topic">&lt;Zdn&gt;</a>.<a title="Size specifier (field &quot;tszh:tszl&quot;) [B,D,H,S]" class="document-topic">&lt;T&gt;</a>, <a title="Governing scalable predicate register P0-P7 (field &quot;Pg&quot;)" class="document-topic">&lt;Pg&gt;</a>/M, <a title="Source and destination scalable vector register (field &quot;Zdn&quot;)" class="document-topic">&lt;Zdn&gt;</a>.<a title="Size specifier (field &quot;tszh:tszl&quot;) [B,D,H,S]" class="document-topic">&lt;T&gt;</a>, #<a title="Immediate shift amount [1-number of bits per element] (field &quot;tszh:tszl:imm3&quot;)" class="document-topic">&lt;const&gt;</a></p> 
+  </div> 
+  <pre>if !<a title="function: boolean HaveSVE()" class="document-topic">HaveSVE</a>() &amp;&amp; !<a title="function: boolean HaveSME()" class="document-topic">HaveSME</a>() then UNDEFINED;
+bits(4) tsize = tszh:tszl;
+integer esize;
+case tsize of
+    when '0000' UNDEFINED;
+    when '0001' esize = 8;
+    when '001x' esize = 16;
+    when '01xx' esize = 32;
+    when '1xxx' esize = 64;
+integer g = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Pg);
+integer dn = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Zdn);
+integer shift = (2 * esize) - <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(tsize:imm3);</pre> 
+  <div></div> 
+  <h3>Assembler Symbols</h3> 
+  <div> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Zdn&gt;</td> 
+      <td><a id="sa_zdn"></a> <p>Is the name of the source and destination scalable vector register, encoded in the "Zdn" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;T&gt;</td> 
+      <td><a id="sa_t"></a> <p>Is the size specifier, encoded in <q>tszh:tszl</q>: </p> 
+       <table> 
+        <thead> 
+         <tr> 
+          <th>tszh</th> 
+          <th>tszl</th> 
+          <th>&lt;T&gt;</th> 
+         </tr> 
+        </thead> 
+        <tbody> 
+         <tr> 
+          <td>00</td> 
+          <td>00</td> 
+          <td>RESERVED</td> 
+         </tr> 
+         <tr> 
+          <td>00</td> 
+          <td>01</td> 
+          <td>B</td> 
+         </tr> 
+         <tr> 
+          <td>00</td> 
+          <td>1x</td> 
+          <td>H</td> 
+         </tr> 
+         <tr> 
+          <td>01</td> 
+          <td>xx</td> 
+          <td>S</td> 
+         </tr> 
+         <tr> 
+          <td>1x</td> 
+          <td>xx</td> 
+          <td>D</td> 
+         </tr> 
+        </tbody> 
+       </table> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Pg&gt;</td> 
+      <td><a id="sa_pg"></a> <p>Is the name of the governing scalable predicate register P0-P7, encoded in the "Pg" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;const&gt;</td> 
+      <td><a id="sa_const"></a> <p>Is the immediate shift amount, in the range 1 to number of bits per element, encoded in "tszh:tszl:imm3".</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div></div> 
+  <div> 
+   <a id="execute"></a> 
+   <h3>Operation</h3> 
+   <pre><a title="function: CheckSVEEnabled()" class="document-topic">CheckSVEEnabled</a>();
+constant integer VL = <a title="accessor: integer CurrentVL" class="document-topic">CurrentVL</a>;
+constant integer elements = VL DIV esize;
+constant integer PL = VL DIV 8;
+bits(VL) operand1 = <a title="accessor: bits(width) Z[integer n, integer width]" class="document-topic">Z</a>[dn, VL];
+bits(PL) mask = <a title="accessor: bits(width) P[integer n, integer width]" class="document-topic">P</a>[g, PL];
+bits(VL) result;
+
+for e = 0 to elements-1
+    bits(esize) element1 = <a title="accessor: bits(size) Elem[bits(N) vector, integer e, integer size]" class="document-topic">Elem</a>[operand1, e, esize];
+    if <a title="function: boolean ActivePredicateElement(bits(N) pred, integer e, integer esize)" class="document-topic">ActivePredicateElement</a>(mask, e, esize) then
+        <a title="accessor: Elem[bits(N) &amp;vector, integer e, integer size] = bits(size) value" class="document-topic">Elem</a>[result, e, esize] = <a title="function: bits(N) LSR(bits(N) x, integer shift)" class="document-topic">LSR</a>(element1, shift);
+    else
+        <a title="accessor: Elem[bits(N) &amp;vector, integer e, integer size] = bits(size) value" class="document-topic">Elem</a>[result, e, esize] = <a title="accessor: bits(size) Elem[bits(N) vector, integer e, integer size]" class="document-topic">Elem</a>[operand1, e, esize];
+
+<a title="accessor: Z[integer n, integer width] = bits(width) value" class="document-topic">Z</a>[dn, VL] = result;</pre> 
+  </div> 
+  <h3>Operational information</h3> 
+  <p>If FEAT_SVE2 is implemented or FEAT_SME is implemented, then if PSTATE.DIT is 1:</p> 
+  <ul> 
+   <li>The execution time of this instruction is independent of: 
+    <ul> 
+     <li>The values of the data supplied in any of its operand registers when its governing predicate register contains the same value for each execution.</li> 
+     <li>The values of the NZCV flags.</li> 
+    </ul></li> 
+   <li>The response of this instruction to asynchronous exceptions does not vary based on: 
+    <ul> 
+     <li>The values of the data supplied in any of its operand registers when its governing predicate register contains the same value for each execution.</li> 
+     <li>The values of the NZCV flags.</li> 
+    </ul></li> 
+  </ul> 
+  <p> This instruction might be immediately preceded in program order by a <span>MOVPRFX</span> instruction. The <span>MOVPRFX</span> instruction must conform to all of the following requirements, otherwise the behavior of the <span>MOVPRFX</span> and this instruction is <small>unpredictable</small>: </p> 
+  <ul> 
+   <li>The <span>MOVPRFX</span> instruction must be unpredicated, or be predicated using the same governing predicate register and source element size as this instruction.</li> 
+   <li>The <span>MOVPRFX</span> instruction must specify the same destination register as this instruction.</li> 
+   <li>The destination register must not refer to architectural register state referenced by any other source operand register of this instruction.</li> 
+  </ul>  
+ </body>
+</html>

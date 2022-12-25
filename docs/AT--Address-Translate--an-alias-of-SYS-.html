@@ -1,0 +1,279 @@
+<html>
+ <head>  <link rel="stylesheet" href="../def-style.css"></head> 
+ <body> 
+  <h2>AT</h2> 
+  <p>Address Translate. For more information, see <em>op0==0b01, cache maintenance, TLB maintenance, and address translation instructions</em>.</p> 
+  <p> This is an alias of <a href="SYS--System-instruction-.html" class="document-topic">SYS</a>. This means: </p> 
+  <ul> 
+   <li> The encodings in this description are named to match the encodings of <a href="SYS--System-instruction-.html" class="document-topic">SYS</a>. </li> 
+   <li>The description of <a href="SYS--System-instruction-.html" class="document-topic">SYS</a> gives the operational pseudocode, any <small>constrained unpredictable</small> behavior, and any operational information for this instruction.</li> 
+  </ul> 
+  <p></p> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td colspan="3">op1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>x</td> 
+      <td colspan="3">op2</td> 
+      <td colspan="5">Rt</td> 
+     </tr> 
+     <tr> 
+      <td colspan="10"></td> 
+      <td>L</td> 
+      <td colspan="2"></td> 
+      <td colspan="3"></td> 
+      <td colspan="4">CRn</td> 
+      <td colspan="4">CRm</td> 
+      <td colspan="3"></td> 
+      <td colspan="5"></td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4></h4> 
+   <a id="AT_SYS_CR_systeminstrs"></a> 
+   <p>AT <a title="AT instruction name, as listed for AT system instruction group (field &quot;op1:CRm<0>:op2&quot;) [S1E0R,S1E0W,S1E1R,S1E1RP (FEAT_PAN2),S1E1W,S1E1WP (FEAT_PAN2),S1E2R,S1E2W,S1E3R,S1E3W,S12E0R,S12E0W,S12E1R,S12E1W]" class="document-topic">&lt;at_op&gt;</a>, <a title="64-bit general-purpose source register (field &quot;Rt&quot;)" class="document-topic">&lt;Xt&gt;</a></p> 
+   <p> is equivalent to </p> 
+   <p><a href="SYS--System-instruction-.html" class="document-topic">SYS</a> #<a title="3-bit unsigned immediate [0-7] (field &quot;op1&quot;)" class="document-topic">&lt;op1&gt;</a>, C7, <a title="Name 'Cm', with 'm' [0-15] (field &quot;CRm&quot;)" class="document-topic">&lt;Cm&gt;</a>, #<a title="3-bit unsigned immediate [0-7] (field &quot;op2&quot;)" class="document-topic">&lt;op2&gt;</a>, <a title="64-bit general-purpose source register (field &quot;Rt&quot;)" class="document-topic">&lt;Xt&gt;</a></p> 
+   <p> and is the preferred disassembly when <span>SysOp(op1,'0111',CRm,op2) == Sys_AT</span>. </p> 
+  </div> 
+  <div></div> 
+  <h3>Assembler Symbols</h3> 
+  <div> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;at_op&gt;</td> 
+      <td><a id="sa_at_op"></a> <p>Is an AT instruction name, as listed for the AT system instruction group, encoded in <q>op1:CRm&lt;0&gt;:op2</q>: </p> 
+       <table> 
+        <thead> 
+         <tr> 
+          <th>op1</th> 
+          <th>CRm&lt;0&gt;</th> 
+          <th>op2</th> 
+          <th>&lt;at_op&gt;</th> 
+          <th>Architectural Feature</th> 
+         </tr> 
+        </thead> 
+        <tbody> 
+         <tr> 
+          <td>000</td> 
+          <td>0</td> 
+          <td>000</td> 
+          <td>S1E1R</td> 
+          <td> - </td> 
+         </tr> 
+         <tr> 
+          <td>000</td> 
+          <td>0</td> 
+          <td>001</td> 
+          <td>S1E1W</td> 
+          <td> - </td> 
+         </tr> 
+         <tr> 
+          <td>000</td> 
+          <td>0</td> 
+          <td>010</td> 
+          <td>S1E0R</td> 
+          <td> - </td> 
+         </tr> 
+         <tr> 
+          <td>000</td> 
+          <td>0</td> 
+          <td>011</td> 
+          <td>S1E0W</td> 
+          <td> - </td> 
+         </tr> 
+         <tr> 
+          <td>000</td> 
+          <td>1</td> 
+          <td>000</td> 
+          <td>S1E1RP</td> 
+          <td> FEAT_PAN2 </td> 
+         </tr> 
+         <tr> 
+          <td>000</td> 
+          <td>1</td> 
+          <td>001</td> 
+          <td>S1E1WP</td> 
+          <td> FEAT_PAN2 </td> 
+         </tr> 
+         <tr> 
+          <td>100</td> 
+          <td>0</td> 
+          <td>000</td> 
+          <td>S1E2R</td> 
+          <td> - </td> 
+         </tr> 
+         <tr> 
+          <td>100</td> 
+          <td>0</td> 
+          <td>001</td> 
+          <td>S1E2W</td> 
+          <td> - </td> 
+         </tr> 
+         <tr> 
+          <td>100</td> 
+          <td>0</td> 
+          <td>100</td> 
+          <td>S12E1R</td> 
+          <td> - </td> 
+         </tr> 
+         <tr> 
+          <td>100</td> 
+          <td>0</td> 
+          <td>101</td> 
+          <td>S12E1W</td> 
+          <td> - </td> 
+         </tr> 
+         <tr> 
+          <td>100</td> 
+          <td>0</td> 
+          <td>110</td> 
+          <td>S12E0R</td> 
+          <td> - </td> 
+         </tr> 
+         <tr> 
+          <td>100</td> 
+          <td>0</td> 
+          <td>111</td> 
+          <td>S12E0W</td> 
+          <td> - </td> 
+         </tr> 
+         <tr> 
+          <td>110</td> 
+          <td>0</td> 
+          <td>000</td> 
+          <td>S1E3R</td> 
+          <td> - </td> 
+         </tr> 
+         <tr> 
+          <td>110</td> 
+          <td>0</td> 
+          <td>001</td> 
+          <td>S1E3W</td> 
+          <td> - </td> 
+         </tr> 
+        </tbody> 
+       </table> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;op1&gt;</td> 
+      <td><a id="sa_op1"></a> <p>Is a 3-bit unsigned immediate, in the range 0 to 7, encoded in the "op1" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Cm&gt;</td> 
+      <td><a id="sa_cm"></a> <p>Is a name 'Cm', with 'm' in the range 0 to 15, encoded in the "CRm" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;op2&gt;</td> 
+      <td><a id="sa_op2"></a> <p>Is a 3-bit unsigned immediate, in the range 0 to 7, encoded in the "op2" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Xt&gt;</td> 
+      <td><a id="sa_xt_1"></a> <p>Is the 64-bit name of the general-purpose source register, encoded in the "Rt" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div></div> 
+  <div> 
+   <h3>Operation</h3> 
+   <p>The description of <a href="SYS--System-instruction-.html" class="document-topic">SYS</a> gives the operational pseudocode for this instruction.</p> 
+  </div>  
+ </body>
+</html>

@@ -1,0 +1,220 @@
+<html>
+ <head>  <link rel="stylesheet" href="../def-style.css"></head> 
+ <body> 
+  <h2>INSR (SIMD&amp;FP scalar)</h2> 
+  <p>Insert SIMD&amp;FP scalar register in shifted vector</p> 
+  <p>Shift the destination vector left by one element, and then place a copy of the SIMD&amp;FP scalar register in element 0 of the destination vector. This instruction is unpredicated.</p> 
+  <p></p> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td colspan="2">size</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td colspan="5">Vm</td> 
+      <td colspan="5">Zdn</td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4></h4> 
+   <a id="insr_z_v_"></a> 
+   <p>INSR <a title="Source and destination scalable vector register (field &quot;Zdn&quot;)" class="document-topic">&lt;Zdn&gt;</a>.<a title="Size specifier (field &quot;size&quot;) [B,D,H,S]" class="document-topic">&lt;T&gt;</a>, <a title="Width specifier (field &quot;size&quot;) [B,D,H,S]" class="document-topic">&lt;V&gt;</a><a title="Source SIMD&amp;FP register number [0-31] (field &quot;Vm&quot;)" class="document-topic">&lt;m&gt;</a></p> 
+  </div> 
+  <pre>if !<a title="function: boolean HaveSVE()" class="document-topic">HaveSVE</a>() &amp;&amp; !<a title="function: boolean HaveSME()" class="document-topic">HaveSME</a>() then UNDEFINED;
+constant integer esize = 8 &lt;&lt; <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(size);
+integer dn = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Zdn);
+integer m = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Vm);</pre> 
+  <div></div> 
+  <h3>Assembler Symbols</h3> 
+  <div> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Zdn&gt;</td> 
+      <td><a id="sa_zdn"></a> <p>Is the name of the source and destination scalable vector register, encoded in the "Zdn" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;T&gt;</td> 
+      <td><a id="sa_t"></a> <p>Is the size specifier, encoded in <q>size</q>: </p> 
+       <table> 
+        <thead> 
+         <tr> 
+          <th>size</th> 
+          <th>&lt;T&gt;</th> 
+         </tr> 
+        </thead> 
+        <tbody> 
+         <tr> 
+          <td>00</td> 
+          <td>B</td> 
+         </tr> 
+         <tr> 
+          <td>01</td> 
+          <td>H</td> 
+         </tr> 
+         <tr> 
+          <td>10</td> 
+          <td>S</td> 
+         </tr> 
+         <tr> 
+          <td>11</td> 
+          <td>D</td> 
+         </tr> 
+        </tbody> 
+       </table> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;V&gt;</td> 
+      <td><a id="sa_v"></a> <p>Is a width specifier, encoded in <q>size</q>: </p> 
+       <table> 
+        <thead> 
+         <tr> 
+          <th>size</th> 
+          <th>&lt;V&gt;</th> 
+         </tr> 
+        </thead> 
+        <tbody> 
+         <tr> 
+          <td>00</td> 
+          <td>B</td> 
+         </tr> 
+         <tr> 
+          <td>01</td> 
+          <td>H</td> 
+         </tr> 
+         <tr> 
+          <td>10</td> 
+          <td>S</td> 
+         </tr> 
+         <tr> 
+          <td>11</td> 
+          <td>D</td> 
+         </tr> 
+        </tbody> 
+       </table> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;m&gt;</td> 
+      <td><a id="sa_m"></a> <p>Is the number [0-31] of the source SIMD&amp;FP register, encoded in the "Vm" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div></div> 
+  <div> 
+   <a id="execute"></a> 
+   <h3>Operation</h3> 
+   <pre><a title="function: CheckSVEEnabled()" class="document-topic">CheckSVEEnabled</a>();
+constant integer VL = <a title="accessor: integer CurrentVL" class="document-topic">CurrentVL</a>;
+constant integer PL = VL DIV 8;
+bits(VL) dest = <a title="accessor: bits(width) Z[integer n, integer width]" class="document-topic">Z</a>[dn, VL];
+bits(esize) src = <a title="accessor: bits(width) V[integer n, integer width]" class="document-topic">V</a>[m, esize];
+<a title="accessor: Z[integer n, integer width] = bits(width) value" class="document-topic">Z</a>[dn, VL] = dest&lt;(VL-esize)-1:0&gt; : src;</pre> 
+  </div> 
+  <h3>Operational information</h3> 
+  <p>If FEAT_SVE2 is implemented or FEAT_SME is implemented, then if PSTATE.DIT is 1:</p> 
+  <ul> 
+   <li>The execution time of this instruction is independent of: 
+    <ul> 
+     <li>The values of the data supplied in any of its registers.</li> 
+     <li>The values of the NZCV flags.</li> 
+    </ul></li> 
+   <li>The response of this instruction to asynchronous exceptions does not vary based on: 
+    <ul> 
+     <li>The values of the data supplied in any of its registers.</li> 
+     <li>The values of the NZCV flags.</li> 
+    </ul></li> 
+  </ul> 
+  <p> This instruction might be immediately preceded in program order by a <span>MOVPRFX</span> instruction. The <span>MOVPRFX</span> instruction must conform to all of the following requirements, otherwise the behavior of the <span>MOVPRFX</span> and this instruction is <small>unpredictable</small>: </p> 
+  <ul> 
+   <li>The <span>MOVPRFX</span> instruction must be unpredicated.</li> 
+   <li>The <span>MOVPRFX</span> instruction must specify the same destination register as this instruction.</li> 
+   <li>The destination register must not refer to architectural register state referenced by any other source operand register of this instruction.</li> 
+  </ul>  
+ </body>
+</html>

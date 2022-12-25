@@ -1,0 +1,99 @@
+<html>
+ <head>  <link rel="stylesheet" href="../def-style.css"></head> 
+ <body> 
+  <h2>BRK</h2> 
+  <p>Breakpoint instruction. A <span>BRK</span> instruction generates a Breakpoint Instruction exception. The PE records the exception in <em>ESR_ELx</em>, using the EC value 0x3c, and captures the value of the immediate argument in <em>ESR_ELx</em>.ISS.</p> 
+  <p></p> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td colspan="16">imm16</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4></h4> 
+   <a id="BRK_EX_exception"></a> 
+   <p>BRK #<a title="16-bit unsigned immediate [0-65535] (field &quot;imm16&quot;)" class="document-topic">&lt;imm&gt;</a></p> 
+  </div> 
+  <pre>bits(16) comment = imm16;
+if <a title="function: boolean HaveBTIExt()" class="document-topic">HaveBTIExt</a>() then
+    <a title="function: SetBTypeCompatible(boolean x)" class="document-topic">SetBTypeCompatible</a>(TRUE);</pre> 
+  <div></div> 
+  <h3>Assembler Symbols</h3> 
+  <div> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;imm&gt;</td> 
+      <td><a id="sa_imm"></a> <p>Is a 16-bit unsigned immediate, in the range 0 to 65535, encoded in the "imm16" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div></div> 
+  <div> 
+   <a id="execute"></a> 
+   <h3>Operation</h3> 
+   <pre><a title="function: AArch64.SoftwareBreakpoint(bits(16) immediate)" class="document-topic">AArch64.SoftwareBreakpoint</a>(comment);</pre> 
+  </div>  
+ </body>
+</html>

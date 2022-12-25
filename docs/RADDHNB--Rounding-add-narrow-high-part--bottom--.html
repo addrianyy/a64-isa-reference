@@ -1,0 +1,247 @@
+<html>
+ <head>  <link rel="stylesheet" href="../def-style.css"></head> 
+ <body> 
+  <h2>RADDHNB</h2> 
+  <p>Rounding add narrow high part (bottom)</p> 
+  <p>Add each vector element of the first source vector to the corresponding vector element of the second source vector, and place the most significant rounded half of the result in the even-numbered half-width destination elements, while setting the odd-numbered elements to zero. This instruction is unpredicated.</p> 
+  <p></p> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td colspan="2">size</td> 
+      <td>1</td> 
+      <td colspan="5">Zm</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td colspan="5">Zn</td> 
+      <td colspan="5">Zd</td> 
+     </tr> 
+     <tr> 
+      <td colspan="8"></td> 
+      <td colspan="2"></td> 
+      <td></td> 
+      <td colspan="5"></td> 
+      <td colspan="3"></td> 
+      <td>S</td> 
+      <td>R</td> 
+      <td>T</td> 
+      <td colspan="5"></td> 
+      <td colspan="5"></td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4></h4> 
+   <a id="raddhnb_z_zz_"></a> 
+   <p>RADDHNB <a title="Destination scalable vector register (field &quot;Zd&quot;)" class="document-topic">&lt;Zd&gt;</a>.<a title="Size specifier (field &quot;size&quot;) [B,H,S]" class="document-topic">&lt;T&gt;</a>, <a title="First source scalable vector register (field &quot;Zn&quot;)" class="document-topic">&lt;Zn&gt;</a>.<a title="Size specifier (field &quot;size&quot;) [D,H,S]" class="document-topic">&lt;Tb&gt;</a>, <a title="Second source scalable vector register (field &quot;Zm&quot;)" class="document-topic">&lt;Zm&gt;</a>.<a title="Size specifier (field &quot;size&quot;) [D,H,S]" class="document-topic">&lt;Tb&gt;</a></p> 
+  </div> 
+  <pre>if !<a title="function: boolean HaveSVE2()" class="document-topic">HaveSVE2</a>() &amp;&amp; !<a title="function: boolean HaveSME()" class="document-topic">HaveSME</a>() then UNDEFINED;
+if size == '00' then UNDEFINED;
+constant integer esize = 8 &lt;&lt; <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(size);
+integer n = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Zn);
+integer m = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Zm);
+integer d = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Zd);</pre> 
+  <div></div> 
+  <h3>Assembler Symbols</h3> 
+  <div> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Zd&gt;</td> 
+      <td><a id="sa_zd"></a> <p>Is the name of the destination scalable vector register, encoded in the "Zd" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;T&gt;</td> 
+      <td><a id="sa_t"></a> <p>Is the size specifier, encoded in <q>size</q>: </p> 
+       <table> 
+        <thead> 
+         <tr> 
+          <th>size</th> 
+          <th>&lt;T&gt;</th> 
+         </tr> 
+        </thead> 
+        <tbody> 
+         <tr> 
+          <td>00</td> 
+          <td>RESERVED</td> 
+         </tr> 
+         <tr> 
+          <td>01</td> 
+          <td>B</td> 
+         </tr> 
+         <tr> 
+          <td>10</td> 
+          <td>H</td> 
+         </tr> 
+         <tr> 
+          <td>11</td> 
+          <td>S</td> 
+         </tr> 
+        </tbody> 
+       </table> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Zn&gt;</td> 
+      <td><a id="sa_zn"></a> <p>Is the name of the first source scalable vector register, encoded in the "Zn" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Tb&gt;</td> 
+      <td><a id="sa_tb"></a> <p>Is the size specifier, encoded in <q>size</q>: </p> 
+       <table> 
+        <thead> 
+         <tr> 
+          <th>size</th> 
+          <th>&lt;Tb&gt;</th> 
+         </tr> 
+        </thead> 
+        <tbody> 
+         <tr> 
+          <td>00</td> 
+          <td>RESERVED</td> 
+         </tr> 
+         <tr> 
+          <td>01</td> 
+          <td>H</td> 
+         </tr> 
+         <tr> 
+          <td>10</td> 
+          <td>S</td> 
+         </tr> 
+         <tr> 
+          <td>11</td> 
+          <td>D</td> 
+         </tr> 
+        </tbody> 
+       </table> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Zm&gt;</td> 
+      <td><a id="sa_zm"></a> <p>Is the name of the second source scalable vector register, encoded in the "Zm" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div></div> 
+  <div> 
+   <a id="execute"></a> 
+   <h3>Operation</h3> 
+   <pre><a title="function: CheckSVEEnabled()" class="document-topic">CheckSVEEnabled</a>();
+constant integer VL = <a title="accessor: integer CurrentVL" class="document-topic">CurrentVL</a>;
+constant integer elements = VL DIV esize;
+bits(VL) operand1 = <a title="accessor: bits(width) Z[integer n, integer width]" class="document-topic">Z</a>[n, VL];
+bits(VL) operand2 = <a title="accessor: bits(width) Z[integer n, integer width]" class="document-topic">Z</a>[m, VL];
+bits(VL) result;
+constant integer halfesize = esize DIV 2;
+constant integer round_const = 1 &lt;&lt; (halfesize - 1);
+
+for e = 0 to elements-1
+    integer element1 = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(<a title="accessor: bits(size) Elem[bits(N) vector, integer e, integer size]" class="document-topic">Elem</a>[operand1, e, esize]);
+    integer element2 = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(<a title="accessor: bits(size) Elem[bits(N) vector, integer e, integer size]" class="document-topic">Elem</a>[operand2, e, esize]);
+    integer res = ((element1 + element2) + round_const) &gt;&gt; halfesize;
+    <a title="accessor: Elem[bits(N) &amp;vector, integer e, integer size] = bits(size) value" class="document-topic">Elem</a>[result, 2*e + 0, halfesize] = res&lt;halfesize-1:0&gt;;
+    <a title="accessor: Elem[bits(N) &amp;vector, integer e, integer size] = bits(size) value" class="document-topic">Elem</a>[result, 2*e + 1, halfesize] = <a title="function: bits(N) Zeros(integer N)" class="document-topic">Zeros</a>(halfesize);
+
+<a title="accessor: Z[integer n, integer width] = bits(width) value" class="document-topic">Z</a>[d, VL] = result;</pre> 
+  </div> 
+  <h3>Operational information</h3> 
+  <p>If FEAT_SVE2 is implemented or FEAT_SME is implemented, then if PSTATE.DIT is 1:</p> 
+  <ul> 
+   <li>The execution time of this instruction is independent of: 
+    <ul> 
+     <li>The values of the data supplied in any of its registers.</li> 
+     <li>The values of the NZCV flags.</li> 
+    </ul></li> 
+   <li>The response of this instruction to asynchronous exceptions does not vary based on: 
+    <ul> 
+     <li>The values of the data supplied in any of its registers.</li> 
+     <li>The values of the NZCV flags.</li> 
+    </ul></li> 
+  </ul>  
+ </body>
+</html>

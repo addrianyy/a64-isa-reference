@@ -1,0 +1,474 @@
+<html>
+ <head>  <link rel="stylesheet" href="../def-style.css"></head> 
+ <body> 
+  <h2>MSR (immediate)</h2> 
+  <p>Move immediate value to Special Register moves an immediate value to selected bits of the PSTATE. For more information, see <em>Process state, PSTATE</em>.</p> 
+  <p>The bits that can be written by this instruction are:</p> 
+  <ul> 
+   <li>PSTATE.D, PSTATE.A, PSTATE.I, PSTATE.F, and PSTATE.SP.</li> 
+   <li>If <em>FEAT_SSBS</em> is implemented, PSTATE.SSBS.</li> 
+   <li>If <em>FEAT_PAN</em> is implemented, PSTATE.PAN.</li> 
+   <li>If <em>FEAT_UAO</em> is implemented, PSTATE.UAO.</li> 
+   <li>If <em>FEAT_DIT</em> is implemented, PSTATE.DIT.</li> 
+   <li>If <em>FEAT_MTE</em> is implemented, PSTATE.TCO.</li> 
+   <li>If <em>FEAT_NMI</em> is implemented, PSTATE.ALLINT.</li> 
+   <li>If <em>FEAT_SME</em> is implemented, PSTATE.SM and PSTATE.ZA.</li> 
+   <li>If FEAT_EBEP is implemented, PSTATE.PM.</li> 
+  </ul> 
+  <p>This instruction is used by the aliases <a title="SMSTART" href="SMSTART--Enables-access-to-Streaming-SVE-mode-and-SME-architectural-state--an-alias-of-MSR--immediate--.html" class="document-topic">SMSTART</a>, and <a href="SMSTOP--Disables-access-to-Streaming-SVE-mode-and-SME-architectural-state--an-alias-of-MSR--immediate--.html" title="SMSTOP" class="document-topic">SMSTOP</a>.</p> 
+  <p></p> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td colspan="3">op1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td colspan="4">CRm</td> 
+      <td colspan="3">op2</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4></h4> 
+   <a id="MSR_SI_pstate"></a> 
+   <p>MSR <a title="PSTATE field name (field &quot;op1:op2:CRm&quot;) [ALLINT (FEAT_NMI),DAIFClr,DAIFSet,DIT (FEAT_DIT),PAN (FEAT_PAN),PM (FEAT_EBEP),SEE(pstate),SPSel,SSBS (FEAT_SSBS),SVCRSM (FEAT_SME),SVCRSMZA (FEAT_SME),SVCRZA (FEAT_SME),TCO (FEAT_MTE),UAO (FEAT_UAO)]" class="document-topic">&lt;pstatefield&gt;</a>, #<a title="4-bit unsigned immediate [0-15] (field &quot;CRm&quot;)" class="document-topic">&lt;imm&gt;</a></p> 
+  </div> 
+  <pre>if op1 == '000' &amp;&amp; op2 == '000' then SEE "CFINV";
+if op1 == '000' &amp;&amp; op2 == '001' then SEE "XAFLAG";
+if op1 == '000' &amp;&amp; op2 == '010' then SEE "AXFLAG";
+
+<a title="function: AArch64.CheckSystemAccess(bits(2) op0, bits(3) op1, bits(4) crn, bits(4) crm, bits(3) op2, bits(5) rt, bit read)" class="document-topic">AArch64.CheckSystemAccess</a>('00', op1, '0100', CRm, op2, '11111', '0');
+bits(2) min_EL;
+boolean need_secure = FALSE;
+
+case op1 of
+    when '00x'
+        min_EL = <a title="constant bits(2) EL1 = '01'" class="document-topic">EL1</a>;
+    when '010'
+        min_EL = <a title="constant bits(2) EL1 = '01'" class="document-topic">EL1</a>;
+    when '011'
+        min_EL = <a title="constant bits(2) EL0 = '00'" class="document-topic">EL0</a>;
+    when '100'
+        min_EL = <a title="constant bits(2) EL2 = '10'" class="document-topic">EL2</a>;
+    when '101'
+        if !<a title="function: boolean HaveVirtHostExt()" class="document-topic">HaveVirtHostExt</a>() then
+            UNDEFINED;
+        min_EL = <a title="constant bits(2) EL2 = '10'" class="document-topic">EL2</a>;
+    when '110'
+        min_EL = <a title="constant bits(2) EL3 = '11'" class="document-topic">EL3</a>;
+    when '111'
+        min_EL = <a title="constant bits(2) EL1 = '01'" class="document-topic">EL1</a>;
+        need_secure = TRUE;
+
+if (<a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(PSTATE.EL) &lt; <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(min_EL) ||
+    (need_secure &amp;&amp; <a title="function: SecurityState CurrentSecurityState()" class="document-topic">CurrentSecurityState</a>() != <a title="enumeration SecurityState { SS_NonSecure, SS_Root, SS_Realm, SS_Secure }" class="document-topic">SS_Secure</a>)) then
+    UNDEFINED;
+
+bits(4) operand = CRm;
+<a title="enumeration PSTATEField {PSTATEField_DAIFSet, PSTATEField_DAIFClr, PSTATEField_PAN, PSTATEField_UAO, PSTATEField_DIT, PSTATEField_SSBS, PSTATEField_TCO, PSTATEField_SVCRSM, PSTATEField_SVCRZA, PSTATEField_SVCRSMZA, PSTATEField_ALLINT, PSTATEField_PM, PSTATEField_SP }" class="document-topic">PSTATEField</a> field;
+case op1:op2 of
+    when '000 011'
+        if !<a title="function: boolean HaveUAOExt()" class="document-topic">HaveUAOExt</a>() then UNDEFINED;
+        field = <a title="enumeration PSTATEField {PSTATEField_DAIFSet, PSTATEField_DAIFClr, PSTATEField_PAN, PSTATEField_UAO, PSTATEField_DIT, PSTATEField_SSBS, PSTATEField_TCO, PSTATEField_SVCRSM, PSTATEField_SVCRZA, PSTATEField_SVCRSMZA, PSTATEField_ALLINT, PSTATEField_PM, PSTATEField_SP }" class="document-topic">PSTATEField_UAO</a>;
+    when '000 100'
+        if !<a title="function: boolean HavePANExt()" class="document-topic">HavePANExt</a>() then UNDEFINED;
+        field = <a title="enumeration PSTATEField {PSTATEField_DAIFSet, PSTATEField_DAIFClr, PSTATEField_PAN, PSTATEField_UAO, PSTATEField_DIT, PSTATEField_SSBS, PSTATEField_TCO, PSTATEField_SVCRSM, PSTATEField_SVCRZA, PSTATEField_SVCRSMZA, PSTATEField_ALLINT, PSTATEField_PM, PSTATEField_SP }" class="document-topic">PSTATEField_PAN</a>;
+    when '000 101' field = <a title="enumeration PSTATEField {PSTATEField_DAIFSet, PSTATEField_DAIFClr, PSTATEField_PAN, PSTATEField_UAO, PSTATEField_DIT, PSTATEField_SSBS, PSTATEField_TCO, PSTATEField_SVCRSM, PSTATEField_SVCRZA, PSTATEField_SVCRSMZA, PSTATEField_ALLINT, PSTATEField_PM, PSTATEField_SP }" class="document-topic">PSTATEField_SP</a>;
+    when '001 000'
+        case CRm of
+            when '000x'
+                if !<a title="function: boolean HaveFeatNMI()" class="document-topic">HaveFeatNMI</a>() then UNDEFINED;
+                field = <a title="enumeration PSTATEField {PSTATEField_DAIFSet, PSTATEField_DAIFClr, PSTATEField_PAN, PSTATEField_UAO, PSTATEField_DIT, PSTATEField_SSBS, PSTATEField_TCO, PSTATEField_SVCRSM, PSTATEField_SVCRZA, PSTATEField_SVCRSMZA, PSTATEField_ALLINT, PSTATEField_PM, PSTATEField_SP }" class="document-topic">PSTATEField_ALLINT</a>;
+            when '001x'
+                if !<a title="function: boolean HaveFeatEBEP()" class="document-topic">HaveFeatEBEP</a>() then UNDEFINED;
+                field = <a title="enumeration PSTATEField {PSTATEField_DAIFSet, PSTATEField_DAIFClr, PSTATEField_PAN, PSTATEField_UAO, PSTATEField_DIT, PSTATEField_SSBS, PSTATEField_TCO, PSTATEField_SVCRSM, PSTATEField_SVCRZA, PSTATEField_SVCRSMZA, PSTATEField_ALLINT, PSTATEField_PM, PSTATEField_SP }" class="document-topic">PSTATEField_PM</a>;
+            otherwise
+                UNDEFINED;
+    when '011 010'
+        if !<a title="function: boolean HaveDITExt()" class="document-topic">HaveDITExt</a>() then UNDEFINED;
+        field = <a title="enumeration PSTATEField {PSTATEField_DAIFSet, PSTATEField_DAIFClr, PSTATEField_PAN, PSTATEField_UAO, PSTATEField_DIT, PSTATEField_SSBS, PSTATEField_TCO, PSTATEField_SVCRSM, PSTATEField_SVCRZA, PSTATEField_SVCRSMZA, PSTATEField_ALLINT, PSTATEField_PM, PSTATEField_SP }" class="document-topic">PSTATEField_DIT</a>;
+    when '011 011'
+        case CRm of
+            when '001x'
+                if !<a title="function: boolean HaveSME()" class="document-topic">HaveSME</a>() then UNDEFINED;
+                field = <a title="enumeration PSTATEField {PSTATEField_DAIFSet, PSTATEField_DAIFClr, PSTATEField_PAN, PSTATEField_UAO, PSTATEField_DIT, PSTATEField_SSBS, PSTATEField_TCO, PSTATEField_SVCRSM, PSTATEField_SVCRZA, PSTATEField_SVCRSMZA, PSTATEField_ALLINT, PSTATEField_PM, PSTATEField_SP }" class="document-topic">PSTATEField_SVCRSM</a>;
+            when '010x'
+                if !<a title="function: boolean HaveSME()" class="document-topic">HaveSME</a>() then UNDEFINED;
+                field = <a title="enumeration PSTATEField {PSTATEField_DAIFSet, PSTATEField_DAIFClr, PSTATEField_PAN, PSTATEField_UAO, PSTATEField_DIT, PSTATEField_SSBS, PSTATEField_TCO, PSTATEField_SVCRSM, PSTATEField_SVCRZA, PSTATEField_SVCRSMZA, PSTATEField_ALLINT, PSTATEField_PM, PSTATEField_SP }" class="document-topic">PSTATEField_SVCRZA</a>;
+            when '011x'
+                if !<a title="function: boolean HaveSME()" class="document-topic">HaveSME</a>() then UNDEFINED;
+                field = <a title="enumeration PSTATEField {PSTATEField_DAIFSet, PSTATEField_DAIFClr, PSTATEField_PAN, PSTATEField_UAO, PSTATEField_DIT, PSTATEField_SSBS, PSTATEField_TCO, PSTATEField_SVCRSM, PSTATEField_SVCRZA, PSTATEField_SVCRSMZA, PSTATEField_ALLINT, PSTATEField_PM, PSTATEField_SP }" class="document-topic">PSTATEField_SVCRSMZA</a>;
+            otherwise
+                UNDEFINED;
+    when '011 100'
+        if !<a title="function: boolean HaveMTEExt()" class="document-topic">HaveMTEExt</a>() then UNDEFINED;
+        field = <a title="enumeration PSTATEField {PSTATEField_DAIFSet, PSTATEField_DAIFClr, PSTATEField_PAN, PSTATEField_UAO, PSTATEField_DIT, PSTATEField_SSBS, PSTATEField_TCO, PSTATEField_SVCRSM, PSTATEField_SVCRZA, PSTATEField_SVCRSMZA, PSTATEField_ALLINT, PSTATEField_PM, PSTATEField_SP }" class="document-topic">PSTATEField_TCO</a>;
+    when '011 110' field = <a title="enumeration PSTATEField {PSTATEField_DAIFSet, PSTATEField_DAIFClr, PSTATEField_PAN, PSTATEField_UAO, PSTATEField_DIT, PSTATEField_SSBS, PSTATEField_TCO, PSTATEField_SVCRSM, PSTATEField_SVCRZA, PSTATEField_SVCRSMZA, PSTATEField_ALLINT, PSTATEField_PM, PSTATEField_SP }" class="document-topic">PSTATEField_DAIFSet</a>;
+    when '011 111' field = <a title="enumeration PSTATEField {PSTATEField_DAIFSet, PSTATEField_DAIFClr, PSTATEField_PAN, PSTATEField_UAO, PSTATEField_DIT, PSTATEField_SSBS, PSTATEField_TCO, PSTATEField_SVCRSM, PSTATEField_SVCRZA, PSTATEField_SVCRSMZA, PSTATEField_ALLINT, PSTATEField_PM, PSTATEField_SP }" class="document-topic">PSTATEField_DAIFClr</a>;
+    when '011 001'
+        if !<a title="function: boolean HaveSSBSExt()" class="document-topic">HaveSSBSExt</a>() then UNDEFINED;
+        field = <a title="enumeration PSTATEField {PSTATEField_DAIFSet, PSTATEField_DAIFClr, PSTATEField_PAN, PSTATEField_UAO, PSTATEField_DIT, PSTATEField_SSBS, PSTATEField_TCO, PSTATEField_SVCRSM, PSTATEField_SVCRZA, PSTATEField_SVCRSMZA, PSTATEField_ALLINT, PSTATEField_PM, PSTATEField_SP }" class="document-topic">PSTATEField_SSBS</a>;
+    otherwise      UNDEFINED;
+
+// Check that an AArch64 MSR/MRS access to the DAIF flags is permitted
+if PSTATE.EL == <a title="constant bits(2) EL0 = '00'" class="document-topic">EL0</a> &amp;&amp; field IN {<a title="enumeration PSTATEField {PSTATEField_DAIFSet, PSTATEField_DAIFClr, PSTATEField_PAN, PSTATEField_UAO, PSTATEField_DIT, PSTATEField_SSBS, PSTATEField_TCO, PSTATEField_SVCRSM, PSTATEField_SVCRZA, PSTATEField_SVCRSMZA, PSTATEField_ALLINT, PSTATEField_PM, PSTATEField_SP }" class="document-topic">PSTATEField_DAIFSet</a>, <a title="enumeration PSTATEField {PSTATEField_DAIFSet, PSTATEField_DAIFClr, PSTATEField_PAN, PSTATEField_UAO, PSTATEField_DIT, PSTATEField_SSBS, PSTATEField_TCO, PSTATEField_SVCRSM, PSTATEField_SVCRZA, PSTATEField_SVCRSMZA, PSTATEField_ALLINT, PSTATEField_PM, PSTATEField_SP }" class="document-topic">PSTATEField_DAIFClr</a>} then
+    if (!<a title="function: boolean ELUsingAArch32(bits(2) el)" class="document-topic">ELUsingAArch32</a>(<a title="constant bits(2) EL1 = '01'" class="document-topic">EL1</a>) &amp;&amp;
+          ((<a title="function: boolean EL2Enabled()" class="document-topic">EL2Enabled</a>() &amp;&amp; HCR_EL2.&lt;E2H,TGE&gt; == '11') || SCTLR_EL1.UMA == '0')) then
+        if <a title="function: boolean EL2Enabled()" class="document-topic">EL2Enabled</a>() &amp;&amp; !<a title="function: boolean ELUsingAArch32(bits(2) el)" class="document-topic">ELUsingAArch32</a>(<a title="constant bits(2) EL2 = '10'" class="document-topic">EL2</a>) &amp;&amp; HCR_EL2.TGE == '1' then
+            <a title="function: AArch64.SystemAccessTrap(bits(2) target_el, integer ec)" class="document-topic">AArch64.SystemAccessTrap</a>(<a title="constant bits(2) EL2 = '10'" class="document-topic">EL2</a>, 0x18);
+        else
+            <a title="function: AArch64.SystemAccessTrap(bits(2) target_el, integer ec)" class="document-topic">AArch64.SystemAccessTrap</a>(<a title="constant bits(2) EL1 = '01'" class="document-topic">EL1</a>, 0x18);</pre> 
+  <div></div> 
+  <h3>Assembler Symbols</h3> 
+  <div> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;pstatefield&gt;</td> 
+      <td><a id="sa_pstatefield"></a> <p>Is a PSTATE field name. For the MSR instruction, this is encoded in <q>op1:op2:CRm</q>: </p> 
+       <table> 
+        <thead> 
+         <tr> 
+          <th>op1</th> 
+          <th>op2</th> 
+          <th>CRm</th> 
+          <th>&lt;pstatefield&gt;</th> 
+          <th>Architectural Feature</th> 
+         </tr> 
+        </thead> 
+        <tbody> 
+         <tr> 
+          <td>000</td> 
+          <td>00x</td> 
+          <td>xxxx</td> 
+          <td><a class="document-topic">SEE PSTATE</a></td> 
+          <td> - </td> 
+         </tr> 
+         <tr> 
+          <td>000</td> 
+          <td>010</td> 
+          <td>xxxx</td> 
+          <td><a class="document-topic">SEE PSTATE</a></td> 
+          <td> - </td> 
+         </tr> 
+         <tr> 
+          <td>000</td> 
+          <td>011</td> 
+          <td>xxxx</td> 
+          <td>UAO</td> 
+          <td> FEAT_UAO </td> 
+         </tr> 
+         <tr> 
+          <td>000</td> 
+          <td>100</td> 
+          <td>xxxx</td> 
+          <td>PAN</td> 
+          <td> FEAT_PAN </td> 
+         </tr> 
+         <tr> 
+          <td>000</td> 
+          <td>101</td> 
+          <td>xxxx</td> 
+          <td>SPSel</td> 
+          <td> - </td> 
+         </tr> 
+         <tr> 
+          <td>000</td> 
+          <td>11x</td> 
+          <td>xxxx</td> 
+          <td>RESERVED</td> 
+          <td> - </td> 
+         </tr> 
+         <tr> 
+          <td>001</td> 
+          <td>000</td> 
+          <td>000x</td> 
+          <td>ALLINT</td> 
+          <td> FEAT_NMI </td> 
+         </tr> 
+         <tr> 
+          <td>001</td> 
+          <td>000</td> 
+          <td>001x</td> 
+          <td>PM</td> 
+          <td> FEAT_EBEP </td> 
+         </tr> 
+         <tr> 
+          <td>001</td> 
+          <td>000</td> 
+          <td>01xx</td> 
+          <td>RESERVED</td> 
+          <td> - </td> 
+         </tr> 
+         <tr> 
+          <td>001</td> 
+          <td>000</td> 
+          <td>1xxx</td> 
+          <td>RESERVED</td> 
+          <td> - </td> 
+         </tr> 
+         <tr> 
+          <td>001</td> 
+          <td>001</td> 
+          <td>xxxx</td> 
+          <td>RESERVED</td> 
+          <td> - </td> 
+         </tr> 
+         <tr> 
+          <td>001</td> 
+          <td>01x</td> 
+          <td>xxxx</td> 
+          <td>RESERVED</td> 
+          <td> - </td> 
+         </tr> 
+         <tr> 
+          <td>001</td> 
+          <td>1xx</td> 
+          <td>xxxx</td> 
+          <td>RESERVED</td> 
+          <td> - </td> 
+         </tr> 
+         <tr> 
+          <td>010</td> 
+          <td>xxx</td> 
+          <td>xxxx</td> 
+          <td>RESERVED</td> 
+          <td> - </td> 
+         </tr> 
+         <tr> 
+          <td>011</td> 
+          <td>000</td> 
+          <td>xxxx</td> 
+          <td>RESERVED</td> 
+          <td> - </td> 
+         </tr> 
+         <tr> 
+          <td>011</td> 
+          <td>001</td> 
+          <td>xxxx</td> 
+          <td>SSBS</td> 
+          <td> FEAT_SSBS </td> 
+         </tr> 
+         <tr> 
+          <td>011</td> 
+          <td>010</td> 
+          <td>xxxx</td> 
+          <td>DIT</td> 
+          <td> FEAT_DIT </td> 
+         </tr> 
+         <tr> 
+          <td>011</td> 
+          <td>011</td> 
+          <td>000x</td> 
+          <td>RESERVED</td> 
+          <td> - </td> 
+         </tr> 
+         <tr> 
+          <td>011</td> 
+          <td>011</td> 
+          <td>001x</td> 
+          <td>SVCRSM</td> 
+          <td> FEAT_SME </td> 
+         </tr> 
+         <tr> 
+          <td>011</td> 
+          <td>011</td> 
+          <td>010x</td> 
+          <td>SVCRZA</td> 
+          <td> FEAT_SME </td> 
+         </tr> 
+         <tr> 
+          <td>011</td> 
+          <td>011</td> 
+          <td>011x</td> 
+          <td>SVCRSMZA</td> 
+          <td> FEAT_SME </td> 
+         </tr> 
+         <tr> 
+          <td>011</td> 
+          <td>011</td> 
+          <td>1xxx</td> 
+          <td>RESERVED</td> 
+          <td> - </td> 
+         </tr> 
+         <tr> 
+          <td>011</td> 
+          <td>100</td> 
+          <td>xxxx</td> 
+          <td>TCO</td> 
+          <td> FEAT_MTE </td> 
+         </tr> 
+         <tr> 
+          <td>011</td> 
+          <td>101</td> 
+          <td>xxxx</td> 
+          <td>RESERVED</td> 
+          <td> - </td> 
+         </tr> 
+         <tr> 
+          <td>011</td> 
+          <td>110</td> 
+          <td>xxxx</td> 
+          <td>DAIFSet</td> 
+          <td> - </td> 
+         </tr> 
+         <tr> 
+          <td>011</td> 
+          <td>111</td> 
+          <td>xxxx</td> 
+          <td>DAIFClr</td> 
+          <td> - </td> 
+         </tr> 
+         <tr> 
+          <td>1xx</td> 
+          <td>xxx</td> 
+          <td>xxxx</td> 
+          <td>RESERVED</td> 
+          <td> - </td> 
+         </tr> 
+        </tbody> 
+       </table> For the SMSTART and SMSTOP aliases, this is encoded in "CRm&lt;2:1&gt;", where 0b01 specifies SVCRSM, 0b10 specifies SVCRZA, and 0b11 specifies SVCRSMZA. </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;imm&gt;</td> 
+      <td><a id="sa_imm"></a> <p>Is a 4-bit unsigned immediate, in the range 0 to 15, encoded in the "CRm" field. Restricted to the range 0 to 1, encoded in "CRm&lt;0&gt;", when &lt;pstatefield&gt; is ALLINT, PM, SVCRSM, SVCRSMZA, or SVCRZA.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div></div> 
+  <h3>Alias Conditions</h3> 
+  <table> 
+   <thead> 
+    <tr> 
+     <th>Alias</th> 
+     <th>Is preferred when</th> 
+    </tr> 
+   </thead> 
+   <tbody> 
+    <tr> 
+     <td><a href="SMSTART--Enables-access-to-Streaming-SVE-mode-and-SME-architectural-state--an-alias-of-MSR--immediate--.html" title="SMSTART" class="document-topic">SMSTART</a></td> 
+     <td><span>op1 == '011' &amp;&amp; CRm == '0xx1' &amp;&amp; op2 == '011'</span></td> 
+    </tr> 
+    <tr> 
+     <td><a href="SMSTOP--Disables-access-to-Streaming-SVE-mode-and-SME-architectural-state--an-alias-of-MSR--immediate--.html" title="SMSTOP" class="document-topic">SMSTOP</a></td> 
+     <td><span>op1 == '011' &amp;&amp; CRm == '0xx0' &amp;&amp; op2 == '011'</span></td> 
+    </tr> 
+   </tbody> 
+  </table> 
+  <div> 
+   <a id="execute"></a> 
+   <h3>Operation</h3> 
+   <pre>case field of
+    when <a title="enumeration PSTATEField {PSTATEField_DAIFSet, PSTATEField_DAIFClr, PSTATEField_PAN, PSTATEField_UAO, PSTATEField_DIT, PSTATEField_SSBS, PSTATEField_TCO, PSTATEField_SVCRSM, PSTATEField_SVCRZA, PSTATEField_SVCRSMZA, PSTATEField_ALLINT, PSTATEField_PM, PSTATEField_SP }" class="document-topic">PSTATEField_SSBS</a>
+        PSTATE.SSBS = operand&lt;0&gt;;
+    when <a title="enumeration PSTATEField {PSTATEField_DAIFSet, PSTATEField_DAIFClr, PSTATEField_PAN, PSTATEField_UAO, PSTATEField_DIT, PSTATEField_SSBS, PSTATEField_TCO, PSTATEField_SVCRSM, PSTATEField_SVCRZA, PSTATEField_SVCRSMZA, PSTATEField_ALLINT, PSTATEField_PM, PSTATEField_SP }" class="document-topic">PSTATEField_SP</a>
+        PSTATE.SP = operand&lt;0&gt;;
+    when <a title="enumeration PSTATEField {PSTATEField_DAIFSet, PSTATEField_DAIFClr, PSTATEField_PAN, PSTATEField_UAO, PSTATEField_DIT, PSTATEField_SSBS, PSTATEField_TCO, PSTATEField_SVCRSM, PSTATEField_SVCRZA, PSTATEField_SVCRSMZA, PSTATEField_ALLINT, PSTATEField_PM, PSTATEField_SP }" class="document-topic">PSTATEField_DAIFSet</a>
+        PSTATE.D = PSTATE.D OR operand&lt;3&gt;;
+        PSTATE.A = PSTATE.A OR operand&lt;2&gt;;
+        PSTATE.I = PSTATE.I OR operand&lt;1&gt;;
+        PSTATE.F = PSTATE.F OR operand&lt;0&gt;;
+    when <a title="enumeration PSTATEField {PSTATEField_DAIFSet, PSTATEField_DAIFClr, PSTATEField_PAN, PSTATEField_UAO, PSTATEField_DIT, PSTATEField_SSBS, PSTATEField_TCO, PSTATEField_SVCRSM, PSTATEField_SVCRZA, PSTATEField_SVCRSMZA, PSTATEField_ALLINT, PSTATEField_PM, PSTATEField_SP }" class="document-topic">PSTATEField_DAIFClr</a>
+        PSTATE.D = PSTATE.D AND NOT(operand&lt;3&gt;);
+        PSTATE.A = PSTATE.A AND NOT(operand&lt;2&gt;);
+        PSTATE.I = PSTATE.I AND NOT(operand&lt;1&gt;);
+        PSTATE.F = PSTATE.F AND NOT(operand&lt;0&gt;);
+    when <a title="enumeration PSTATEField {PSTATEField_DAIFSet, PSTATEField_DAIFClr, PSTATEField_PAN, PSTATEField_UAO, PSTATEField_DIT, PSTATEField_SSBS, PSTATEField_TCO, PSTATEField_SVCRSM, PSTATEField_SVCRZA, PSTATEField_SVCRSMZA, PSTATEField_ALLINT, PSTATEField_PM, PSTATEField_SP }" class="document-topic">PSTATEField_PAN</a>
+        PSTATE.PAN = operand&lt;0&gt;;
+    when <a title="enumeration PSTATEField {PSTATEField_DAIFSet, PSTATEField_DAIFClr, PSTATEField_PAN, PSTATEField_UAO, PSTATEField_DIT, PSTATEField_SSBS, PSTATEField_TCO, PSTATEField_SVCRSM, PSTATEField_SVCRZA, PSTATEField_SVCRSMZA, PSTATEField_ALLINT, PSTATEField_PM, PSTATEField_SP }" class="document-topic">PSTATEField_UAO</a>
+        PSTATE.UAO = operand&lt;0&gt;;
+    when <a title="enumeration PSTATEField {PSTATEField_DAIFSet, PSTATEField_DAIFClr, PSTATEField_PAN, PSTATEField_UAO, PSTATEField_DIT, PSTATEField_SSBS, PSTATEField_TCO, PSTATEField_SVCRSM, PSTATEField_SVCRZA, PSTATEField_SVCRSMZA, PSTATEField_ALLINT, PSTATEField_PM, PSTATEField_SP }" class="document-topic">PSTATEField_DIT</a>
+        PSTATE.DIT = operand&lt;0&gt;;
+    when <a title="enumeration PSTATEField {PSTATEField_DAIFSet, PSTATEField_DAIFClr, PSTATEField_PAN, PSTATEField_UAO, PSTATEField_DIT, PSTATEField_SSBS, PSTATEField_TCO, PSTATEField_SVCRSM, PSTATEField_SVCRZA, PSTATEField_SVCRSMZA, PSTATEField_ALLINT, PSTATEField_PM, PSTATEField_SP }" class="document-topic">PSTATEField_TCO</a>
+        PSTATE.TCO = operand&lt;0&gt;;
+    when <a title="enumeration PSTATEField {PSTATEField_DAIFSet, PSTATEField_DAIFClr, PSTATEField_PAN, PSTATEField_UAO, PSTATEField_DIT, PSTATEField_SSBS, PSTATEField_TCO, PSTATEField_SVCRSM, PSTATEField_SVCRZA, PSTATEField_SVCRSMZA, PSTATEField_ALLINT, PSTATEField_PM, PSTATEField_SP }" class="document-topic">PSTATEField_ALLINT</a>
+        if (PSTATE.EL == <a title="constant bits(2) EL1 = '01'" class="document-topic">EL1</a> &amp;&amp; <a title="function: boolean IsHCRXEL2Enabled()" class="document-topic">IsHCRXEL2Enabled</a>() &amp;&amp;
+            HCRX_EL2.TALLINT == '1' &amp;&amp; operand&lt;0&gt; == '1') then
+            <a title="function: AArch64.SystemAccessTrap(bits(2) target_el, integer ec)" class="document-topic">AArch64.SystemAccessTrap</a>(<a title="constant bits(2) EL2 = '10'" class="document-topic">EL2</a>, 0x18);
+        PSTATE.ALLINT = operand&lt;0&gt;;
+    when <a title="enumeration PSTATEField {PSTATEField_DAIFSet, PSTATEField_DAIFClr, PSTATEField_PAN, PSTATEField_UAO, PSTATEField_DIT, PSTATEField_SSBS, PSTATEField_TCO, PSTATEField_SVCRSM, PSTATEField_SVCRZA, PSTATEField_SVCRSMZA, PSTATEField_ALLINT, PSTATEField_PM, PSTATEField_SP }" class="document-topic">PSTATEField_SVCRSM</a>
+        <a title="function: CheckSMEAccess()" class="document-topic">CheckSMEAccess</a>();
+        <a title="function: SetPSTATE_SM(bit value)" class="document-topic">SetPSTATE_SM</a>(operand&lt;0&gt;);
+    when <a title="enumeration PSTATEField {PSTATEField_DAIFSet, PSTATEField_DAIFClr, PSTATEField_PAN, PSTATEField_UAO, PSTATEField_DIT, PSTATEField_SSBS, PSTATEField_TCO, PSTATEField_SVCRSM, PSTATEField_SVCRZA, PSTATEField_SVCRSMZA, PSTATEField_ALLINT, PSTATEField_PM, PSTATEField_SP }" class="document-topic">PSTATEField_SVCRZA</a>
+        <a title="function: CheckSMEAccess()" class="document-topic">CheckSMEAccess</a>();
+        <a title="function: SetPSTATE_ZA(bit value)" class="document-topic">SetPSTATE_ZA</a>(operand&lt;0&gt;);
+    when <a title="enumeration PSTATEField {PSTATEField_DAIFSet, PSTATEField_DAIFClr, PSTATEField_PAN, PSTATEField_UAO, PSTATEField_DIT, PSTATEField_SSBS, PSTATEField_TCO, PSTATEField_SVCRSM, PSTATEField_SVCRZA, PSTATEField_SVCRSMZA, PSTATEField_ALLINT, PSTATEField_PM, PSTATEField_SP }" class="document-topic">PSTATEField_SVCRSMZA</a>
+        <a title="function: CheckSMEAccess()" class="document-topic">CheckSMEAccess</a>();
+        <a title="function: SetPSTATE_SM(bit value)" class="document-topic">SetPSTATE_SM</a>(operand&lt;0&gt;);
+        <a title="function: SetPSTATE_ZA(bit value)" class="document-topic">SetPSTATE_ZA</a>(operand&lt;0&gt;);
+    when <a title="enumeration PSTATEField {PSTATEField_DAIFSet, PSTATEField_DAIFClr, PSTATEField_PAN, PSTATEField_UAO, PSTATEField_DIT, PSTATEField_SSBS, PSTATEField_TCO, PSTATEField_SVCRSM, PSTATEField_SVCRZA, PSTATEField_SVCRSMZA, PSTATEField_ALLINT, PSTATEField_PM, PSTATEField_SP }" class="document-topic">PSTATEField_PM</a>
+        PSTATE.PM = operand&lt;0&gt;;</pre> 
+  </div>  
+ </body>
+</html>

@@ -1,0 +1,200 @@
+<html>
+ <head>  <link rel="stylesheet" href="../def-style.css"></head> 
+ <body> 
+  <h2>PEXT (predicate)</h2> 
+  <p>Set predicate from predicate-as-counter</p> 
+  <p>Expands the source predicate-as-counter into a four-predicate wide mask and copies one quarter of it into the destination predicate register.</p> 
+  <h3><a id="iclass_sve2"></a>SVE2<span><br></br>(FEAT_SVE2p1) </span></h3> 
+  <p></p> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td colspan="2">size</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td colspan="2">imm2</td> 
+      <td colspan="3">PNn</td> 
+      <td>1</td> 
+      <td colspan="4">Pd</td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4></h4> 
+   <a id="pext_pn_rr_"></a> 
+   <p>PEXT <a title="Destination scalable predicate register (field &quot;Pd&quot;)" class="document-topic">&lt;Pd&gt;</a>.<a title="Size specifier (field &quot;size&quot;) [B,D,H,S]" class="document-topic">&lt;T&gt;</a>, <a title="First source scalable predicate register PN8-PN15 (field &quot;PNn&quot;)" class="document-topic">&lt;PNn&gt;</a>[<a title="Element index [0-3] (field &quot;imm2&quot;)" class="document-topic">&lt;imm&gt;</a>]</p> 
+  </div> 
+  <pre>if !<a title="function: boolean HaveSME2()" class="document-topic">HaveSME2</a>() &amp;&amp; !<a title="function: boolean HaveSVE2p1()" class="document-topic">HaveSVE2p1</a>() then UNDEFINED;
+constant integer esize = 8 &lt;&lt; <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(size);
+integer n = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>('1':PNn);
+integer d = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Pd);
+integer part = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(imm2);</pre> 
+  <div></div> 
+  <h3>Assembler Symbols</h3> 
+  <div> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Pd&gt;</td> 
+      <td><a id="sa_pd"></a> <p>Is the name of the destination scalable predicate register, encoded in the "Pd" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;T&gt;</td> 
+      <td><a id="sa_t"></a> <p>Is the size specifier, encoded in <q>size</q>: </p> 
+       <table> 
+        <thead> 
+         <tr> 
+          <th>size</th> 
+          <th>&lt;T&gt;</th> 
+         </tr> 
+        </thead> 
+        <tbody> 
+         <tr> 
+          <td>00</td> 
+          <td>B</td> 
+         </tr> 
+         <tr> 
+          <td>01</td> 
+          <td>H</td> 
+         </tr> 
+         <tr> 
+          <td>10</td> 
+          <td>S</td> 
+         </tr> 
+         <tr> 
+          <td>11</td> 
+          <td>D</td> 
+         </tr> 
+        </tbody> 
+       </table> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;PNn&gt;</td> 
+      <td><a id="sa_pnn"></a> <p>Is the name of the first source scalable predicate register PN8-PN15, with predicate-as-counter encoding, encoded in the "PNn" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;imm&gt;</td> 
+      <td><a id="sa_imm"></a> <p>Is the element index, in the range 0 to 3, encoded in the "imm2" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div></div> 
+  <div> 
+   <a id="execute"></a> 
+   <h3>Operation</h3> 
+   <pre>if <a title="function: boolean HaveSVE2p1()" class="document-topic">HaveSVE2p1</a>() then <a title="function: CheckSVEEnabled()" class="document-topic">CheckSVEEnabled</a>(); else <a title="function: CheckStreamingSVEEnabled()" class="document-topic">CheckStreamingSVEEnabled</a>();
+constant integer VL = <a title="accessor: integer CurrentVL" class="document-topic">CurrentVL</a>;
+constant integer PL = VL DIV 8;
+constant integer elements = VL DIV esize;
+bits(PL) pred = <a title="accessor: bits(width) P[integer n, integer width]" class="document-topic">P</a>[n, PL];
+bits(PL*4) mask = <a title="function: bits(width) CounterToPredicate(bits(16) pred, integer width)" class="document-topic">CounterToPredicate</a>(pred&lt;15:0&gt;, PL*4);
+bits(PL) result;
+constant integer psize = esize DIV 8;
+
+for e = 0 to elements-1
+    bit pbit = <a title="function: bit PredicateElement(bits(N) pred, integer e, integer esize)" class="document-topic">PredicateElement</a>(mask, part * elements + e, esize);
+    <a title="accessor: Elem[bits(N) &amp;vector, integer e, integer size] = bits(size) value" class="document-topic">Elem</a>[result, e, psize] = <a title="function: bits(N) ZeroExtend(bits(M) x, integer N)" class="document-topic">ZeroExtend</a>(pbit, psize);
+
+<a title="accessor: P[integer n, integer width] = bits(width) value" class="document-topic">P</a>[d, PL] = result;</pre> 
+  </div> 
+  <h3>Operational information</h3> 
+  <p>If PSTATE.DIT is 1:</p> 
+  <ul> 
+   <li>The execution time of this instruction is independent of: 
+    <ul> 
+     <li>The values of the data supplied in any of its registers.</li> 
+     <li>The values of the NZCV flags.</li> 
+    </ul></li> 
+   <li>The response of this instruction to asynchronous exceptions does not vary based on: 
+    <ul> 
+     <li>The values of the data supplied in any of its registers.</li> 
+     <li>The values of the NZCV flags.</li> 
+    </ul></li> 
+  </ul>  
+ </body>
+</html>

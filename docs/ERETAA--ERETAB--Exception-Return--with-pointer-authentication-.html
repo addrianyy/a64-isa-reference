@@ -1,0 +1,139 @@
+<html>
+ <head>  <link rel="stylesheet" href="../def-style.css"></head> 
+ <body> 
+  <h2>ERETAA, ERETAB</h2> 
+  <p>Exception Return, with pointer authentication. This instruction authenticates the address in ELR, using SP as the modifier and the specified key, the PE restores <em>PSTATE</em> from the SPSR for the current Exception level, and branches to the authenticated address.</p> 
+  <p>Key A is used for <span>ERETAA</span>. Key B is used for <span>ERETAB</span>.</p> 
+  <p>If the authentication passes, the PE continues execution at the target of the branch. For information on behavior if the authentication fails, see <em>Faulting on pointer authentication</em>.</p> 
+  <p>The authenticated address is not written back to ELR.</p> 
+  <p>The PE checks the SPSR for the current Exception level for an illegal return event. See <em>Illegal return events from AArch64 state</em>.</p> 
+  <p><span>ERETAA</span> and <span>ERETAB</span> are <small>undefined</small> at EL0.</p> 
+  <h3><a id="iclass_general"></a>Integer<span><br></br>(FEAT_PAuth) </span></h3> 
+  <p></p> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>M</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+     </tr> 
+     <tr> 
+      <td colspan="7"></td> 
+      <td></td> 
+      <td colspan="3"></td> 
+      <td colspan="5"></td> 
+      <td colspan="4"></td> 
+      <td>A</td> 
+      <td></td> 
+      <td colspan="5">Rn</td> 
+      <td colspan="5">op4</td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4>ERETAA<span> (M == 0)</span></h4> 
+   <a id="ERETAA_64E_branch_reg"></a> 
+   <p>ERETAA</p> 
+  </div> 
+  <div> 
+   <h4>ERETAB<span> (M == 1)</span></h4> 
+   <a id="ERETAB_64E_branch_reg"></a> 
+   <p>ERETAB</p> 
+  </div> 
+  <pre>if PSTATE.EL == <a title="constant bits(2) EL0 = '00'" class="document-topic">EL0</a> then UNDEFINED;
+boolean pac = (A == '1');
+boolean use_key_a = (M == '0');
+
+if !pac &amp;&amp; op4 != '00000' then
+    UNDEFINED;
+elsif pac &amp;&amp; (!<a title="function: boolean HavePACExt()" class="document-topic">HavePACExt</a>() || op4 != '11111') then
+    UNDEFINED;
+
+if Rn != '11111' then 
+    UNDEFINED;</pre> 
+  <div></div> 
+  <div> 
+   <a id="execute"></a> 
+   <h3>Operation</h3> 
+   <pre><a title="function: AArch64.CheckForERetTrap(boolean eret_with_pac, boolean pac_uses_key_a)" class="document-topic">AArch64.CheckForERetTrap</a>(pac, use_key_a);
+bits(64) target = <a title="accessor: bits(64) ELR[]" class="document-topic">ELR</a>[];
+bits(64) modifier = <a title="accessor: bits(64) SP[]" class="document-topic">SP</a>[];
+boolean auth_then_branch = TRUE;
+
+if pac then
+    if use_key_a then
+        target = <a title="function: bits(64) AuthIA(bits(64) x, bits(64) y, boolean is_combined)" class="document-topic">AuthIA</a>(target, modifier, auth_then_branch);
+    else
+        target = <a title="function: bits(64) AuthIB(bits(64) x, bits(64) y, boolean is_combined)" class="document-topic">AuthIB</a>(target, modifier, auth_then_branch);
+
+<a title="function: AArch64.ExceptionReturn(bits(64) new_pc_in, bits(64) spsr)" class="document-topic">AArch64.ExceptionReturn</a>(target, <a title="accessor: bits(N) SPSR[]" class="document-topic">SPSR</a>[]);</pre> 
+  </div>  
+ </body>
+</html>

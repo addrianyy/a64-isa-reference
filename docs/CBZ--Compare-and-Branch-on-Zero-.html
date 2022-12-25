@@ -1,0 +1,134 @@
+<html>
+ <head>  <link rel="stylesheet" href="../def-style.css"></head> 
+ <body> 
+  <h2>CBZ</h2> 
+  <p>Compare and Branch on Zero compares the value in a register with zero, and conditionally branches to a label at a PC-relative offset if the comparison is equal. It provides a hint that this is not a subroutine call or return. This instruction does not affect condition flags.</p> 
+  <p></p> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>sf</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td colspan="19">imm19</td> 
+      <td colspan="5">Rt</td> 
+     </tr> 
+     <tr> 
+      <td></td> 
+      <td colspan="6"></td> 
+      <td>op</td> 
+      <td colspan="19"></td> 
+      <td colspan="5"></td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4>32-bit<span> (sf == 0)</span></h4> 
+   <a id="CBZ_32_compbranch"></a> 
+   <p>CBZ <a title="32-bit general-purpose register to be tested (field &quot;Rt&quot;)" class="document-topic">&lt;Wt&gt;</a>, <a title="Label to be conditionally branched to (field imm19)" class="document-topic">&lt;label&gt;</a></p> 
+  </div> 
+  <div> 
+   <h4>64-bit<span> (sf == 1)</span></h4> 
+   <a id="CBZ_64_compbranch"></a> 
+   <p>CBZ <a title="64-bit general-purpose register to be tested (field &quot;Rt&quot;)" class="document-topic">&lt;Xt&gt;</a>, <a title="Label to be conditionally branched to (field imm19)" class="document-topic">&lt;label&gt;</a></p> 
+  </div> 
+  <pre>integer t = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Rt);
+integer datasize = if sf == '1' then 64 else 32;
+boolean iszero = (op == '0');
+bits(64) offset = <a title="function: bits(N) SignExtend(bits(M) x, integer N)" class="document-topic">SignExtend</a>(imm19:'00', 64);</pre> 
+  <div></div> 
+  <h3>Assembler Symbols</h3> 
+  <div> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Wt&gt;</td> 
+      <td><a id="sa_wt"></a> <p>Is the 32-bit name of the general-purpose register to be tested, encoded in the "Rt" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Xt&gt;</td> 
+      <td><a id="sa_xt"></a> <p>Is the 64-bit name of the general-purpose register to be tested, encoded in the "Rt" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;label&gt;</td> 
+      <td><a id="sa_label"></a> <p>Is the program label to be conditionally branched to. Its offset from the address of this instruction, in the range +/-1MB, is encoded as "imm19" times 4.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div></div> 
+  <div> 
+   <a id="execute"></a> 
+   <h3>Operation</h3> 
+   <pre>bits(datasize) operand1 = <a title="accessor: bits(width) X[integer n, integer width]" class="document-topic">X</a>[t, datasize];
+boolean branch_conditional = TRUE;
+if <a title="function: boolean IsZero(bits(N) x)" class="document-topic">IsZero</a>(operand1) == iszero then
+    <a title="function: BranchTo(bits(N) target, BranchType branch_type, boolean branch_conditional)" class="document-topic">BranchTo</a>(<a title="accessor: bits(64) PC[]" class="document-topic">PC</a>[] + offset, <a title="enumeration BranchType { BranchType_DIRCALL, BranchType_INDCALL, BranchType_ERET, BranchType_DBGEXIT, BranchType_RET, BranchType_DIR, BranchType_INDIR, BranchType_EXCEPTION, BranchType_TMFAIL, BranchType_RESET, BranchType_UNKNOWN}" class="document-topic">BranchType_DIR</a>, branch_conditional);
+else
+    <a title="function: BranchNotTaken(BranchType branchtype, boolean branch_conditional)" class="document-topic">BranchNotTaken</a>(<a title="enumeration BranchType { BranchType_DIRCALL, BranchType_INDCALL, BranchType_ERET, BranchType_DBGEXIT, BranchType_RET, BranchType_DIR, BranchType_INDIR, BranchType_EXCEPTION, BranchType_TMFAIL, BranchType_RESET, BranchType_UNKNOWN}" class="document-topic">BranchType_DIR</a>, branch_conditional);</pre> 
+  </div>  
+ </body>
+</html>

@@ -1,0 +1,290 @@
+<html>
+ <head>  <link rel="stylesheet" href="../def-style.css"></head> 
+ <body> 
+  <h2>ADDVA</h2> 
+  <p>Add vertically vector elements to ZA tile</p> 
+  <p>Add each element of the source vector to the corresponding active element of each vertical slice of a ZA tile. The tile elements are predicated by a pair of governing predicates. An element of a vertical slice is considered active if its corresponding element in the first governing predicate is TRUE and the element corresponding to its vertical slice number in the second governing predicate is TRUE. Inactive elements in the destination tile remain unmodified.</p> 
+  <p>ID_AA64SMFR0_EL1.I16I64 indicates whether the 64-bit integer variant is implemented.</p> 
+  <p> It has encodings from 2 classes: <a class="document-topic">32-bit</a> and <a class="document-topic">64-bit</a> </p> 
+  <h3><a id="iclass_per_word"></a>32-bit<span><br></br>(FEAT_SME) </span></h3> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td colspan="3">Pm</td> 
+      <td colspan="3">Pn</td> 
+      <td colspan="5">Zn</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td colspan="2">ZAda</td> 
+     </tr> 
+     <tr> 
+      <td colspan="2"></td> 
+      <td colspan="7"></td> 
+      <td></td> 
+      <td colspan="2"></td> 
+      <td colspan="3"></td> 
+      <td>V</td> 
+      <td colspan="3"></td> 
+      <td colspan="3"></td> 
+      <td colspan="5"></td> 
+      <td></td> 
+      <td></td> 
+      <td></td> 
+      <td colspan="2"></td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4></h4> 
+   <a id="addva_za_pp_z_32"></a> 
+   <p>ADDVA <a title="ZA tile ZA0-ZA3 (field &quot;ZAda&quot;)" class="document-topic">&lt;ZAda&gt;</a>.S, <a title="First governing scalable predicate register P0-P7 (field &quot;Pn&quot;)" class="document-topic">&lt;Pn&gt;</a>/M, <a title="Second governing scalable predicate register P0-P7 (field &quot;Pm&quot;)" class="document-topic">&lt;Pm&gt;</a>/M, <a title="Source scalable vector register (field &quot;Zn&quot;)" class="document-topic">&lt;Zn&gt;</a>.S</p> 
+  </div> 
+  <pre>if !<a title="function: boolean HaveSME()" class="document-topic">HaveSME</a>() then UNDEFINED;
+constant integer esize = 32;
+integer a = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Pn);
+integer b = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Pm);
+integer n = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Zn);
+integer da = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(ZAda);</pre> 
+  <h3><a id="iclass_per_doubleword"></a>64-bit<span><br></br>(FEAT_SME_I16I64) </span></h3> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td colspan="3">Pm</td> 
+      <td colspan="3">Pn</td> 
+      <td colspan="5">Zn</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td colspan="3">ZAda</td> 
+     </tr> 
+     <tr> 
+      <td colspan="2"></td> 
+      <td colspan="7"></td> 
+      <td></td> 
+      <td colspan="5"></td> 
+      <td>V</td> 
+      <td colspan="3"></td> 
+      <td colspan="3"></td> 
+      <td colspan="5"></td> 
+      <td></td> 
+      <td></td> 
+      <td colspan="3"></td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4></h4> 
+   <a id="addva_za_pp_z_64"></a> 
+   <p>ADDVA <a title="ZA tile ZA0-ZA7 (field &quot;ZAda&quot;)" class="document-topic">&lt;ZAda&gt;</a>.D, <a title="First governing scalable predicate register P0-P7 (field &quot;Pn&quot;)" class="document-topic">&lt;Pn&gt;</a>/M, <a title="Second governing scalable predicate register P0-P7 (field &quot;Pm&quot;)" class="document-topic">&lt;Pm&gt;</a>/M, <a title="Source scalable vector register (field &quot;Zn&quot;)" class="document-topic">&lt;Zn&gt;</a>.D</p> 
+  </div> 
+  <pre>if !<a title="function: boolean HaveSMEI16I64()" class="document-topic">HaveSMEI16I64</a>() then UNDEFINED;
+constant integer esize = 64;
+integer a = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Pn);
+integer b = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Pm);
+integer n = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Zn);
+integer da = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(ZAda);</pre> 
+  <div></div> 
+  <h3>Assembler Symbols</h3> 
+  <div> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;ZAda&gt;</td> 
+      <td><a id="sa_zada"></a> <p>For the 32-bit variant: is the name of the ZA tile ZA0-ZA3, encoded in the "ZAda" field.</p> </td> 
+     </tr> 
+     <tr> 
+      <td></td> 
+      <td><a id="sa_zada_1"></a> <p>For the 64-bit variant: is the name of the ZA tile ZA0-ZA7, encoded in the "ZAda" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Pn&gt;</td> 
+      <td><a id="sa_pn"></a> <p>Is the name of the first governing scalable predicate register P0-P7, encoded in the "Pn" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Pm&gt;</td> 
+      <td><a id="sa_pm"></a> <p>Is the name of the second governing scalable predicate register P0-P7, encoded in the "Pm" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Zn&gt;</td> 
+      <td><a id="sa_zn"></a> <p>Is the name of the source scalable vector register, encoded in the "Zn" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div></div> 
+  <div> 
+   <a id="execute"></a> 
+   <h3>Operation</h3> 
+   <pre><a title="function: CheckStreamingSVEAndZAEnabled()" class="document-topic">CheckStreamingSVEAndZAEnabled</a>();
+constant integer VL = <a title="accessor: integer CurrentVL" class="document-topic">CurrentVL</a>;
+constant integer PL = VL DIV 8;
+constant integer dim = VL DIV esize;
+bits(PL) mask1 = <a title="accessor: bits(width) P[integer n, integer width]" class="document-topic">P</a>[a, PL];
+bits(PL) mask2 = <a title="accessor: bits(width) P[integer n, integer width]" class="document-topic">P</a>[b, PL];
+bits(VL) operand_src = <a title="accessor: bits(width) Z[integer n, integer width]" class="document-topic">Z</a>[n, VL];
+bits(dim*dim*esize) operand_acc = <a title="accessor: bits(width) ZAtile[integer tile, integer esize, integer width]" class="document-topic">ZAtile</a>[da, esize, dim*dim*esize];
+bits(dim*dim*esize) result;
+
+for row = 0 to dim-1
+    bits(esize) element = <a title="accessor: bits(size) Elem[bits(N) vector, integer e, integer size]" class="document-topic">Elem</a>[operand_src, row, esize];
+    for col = 0 to dim-1
+        bits(esize) res = <a title="accessor: bits(size) Elem[bits(N) vector, integer e, integer size]" class="document-topic">Elem</a>[operand_acc, row*dim+col, esize];
+        if (<a title="function: boolean ActivePredicateElement(bits(N) pred, integer e, integer esize)" class="document-topic">ActivePredicateElement</a>(mask1, row, esize) &amp;&amp;
+              <a title="function: boolean ActivePredicateElement(bits(N) pred, integer e, integer esize)" class="document-topic">ActivePredicateElement</a>(mask2, col, esize)) then
+            res = res + element;
+        <a title="accessor: Elem[bits(N) &amp;vector, integer e, integer size] = bits(size) value" class="document-topic">Elem</a>[result, row*dim+col, esize] = res;
+
+<a title="accessor: ZAtile[integer tile, integer esize, integer width] = bits(width) value" class="document-topic">ZAtile</a>[da, esize, dim*dim*esize] = result;</pre> 
+  </div> 
+  <h3>Operational information</h3> 
+  <p>If PSTATE.DIT is 1:</p> 
+  <ul> 
+   <li>The execution time of this instruction is independent of: 
+    <ul> 
+     <li>The values of the data supplied in any of its operand registers when its governing predicate registers contain the same value for each execution.</li> 
+     <li>The values of the NZCV flags.</li> 
+    </ul></li> 
+   <li>The response of this instruction to asynchronous exceptions does not vary based on: 
+    <ul> 
+     <li>The values of the data supplied in any of its operand registers when its governing predicate registers contain the same value for each execution.</li> 
+     <li>The values of the NZCV flags.</li> 
+    </ul></li> 
+  </ul>  
+ </body>
+</html>

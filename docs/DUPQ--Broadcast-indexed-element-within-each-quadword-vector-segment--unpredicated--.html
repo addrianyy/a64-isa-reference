@@ -1,0 +1,208 @@
+<html>
+ <head>  <link rel="stylesheet" href="../def-style.css"></head> 
+ <body> 
+  <h2>DUPQ</h2> 
+  <p>Broadcast indexed element within each quadword vector segment (unpredicated)</p> 
+  <p>Unconditionally broadcast the indexed element within each 128-bit source vector segment to all elements of the corresponding destination vector segment. This instruction is unpredicated.</p> 
+  <p>The immediate element index is in the range of 0 to 15 (bytes), 7 (halfwords), 3 (words) or 1 (doublewords).</p> 
+  <h3><a id="iclass_sve2"></a>SVE2<span><br></br>(FEAT_SVE2p1) </span></h3> 
+  <p></p> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>i1</td> 
+      <td colspan="4">tsz</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td colspan="5">Zn</td> 
+      <td colspan="5">Zd</td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4></h4> 
+   <a id="dupq_z_zi_"></a> 
+   <p>DUPQ <a title="Destination scalable vector register (field &quot;Zd&quot;)" class="document-topic">&lt;Zd&gt;</a>.<a title="Size specifier (field &quot;tsz&quot;) [B,D,H,S]" class="document-topic">&lt;T&gt;</a>, <a title="Source scalable vector register (field &quot;Zn&quot;)" class="document-topic">&lt;Zn&gt;</a>.<a title="Size specifier (field &quot;tsz&quot;) [B,D,H,S]" class="document-topic">&lt;T&gt;</a>[<a title="Immediate index [0-one less than the number of elements in 128 bits] (field &quot;i1:tsz&quot;)" class="document-topic">&lt;imm&gt;</a>]</p> 
+  </div> 
+  <pre>if !<a title="function: boolean HaveSVE2p1()" class="document-topic">HaveSVE2p1</a>() &amp;&amp; !<a title="function: boolean HaveSME2p1()" class="document-topic">HaveSME2p1</a>() then UNDEFINED;
+bits(5) imm = i1:tsz;
+integer esize;
+integer index;
+case tsz of
+    when '0000' UNDEFINED;
+    when '1000' esize = 64;  index = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(imm&lt;4:4&gt;);
+    when 'x100' esize = 32;  index = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(imm&lt;4:3&gt;);
+    when 'xx10' esize = 16;  index = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(imm&lt;4:2&gt;);
+    when 'xxx1' esize = 8;   index = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(imm&lt;4:1&gt;);
+integer n = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Zn);
+integer d = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Zd);</pre> 
+  <div></div> 
+  <h3>Assembler Symbols</h3> 
+  <div> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Zd&gt;</td> 
+      <td><a id="sa_zd"></a> <p>Is the name of the destination scalable vector register, encoded in the "Zd" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;T&gt;</td> 
+      <td><a id="sa_t"></a> <p>Is the size specifier, encoded in <q>tsz</q>: </p> 
+       <table> 
+        <thead> 
+         <tr> 
+          <th>tsz</th> 
+          <th>&lt;T&gt;</th> 
+         </tr> 
+        </thead> 
+        <tbody> 
+         <tr> 
+          <td>0000</td> 
+          <td>RESERVED</td> 
+         </tr> 
+         <tr> 
+          <td>xxx1</td> 
+          <td>B</td> 
+         </tr> 
+         <tr> 
+          <td>xx10</td> 
+          <td>H</td> 
+         </tr> 
+         <tr> 
+          <td>x100</td> 
+          <td>S</td> 
+         </tr> 
+         <tr> 
+          <td>1000</td> 
+          <td>D</td> 
+         </tr> 
+        </tbody> 
+       </table> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Zn&gt;</td> 
+      <td><a id="sa_zn"></a> <p>Is the name of the source scalable vector register, encoded in the "Zn" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;imm&gt;</td> 
+      <td><a id="sa_imm"></a> <p>Is the immediate index, in the range 0 to one less than the number of elements in 128 bits, encoded in "i1:tsz".</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div></div> 
+  <div> 
+   <a id="execute"></a> 
+   <h3>Operation</h3> 
+   <pre><a title="function: CheckSVEEnabled()" class="document-topic">CheckSVEEnabled</a>();
+constant integer VL = <a title="accessor: integer CurrentVL" class="document-topic">CurrentVL</a>;
+constant integer PL = VL DIV 8;
+constant integer segments = VL DIV 128;
+constant integer elements = 128 DIV esize;
+bits(VL) operand = <a title="accessor: bits(width) Z[integer n, integer width]" class="document-topic">Z</a>[n, VL];
+bits(VL) result;
+bits(esize) element;
+
+for s = 0 to segments-1
+    element = <a title="accessor: bits(size) Elem[bits(N) vector, integer e, integer size]" class="document-topic">Elem</a>[operand, s * elements + index, esize];
+    <a title="accessor: Elem[bits(N) &amp;vector, integer e, integer size] = bits(size) value" class="document-topic">Elem</a>[result, s, 128] = <a title="function: bits(M*N) Replicate(bits(M) x, integer N)" class="document-topic">Replicate</a>(element, 128 DIV esize);
+
+<a title="accessor: Z[integer n, integer width] = bits(width) value" class="document-topic">Z</a>[d, VL] = result;</pre> 
+  </div> 
+  <h3>Operational information</h3> 
+  <p>If PSTATE.DIT is 1:</p> 
+  <ul> 
+   <li>The execution time of this instruction is independent of: 
+    <ul> 
+     <li>The values of the data supplied in any of its registers.</li> 
+     <li>The values of the NZCV flags.</li> 
+    </ul></li> 
+   <li>The response of this instruction to asynchronous exceptions does not vary based on: 
+    <ul> 
+     <li>The values of the data supplied in any of its registers.</li> 
+     <li>The values of the NZCV flags.</li> 
+    </ul></li> 
+  </ul>  
+ </body>
+</html>

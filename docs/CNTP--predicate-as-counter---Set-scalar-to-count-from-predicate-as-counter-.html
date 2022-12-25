@@ -1,0 +1,216 @@
+<html>
+ <head>  <link rel="stylesheet" href="../def-style.css"></head> 
+ <body> 
+  <h2>CNTP (predicate as counter)</h2> 
+  <p>Set scalar to count from predicate-as-counter</p> 
+  <p>Counts the number of true elements in the source predicate and places the scalar result in the destination general-purpose register.</p> 
+  <h3><a id="iclass_sve2"></a>SVE2<span><br></br>(FEAT_SVE2p1) </span></h3> 
+  <p></p> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td colspan="2">size</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>vl</td> 
+      <td>1</td> 
+      <td colspan="4">PNn</td> 
+      <td colspan="5">Rd</td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4></h4> 
+   <a id="cntp_r_pn_"></a> 
+   <p>CNTP <a title="64-bit destination general-purpose register (field &quot;Rd&quot;)" class="document-topic">&lt;Xd&gt;</a>, <a title="First source scalable predicate register (field &quot;PNn&quot;)" class="document-topic">&lt;PNn&gt;</a>.<a title="Size specifier (field &quot;size&quot;) [B,D,H,S]" class="document-topic">&lt;T&gt;</a>, <a title="Vl specifier (field &quot;vl&quot;) [VLx2,VLx4]" class="document-topic">&lt;vl&gt;</a></p> 
+  </div> 
+  <pre>if !<a title="function: boolean HaveSME2()" class="document-topic">HaveSME2</a>() &amp;&amp; !<a title="function: boolean HaveSVE2p1()" class="document-topic">HaveSVE2p1</a>() then UNDEFINED;
+constant integer esize = 8 &lt;&lt; <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(size);
+integer n = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(PNn);
+integer d = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Rd);
+constant integer width = 2 &lt;&lt; <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(vl);</pre> 
+  <div></div> 
+  <h3>Assembler Symbols</h3> 
+  <div> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Xd&gt;</td> 
+      <td><a id="sa_xd"></a> <p>Is the 64-bit name of the destination general-purpose register, encoded in the "Rd" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;PNn&gt;</td> 
+      <td><a id="sa_pnn"></a> <p>Is the name of the first source scalable predicate register, with predicate-as-counter encoding, encoded in the "PNn" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;T&gt;</td> 
+      <td><a id="sa_t"></a> <p>Is the size specifier, encoded in <q>size</q>: </p> 
+       <table> 
+        <thead> 
+         <tr> 
+          <th>size</th> 
+          <th>&lt;T&gt;</th> 
+         </tr> 
+        </thead> 
+        <tbody> 
+         <tr> 
+          <td>00</td> 
+          <td>B</td> 
+         </tr> 
+         <tr> 
+          <td>01</td> 
+          <td>H</td> 
+         </tr> 
+         <tr> 
+          <td>10</td> 
+          <td>S</td> 
+         </tr> 
+         <tr> 
+          <td>11</td> 
+          <td>D</td> 
+         </tr> 
+        </tbody> 
+       </table> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;vl&gt;</td> 
+      <td><a id="sa_vl"></a> <p>Is the vl specifier, encoded in <q>vl</q>: </p> 
+       <table> 
+        <thead> 
+         <tr> 
+          <th>vl</th> 
+          <th>&lt;vl&gt;</th> 
+         </tr> 
+        </thead> 
+        <tbody> 
+         <tr> 
+          <td>0</td> 
+          <td>VLx2</td> 
+         </tr> 
+         <tr> 
+          <td>1</td> 
+          <td>VLx4</td> 
+         </tr> 
+        </tbody> 
+       </table> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div></div> 
+  <div> 
+   <a id="execute"></a> 
+   <h3>Operation</h3> 
+   <pre>if <a title="function: boolean HaveSVE2p1()" class="document-topic">HaveSVE2p1</a>() then <a title="function: CheckSVEEnabled()" class="document-topic">CheckSVEEnabled</a>(); else <a title="function: CheckStreamingSVEEnabled()" class="document-topic">CheckStreamingSVEEnabled</a>();
+constant integer VL = <a title="accessor: integer CurrentVL" class="document-topic">CurrentVL</a>;
+constant integer PL = VL DIV 8;
+constant integer elements = VL DIV esize;
+bits(PL) pred = <a title="accessor: bits(width) P[integer n, integer width]" class="document-topic">P</a>[n, PL];
+bits(PL*4) mask = <a title="function: bits(width) CounterToPredicate(bits(16) pred, integer width)" class="document-topic">CounterToPredicate</a>(pred&lt;15:0&gt;, PL*4);
+bits(64) sum = <a title="function: bits(N) Zeros(integer N)" class="document-topic">Zeros</a>(64);
+constant integer limit = elements * width;
+
+for e = 0 to limit-1
+    if <a title="function: boolean ActivePredicateElement(bits(N) pred, integer e, integer esize)" class="document-topic">ActivePredicateElement</a>(mask, e, esize) then
+        sum = sum + 1;
+<a title="accessor: X[integer n, integer width] = bits(width) value" class="document-topic">X</a>[d, 64] = sum;</pre> 
+  </div> 
+  <h3>Operational information</h3> 
+  <p>If PSTATE.DIT is 1:</p> 
+  <ul> 
+   <li>The execution time of this instruction is independent of: 
+    <ul> 
+     <li>The values of the data supplied in any of its registers.</li> 
+     <li>The values of the NZCV flags.</li> 
+    </ul></li> 
+   <li>The response of this instruction to asynchronous exceptions does not vary based on: 
+    <ul> 
+     <li>The values of the data supplied in any of its registers.</li> 
+     <li>The values of the NZCV flags.</li> 
+    </ul></li> 
+  </ul>  
+ </body>
+</html>

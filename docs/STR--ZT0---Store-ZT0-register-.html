@@ -1,0 +1,138 @@
+<html>
+ <head>  <link rel="stylesheet" href="../def-style.css"></head> 
+ <body> 
+  <h2>STR (ZT0)</h2> 
+  <p>Store ZT0 register</p> 
+  <p>Store the 64-byte ZT0 register to the memory address provided in the 64-bit scalar base register. This instruction is unpredicated.</p> 
+  <p>The store is performed as contiguous byte accesses, with no endian conversion and no guarantee of single-copy atomicity larger than a byte. However, if alignment is checked, then the base register must be aligned to 16 bytes.</p> 
+  <p>This instruction does not require the PE to be in Streaming SVE mode, and it is expected that this instruction will not experience a significant slowdown due to contention with other PEs that are executing in Streaming SVE mode.</p> 
+  <h3><a id="iclass_mortlach2"></a>SME2<span><br></br>(FEAT_SME2) </span></h3> 
+  <p></p> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td colspan="5">Rn</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4></h4> 
+   <a id="str_zt_br_"></a> 
+   <p>STR ZT0, [<a title="64-bit general-purpose base register or SP (field &quot;Rn&quot;)" class="document-topic">&lt;Xn|SP&gt;</a>]</p> 
+  </div> 
+  <pre>if !<a title="function: boolean HaveSME2()" class="document-topic">HaveSME2</a>() then UNDEFINED;
+integer n = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Rn);</pre> 
+  <div></div> 
+  <h3>Assembler Symbols</h3> 
+  <div> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Xn|SP&gt;</td> 
+      <td><a id="sa_xn_sp"></a> <p>Is the 64-bit name of the general-purpose base register or stack pointer, encoded in the "Rn" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div></div> 
+  <div> 
+   <a id="execute"></a> 
+   <h3>Operation</h3> 
+   <pre><a title="function: CheckSMEEnabled()" class="document-topic">CheckSMEEnabled</a>();
+<a title="function: CheckSMEZT0Enabled()" class="document-topic">CheckSMEZT0Enabled</a>();
+constant integer elements = 512 DIV 8;
+bits(64) base;
+bits(512) table = <a title="accessor: bits(width) ZT0[integer width]" class="document-topic">ZT0</a>[512];
+boolean contiguous = TRUE;
+boolean nontemporal = FALSE;
+boolean tagchecked = n != 31;
+<a title="type AccessDescriptor is ( AccessType acctype, bits(2) el, SecurityState ss, boolean acqsc, boolean acqpc, boolean relsc, boolean limitedordered, boolean exclusive, boolean atomicop, MemAtomicOp modop, boolean nontemporal, boolean read, boolean write, CacheOp cacheop, CacheOpScope opscope, CacheType cachetype, boolean pan, boolean transactional, boolean nonfault, boolean firstfault, boolean first, boolean contiguous, boolean streamingsve, boolean ls64, boolean mops, boolean rcw, boolean rcws, boolean toplevel, VARange varange, boolean a32lsmd, boolean tagchecked, boolean tagaccess, MPAMinfo mpam )" class="document-topic">AccessDescriptor</a> accdesc = <a title="function: AccessDescriptor CreateAccDescSME(MemOp memop, boolean nontemporal, boolean contiguous, boolean tagchecked)" class="document-topic">CreateAccDescSME</a>(<a title="enumeration MemOp {MemOp_LOAD, MemOp_STORE, MemOp_PREFETCH}" class="document-topic">MemOp_STORE</a>, nontemporal, contiguous, tagchecked);
+
+if <a title="function: boolean HaveTME()" class="document-topic">HaveTME</a>() &amp;&amp; TSTATE.depth &gt; 0 then
+    <a title="function: FailTransaction(TMFailure cause, boolean retry)" class="document-topic">FailTransaction</a>(<a title="enumeration TMFailure { TMFailure_CNCL, TMFailure_DBG, TMFailure_ERR, TMFailure_NEST, TMFailure_SIZE, TMFailure_MEM, TMFailure_TRIVIAL, TMFailure_IMP }" class="document-topic">TMFailure_ERR</a>, FALSE);
+
+if n == 31 then
+    <a title="function: CheckSPAlignment()" class="document-topic">CheckSPAlignment</a>();
+    base = <a title="accessor: bits(64) SP[]" class="document-topic">SP</a>[];
+else
+    base = <a title="accessor: bits(width) X[integer n, integer width]" class="document-topic">X</a>[n, 64];
+
+boolean aligned = <a title="function: boolean IsAligned(integer x, integer y)" class="document-topic">IsAligned</a>(base, 16);
+
+if !aligned &amp;&amp; <a title="function: boolean AlignmentEnforced()" class="document-topic">AlignmentEnforced</a>() then
+    <a title="function: AArch64.Abort(bits(64) vaddress, FaultRecord fault)" class="document-topic">AArch64.Abort</a>(base, <a title="function: FaultRecord AlignmentFault(AccessDescriptor accdesc)" class="document-topic">AlignmentFault</a>(accdesc));
+
+for e = 0 to elements-1
+    <a title="accessor: AArch64.MemSingle[bits(64) address, integer size, AccessDescriptor accdesc, boolean aligned] = bits(size*8) value" class="document-topic">AArch64.MemSingle</a>[base + e, 1, accdesc, aligned] = <a title="accessor: bits(size) Elem[bits(N) vector, integer e, integer size]" class="document-topic">Elem</a>[table, e, 8];</pre> 
+  </div>  
+ </body>
+</html>

@@ -1,0 +1,317 @@
+<html>
+ <head>  <link rel="stylesheet" href="../def-style.css"></head> 
+ <body> 
+  <h2>LDRSW (register)</h2> 
+  <p>Load Register Signed Word (register) calculates an address from a base register value and an offset register value, loads a word from memory, sign-extends it to form a 64-bit value, and writes it to a register. The offset register value can be shifted left by 0 or 2 bits. For information about memory accesses, see <em>Load/Store addressing modes</em>.</p> 
+  <p></p> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td colspan="5">Rm</td> 
+      <td colspan="3">option</td> 
+      <td>S</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td colspan="5">Rn</td> 
+      <td colspan="5">Rt</td> 
+     </tr> 
+     <tr> 
+      <td colspan="2">size</td> 
+      <td colspan="3"></td> 
+      <td></td> 
+      <td colspan="2"></td> 
+      <td colspan="2">opc</td> 
+      <td></td> 
+      <td colspan="5"></td> 
+      <td colspan="3"></td> 
+      <td></td> 
+      <td colspan="2"></td> 
+      <td colspan="5"></td> 
+      <td colspan="5"></td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4></h4> 
+   <a id="LDRSW_64_ldst_regoff"></a> 
+   <p>LDRSW <a title="64-bit general-purpose register to be transferred (field &quot;Rt&quot;)" class="document-topic">&lt;Xt&gt;</a>, [<a title="64-bit general-purpose base register or SP (field &quot;Rn&quot;)" class="document-topic">&lt;Xn|SP&gt;</a>, (<a title="When {field{option<0>}} is set to {binarynumber{0}} (field &quot;Rm&quot;)" class="document-topic">&lt;Wm&gt;</a>|<a title="When {field{option<0>}} is set to {binarynumber{1}} (field &quot;Rm&quot;)" class="document-topic">&lt;Xm&gt;</a>){, <a title="Index extend/shift specifier, default LSL, and which must be omitted for LSL option when <amount> is omitted (field &quot;option&quot;) [LSL,SXTW,SXTX,UXTW]" class="document-topic">&lt;extend&gt;</a> {<a title="Index shift amount, optional when <extend> is not LSL (field &quot;S&quot;) [#0,#2]" class="document-topic">&lt;amount&gt;</a>}}]</p> 
+  </div> 
+  <pre>boolean wback = FALSE;
+boolean postindex = FALSE;
+integer scale = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(size);
+if option&lt;1&gt; == '0' then UNDEFINED;             // sub-word index
+<a title="enumeration ExtendType  {ExtendType_SXTB, ExtendType_SXTH, ExtendType_SXTW, ExtendType_SXTX, ExtendType_UXTB, ExtendType_UXTH, ExtendType_UXTW, ExtendType_UXTX}" class="document-topic">ExtendType</a> extend_type = <a title="function: ExtendType DecodeRegExtend(bits(3) op)" class="document-topic">DecodeRegExtend</a>(option);
+integer shift = if S == '1' then scale else 0;</pre> 
+  <div></div> 
+  <h3>Assembler Symbols</h3> 
+  <div> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Xt&gt;</td> 
+      <td><a id="sa_xt"></a> <p>Is the 64-bit name of the general-purpose register to be transferred, encoded in the "Rt" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Xn|SP&gt;</td> 
+      <td><a id="sa_xn_sp"></a> <p>Is the 64-bit name of the general-purpose base register or stack pointer, encoded in the "Rn" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Wm&gt;</td> 
+      <td><a id="sa_wm"></a> <p>When option&lt;0&gt; is set to 0, is the 32-bit name of the general-purpose index register, encoded in the "Rm" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Xm&gt;</td> 
+      <td><a id="sa_xm"></a> <p>When option&lt;0&gt; is set to 1, is the 64-bit name of the general-purpose index register, encoded in the "Rm" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;extend&gt;</td> 
+      <td><a id="sa_extend"></a> <p>Is the index extend/shift specifier, defaulting to LSL, and which must be omitted for the LSL option when &lt;amount&gt; is omitted. encoded in <q>option</q>: </p> 
+       <table> 
+        <thead> 
+         <tr> 
+          <th>option</th> 
+          <th>&lt;extend&gt;</th> 
+         </tr> 
+        </thead> 
+        <tbody> 
+         <tr> 
+          <td>010</td> 
+          <td>UXTW</td> 
+         </tr> 
+         <tr> 
+          <td>011</td> 
+          <td>LSL</td> 
+         </tr> 
+         <tr> 
+          <td>110</td> 
+          <td>SXTW</td> 
+         </tr> 
+         <tr> 
+          <td>111</td> 
+          <td>SXTX</td> 
+         </tr> 
+        </tbody> 
+       </table> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;amount&gt;</td> 
+      <td><a id="sa_amount"></a> <p>Is the index shift amount, optional only when &lt;extend&gt; is not LSL. Where it is permitted to be optional, it defaults to #0. It is encoded in <q>S</q>: </p> 
+       <table> 
+        <thead> 
+         <tr> 
+          <th>S</th> 
+          <th>&lt;amount&gt;</th> 
+         </tr> 
+        </thead> 
+        <tbody> 
+         <tr> 
+          <td>0</td> 
+          <td>#0</td> 
+         </tr> 
+         <tr> 
+          <td>1</td> 
+          <td>#2</td> 
+         </tr> 
+        </tbody> 
+       </table> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div></div> 
+  <div> 
+   <a id="postdecode"></a> 
+   <h3>Shared Decode</h3> 
+   <pre>integer n = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Rn);
+integer t = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Rt);
+integer m = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Rm);
+boolean nontemporal = FALSE;
+boolean privileged = PSTATE.EL != <a title="constant bits(2) EL0 = '00'" class="document-topic">EL0</a>;
+<a title="enumeration MemOp {MemOp_LOAD, MemOp_STORE, MemOp_PREFETCH}" class="document-topic">MemOp</a> memop;
+boolean signed;
+integer regsize;
+
+if opc&lt;1&gt; == '0' then
+    // store or zero-extending load
+    memop = if opc&lt;0&gt; == '1' then <a title="enumeration MemOp {MemOp_LOAD, MemOp_STORE, MemOp_PREFETCH}" class="document-topic">MemOp_LOAD</a> else <a title="enumeration MemOp {MemOp_LOAD, MemOp_STORE, MemOp_PREFETCH}" class="document-topic">MemOp_STORE</a>;
+    regsize = if size == '11' then 64 else 32;
+    signed = FALSE;
+else
+    if size == '11' then
+        memop = <a title="enumeration MemOp {MemOp_LOAD, MemOp_STORE, MemOp_PREFETCH}" class="document-topic">MemOp_PREFETCH</a>;
+        if opc&lt;0&gt; == '1' then UNDEFINED;
+    else
+        // sign-extending load
+        memop = <a title="enumeration MemOp {MemOp_LOAD, MemOp_STORE, MemOp_PREFETCH}" class="document-topic">MemOp_LOAD</a>;
+        if size == '10' &amp;&amp; opc&lt;0&gt; == '1' then UNDEFINED;
+        regsize = if opc&lt;0&gt; == '1' then 32 else 64;
+        signed = TRUE;
+
+integer datasize = 8 &lt;&lt; scale;
+boolean tagchecked = memop != <a title="enumeration MemOp {MemOp_LOAD, MemOp_STORE, MemOp_PREFETCH}" class="document-topic">MemOp_PREFETCH</a>;
+
+boolean wb_unknown = FALSE;
+boolean rt_unknown = FALSE;
+<a title="enumeration Constraint    { Constraint_NONE,   Constraint_UNKNOWN,  Constraint_UNDEF, Constraint_UNDEFEL0, Constraint_NOP, Constraint_TRUE, Constraint_FALSE, Constraint_DISABLED, Constraint_UNCOND, Constraint_COND, Constraint_ADDITIONAL_DECODE,   Constraint_WBSUPPRESS, Constraint_FAULT, Constraint_LIMITED_ATOMICITY,   Constraint_NVNV1_00, Constraint_NVNV1_01, Constraint_NVNV1_11, Constraint_EL1TIMESTAMP, Constraint_EL2TIMESTAMP, Constraint_OSH, Constraint_ISH, Constraint_NSH,  Constraint_NC, Constraint_WT, Constraint_WB,   Constraint_FORCE, Constraint_FORCENOSLCHECK,  Constraint_MAPTOALLOCATED,  Constraint_PMSCR_PCT_VIRT }" class="document-topic">Constraint</a> c;
+
+if memop == <a title="enumeration MemOp {MemOp_LOAD, MemOp_STORE, MemOp_PREFETCH}" class="document-topic">MemOp_LOAD</a> &amp;&amp; wback &amp;&amp; n == t &amp;&amp; n != 31 then
+    c = <a title="function: Constraint ConstrainUnpredictable(Unpredictable which)" class="document-topic">ConstrainUnpredictable</a>(<a title="enumeration Unpredictable {  Unpredictable_VMSR,  Unpredictable_WBOVERLAPLD,  Unpredictable_WBOVERLAPST,  Unpredictable_LDPOVERLAP,  Unpredictable_BASEOVERLAP,  Unpredictable_DATAOVERLAP,  Unpredictable_DEVPAGE2,  Unpredictable_INSTRDEVICE,  Unpredictable_RESCPACR,  Unpredictable_RESMAIR,  Unpredictable_S1CTAGGED,  Unpredictable_S2RESMEMATTR,  Unpredictable_RESTEXCB,  Unpredictable_RESPRRR,  Unpredictable_RESDACR,  Unpredictable_RESVTCRS,  Unpredictable_RESTnSZ,  Unpredictable_RESTCF,  Unpredictable_DEVICETAGSTORE,  Unpredictable_OORTnSZ,  Unpredictable_LARGEIPA,  Unpredictable_ESRCONDPASS,  Unpredictable_ILZEROIT,  Unpredictable_ILZEROT,  Unpredictable_BPVECTORCATCHPRI,  Unpredictable_VCMATCHHALF,   Unpredictable_VCMATCHDAPA,  Unpredictable_WPMASKANDBAS,  Unpredictable_WPBASCONTIGUOUS,  Unpredictable_RESWPMASK,  Unpredictable_WPMASKEDBITS,  Unpredictable_RESBPWPCTRL,  Unpredictable_BPNOTIMPL,  Unpredictable_RESBPTYPE,  Unpredictable_BPNOTCTXCMP,  Unpredictable_BPMATCHHALF,  Unpredictable_BPMISMATCHHALF,  Unpredictable_RESTARTALIGNPC,  Unpredictable_RESTARTZEROUPPERPC,  Unpredictable_ZEROUPPER,   Unpredictable_ERETZEROUPPERPC,   Unpredictable_A32FORCEALIGNPC,  Unpredictable_SMD,  Unpredictable_NONFAULT,  Unpredictable_SVEZEROUPPER,  Unpredictable_SVELDNFDATA,  Unpredictable_SVELDNFZERO,  Unpredictable_CHECKSPNONEACTIVE,  Unpredictable_SMEZEROUPPER,  Unpredictable_NVNV1,  Unpredictable_Shareability,  Unpredictable_AFUPDATE,  Unpredictable_DBUPDATE,  Unpredictable_IESBinDebug,  Unpredictable_BADPMSFCR,  Unpredictable_ZEROBTYPE,  Unpredictable_EL2TIMESTAMP, Unpredictable_EL1TIMESTAMP,  Unpredictable_RESERVEDNSxB,  Unpredictable_WFxTDEBUG,  Unpredictable_LS64UNSUPPORTED,   Unpredictable_MISALIGNEDATOMIC,  Unpredictable_CLEARERRITEZERO,   Unpredictable_ALUEXCEPTIONRETURN,  Unpredictable_IGNORETRAPINDEBUG,  Unpredictable_DBGxVR_RESS,  Unpredictable_PMUEVENTCOUNTER,  Unpredictable_PMSCR_PCT,   Unpredictable_CounterReservedForEL2,  Unpredictable_BRBFILTRATE,   Unpredictable_MOPSOVERLAP31,  Unpredictable_STOREONLYTAGCHECKEDCAS,  Unpredictable_RESTC }" class="document-topic">Unpredictable_WBOVERLAPLD</a>);
+    assert c IN {<a title="enumeration Constraint    { Constraint_NONE,   Constraint_UNKNOWN,  Constraint_UNDEF, Constraint_UNDEFEL0, Constraint_NOP, Constraint_TRUE, Constraint_FALSE, Constraint_DISABLED, Constraint_UNCOND, Constraint_COND, Constraint_ADDITIONAL_DECODE,   Constraint_WBSUPPRESS, Constraint_FAULT, Constraint_LIMITED_ATOMICITY,   Constraint_NVNV1_00, Constraint_NVNV1_01, Constraint_NVNV1_11, Constraint_EL1TIMESTAMP, Constraint_EL2TIMESTAMP, Constraint_OSH, Constraint_ISH, Constraint_NSH,  Constraint_NC, Constraint_WT, Constraint_WB,   Constraint_FORCE, Constraint_FORCENOSLCHECK,  Constraint_MAPTOALLOCATED,  Constraint_PMSCR_PCT_VIRT }" class="document-topic">Constraint_WBSUPPRESS</a>, <a title="enumeration Constraint    { Constraint_NONE,   Constraint_UNKNOWN,  Constraint_UNDEF, Constraint_UNDEFEL0, Constraint_NOP, Constraint_TRUE, Constraint_FALSE, Constraint_DISABLED, Constraint_UNCOND, Constraint_COND, Constraint_ADDITIONAL_DECODE,   Constraint_WBSUPPRESS, Constraint_FAULT, Constraint_LIMITED_ATOMICITY,   Constraint_NVNV1_00, Constraint_NVNV1_01, Constraint_NVNV1_11, Constraint_EL1TIMESTAMP, Constraint_EL2TIMESTAMP, Constraint_OSH, Constraint_ISH, Constraint_NSH,  Constraint_NC, Constraint_WT, Constraint_WB,   Constraint_FORCE, Constraint_FORCENOSLCHECK,  Constraint_MAPTOALLOCATED,  Constraint_PMSCR_PCT_VIRT }" class="document-topic">Constraint_UNKNOWN</a>, <a title="enumeration Constraint    { Constraint_NONE,   Constraint_UNKNOWN,  Constraint_UNDEF, Constraint_UNDEFEL0, Constraint_NOP, Constraint_TRUE, Constraint_FALSE, Constraint_DISABLED, Constraint_UNCOND, Constraint_COND, Constraint_ADDITIONAL_DECODE,   Constraint_WBSUPPRESS, Constraint_FAULT, Constraint_LIMITED_ATOMICITY,   Constraint_NVNV1_00, Constraint_NVNV1_01, Constraint_NVNV1_11, Constraint_EL1TIMESTAMP, Constraint_EL2TIMESTAMP, Constraint_OSH, Constraint_ISH, Constraint_NSH,  Constraint_NC, Constraint_WT, Constraint_WB,   Constraint_FORCE, Constraint_FORCENOSLCHECK,  Constraint_MAPTOALLOCATED,  Constraint_PMSCR_PCT_VIRT }" class="document-topic">Constraint_UNDEF</a>, <a title="enumeration Constraint    { Constraint_NONE,   Constraint_UNKNOWN,  Constraint_UNDEF, Constraint_UNDEFEL0, Constraint_NOP, Constraint_TRUE, Constraint_FALSE, Constraint_DISABLED, Constraint_UNCOND, Constraint_COND, Constraint_ADDITIONAL_DECODE,   Constraint_WBSUPPRESS, Constraint_FAULT, Constraint_LIMITED_ATOMICITY,   Constraint_NVNV1_00, Constraint_NVNV1_01, Constraint_NVNV1_11, Constraint_EL1TIMESTAMP, Constraint_EL2TIMESTAMP, Constraint_OSH, Constraint_ISH, Constraint_NSH,  Constraint_NC, Constraint_WT, Constraint_WB,   Constraint_FORCE, Constraint_FORCENOSLCHECK,  Constraint_MAPTOALLOCATED,  Constraint_PMSCR_PCT_VIRT }" class="document-topic">Constraint_NOP</a>};
+    case c of
+        when <a title="enumeration Constraint    { Constraint_NONE,   Constraint_UNKNOWN,  Constraint_UNDEF, Constraint_UNDEFEL0, Constraint_NOP, Constraint_TRUE, Constraint_FALSE, Constraint_DISABLED, Constraint_UNCOND, Constraint_COND, Constraint_ADDITIONAL_DECODE,   Constraint_WBSUPPRESS, Constraint_FAULT, Constraint_LIMITED_ATOMICITY,   Constraint_NVNV1_00, Constraint_NVNV1_01, Constraint_NVNV1_11, Constraint_EL1TIMESTAMP, Constraint_EL2TIMESTAMP, Constraint_OSH, Constraint_ISH, Constraint_NSH,  Constraint_NC, Constraint_WT, Constraint_WB,   Constraint_FORCE, Constraint_FORCENOSLCHECK,  Constraint_MAPTOALLOCATED,  Constraint_PMSCR_PCT_VIRT }" class="document-topic">Constraint_WBSUPPRESS</a> wback = FALSE;       // writeback is suppressed
+        when <a title="enumeration Constraint    { Constraint_NONE,   Constraint_UNKNOWN,  Constraint_UNDEF, Constraint_UNDEFEL0, Constraint_NOP, Constraint_TRUE, Constraint_FALSE, Constraint_DISABLED, Constraint_UNCOND, Constraint_COND, Constraint_ADDITIONAL_DECODE,   Constraint_WBSUPPRESS, Constraint_FAULT, Constraint_LIMITED_ATOMICITY,   Constraint_NVNV1_00, Constraint_NVNV1_01, Constraint_NVNV1_11, Constraint_EL1TIMESTAMP, Constraint_EL2TIMESTAMP, Constraint_OSH, Constraint_ISH, Constraint_NSH,  Constraint_NC, Constraint_WT, Constraint_WB,   Constraint_FORCE, Constraint_FORCENOSLCHECK,  Constraint_MAPTOALLOCATED,  Constraint_PMSCR_PCT_VIRT }" class="document-topic">Constraint_UNKNOWN</a>    wb_unknown = TRUE;   // writeback is UNKNOWN
+        when <a title="enumeration Constraint    { Constraint_NONE,   Constraint_UNKNOWN,  Constraint_UNDEF, Constraint_UNDEFEL0, Constraint_NOP, Constraint_TRUE, Constraint_FALSE, Constraint_DISABLED, Constraint_UNCOND, Constraint_COND, Constraint_ADDITIONAL_DECODE,   Constraint_WBSUPPRESS, Constraint_FAULT, Constraint_LIMITED_ATOMICITY,   Constraint_NVNV1_00, Constraint_NVNV1_01, Constraint_NVNV1_11, Constraint_EL1TIMESTAMP, Constraint_EL2TIMESTAMP, Constraint_OSH, Constraint_ISH, Constraint_NSH,  Constraint_NC, Constraint_WT, Constraint_WB,   Constraint_FORCE, Constraint_FORCENOSLCHECK,  Constraint_MAPTOALLOCATED,  Constraint_PMSCR_PCT_VIRT }" class="document-topic">Constraint_UNDEF</a>      UNDEFINED;
+        when <a title="enumeration Constraint    { Constraint_NONE,   Constraint_UNKNOWN,  Constraint_UNDEF, Constraint_UNDEFEL0, Constraint_NOP, Constraint_TRUE, Constraint_FALSE, Constraint_DISABLED, Constraint_UNCOND, Constraint_COND, Constraint_ADDITIONAL_DECODE,   Constraint_WBSUPPRESS, Constraint_FAULT, Constraint_LIMITED_ATOMICITY,   Constraint_NVNV1_00, Constraint_NVNV1_01, Constraint_NVNV1_11, Constraint_EL1TIMESTAMP, Constraint_EL2TIMESTAMP, Constraint_OSH, Constraint_ISH, Constraint_NSH,  Constraint_NC, Constraint_WT, Constraint_WB,   Constraint_FORCE, Constraint_FORCENOSLCHECK,  Constraint_MAPTOALLOCATED,  Constraint_PMSCR_PCT_VIRT }" class="document-topic">Constraint_NOP</a>        <a title="function: EndOfInstruction()" class="document-topic">EndOfInstruction</a>();
+
+if memop == <a title="enumeration MemOp {MemOp_LOAD, MemOp_STORE, MemOp_PREFETCH}" class="document-topic">MemOp_STORE</a> &amp;&amp; wback &amp;&amp; n == t &amp;&amp; n != 31 then
+    c = <a title="function: Constraint ConstrainUnpredictable(Unpredictable which)" class="document-topic">ConstrainUnpredictable</a>(<a title="enumeration Unpredictable {  Unpredictable_VMSR,  Unpredictable_WBOVERLAPLD,  Unpredictable_WBOVERLAPST,  Unpredictable_LDPOVERLAP,  Unpredictable_BASEOVERLAP,  Unpredictable_DATAOVERLAP,  Unpredictable_DEVPAGE2,  Unpredictable_INSTRDEVICE,  Unpredictable_RESCPACR,  Unpredictable_RESMAIR,  Unpredictable_S1CTAGGED,  Unpredictable_S2RESMEMATTR,  Unpredictable_RESTEXCB,  Unpredictable_RESPRRR,  Unpredictable_RESDACR,  Unpredictable_RESVTCRS,  Unpredictable_RESTnSZ,  Unpredictable_RESTCF,  Unpredictable_DEVICETAGSTORE,  Unpredictable_OORTnSZ,  Unpredictable_LARGEIPA,  Unpredictable_ESRCONDPASS,  Unpredictable_ILZEROIT,  Unpredictable_ILZEROT,  Unpredictable_BPVECTORCATCHPRI,  Unpredictable_VCMATCHHALF,   Unpredictable_VCMATCHDAPA,  Unpredictable_WPMASKANDBAS,  Unpredictable_WPBASCONTIGUOUS,  Unpredictable_RESWPMASK,  Unpredictable_WPMASKEDBITS,  Unpredictable_RESBPWPCTRL,  Unpredictable_BPNOTIMPL,  Unpredictable_RESBPTYPE,  Unpredictable_BPNOTCTXCMP,  Unpredictable_BPMATCHHALF,  Unpredictable_BPMISMATCHHALF,  Unpredictable_RESTARTALIGNPC,  Unpredictable_RESTARTZEROUPPERPC,  Unpredictable_ZEROUPPER,   Unpredictable_ERETZEROUPPERPC,   Unpredictable_A32FORCEALIGNPC,  Unpredictable_SMD,  Unpredictable_NONFAULT,  Unpredictable_SVEZEROUPPER,  Unpredictable_SVELDNFDATA,  Unpredictable_SVELDNFZERO,  Unpredictable_CHECKSPNONEACTIVE,  Unpredictable_SMEZEROUPPER,  Unpredictable_NVNV1,  Unpredictable_Shareability,  Unpredictable_AFUPDATE,  Unpredictable_DBUPDATE,  Unpredictable_IESBinDebug,  Unpredictable_BADPMSFCR,  Unpredictable_ZEROBTYPE,  Unpredictable_EL2TIMESTAMP, Unpredictable_EL1TIMESTAMP,  Unpredictable_RESERVEDNSxB,  Unpredictable_WFxTDEBUG,  Unpredictable_LS64UNSUPPORTED,   Unpredictable_MISALIGNEDATOMIC,  Unpredictable_CLEARERRITEZERO,   Unpredictable_ALUEXCEPTIONRETURN,  Unpredictable_IGNORETRAPINDEBUG,  Unpredictable_DBGxVR_RESS,  Unpredictable_PMUEVENTCOUNTER,  Unpredictable_PMSCR_PCT,   Unpredictable_CounterReservedForEL2,  Unpredictable_BRBFILTRATE,   Unpredictable_MOPSOVERLAP31,  Unpredictable_STOREONLYTAGCHECKEDCAS,  Unpredictable_RESTC }" class="document-topic">Unpredictable_WBOVERLAPST</a>);
+    assert c IN {<a title="enumeration Constraint    { Constraint_NONE,   Constraint_UNKNOWN,  Constraint_UNDEF, Constraint_UNDEFEL0, Constraint_NOP, Constraint_TRUE, Constraint_FALSE, Constraint_DISABLED, Constraint_UNCOND, Constraint_COND, Constraint_ADDITIONAL_DECODE,   Constraint_WBSUPPRESS, Constraint_FAULT, Constraint_LIMITED_ATOMICITY,   Constraint_NVNV1_00, Constraint_NVNV1_01, Constraint_NVNV1_11, Constraint_EL1TIMESTAMP, Constraint_EL2TIMESTAMP, Constraint_OSH, Constraint_ISH, Constraint_NSH,  Constraint_NC, Constraint_WT, Constraint_WB,   Constraint_FORCE, Constraint_FORCENOSLCHECK,  Constraint_MAPTOALLOCATED,  Constraint_PMSCR_PCT_VIRT }" class="document-topic">Constraint_NONE</a>, <a title="enumeration Constraint    { Constraint_NONE,   Constraint_UNKNOWN,  Constraint_UNDEF, Constraint_UNDEFEL0, Constraint_NOP, Constraint_TRUE, Constraint_FALSE, Constraint_DISABLED, Constraint_UNCOND, Constraint_COND, Constraint_ADDITIONAL_DECODE,   Constraint_WBSUPPRESS, Constraint_FAULT, Constraint_LIMITED_ATOMICITY,   Constraint_NVNV1_00, Constraint_NVNV1_01, Constraint_NVNV1_11, Constraint_EL1TIMESTAMP, Constraint_EL2TIMESTAMP, Constraint_OSH, Constraint_ISH, Constraint_NSH,  Constraint_NC, Constraint_WT, Constraint_WB,   Constraint_FORCE, Constraint_FORCENOSLCHECK,  Constraint_MAPTOALLOCATED,  Constraint_PMSCR_PCT_VIRT }" class="document-topic">Constraint_UNKNOWN</a>, <a title="enumeration Constraint    { Constraint_NONE,   Constraint_UNKNOWN,  Constraint_UNDEF, Constraint_UNDEFEL0, Constraint_NOP, Constraint_TRUE, Constraint_FALSE, Constraint_DISABLED, Constraint_UNCOND, Constraint_COND, Constraint_ADDITIONAL_DECODE,   Constraint_WBSUPPRESS, Constraint_FAULT, Constraint_LIMITED_ATOMICITY,   Constraint_NVNV1_00, Constraint_NVNV1_01, Constraint_NVNV1_11, Constraint_EL1TIMESTAMP, Constraint_EL2TIMESTAMP, Constraint_OSH, Constraint_ISH, Constraint_NSH,  Constraint_NC, Constraint_WT, Constraint_WB,   Constraint_FORCE, Constraint_FORCENOSLCHECK,  Constraint_MAPTOALLOCATED,  Constraint_PMSCR_PCT_VIRT }" class="document-topic">Constraint_UNDEF</a>, <a title="enumeration Constraint    { Constraint_NONE,   Constraint_UNKNOWN,  Constraint_UNDEF, Constraint_UNDEFEL0, Constraint_NOP, Constraint_TRUE, Constraint_FALSE, Constraint_DISABLED, Constraint_UNCOND, Constraint_COND, Constraint_ADDITIONAL_DECODE,   Constraint_WBSUPPRESS, Constraint_FAULT, Constraint_LIMITED_ATOMICITY,   Constraint_NVNV1_00, Constraint_NVNV1_01, Constraint_NVNV1_11, Constraint_EL1TIMESTAMP, Constraint_EL2TIMESTAMP, Constraint_OSH, Constraint_ISH, Constraint_NSH,  Constraint_NC, Constraint_WT, Constraint_WB,   Constraint_FORCE, Constraint_FORCENOSLCHECK,  Constraint_MAPTOALLOCATED,  Constraint_PMSCR_PCT_VIRT }" class="document-topic">Constraint_NOP</a>};
+    case c of
+        when <a title="enumeration Constraint    { Constraint_NONE,   Constraint_UNKNOWN,  Constraint_UNDEF, Constraint_UNDEFEL0, Constraint_NOP, Constraint_TRUE, Constraint_FALSE, Constraint_DISABLED, Constraint_UNCOND, Constraint_COND, Constraint_ADDITIONAL_DECODE,   Constraint_WBSUPPRESS, Constraint_FAULT, Constraint_LIMITED_ATOMICITY,   Constraint_NVNV1_00, Constraint_NVNV1_01, Constraint_NVNV1_11, Constraint_EL1TIMESTAMP, Constraint_EL2TIMESTAMP, Constraint_OSH, Constraint_ISH, Constraint_NSH,  Constraint_NC, Constraint_WT, Constraint_WB,   Constraint_FORCE, Constraint_FORCENOSLCHECK,  Constraint_MAPTOALLOCATED,  Constraint_PMSCR_PCT_VIRT }" class="document-topic">Constraint_NONE</a>       rt_unknown = FALSE;  // value stored is original value
+        when <a title="enumeration Constraint    { Constraint_NONE,   Constraint_UNKNOWN,  Constraint_UNDEF, Constraint_UNDEFEL0, Constraint_NOP, Constraint_TRUE, Constraint_FALSE, Constraint_DISABLED, Constraint_UNCOND, Constraint_COND, Constraint_ADDITIONAL_DECODE,   Constraint_WBSUPPRESS, Constraint_FAULT, Constraint_LIMITED_ATOMICITY,   Constraint_NVNV1_00, Constraint_NVNV1_01, Constraint_NVNV1_11, Constraint_EL1TIMESTAMP, Constraint_EL2TIMESTAMP, Constraint_OSH, Constraint_ISH, Constraint_NSH,  Constraint_NC, Constraint_WT, Constraint_WB,   Constraint_FORCE, Constraint_FORCENOSLCHECK,  Constraint_MAPTOALLOCATED,  Constraint_PMSCR_PCT_VIRT }" class="document-topic">Constraint_UNKNOWN</a>    rt_unknown = TRUE;   // value stored is UNKNOWN
+        when <a title="enumeration Constraint    { Constraint_NONE,   Constraint_UNKNOWN,  Constraint_UNDEF, Constraint_UNDEFEL0, Constraint_NOP, Constraint_TRUE, Constraint_FALSE, Constraint_DISABLED, Constraint_UNCOND, Constraint_COND, Constraint_ADDITIONAL_DECODE,   Constraint_WBSUPPRESS, Constraint_FAULT, Constraint_LIMITED_ATOMICITY,   Constraint_NVNV1_00, Constraint_NVNV1_01, Constraint_NVNV1_11, Constraint_EL1TIMESTAMP, Constraint_EL2TIMESTAMP, Constraint_OSH, Constraint_ISH, Constraint_NSH,  Constraint_NC, Constraint_WT, Constraint_WB,   Constraint_FORCE, Constraint_FORCENOSLCHECK,  Constraint_MAPTOALLOCATED,  Constraint_PMSCR_PCT_VIRT }" class="document-topic">Constraint_UNDEF</a>      UNDEFINED;
+        when <a title="enumeration Constraint    { Constraint_NONE,   Constraint_UNKNOWN,  Constraint_UNDEF, Constraint_UNDEFEL0, Constraint_NOP, Constraint_TRUE, Constraint_FALSE, Constraint_DISABLED, Constraint_UNCOND, Constraint_COND, Constraint_ADDITIONAL_DECODE,   Constraint_WBSUPPRESS, Constraint_FAULT, Constraint_LIMITED_ATOMICITY,   Constraint_NVNV1_00, Constraint_NVNV1_01, Constraint_NVNV1_11, Constraint_EL1TIMESTAMP, Constraint_EL2TIMESTAMP, Constraint_OSH, Constraint_ISH, Constraint_NSH,  Constraint_NC, Constraint_WT, Constraint_WB,   Constraint_FORCE, Constraint_FORCENOSLCHECK,  Constraint_MAPTOALLOCATED,  Constraint_PMSCR_PCT_VIRT }" class="document-topic">Constraint_NOP</a>        <a title="function: EndOfInstruction()" class="document-topic">EndOfInstruction</a>();</pre> 
+  </div> 
+  <div> 
+   <a id="execute"></a> 
+   <h3>Operation</h3> 
+   <pre>bits(64) offset = <a title="function: bits(N) ExtendReg(integer reg, ExtendType exttype, integer shift, integer N)" class="document-topic">ExtendReg</a>(m, extend_type, shift, 64);
+bits(64) address;
+bits(datasize) data;
+
+<a title="type AccessDescriptor is ( AccessType acctype, bits(2) el, SecurityState ss, boolean acqsc, boolean acqpc, boolean relsc, boolean limitedordered, boolean exclusive, boolean atomicop, MemAtomicOp modop, boolean nontemporal, boolean read, boolean write, CacheOp cacheop, CacheOpScope opscope, CacheType cachetype, boolean pan, boolean transactional, boolean nonfault, boolean firstfault, boolean first, boolean contiguous, boolean streamingsve, boolean ls64, boolean mops, boolean rcw, boolean rcws, boolean toplevel, VARange varange, boolean a32lsmd, boolean tagchecked, boolean tagaccess, MPAMinfo mpam )" class="document-topic">AccessDescriptor</a> accdesc = <a title="function: AccessDescriptor CreateAccDescGPR(MemOp memop, boolean nontemporal, boolean privileged, boolean tagchecked)" class="document-topic">CreateAccDescGPR</a>(memop, nontemporal, privileged, tagchecked);
+
+if n == 31 then
+    if memop != <a title="enumeration MemOp {MemOp_LOAD, MemOp_STORE, MemOp_PREFETCH}" class="document-topic">MemOp_PREFETCH</a> then <a title="function: CheckSPAlignment()" class="document-topic">CheckSPAlignment</a>();
+    address = <a title="accessor: bits(64) SP[]" class="document-topic">SP</a>[];
+else
+    address = <a title="accessor: bits(width) X[integer n, integer width]" class="document-topic">X</a>[n, 64];
+
+if ! postindex then
+    address = address + offset;
+
+case memop of
+    when <a title="enumeration MemOp {MemOp_LOAD, MemOp_STORE, MemOp_PREFETCH}" class="document-topic">MemOp_STORE</a>
+        if rt_unknown then
+            data = bits(datasize) UNKNOWN;
+        else
+            data = <a title="accessor: bits(width) X[integer n, integer width]" class="document-topic">X</a>[t, datasize];
+        Mem[address, datasize DIV 8, accdesc] = data;
+
+    when <a title="enumeration MemOp {MemOp_LOAD, MemOp_STORE, MemOp_PREFETCH}" class="document-topic">MemOp_LOAD</a>
+        data = <a title="accessor: bits(size*8) Mem[bits(64) address, integer size, AccessDescriptor accdesc]" class="document-topic">Mem</a>[address, datasize DIV 8, accdesc];
+        if signed then
+            <a title="accessor: X[integer n, integer width] = bits(width) value" class="document-topic">X</a>[t, regsize] = <a title="function: bits(N) SignExtend(bits(M) x, integer N)" class="document-topic">SignExtend</a>(data, regsize);
+        else
+            <a title="accessor: X[integer n, integer width] = bits(width) value" class="document-topic">X</a>[t, regsize] = <a title="function: bits(N) ZeroExtend(bits(M) x, integer N)" class="document-topic">ZeroExtend</a>(data, regsize);
+
+    when <a title="enumeration MemOp {MemOp_LOAD, MemOp_STORE, MemOp_PREFETCH}" class="document-topic">MemOp_PREFETCH</a>
+        <a title="function: Prefetch(bits(64) address, bits(5) prfop)" class="document-topic">Prefetch</a>(address, t&lt;4:0&gt;);
+
+if wback then
+    if wb_unknown then
+        address = bits(64) UNKNOWN;
+    elsif postindex then
+        address = address + offset;
+    if n == 31 then
+        <a title="accessor: SP[] = bits(64) value" class="document-topic">SP</a>[] = address;
+    else
+        <a title="accessor: X[integer n, integer width] = bits(width) value" class="document-topic">X</a>[n, 64] = address;</pre> 
+  </div> 
+  <h3>Operational information</h3> 
+  <p>If PSTATE.DIT is 1, the timing of this instruction is insensitive to the value of the data being loaded or stored.</p>  
+ </body>
+</html>

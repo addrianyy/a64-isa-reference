@@ -1,0 +1,420 @@
+<html>
+ <head>  <link rel="stylesheet" href="../def-style.css"></head> 
+ <body> 
+  <h2>SMLSLL (multiple vectors)</h2> 
+  <p>Multi-vector signed integer multiply-subtract long long</p> 
+  <p>The instruction operates on two or four ZA quad-vector groups.</p> 
+  <p>This signed integer multiply-subtract long long instruction multiplies each signed 8-bit or 16-bit element in the two or four first source vectors with each signed 8-bit or 16-bit element in the one, two, or four second source vectors, widens each product to 32-bits or 64-bits and destructively subtracts these values from the corresponding 32-bit or 64-bit elements of the two or four ZA quad-vector groups. The lowest of the four consecutive vector numbers forming the quad-vector group within each half or each quarter of the ZA array are selected by the sum of the vector select register and immediate offset, modulo half or quarter the number of ZA array vectors.</p> 
+  <p>The <small>vector group</small> symbol, VGx2 or VGx4, indicates that the ZA operand consists of two or four ZA quad-vector groups respectively. The <small>vector group</small> symbol is preferred for disassembly, but optional in assembler source code.</p> 
+  <p>This instruction is unpredicated.</p> 
+  <p>ID_AA64SMFR0_EL1.I16I64 indicates whether the 16-bit integer variant is implemented.</p> 
+  <p> It has encodings from 2 classes: <a class="document-topic">Two ZA quad-vectors</a> and <a class="document-topic">Four ZA quad-vectors</a> </p> 
+  <h3><a id="iclass_sme_vgx2_quad"></a>Two ZA quad-vectors<span><br></br>(FEAT_SME2) </span></h3> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>sz</td> 
+      <td>1</td> 
+      <td colspan="4">Zm</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td colspan="2">Rv</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td colspan="4">Zn</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>o1</td> 
+     </tr> 
+     <tr> 
+      <td colspan="9"></td> 
+      <td></td> 
+      <td></td> 
+      <td colspan="4"></td> 
+      <td colspan="2"></td> 
+      <td colspan="2"></td> 
+      <td colspan="3"></td> 
+      <td colspan="4"></td> 
+      <td></td> 
+      <td>U</td> 
+      <td>S</td> 
+      <td></td> 
+      <td></td> 
+      <td></td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4></h4> 
+   <a id="smlsll_za_zzw_2x2"></a> 
+   <p>SMLSLL ZA.<a title="Size specifier (field &quot;sz&quot;) [D,S]" class="document-topic">&lt;T&gt;</a>[<a title="32-bit vector select register W8-W11 (field &quot;Rv&quot;)" class="document-topic">&lt;Wv&gt;</a>, <a title="Vector select offset, pointing to first of four consecutive vectors, encoded as &quot;o1&quot; field times 4 (field o1)" class="document-topic">&lt;offsf&gt;</a>:<a title="Vector select offset, pointing to last of four consecutive vectors, encoded as &quot;o1&quot; field times 4 plus 3 (field o1)" class="document-topic">&lt;offsl&gt;</a>{, VGx2}], { <a title="First scalable vector register of a multi-vector sequence (field Zn)" class="document-topic">&lt;Zn1&gt;</a>.<a title="Size specifier (field &quot;sz&quot;) [B,H]" class="document-topic">&lt;Tb&gt;</a>-<a title="Second scalable vector register of a multi-vector sequence (field Zn)" class="document-topic">&lt;Zn2&gt;</a>.<a title="Size specifier (field &quot;sz&quot;) [B,H]" class="document-topic">&lt;Tb&gt;</a> }, { <a title="First scalable vector register of a multi-vector sequence (field Zm)" class="document-topic">&lt;Zm1&gt;</a>.<a title="Size specifier (field &quot;sz&quot;) [B,H]" class="document-topic">&lt;Tb&gt;</a>-<a title="Second scalable vector register of a multi-vector sequence (field Zm)" class="document-topic">&lt;Zm2&gt;</a>.<a title="Size specifier (field &quot;sz&quot;) [B,H]" class="document-topic">&lt;Tb&gt;</a> }</p> 
+  </div> 
+  <pre>if !<a title="function: boolean HaveSME2()" class="document-topic">HaveSME2</a>() then UNDEFINED;
+if sz == '1' &amp;&amp; !<a title="function: boolean HaveSMEI16I64()" class="document-topic">HaveSMEI16I64</a>() then UNDEFINED;
+constant integer esize = 32 &lt;&lt; <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(sz);
+integer v = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>('010':Rv);
+integer n = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Zn:'0');
+integer m = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Zm:'0');
+integer offset = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(o1:'00');
+constant integer nreg = 2;</pre> 
+  <h3><a id="iclass_sme_vgx4_quad"></a>Four ZA quad-vectors<span><br></br>(FEAT_SME2) </span></h3> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>sz</td> 
+      <td>1</td> 
+      <td colspan="3">Zm</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td colspan="2">Rv</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td colspan="3">Zn</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>o1</td> 
+     </tr> 
+     <tr> 
+      <td colspan="9"></td> 
+      <td></td> 
+      <td></td> 
+      <td colspan="3"></td> 
+      <td colspan="3"></td> 
+      <td colspan="2"></td> 
+      <td colspan="3"></td> 
+      <td colspan="3"></td> 
+      <td colspan="2"></td> 
+      <td>U</td> 
+      <td>S</td> 
+      <td></td> 
+      <td></td> 
+      <td></td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4></h4> 
+   <a id="smlsll_za_zzw_4x4"></a> 
+   <p>SMLSLL ZA.<a title="Size specifier (field &quot;sz&quot;) [D,S]" class="document-topic">&lt;T&gt;</a>[<a title="32-bit vector select register W8-W11 (field &quot;Rv&quot;)" class="document-topic">&lt;Wv&gt;</a>, <a title="Vector select offset, pointing to first of four consecutive vectors, encoded as &quot;o1&quot; field times 4 (field o1)" class="document-topic">&lt;offsf&gt;</a>:<a title="Vector select offset, pointing to last of four consecutive vectors, encoded as &quot;o1&quot; field times 4 plus 3 (field o1)" class="document-topic">&lt;offsl&gt;</a>{, VGx4}], { <a title="First scalable vector register of a multi-vector sequence (field Zn)" class="document-topic">&lt;Zn1&gt;</a>.<a title="Size specifier (field &quot;sz&quot;) [B,H]" class="document-topic">&lt;Tb&gt;</a>-<a title="Fourth scalable vector register of a multi-vector sequence (field Zn)" class="document-topic">&lt;Zn4&gt;</a>.<a title="Size specifier (field &quot;sz&quot;) [B,H]" class="document-topic">&lt;Tb&gt;</a> }, { <a title="First scalable vector register of a multi-vector sequence (field Zm)" class="document-topic">&lt;Zm1&gt;</a>.<a title="Size specifier (field &quot;sz&quot;) [B,H]" class="document-topic">&lt;Tb&gt;</a>-<a title="Fourth scalable vector register of a multi-vector sequence (field Zm)" class="document-topic">&lt;Zm4&gt;</a>.<a title="Size specifier (field &quot;sz&quot;) [B,H]" class="document-topic">&lt;Tb&gt;</a> }</p> 
+  </div> 
+  <pre>if !<a title="function: boolean HaveSME2()" class="document-topic">HaveSME2</a>() then UNDEFINED;
+if sz == '1' &amp;&amp; !<a title="function: boolean HaveSMEI16I64()" class="document-topic">HaveSMEI16I64</a>() then UNDEFINED;
+constant integer esize = 32 &lt;&lt; <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(sz);
+integer v = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>('010':Rv);
+integer n = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Zn:'00');
+integer m = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Zm:'00');
+integer offset = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(o1:'00');
+constant integer nreg = 4;</pre> 
+  <div></div> 
+  <h3>Assembler Symbols</h3> 
+  <div> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;T&gt;</td> 
+      <td><a id="sa_t"></a> <p>Is the size specifier, encoded in <q>sz</q>: </p> 
+       <table> 
+        <thead> 
+         <tr> 
+          <th>sz</th> 
+          <th>&lt;T&gt;</th> 
+         </tr> 
+        </thead> 
+        <tbody> 
+         <tr> 
+          <td>0</td> 
+          <td>S</td> 
+         </tr> 
+         <tr> 
+          <td>1</td> 
+          <td>D</td> 
+         </tr> 
+        </tbody> 
+       </table> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Wv&gt;</td> 
+      <td><a id="sa_wv"></a> <p>Is the 32-bit name of the vector select register W8-W11, encoded in the "Rv" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;offsf&gt;</td> 
+      <td><a id="sa_offsf"></a> <p>Is the vector select offset, pointing to first of four consecutive vectors, encoded as "o1" field times 4.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;offsl&gt;</td> 
+      <td><a id="sa_offsl"></a> <p>Is the vector select offset, pointing to last of four consecutive vectors, encoded as "o1" field times 4 plus 3.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Zn1&gt;</td> 
+      <td><a id="sa_zn1"></a> <p>For the two ZA quad-vectors variant: is the name of the first scalable vector register of a multi-vector sequence, encoded as "Zn" times 2.</p> </td> 
+     </tr> 
+     <tr> 
+      <td></td> 
+      <td><a id="sa_zn1_1"></a> <p>For the four ZA quad-vectors variant: is the name of the first scalable vector register of a multi-vector sequence, encoded as "Zn" times 4.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Tb&gt;</td> 
+      <td><a id="sa_tb"></a> <p>Is the size specifier, encoded in <q>sz</q>: </p> 
+       <table> 
+        <thead> 
+         <tr> 
+          <th>sz</th> 
+          <th>&lt;Tb&gt;</th> 
+         </tr> 
+        </thead> 
+        <tbody> 
+         <tr> 
+          <td>0</td> 
+          <td>B</td> 
+         </tr> 
+         <tr> 
+          <td>1</td> 
+          <td>H</td> 
+         </tr> 
+        </tbody> 
+       </table> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Zn4&gt;</td> 
+      <td><a id="sa_zn4"></a> <p>Is the name of the fourth scalable vector register of a multi-vector sequence, encoded as "Zn" times 4 plus 3.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Zn2&gt;</td> 
+      <td><a id="sa_zn2"></a> <p>Is the name of the second scalable vector register of a multi-vector sequence, encoded as "Zn" times 2 plus 1.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Zm1&gt;</td> 
+      <td><a id="sa_zm1"></a> <p>For the two ZA quad-vectors variant: is the name of the first scalable vector register of a multi-vector sequence, encoded as "Zm" times 2.</p> </td> 
+     </tr> 
+     <tr> 
+      <td></td> 
+      <td><a id="sa_zm1_1"></a> <p>For the four ZA quad-vectors variant: is the name of the first scalable vector register of a multi-vector sequence, encoded as "Zm" times 4.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Zm4&gt;</td> 
+      <td><a id="sa_zm4"></a> <p>Is the name of the fourth scalable vector register of a multi-vector sequence, encoded as "Zm" times 4 plus 3.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Zm2&gt;</td> 
+      <td><a id="sa_zm2"></a> <p>Is the name of the second scalable vector register of a multi-vector sequence, encoded as "Zm" times 2 plus 1.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div></div> 
+  <div> 
+   <a id="execute"></a> 
+   <h3>Operation</h3> 
+   <pre><a title="function: CheckStreamingSVEAndZAEnabled()" class="document-topic">CheckStreamingSVEAndZAEnabled</a>();
+constant integer VL = <a title="accessor: integer CurrentVL" class="document-topic">CurrentVL</a>;
+constant integer elements = VL DIV esize;
+integer vectors = VL DIV 8;
+integer vstride = vectors DIV nreg;
+bits(32) vbase = <a title="accessor: bits(width) X[integer n, integer width]" class="document-topic">X</a>[v, 32];
+integer vec = (<a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(vbase) + offset) MOD vstride;
+bits(VL) result;
+vec = vec - (vec MOD 4);
+
+for r = 0 to nreg-1
+    bits(VL) operand1 = <a title="accessor: bits(width) Z[integer n, integer width]" class="document-topic">Z</a>[n+r, VL];
+    bits(VL) operand2 = <a title="accessor: bits(width) Z[integer n, integer width]" class="document-topic">Z</a>[m+r, VL];
+    for i = 0 to 3
+        bits(VL) operand3 = <a title="accessor: bits(width) ZAvector[integer index, integer width]" class="document-topic">ZAvector</a>[vec + i, VL];
+        for e = 0 to elements-1
+            integer element1 = <a title="function: integer SInt(bits(N) x)" class="document-topic">SInt</a>(<a title="accessor: bits(size) Elem[bits(N) vector, integer e, integer size]" class="document-topic">Elem</a>[operand1, 4 * e + i, esize DIV 4]);
+            integer element2 = <a title="function: integer SInt(bits(N) x)" class="document-topic">SInt</a>(<a title="accessor: bits(size) Elem[bits(N) vector, integer e, integer size]" class="document-topic">Elem</a>[operand2, 4 * e + i, esize DIV 4]);
+            bits(esize) product = (element1 * element2)&lt;esize-1:0&gt;;
+            <a title="accessor: Elem[bits(N) &amp;vector, integer e, integer size] = bits(size) value" class="document-topic">Elem</a>[result, e, esize] = <a title="accessor: bits(size) Elem[bits(N) vector, integer e, integer size]" class="document-topic">Elem</a>[operand3, e, esize] - product;
+        <a title="accessor: ZAvector[integer index, integer width] = bits(width) value" class="document-topic">ZAvector</a>[vec + i, VL] = result;
+    vec = vec + vstride;</pre> 
+  </div>  
+ </body>
+</html>

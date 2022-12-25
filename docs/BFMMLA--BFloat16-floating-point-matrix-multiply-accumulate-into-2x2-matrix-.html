@@ -1,0 +1,156 @@
+<html>
+ <head>  <link rel="stylesheet" href="../def-style.css"></head> 
+ <body> 
+  <h2>BFMMLA</h2> 
+  <p>BFloat16 floating-point matrix multiply-accumulate into 2x2 matrix.</p> 
+  <p>If FEAT_EBF16 is not implemented or <em>FPCR</em>.EBF is 0, this instruction:</p> 
+  <ul> 
+   <li>Performs two unfused sums-of-products within each two pairs of adjacent BFloat16 elements while multiplying the 2x4 matrix of BFloat16 values in the first source vector with the 4x2 matrix of BFloat16 values in the second source vector. The intermediate single-precision products are rounded before they are summed and the intermediate sum is rounded before accumulation into the 2x2 single-precision matrix in the destination vector. This is equivalent to accumulating two 2-way unfused dot products per destination element.</li> 
+   <li>Uses the non-IEEE 754 Round-to-Odd rounding mode, which forces bit 0 of an inexact result to 1, and rounds an overflow to an appropriately signed Infinity.</li> 
+   <li>Flushes denormalized inputs and results to zero, as if <em>FPCR</em>.{FZ, FIZ} is {1, 1}.</li> 
+   <li>Disables alternative floating point behaviors, as if <em>FPCR</em>.AH is 0.</li> 
+  </ul> 
+  <p>If FEAT_EBF16 is implemented and <em>FPCR</em>.EBF is 1, then this instruction:</p> 
+  <ul> 
+   <li>Performs two fused sums-of-products within each two pairs of adjacent BFloat16 elements while multiplying the 2x4 matrix of BFloat16 values in the first source vector with the 4x2 matrix of BFloat16 values in the second source vector. The intermediate single-precision products are not rounded before they are summed, but the intermediate sum is rounded before accumulation into the 2x2 single-precision matrix in the destination vector. This is equivalent to accumulating two 2-way fused dot products per destination element.</li> 
+   <li>Follows all other floating-point behaviors that apply to single-precision arithmetic, as governed by <em>FPCR</em>.RMode, <em>FPCR</em>.FZ, <em>FPCR</em>.AH, and <em>FPCR</em>.FIZ.</li> 
+  </ul> 
+  <p>Irrespective of FEAT_EBF16 and <em>FPCR</em>.EBF, this instruction:</p> 
+  <ul> 
+   <li>Does not modify the cumulative <em>FPSR</em> exception bits (IDC, IXC, UFC, OFC, DZC, and IOC).</li> 
+   <li>Disables trapped floating-point exceptions, as if the <em>FPCR</em> trap enable bits (IDE, IXE, UFE, OFE, DZE, and IOE) are all zero.</li> 
+   <li>Generates only the default NaN, as if <em>FPCR</em>.DN is 1.</li> 
+  </ul> 
+  <p><em>ID_AA64ISAR1_EL1</em>.BF16 indicates whether this instruction is supported.</p> 
+  <blockquote title="Note info"> 
+   <h4>Note</h4> 
+   <p>Arm expects that the BFMMLA instruction will deliver a peak BFloat16 multiply throughput that is at least as high as can be achieved using two BFDOT instructions, with a goal that it should have significantly higher throughput.</p> 
+  </blockquote> 
+  <h3><a id="iclass_simd"></a>Vector<span><br></br>(FEAT_BF16) </span></h3> 
+  <p></p> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td colspan="5">Rm</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td colspan="5">Rn</td> 
+      <td colspan="5">Rd</td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4></h4> 
+   <a id="BFMMLA_asimdsame2_E"></a> 
+   <p>BFMMLA <a title="SIMD&amp;FP third source and destination register (field &quot;Rd&quot;)" class="document-topic">&lt;Vd&gt;</a>.4S, <a title="First SIMD&amp;FP source register (field &quot;Rn&quot;)" class="document-topic">&lt;Vn&gt;</a>.8H, <a title="Second SIMD&amp;FP source register (field &quot;Rm&quot;)" class="document-topic">&lt;Vm&gt;</a>.8H</p> 
+  </div> 
+  <pre>if !<a title="function: boolean HaveBF16Ext()" class="document-topic">HaveBF16Ext</a>() then UNDEFINED;
+integer n = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Rn);
+integer m = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Rm);
+integer d = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Rd);</pre> 
+  <div></div> 
+  <h3>Assembler Symbols</h3> 
+  <div> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Vd&gt;</td> 
+      <td><a id="sa_vd"></a> <p>Is the name of the SIMD&amp;FP third source and destination register, encoded in the "Rd" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Vn&gt;</td> 
+      <td><a id="sa_vn"></a> <p>Is the name of the first SIMD&amp;FP source register, encoded in the "Rn" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Vm&gt;</td> 
+      <td><a id="sa_vm"></a> <p>Is the name of the second SIMD&amp;FP source register, encoded in the "Rm" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div></div> 
+  <div> 
+   <a id="execute"></a> 
+   <h3>Operation</h3> 
+   <pre><a title="function: CheckFPAdvSIMDEnabled64()" class="document-topic">CheckFPAdvSIMDEnabled64</a>();
+bits(128) op1 = <a title="accessor: bits(width) V[integer n, integer width]" class="document-topic">V</a>[n, 128];
+bits(128) op2 = <a title="accessor: bits(width) V[integer n, integer width]" class="document-topic">V</a>[m, 128];
+bits(128) acc = <a title="accessor: bits(width) V[integer n, integer width]" class="document-topic">V</a>[d, 128];
+
+<a title="accessor: V[integer n, integer width] = bits(width) value" class="document-topic">V</a>[d, 128] = <a title="function: bits(N) BFMatMulAdd(bits(N) addend, bits(N) op1, bits(N) op2)" class="document-topic">BFMatMulAdd</a>(acc, op1, op2);</pre> 
+  </div>  
+ </body>
+</html>

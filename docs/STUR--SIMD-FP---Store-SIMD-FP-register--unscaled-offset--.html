@@ -1,0 +1,246 @@
+<html>
+ <head>  <link rel="stylesheet" href="../def-style.css"></head> 
+ <body> 
+  <h2>STUR (SIMD&amp;FP)</h2> 
+  <p>Store SIMD&amp;FP register (unscaled offset). This instruction stores a single SIMD&amp;FP register to memory. The address that is used for the store is calculated from a base register value and an optional immediate offset.</p> 
+  <p>Depending on the settings in the <em>CPACR_EL1</em>, <em>CPTR_EL2</em>, and <em>CPTR_EL3</em> registers, and the current Security state and Exception level, an attempt to execute the instruction might be trapped.</p> 
+  <p></p> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td colspan="2">size</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>x</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td colspan="9">imm9</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td colspan="5">Rn</td> 
+      <td colspan="5">Rt</td> 
+     </tr> 
+     <tr> 
+      <td colspan="2"></td> 
+      <td colspan="3"></td> 
+      <td></td> 
+      <td colspan="2"></td> 
+      <td colspan="2">opc</td> 
+      <td></td> 
+      <td colspan="9"></td> 
+      <td colspan="2"></td> 
+      <td colspan="5"></td> 
+      <td colspan="5"></td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4>8-bit<span> (size == 00 &amp;&amp; opc == 00)</span></h4> 
+   <a id="STUR_B_ldst_unscaled"></a> 
+   <p>STUR <a title="8-bit SIMD&amp;FP register to be transferred (field &quot;Rt&quot;)" class="document-topic">&lt;Bt&gt;</a>, [<a title="64-bit general-purpose base register or SP (field &quot;Rn&quot;)" class="document-topic">&lt;Xn|SP&gt;</a>{, #<a title="Optional signed immediate byte offset [-256-255], default 0 (field &quot;imm9&quot;)" class="document-topic">&lt;simm&gt;</a>}]</p> 
+  </div> 
+  <div> 
+   <h4>16-bit<span> (size == 01 &amp;&amp; opc == 00)</span></h4> 
+   <a id="STUR_H_ldst_unscaled"></a> 
+   <p>STUR <a title="16-bit SIMD&amp;FP register to be transferred (field &quot;Rt&quot;)" class="document-topic">&lt;Ht&gt;</a>, [<a title="64-bit general-purpose base register or SP (field &quot;Rn&quot;)" class="document-topic">&lt;Xn|SP&gt;</a>{, #<a title="Optional signed immediate byte offset [-256-255], default 0 (field &quot;imm9&quot;)" class="document-topic">&lt;simm&gt;</a>}]</p> 
+  </div> 
+  <div> 
+   <h4>32-bit<span> (size == 10 &amp;&amp; opc == 00)</span></h4> 
+   <a id="STUR_S_ldst_unscaled"></a> 
+   <p>STUR <a title="32-bit SIMD&amp;FP register to be transferred (field &quot;Rt&quot;)" class="document-topic">&lt;St&gt;</a>, [<a title="64-bit general-purpose base register or SP (field &quot;Rn&quot;)" class="document-topic">&lt;Xn|SP&gt;</a>{, #<a title="Optional signed immediate byte offset [-256-255], default 0 (field &quot;imm9&quot;)" class="document-topic">&lt;simm&gt;</a>}]</p> 
+  </div> 
+  <div> 
+   <h4>64-bit<span> (size == 11 &amp;&amp; opc == 00)</span></h4> 
+   <a id="STUR_D_ldst_unscaled"></a> 
+   <p>STUR <a title="64-bit SIMD&amp;FP register to be transferred (field &quot;Rt&quot;)" class="document-topic">&lt;Dt&gt;</a>, [<a title="64-bit general-purpose base register or SP (field &quot;Rn&quot;)" class="document-topic">&lt;Xn|SP&gt;</a>{, #<a title="Optional signed immediate byte offset [-256-255], default 0 (field &quot;imm9&quot;)" class="document-topic">&lt;simm&gt;</a>}]</p> 
+  </div> 
+  <div> 
+   <h4>128-bit<span> (size == 00 &amp;&amp; opc == 10)</span></h4> 
+   <a id="STUR_Q_ldst_unscaled"></a> 
+   <p>STUR <a title="128-bit SIMD&amp;FP register to be transferred (field &quot;Rt&quot;)" class="document-topic">&lt;Qt&gt;</a>, [<a title="64-bit general-purpose base register or SP (field &quot;Rn&quot;)" class="document-topic">&lt;Xn|SP&gt;</a>{, #<a title="Optional signed immediate byte offset [-256-255], default 0 (field &quot;imm9&quot;)" class="document-topic">&lt;simm&gt;</a>}]</p> 
+  </div> 
+  <pre>boolean wback = FALSE;
+boolean postindex = FALSE;
+integer scale = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(opc&lt;1&gt;:size);
+if scale &gt; 4 then UNDEFINED;
+bits(64) offset = <a title="function: bits(N) SignExtend(bits(M) x, integer N)" class="document-topic">SignExtend</a>(imm9, 64);</pre> 
+  <div></div> 
+  <h3>Assembler Symbols</h3> 
+  <div> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Bt&gt;</td> 
+      <td><a id="sa_bt"></a> <p>Is the 8-bit name of the SIMD&amp;FP register to be transferred, encoded in the "Rt" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Dt&gt;</td> 
+      <td><a id="sa_dt"></a> <p>Is the 64-bit name of the SIMD&amp;FP register to be transferred, encoded in the "Rt" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Ht&gt;</td> 
+      <td><a id="sa_ht"></a> <p>Is the 16-bit name of the SIMD&amp;FP register to be transferred, encoded in the "Rt" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Qt&gt;</td> 
+      <td><a id="sa_qt"></a> <p>Is the 128-bit name of the SIMD&amp;FP register to be transferred, encoded in the "Rt" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;St&gt;</td> 
+      <td><a id="sa_st"></a> <p>Is the 32-bit name of the SIMD&amp;FP register to be transferred, encoded in the "Rt" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Xn|SP&gt;</td> 
+      <td><a id="sa_xn_sp"></a> <p>Is the 64-bit name of the general-purpose base register or stack pointer, encoded in the "Rn" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;simm&gt;</td> 
+      <td><a id="sa_simm"></a> <p>Is the optional signed immediate byte offset, in the range -256 to 255, defaulting to 0 and encoded in the "imm9" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div></div> 
+  <div> 
+   <a id="postdecode"></a> 
+   <h3>Shared Decode</h3> 
+   <pre>integer n = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Rn);
+integer t = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Rt);
+boolean nontemporal = FALSE;
+<a title="enumeration MemOp {MemOp_LOAD, MemOp_STORE, MemOp_PREFETCH}" class="document-topic">MemOp</a> memop = if opc&lt;0&gt; == '1' then <a title="enumeration MemOp {MemOp_LOAD, MemOp_STORE, MemOp_PREFETCH}" class="document-topic">MemOp_LOAD</a> else <a title="enumeration MemOp {MemOp_LOAD, MemOp_STORE, MemOp_PREFETCH}" class="document-topic">MemOp_STORE</a>;
+integer datasize = 8 &lt;&lt; scale;
+boolean tagchecked = memop != <a title="enumeration MemOp {MemOp_LOAD, MemOp_STORE, MemOp_PREFETCH}" class="document-topic">MemOp_PREFETCH</a> &amp;&amp; (wback || n != 31);</pre> 
+  </div> 
+  <div> 
+   <a id="execute"></a> 
+   <h3>Operation</h3> 
+   <pre><a title="function: CheckFPEnabled64()" class="document-topic">CheckFPEnabled64</a>();
+bits(64) address;
+bits(datasize) data;
+
+<a title="type AccessDescriptor is ( AccessType acctype, bits(2) el, SecurityState ss, boolean acqsc, boolean acqpc, boolean relsc, boolean limitedordered, boolean exclusive, boolean atomicop, MemAtomicOp modop, boolean nontemporal, boolean read, boolean write, CacheOp cacheop, CacheOpScope opscope, CacheType cachetype, boolean pan, boolean transactional, boolean nonfault, boolean firstfault, boolean first, boolean contiguous, boolean streamingsve, boolean ls64, boolean mops, boolean rcw, boolean rcws, boolean toplevel, VARange varange, boolean a32lsmd, boolean tagchecked, boolean tagaccess, MPAMinfo mpam )" class="document-topic">AccessDescriptor</a> accdesc = <a title="function: AccessDescriptor CreateAccDescASIMD(MemOp memop, boolean nontemporal, boolean tagchecked)" class="document-topic">CreateAccDescASIMD</a>(memop, nontemporal, tagchecked);
+
+if n == 31 then
+    <a title="function: CheckSPAlignment()" class="document-topic">CheckSPAlignment</a>();
+    address = <a title="accessor: bits(64) SP[]" class="document-topic">SP</a>[];
+else
+    address = <a title="accessor: bits(width) X[integer n, integer width]" class="document-topic">X</a>[n, 64];
+
+if ! postindex then
+    address = address + offset;
+
+case memop of
+    when <a title="enumeration MemOp {MemOp_LOAD, MemOp_STORE, MemOp_PREFETCH}" class="document-topic">MemOp_STORE</a>
+        data = <a title="accessor: bits(width) V[integer n, integer width]" class="document-topic">V</a>[t, datasize];
+        Mem[address, datasize DIV 8, accdesc] = data;
+
+    when <a title="enumeration MemOp {MemOp_LOAD, MemOp_STORE, MemOp_PREFETCH}" class="document-topic">MemOp_LOAD</a>
+        data = <a title="accessor: bits(size*8) Mem[bits(64) address, integer size, AccessDescriptor accdesc]" class="document-topic">Mem</a>[address, datasize DIV 8, accdesc];
+        <a title="accessor: V[integer n, integer width] = bits(width) value" class="document-topic">V</a>[t, datasize] = data;
+
+if wback then
+    if postindex then
+        address = address + offset;
+    if n == 31 then
+        <a title="accessor: SP[] = bits(64) value" class="document-topic">SP</a>[] = address;
+    else
+        <a title="accessor: X[integer n, integer width] = bits(width) value" class="document-topic">X</a>[n, 64] = address;</pre> 
+  </div> 
+  <h3>Operational information</h3> 
+  <p>If PSTATE.DIT is 1, the timing of this instruction is insensitive to the value of the data being loaded or stored.</p>  
+ </body>
+</html>

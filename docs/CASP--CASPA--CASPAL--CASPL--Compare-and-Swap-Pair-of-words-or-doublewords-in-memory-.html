@@ -1,0 +1,293 @@
+<html>
+ <head>  <link rel="stylesheet" href="../def-style.css"></head> 
+ <body> 
+  <h2>CASP, CASPA, CASPAL, CASPL</h2> 
+  <p>Compare and Swap Pair of words or doublewords in memory reads a pair of 32-bit words or 64-bit doublewords from memory, and compares them against the values held in the first pair of registers. If the comparison is equal, the values in the second pair of registers are written to memory. If the writes are performed, the reads and writes occur atomically such that no other modification of the memory location can take place between the reads and writes.</p> 
+  <ul> 
+   <li><span>CASPA</span> and <span>CASPAL</span> load from memory with acquire semantics.</li> 
+   <li><span>CASPL</span> and <span>CASPAL</span> store to memory with release semantics.</li> 
+   <li><span>CASP</span> has neither acquire nor release semantics.</li> 
+  </ul> 
+  <p>For more information about memory ordering semantics, see <em>Load-Acquire, Store-Release</em>.</p> 
+  <p>For information about memory accesses, see <em>Load/Store addressing modes</em>.</p> 
+  <p>The architecture permits that the data read clears any exclusive monitors associated with that location, even if the compare subsequently fails.</p> 
+  <p>If the instruction generates a synchronous Data Abort, the registers which are compared and loaded, that is &lt;Ws&gt; and &lt;W(s+1)&gt;, or &lt;Xs&gt; and &lt;X(s+1)&gt;, are restored to the values held in the registers before the instruction was executed.</p> 
+  <h3><a id="iclass_base_register"></a>No offset<span><br></br>(FEAT_LSE) </span></h3> 
+  <p></p> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>0</td> 
+      <td>sz</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>L</td> 
+      <td>1</td> 
+      <td colspan="5">Rs</td> 
+      <td>o0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td colspan="5">Rn</td> 
+      <td colspan="5">Rt</td> 
+     </tr> 
+     <tr> 
+      <td></td> 
+      <td></td> 
+      <td colspan="6"></td> 
+      <td></td> 
+      <td></td> 
+      <td></td> 
+      <td colspan="5"></td> 
+      <td></td> 
+      <td colspan="5">Rt2</td> 
+      <td colspan="5"></td> 
+      <td colspan="5"></td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4>32-bit CASP<span> (sz == 0 &amp;&amp; L == 0 &amp;&amp; o0 == 0)</span></h4> 
+   <a id="CASP_CP32_comswappr"></a> 
+   <p>CASP <a title="First 32-bit general-purpose register to be compared and loaded (field &quot;Rs&quot;)" class="document-topic">&lt;Ws&gt;</a>, <a title="Second 32-bit general-purpose register to be compared and loaded" class="document-topic">&lt;W(s+1)&gt;</a>, <a title="First 32-bit general-purpose register to be conditionally stored (field &quot;Rt&quot;)" class="document-topic">&lt;Wt&gt;</a>, <a title="Second 32-bit general-purpose register to be conditionally stored" class="document-topic">&lt;W(t+1)&gt;</a>, [<a title="64-bit general-purpose base register or SP (field &quot;Rn&quot;)" class="document-topic">&lt;Xn|SP&gt;</a>{,#0}]</p> 
+  </div> 
+  <div> 
+   <h4>32-bit CASPA<span> (sz == 0 &amp;&amp; L == 1 &amp;&amp; o0 == 0)</span></h4> 
+   <a id="CASPA_CP32_comswappr"></a> 
+   <p>CASPA <a title="First 32-bit general-purpose register to be compared and loaded (field &quot;Rs&quot;)" class="document-topic">&lt;Ws&gt;</a>, <a title="Second 32-bit general-purpose register to be compared and loaded" class="document-topic">&lt;W(s+1)&gt;</a>, <a title="First 32-bit general-purpose register to be conditionally stored (field &quot;Rt&quot;)" class="document-topic">&lt;Wt&gt;</a>, <a title="Second 32-bit general-purpose register to be conditionally stored" class="document-topic">&lt;W(t+1)&gt;</a>, [<a title="64-bit general-purpose base register or SP (field &quot;Rn&quot;)" class="document-topic">&lt;Xn|SP&gt;</a>{,#0}]</p> 
+  </div> 
+  <div> 
+   <h4>32-bit CASPAL<span> (sz == 0 &amp;&amp; L == 1 &amp;&amp; o0 == 1)</span></h4> 
+   <a id="CASPAL_CP32_comswappr"></a> 
+   <p>CASPAL <a title="First 32-bit general-purpose register to be compared and loaded (field &quot;Rs&quot;)" class="document-topic">&lt;Ws&gt;</a>, <a title="Second 32-bit general-purpose register to be compared and loaded" class="document-topic">&lt;W(s+1)&gt;</a>, <a title="First 32-bit general-purpose register to be conditionally stored (field &quot;Rt&quot;)" class="document-topic">&lt;Wt&gt;</a>, <a title="Second 32-bit general-purpose register to be conditionally stored" class="document-topic">&lt;W(t+1)&gt;</a>, [<a title="64-bit general-purpose base register or SP (field &quot;Rn&quot;)" class="document-topic">&lt;Xn|SP&gt;</a>{,#0}]</p> 
+  </div> 
+  <div> 
+   <h4>32-bit CASPL<span> (sz == 0 &amp;&amp; L == 0 &amp;&amp; o0 == 1)</span></h4> 
+   <a id="CASPL_CP32_comswappr"></a> 
+   <p>CASPL <a title="First 32-bit general-purpose register to be compared and loaded (field &quot;Rs&quot;)" class="document-topic">&lt;Ws&gt;</a>, <a title="Second 32-bit general-purpose register to be compared and loaded" class="document-topic">&lt;W(s+1)&gt;</a>, <a title="First 32-bit general-purpose register to be conditionally stored (field &quot;Rt&quot;)" class="document-topic">&lt;Wt&gt;</a>, <a title="Second 32-bit general-purpose register to be conditionally stored" class="document-topic">&lt;W(t+1)&gt;</a>, [<a title="64-bit general-purpose base register or SP (field &quot;Rn&quot;)" class="document-topic">&lt;Xn|SP&gt;</a>{,#0}]</p> 
+  </div> 
+  <div> 
+   <h4>64-bit CASP<span> (sz == 1 &amp;&amp; L == 0 &amp;&amp; o0 == 0)</span></h4> 
+   <a id="CASP_CP64_comswappr"></a> 
+   <p>CASP <a title="First 64-bit general-purpose register to be compared and loaded (field &quot;Rs&quot;)" class="document-topic">&lt;Xs&gt;</a>, <a title="Second 64-bit general-purpose register to be compared and loaded" class="document-topic">&lt;X(s+1)&gt;</a>, <a title="First 64-bit general-purpose register to be conditionally stored (field &quot;Rt&quot;)" class="document-topic">&lt;Xt&gt;</a>, <a title="Second 64-bit general-purpose register to be conditionally stored" class="document-topic">&lt;X(t+1)&gt;</a>, [<a title="64-bit general-purpose base register or SP (field &quot;Rn&quot;)" class="document-topic">&lt;Xn|SP&gt;</a>{,#0}]</p> 
+  </div> 
+  <div> 
+   <h4>64-bit CASPA<span> (sz == 1 &amp;&amp; L == 1 &amp;&amp; o0 == 0)</span></h4> 
+   <a id="CASPA_CP64_comswappr"></a> 
+   <p>CASPA <a title="First 64-bit general-purpose register to be compared and loaded (field &quot;Rs&quot;)" class="document-topic">&lt;Xs&gt;</a>, <a title="Second 64-bit general-purpose register to be compared and loaded" class="document-topic">&lt;X(s+1)&gt;</a>, <a title="First 64-bit general-purpose register to be conditionally stored (field &quot;Rt&quot;)" class="document-topic">&lt;Xt&gt;</a>, <a title="Second 64-bit general-purpose register to be conditionally stored" class="document-topic">&lt;X(t+1)&gt;</a>, [<a title="64-bit general-purpose base register or SP (field &quot;Rn&quot;)" class="document-topic">&lt;Xn|SP&gt;</a>{,#0}]</p> 
+  </div> 
+  <div> 
+   <h4>64-bit CASPAL<span> (sz == 1 &amp;&amp; L == 1 &amp;&amp; o0 == 1)</span></h4> 
+   <a id="CASPAL_CP64_comswappr"></a> 
+   <p>CASPAL <a title="First 64-bit general-purpose register to be compared and loaded (field &quot;Rs&quot;)" class="document-topic">&lt;Xs&gt;</a>, <a title="Second 64-bit general-purpose register to be compared and loaded" class="document-topic">&lt;X(s+1)&gt;</a>, <a title="First 64-bit general-purpose register to be conditionally stored (field &quot;Rt&quot;)" class="document-topic">&lt;Xt&gt;</a>, <a title="Second 64-bit general-purpose register to be conditionally stored" class="document-topic">&lt;X(t+1)&gt;</a>, [<a title="64-bit general-purpose base register or SP (field &quot;Rn&quot;)" class="document-topic">&lt;Xn|SP&gt;</a>{,#0}]</p> 
+  </div> 
+  <div> 
+   <h4>64-bit CASPL<span> (sz == 1 &amp;&amp; L == 0 &amp;&amp; o0 == 1)</span></h4> 
+   <a id="CASPL_CP64_comswappr"></a> 
+   <p>CASPL <a title="First 64-bit general-purpose register to be compared and loaded (field &quot;Rs&quot;)" class="document-topic">&lt;Xs&gt;</a>, <a title="Second 64-bit general-purpose register to be compared and loaded" class="document-topic">&lt;X(s+1)&gt;</a>, <a title="First 64-bit general-purpose register to be conditionally stored (field &quot;Rt&quot;)" class="document-topic">&lt;Xt&gt;</a>, <a title="Second 64-bit general-purpose register to be conditionally stored" class="document-topic">&lt;X(t+1)&gt;</a>, [<a title="64-bit general-purpose base register or SP (field &quot;Rn&quot;)" class="document-topic">&lt;Xn|SP&gt;</a>{,#0}]</p> 
+  </div> 
+  <pre>if !<a title="function: boolean HaveAtomicExt()" class="document-topic">HaveAtomicExt</a>() then UNDEFINED;
+if Rs&lt;0&gt; == '1' then UNDEFINED;
+if Rt&lt;0&gt; == '1' then UNDEFINED;
+
+integer n = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Rn);
+integer t = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Rt);
+integer s = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Rs);
+
+integer datasize = 32 &lt;&lt; <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(sz);
+integer regsize = datasize;
+boolean acquire = L == '1';
+boolean release = o0 == '1';
+boolean tagchecked = n != 31;</pre> 
+  <div></div> 
+  <h3>Assembler Symbols</h3> 
+  <div> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Ws&gt;</td> 
+      <td><a id="sa_ws"></a> <p>Is the 32-bit name of the first general-purpose register to be compared and loaded, encoded in the "Rs" field. &lt;Ws&gt; must be an even-numbered register.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;W(s+1)&gt;</td> 
+      <td><a id="sa_w_s_plus_1"></a> <p>Is the 32-bit name of the second general-purpose register to be compared and loaded.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Wt&gt;</td> 
+      <td><a id="sa_wt"></a> <p>Is the 32-bit name of the first general-purpose register to be conditionally stored, encoded in the "Rt" field. &lt;Wt&gt; must be an even-numbered register.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;W(t+1)&gt;</td> 
+      <td><a id="sa_w_t_plus_1"></a> <p>Is the 32-bit name of the second general-purpose register to be conditionally stored.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Xs&gt;</td> 
+      <td><a id="sa_xs"></a> <p>Is the 64-bit name of the first general-purpose register to be compared and loaded, encoded in the "Rs" field. &lt;Xs&gt; must be an even-numbered register.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;X(s+1)&gt;</td> 
+      <td><a id="sa_x_s_plus_1"></a> <p>Is the 64-bit name of the second general-purpose register to be compared and loaded.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Xt&gt;</td> 
+      <td><a id="sa_xt"></a> <p>Is the 64-bit name of the first general-purpose register to be conditionally stored, encoded in the "Rt" field. &lt;Xt&gt; must be an even-numbered register.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;X(t+1)&gt;</td> 
+      <td><a id="sa_x_t_plus_1"></a> <p>Is the 64-bit name of the second general-purpose register to be conditionally stored.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Xn|SP&gt;</td> 
+      <td><a id="sa_xn_sp"></a> <p>Is the 64-bit name of the general-purpose base register or stack pointer, encoded in the "Rn" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div></div> 
+  <div> 
+   <a id="execute"></a> 
+   <h3>Operation</h3> 
+   <pre>bits(64) address;
+bits(2*datasize) comparevalue;
+bits(2*datasize) newvalue;
+bits(2*datasize) data;
+
+bits(datasize) s1 = <a title="accessor: bits(width) X[integer n, integer width]" class="document-topic">X</a>[s, datasize];
+bits(datasize) s2 = <a title="accessor: bits(width) X[integer n, integer width]" class="document-topic">X</a>[s+1, datasize];
+bits(datasize) t1 = <a title="accessor: bits(width) X[integer n, integer width]" class="document-topic">X</a>[t, datasize];
+bits(datasize) t2 = <a title="accessor: bits(width) X[integer n, integer width]" class="document-topic">X</a>[t+1, datasize];
+
+<a title="type AccessDescriptor is ( AccessType acctype, bits(2) el, SecurityState ss, boolean acqsc, boolean acqpc, boolean relsc, boolean limitedordered, boolean exclusive, boolean atomicop, MemAtomicOp modop, boolean nontemporal, boolean read, boolean write, CacheOp cacheop, CacheOpScope opscope, CacheType cachetype, boolean pan, boolean transactional, boolean nonfault, boolean firstfault, boolean first, boolean contiguous, boolean streamingsve, boolean ls64, boolean mops, boolean rcw, boolean rcws, boolean toplevel, VARange varange, boolean a32lsmd, boolean tagchecked, boolean tagaccess, MPAMinfo mpam )" class="document-topic">AccessDescriptor</a> accdesc = <a title="function: AccessDescriptor CreateAccDescAtomicOp(MemAtomicOp modop, boolean acquire, boolean release, boolean tagchecked)" class="document-topic">CreateAccDescAtomicOp</a>(<a title="enumeration MemAtomicOp { MemAtomicOp_GCSSS1, MemAtomicOp_ADD, MemAtomicOp_BIC, MemAtomicOp_EOR, MemAtomicOp_ORR, MemAtomicOp_SMAX, MemAtomicOp_SMIN, MemAtomicOp_UMAX, MemAtomicOp_UMIN, MemAtomicOp_SWP, MemAtomicOp_CAS }" class="document-topic">MemAtomicOp_CAS</a>, acquire, release, tagchecked);
+
+comparevalue = if <a title="function: boolean BigEndian(AccessType acctype)" class="document-topic">BigEndian</a>(accdesc.acctype) then s1:s2 else s2:s1;
+newvalue     = if <a title="function: boolean BigEndian(AccessType acctype)" class="document-topic">BigEndian</a>(accdesc.acctype) then t1:t2 else t2:t1;
+if n == 31 then
+    <a title="function: CheckSPAlignment()" class="document-topic">CheckSPAlignment</a>();
+    address = <a title="accessor: bits(64) SP[]" class="document-topic">SP</a>[];
+else
+    address = <a title="accessor: bits(width) X[integer n, integer width]" class="document-topic">X</a>[n, 64];
+
+data = <a title="function: bits(size) MemAtomic(bits(64) address, bits(size) cmpoperand, bits(size) operand, AccessDescriptor accdesc_in)" class="document-topic">MemAtomic</a>(address, comparevalue, newvalue, accdesc);
+
+if <a title="function: boolean BigEndian(AccessType acctype)" class="document-topic">BigEndian</a>(accdesc.acctype) then
+    <a title="accessor: X[integer n, integer width] = bits(width) value" class="document-topic">X</a>[s, datasize]   = data&lt;2*datasize-1:datasize&gt;;
+    <a title="accessor: X[integer n, integer width] = bits(width) value" class="document-topic">X</a>[s+1, datasize] = data&lt;datasize-1:0&gt;;
+else
+    <a title="accessor: X[integer n, integer width] = bits(width) value" class="document-topic">X</a>[s, datasize]   = data&lt;datasize-1:0&gt;;
+    <a title="accessor: X[integer n, integer width] = bits(width) value" class="document-topic">X</a>[s+1, datasize] = data&lt;2*datasize-1:datasize&gt;;</pre> 
+  </div>  
+ </body>
+</html>

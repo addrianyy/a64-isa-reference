@@ -1,0 +1,162 @@
+<html>
+ <head>  <link rel="stylesheet" href="../def-style.css"></head> 
+ <body> 
+  <h2>FMOV (scalar, immediate)</h2> 
+  <p>Floating-point move immediate (scalar). This instruction copies a floating-point immediate constant into the SIMD&amp;FP destination register.</p> 
+  <p>Depending on the settings in the <em>CPACR_EL1</em>, <em>CPTR_EL2</em>, and <em>CPTR_EL3</em> registers, and the current Security state and Exception level, an attempt to execute the instruction might be trapped.</p> 
+  <p></p> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td colspan="2">ftype</td> 
+      <td>1</td> 
+      <td colspan="8">imm8</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td colspan="5">Rd</td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4>Half-precision<span> (ftype == 11)</span><span><br></br>(FEAT_FP16) </span></h4> 
+   <a id="FMOV_H_floatimm"></a> 
+   <p>FMOV <a title="16-bit SIMD&amp;FP destination register (field &quot;Rd&quot;)" class="document-topic">&lt;Hd&gt;</a>, #<a title="Signed floating-point constant with 3-bit exponent and normalized 4 bits of precision (field &quot;imm8&quot;)" class="document-topic">&lt;imm&gt;</a></p> 
+  </div> 
+  <div> 
+   <h4>Single-precision<span> (ftype == 00)</span></h4> 
+   <a id="FMOV_S_floatimm"></a> 
+   <p>FMOV <a title="32-bit SIMD&amp;FP destination register (field &quot;Rd&quot;)" class="document-topic">&lt;Sd&gt;</a>, #<a title="Signed floating-point constant with 3-bit exponent and normalized 4 bits of precision (field &quot;imm8&quot;)" class="document-topic">&lt;imm&gt;</a></p> 
+  </div> 
+  <div> 
+   <h4>Double-precision<span> (ftype == 01)</span></h4> 
+   <a id="FMOV_D_floatimm"></a> 
+   <p>FMOV <a title="64-bit SIMD&amp;FP destination register (field &quot;Rd&quot;)" class="document-topic">&lt;Dd&gt;</a>, #<a title="Signed floating-point constant with 3-bit exponent and normalized 4 bits of precision (field &quot;imm8&quot;)" class="document-topic">&lt;imm&gt;</a></p> 
+  </div> 
+  <pre>integer d = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Rd);
+
+integer datasize;
+case ftype of
+    when '00' datasize = 32;
+    when '01' datasize = 64;
+    when '10' UNDEFINED;
+    when '11'
+        if <a title="function: boolean HaveFP16Ext()" class="document-topic">HaveFP16Ext</a>() then
+            datasize = 16;
+        else
+            UNDEFINED;
+
+bits(datasize) imm = <a title="function: bits(N) VFPExpandImm(bits(8) imm8, integer N)" class="document-topic">VFPExpandImm</a>(imm8, datasize);</pre> 
+  <div></div> 
+  <h3>Assembler Symbols</h3> 
+  <div> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Dd&gt;</td> 
+      <td><a id="sa_dd"></a> <p>Is the 64-bit name of the SIMD&amp;FP destination register, encoded in the "Rd" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Hd&gt;</td> 
+      <td><a id="sa_hd"></a> <p>Is the 16-bit name of the SIMD&amp;FP destination register, encoded in the "Rd" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Sd&gt;</td> 
+      <td><a id="sa_sd"></a> <p>Is the 32-bit name of the SIMD&amp;FP destination register, encoded in the "Rd" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;imm&gt;</td> 
+      <td><a id="sa_imm"></a> <p>Is a signed floating-point constant with 3-bit exponent and normalized 4 bits of precision, encoded in the "imm8" field. For details of the range of constants available and the encoding of &lt;imm&gt;, see <em>Modified immediate constants in A64 floating-point instructions</em>.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div></div> 
+  <div> 
+   <a id="execute"></a> 
+   <h3>Operation</h3> 
+   <pre><a title="function: CheckFPEnabled64()" class="document-topic">CheckFPEnabled64</a>();
+
+<a title="accessor: V[integer n, integer width] = bits(width) value" class="document-topic">V</a>[d, datasize] = imm;</pre> 
+  </div>  
+ </body>
+</html>

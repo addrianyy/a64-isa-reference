@@ -1,0 +1,143 @@
+<html>
+ <head>  <link rel="stylesheet" href="../def-style.css"></head> 
+ <body> 
+  <h2>STGM</h2> 
+  <p>Store Tag Multiple writes a naturally aligned block of N Allocation Tags, where the size of N is identified in GMID_EL1.BS, and the Allocation Tag written to address A is taken from the source register at 4*A&lt;7:4&gt;+3:4*A&lt;7:4&gt;.</p> 
+  <p>This instruction is <small>undefined</small> at EL0.</p> 
+  <p>This instruction generates an Unchecked access.</p> 
+  <h3><a id="iclass_general"></a>Integer<span><br></br>(FEAT_MTE2) </span></h3> 
+  <p></p> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td colspan="5">Xn</td> 
+      <td colspan="5">Xt</td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4></h4> 
+   <a id="STGM_64bulk_ldsttags"></a> 
+   <p>STGM <a title="64-bit general-purpose source register (field &quot;Xt&quot;)" class="document-topic">&lt;Xt&gt;</a>, [<a title="64-bit general-purpose base register or SP (field &quot;Xn&quot;)" class="document-topic">&lt;Xn|SP&gt;</a>]</p> 
+  </div> 
+  <pre>if !<a title="function: boolean HaveMTE2Ext()" class="document-topic">HaveMTE2Ext</a>() then UNDEFINED;
+integer t = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Xt);
+integer n = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Xn);</pre> 
+  <div></div> 
+  <h3>Assembler Symbols</h3> 
+  <div> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Xt&gt;</td> 
+      <td><a id="sa_xt"></a> <p>Is the 64-bit name of the general-purpose source register, encoded in the "Xt" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Xn|SP&gt;</td> 
+      <td><a id="sa_xn_sp"></a> <p>Is the 64-bit name of the general-purpose base register or stack pointer, encoded in the "Xn" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div></div> 
+  <div> 
+   <a id="execute"></a> 
+   <h3>Operation</h3> 
+   <pre>if PSTATE.EL == <a title="constant bits(2) EL0 = '00'" class="document-topic">EL0</a> then
+    UNDEFINED;
+
+bits(64) data = <a title="accessor: bits(width) X[integer n, integer width]" class="document-topic">X</a>[t, 64];
+bits(64) address;
+
+if n == 31 then
+    <a title="function: CheckSPAlignment()" class="document-topic">CheckSPAlignment</a>();
+    address = <a title="accessor: bits(64) SP[]" class="document-topic">SP</a>[];
+else
+    address = <a title="accessor: bits(width) X[integer n, integer width]" class="document-topic">X</a>[n, 64];
+
+integer size = 4*(2^(<a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(GMID_EL1.BS)));
+address = <a title="function: integer Align(integer x, integer y)" class="document-topic">Align</a>(address,size);
+integer count = size &gt;&gt; <a title="constant integer LOG2_TAG_GRANULE = 4" class="document-topic">LOG2_TAG_GRANULE</a>;
+integer index = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(address&lt;<a title="constant integer LOG2_TAG_GRANULE = 4" class="document-topic">LOG2_TAG_GRANULE</a>+3:<a title="constant integer LOG2_TAG_GRANULE = 4" class="document-topic">LOG2_TAG_GRANULE</a>&gt;);
+<a title="type AccessDescriptor is ( AccessType acctype, bits(2) el, SecurityState ss, boolean acqsc, boolean acqpc, boolean relsc, boolean limitedordered, boolean exclusive, boolean atomicop, MemAtomicOp modop, boolean nontemporal, boolean read, boolean write, CacheOp cacheop, CacheOpScope opscope, CacheType cachetype, boolean pan, boolean transactional, boolean nonfault, boolean firstfault, boolean first, boolean contiguous, boolean streamingsve, boolean ls64, boolean mops, boolean rcw, boolean rcws, boolean toplevel, VARange varange, boolean a32lsmd, boolean tagchecked, boolean tagaccess, MPAMinfo mpam )" class="document-topic">AccessDescriptor</a> accdesc = <a title="function: AccessDescriptor CreateAccDescLDGSTG(MemOp memop)" class="document-topic">CreateAccDescLDGSTG</a>(<a title="enumeration MemOp {MemOp_LOAD, MemOp_STORE, MemOp_PREFETCH}" class="document-topic">MemOp_STORE</a>);
+
+for i = 0 to count-1
+    bits(4) tag = data&lt;(index*4)+3:index*4&gt;;
+    <a title="accessor: AArch64.MemTag[bits(64) address, AccessDescriptor accdesc_in] = bits(4) value" class="document-topic">AArch64.MemTag</a>[address, accdesc] = tag;
+    address = address + <a title="constant integer TAG_GRANULE = 1 << LOG2_TAG_GRANULE" class="document-topic">TAG_GRANULE</a>;
+    index = index + 1;</pre> 
+  </div>  
+ </body>
+</html>

@@ -1,0 +1,172 @@
+<html>
+ <head>  <link rel="stylesheet" href="../def-style.css"></head> 
+ <body> 
+  <h2>MOV (wide immediate)</h2> 
+  <p>Move (wide immediate) moves a 16-bit immediate value to a register.</p> 
+  <p> This is an alias of <a href="MOVZ--Move-wide-with-zero-.html" class="document-topic">MOVZ</a>. This means: </p> 
+  <ul> 
+   <li> The encodings in this description are named to match the encodings of <a href="MOVZ--Move-wide-with-zero-.html" class="document-topic">MOVZ</a>. </li> 
+   <li>The description of <a href="MOVZ--Move-wide-with-zero-.html" class="document-topic">MOVZ</a> gives the operational pseudocode, any <small>constrained unpredictable</small> behavior, and any operational information for this instruction.</li> 
+  </ul> 
+  <p></p> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>sf</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td colspan="2">hw</td> 
+      <td colspan="16">imm16</td> 
+      <td colspan="5">Rd</td> 
+     </tr> 
+     <tr> 
+      <td></td> 
+      <td colspan="2">opc</td> 
+      <td colspan="6"></td> 
+      <td colspan="2"></td> 
+      <td colspan="16"></td> 
+      <td colspan="5"></td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4>32-bit<span> (sf == 0 &amp;&amp; hw == 0x)</span></h4> 
+   <a id="MOV_MOVZ_32_movewide"></a> 
+   <p>MOV <a title="32-bit general-purpose destination register (field &quot;Rd&quot;)" class="document-topic">&lt;Wd&gt;</a>, #<a title="32-bit immediate which can be (field &quot;imm16:hw&quot;)" class="document-topic">&lt;imm&gt;</a></p> 
+   <p> is equivalent to </p> 
+   <p><a href="MOVZ--Move-wide-with-zero-.html" class="document-topic">MOVZ</a> <a title="32-bit general-purpose destination register (field &quot;Rd&quot;)" class="document-topic">&lt;Wd&gt;</a>, #&lt;imm16&gt;, LSL #<a title="Amount by which to shift the immediate left (field &quot;hw&quot;)" class="document-topic">&lt;shift&gt;</a></p> 
+   <p> and is the preferred disassembly when <span>! (IsZero(imm16) &amp;&amp; hw != '00')</span>. </p> 
+  </div> 
+  <div> 
+   <h4>64-bit<span> (sf == 1)</span></h4> 
+   <a id="MOV_MOVZ_64_movewide"></a> 
+   <p>MOV <a title="64-bit general-purpose destination register (field &quot;Rd&quot;)" class="document-topic">&lt;Xd&gt;</a>, #<a title="64-bit immediate which can be (field &quot;imm16:hw&quot;)" class="document-topic">&lt;imm&gt;</a></p> 
+   <p> is equivalent to </p> 
+   <p><a href="MOVZ--Move-wide-with-zero-.html" class="document-topic">MOVZ</a> <a title="64-bit general-purpose destination register (field &quot;Rd&quot;)" class="document-topic">&lt;Xd&gt;</a>, #&lt;imm16&gt;, LSL #<a title="Amount by which to shift the immediate left (field &quot;hw&quot;)" class="document-topic">&lt;shift&gt;</a></p> 
+   <p> and is the preferred disassembly when <span>! (IsZero(imm16) &amp;&amp; hw != '00')</span>. </p> 
+  </div> 
+  <div></div> 
+  <h3>Assembler Symbols</h3> 
+  <div> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Wd&gt;</td> 
+      <td><a id="sa_wd"></a> <p>Is the 32-bit name of the general-purpose destination register, encoded in the "Rd" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Xd&gt;</td> 
+      <td><a id="sa_xd"></a> <p>Is the 64-bit name of the general-purpose destination register, encoded in the "Rd" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;imm&gt;</td> 
+      <td><a id="sa_imm_1"></a> <p>For the 32-bit variant: is a 32-bit immediate which can be encoded in "imm16:hw".</p> </td> 
+     </tr> 
+     <tr> 
+      <td></td> 
+      <td><a id="sa_imm_2"></a> <p>For the 64-bit variant: is a 64-bit immediate which can be encoded in "imm16:hw".</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;shift&gt;</td> 
+      <td><a id="sa_shift"></a> <p>For the 32-bit variant: is the amount by which to shift the immediate left, either 0 (the default) or 16, encoded in the "hw" field as &lt;shift&gt;/16.</p> </td> 
+     </tr> 
+     <tr> 
+      <td></td> 
+      <td><a id="sa_shift_1"></a> <p>For the 64-bit variant: is the amount by which to shift the immediate left, either 0 (the default), 16, 32 or 48, encoded in the "hw" field as &lt;shift&gt;/16.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div></div> 
+  <div> 
+   <h3>Operation</h3> 
+   <p>The description of <a href="MOVZ--Move-wide-with-zero-.html" class="document-topic">MOVZ</a> gives the operational pseudocode for this instruction.</p> 
+  </div> 
+  <h3>Operational information</h3> 
+  <p>If PSTATE.DIT is 1:</p> 
+  <ul> 
+   <li>The execution time of this instruction is independent of: 
+    <ul> 
+     <li>The values of the data supplied in any of its registers.</li> 
+     <li>The values of the NZCV flags.</li> 
+    </ul></li> 
+   <li>The response of this instruction to asynchronous exceptions does not vary based on: 
+    <ul> 
+     <li>The values of the data supplied in any of its registers.</li> 
+     <li>The values of the NZCV flags.</li> 
+    </ul></li> 
+  </ul>  
+ </body>
+</html>

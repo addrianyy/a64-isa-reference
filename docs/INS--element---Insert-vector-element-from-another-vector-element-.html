@@ -1,0 +1,269 @@
+<html>
+ <head>  <link rel="stylesheet" href="../def-style.css"></head> 
+ <body> 
+  <h2>INS (element)</h2> 
+  <p>Insert vector element from another vector element. This instruction copies the vector element of the source SIMD&amp;FP register to the specified vector element of the destination SIMD&amp;FP register.</p> 
+  <p>This instruction can insert data into individual elements within a SIMD&amp;FP register without clearing the remaining bits to zero.</p> 
+  <p>Depending on the settings in the <em>CPACR_EL1</em>, <em>CPTR_EL2</em>, and <em>CPTR_EL3</em> registers, and the current Security state and Exception level, an attempt to execute the instruction might be trapped.</p> 
+  <p>This instruction is used by the alias <a title="Move vector element to another vector element" href="MOV--element---Move-vector-element-to-another-vector-element--an-alias-of-INS--element--.html" class="document-topic">MOV (element)</a>.</p> 
+  <p></p> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td colspan="5">imm5</td> 
+      <td>0</td> 
+      <td colspan="4">imm4</td> 
+      <td>1</td> 
+      <td colspan="5">Rn</td> 
+      <td colspan="5">Rd</td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4></h4> 
+   <a id="INS_asimdins_IV_v"></a> 
+   <p>INS <a title="SIMD&amp;FP destination register (field &quot;Rd&quot;)" class="document-topic">&lt;Vd&gt;</a>.<a title="Element size specifier (field &quot;imm5&quot;) [B,D,H,S]" class="document-topic">&lt;Ts&gt;</a>[<a title="Destination element index (field &quot;imm5&quot;)" class="document-topic">&lt;index1&gt;</a>], <a title="SIMD&amp;FP source register (field &quot;Rn&quot;)" class="document-topic">&lt;Vn&gt;</a>.<a title="Element size specifier (field &quot;imm5&quot;) [B,D,H,S]" class="document-topic">&lt;Ts&gt;</a>[<a title="Source element index (field &quot;imm5:imm4&quot;)" class="document-topic">&lt;index2&gt;</a>]</p> 
+  </div> 
+  <pre>integer d = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Rd);
+integer n = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Rn);
+
+integer size = <a title="function: integer LowestSetBit(bits(N) x)" class="document-topic">LowestSetBit</a>(imm5);
+if size &gt; 3 then UNDEFINED;
+
+integer dst_index = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(imm5&lt;4:size+1&gt;);
+integer src_index = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(imm4&lt;3:size&gt;);
+integer idxdsize = if imm4&lt;3&gt; == '1' then 128 else 64; 
+// imm4&lt;size-1:0&gt; is IGNORED 
+
+integer esize = 8 &lt;&lt; size;</pre> 
+  <div></div> 
+  <h3>Assembler Symbols</h3> 
+  <div> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Vd&gt;</td> 
+      <td><a id="sa_vd"></a> <p>Is the name of the SIMD&amp;FP destination register, encoded in the "Rd" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Ts&gt;</td> 
+      <td><a id="sa_ts"></a> <p>Is an element size specifier, encoded in <q>imm5</q>: </p> 
+       <table> 
+        <thead> 
+         <tr> 
+          <th>imm5</th> 
+          <th>&lt;Ts&gt;</th> 
+         </tr> 
+        </thead> 
+        <tbody> 
+         <tr> 
+          <td>x0000</td> 
+          <td>RESERVED</td> 
+         </tr> 
+         <tr> 
+          <td>xxxx1</td> 
+          <td>B</td> 
+         </tr> 
+         <tr> 
+          <td>xxx10</td> 
+          <td>H</td> 
+         </tr> 
+         <tr> 
+          <td>xx100</td> 
+          <td>S</td> 
+         </tr> 
+         <tr> 
+          <td>x1000</td> 
+          <td>D</td> 
+         </tr> 
+        </tbody> 
+       </table> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;index1&gt;</td> 
+      <td><a id="sa_index1"></a> <p>Is the destination element index encoded in <q>imm5</q>: </p> 
+       <table> 
+        <thead> 
+         <tr> 
+          <th>imm5</th> 
+          <th>&lt;index1&gt;</th> 
+         </tr> 
+        </thead> 
+        <tbody> 
+         <tr> 
+          <td>x0000</td> 
+          <td>RESERVED</td> 
+         </tr> 
+         <tr> 
+          <td>xxxx1</td> 
+          <td>imm5&lt;4:1&gt;</td> 
+         </tr> 
+         <tr> 
+          <td>xxx10</td> 
+          <td>imm5&lt;4:2&gt;</td> 
+         </tr> 
+         <tr> 
+          <td>xx100</td> 
+          <td>imm5&lt;4:3&gt;</td> 
+         </tr> 
+         <tr> 
+          <td>x1000</td> 
+          <td>imm5&lt;4&gt;</td> 
+         </tr> 
+        </tbody> 
+       </table> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Vn&gt;</td> 
+      <td><a id="sa_vn"></a> <p>Is the name of the SIMD&amp;FP source register, encoded in the "Rn" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;index2&gt;</td> 
+      <td><a id="sa_index2"></a> <p>Is the source element index encoded in <q>imm5:imm4</q>: </p> 
+       <table> 
+        <thead> 
+         <tr> 
+          <th>imm5</th> 
+          <th>&lt;index2&gt;</th> 
+         </tr> 
+        </thead> 
+        <tbody> 
+         <tr> 
+          <td>x0000</td> 
+          <td>RESERVED</td> 
+         </tr> 
+         <tr> 
+          <td>xxxx1</td> 
+          <td>imm4&lt;3:0&gt;</td> 
+         </tr> 
+         <tr> 
+          <td>xxx10</td> 
+          <td>imm4&lt;3:1&gt;</td> 
+         </tr> 
+         <tr> 
+          <td>xx100</td> 
+          <td>imm4&lt;3:2&gt;</td> 
+         </tr> 
+         <tr> 
+          <td>x1000</td> 
+          <td>imm4&lt;3&gt;</td> 
+         </tr> 
+        </tbody> 
+       </table> Unspecified bits in "imm4" are ignored but should be set to zero by an assembler. </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div></div> 
+  <div> 
+   <a id="execute"></a> 
+   <h3>Operation</h3> 
+   <pre><a title="function: CheckFPAdvSIMDEnabled64()" class="document-topic">CheckFPAdvSIMDEnabled64</a>();
+bits(idxdsize) operand = <a title="accessor: bits(width) V[integer n, integer width]" class="document-topic">V</a>[n, idxdsize];
+bits(128) result;
+
+result = <a title="accessor: bits(width) V[integer n, integer width]" class="document-topic">V</a>[d, 128];
+<a title="accessor: Elem[bits(N) &amp;vector, integer e, integer size] = bits(size) value" class="document-topic">Elem</a>[result, dst_index, esize] = <a title="accessor: bits(size) Elem[bits(N) vector, integer e, integer size]" class="document-topic">Elem</a>[operand, src_index, esize];
+<a title="accessor: V[integer n, integer width] = bits(width) value" class="document-topic">V</a>[d, 128] = result;</pre> 
+  </div> 
+  <h3>Operational information</h3> 
+  <p>If PSTATE.DIT is 1:</p> 
+  <ul> 
+   <li>The execution time of this instruction is independent of: 
+    <ul> 
+     <li>The values of the data supplied in any of its registers.</li> 
+     <li>The values of the NZCV flags.</li> 
+    </ul></li> 
+   <li>The response of this instruction to asynchronous exceptions does not vary based on: 
+    <ul> 
+     <li>The values of the data supplied in any of its registers.</li> 
+     <li>The values of the NZCV flags.</li> 
+    </ul></li> 
+  </ul>  
+ </body>
+</html>

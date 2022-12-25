@@ -1,0 +1,228 @@
+<html>
+ <head>  <link rel="stylesheet" href="../def-style.css"></head> 
+ <body> 
+  <h2>NEG (shifted register)</h2> 
+  <p>Negate (shifted register) negates an optionally-shifted register value, and writes the result to the destination register.</p> 
+  <p> This is an alias of <a href="SUB--shifted-register---Subtract--shifted-register--.html" class="document-topic">SUB (shifted register)</a>. This means: </p> 
+  <ul> 
+   <li> The encodings in this description are named to match the encodings of <a href="SUB--shifted-register---Subtract--shifted-register--.html" class="document-topic">SUB (shifted register)</a>. </li> 
+   <li>The description of <a href="SUB--shifted-register---Subtract--shifted-register--.html" class="document-topic">SUB (shifted register)</a> gives the operational pseudocode, any <small>constrained unpredictable</small> behavior, and any operational information for this instruction.</li> 
+  </ul> 
+  <p></p> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>sf</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td colspan="2">shift</td> 
+      <td>0</td> 
+      <td colspan="5">Rm</td> 
+      <td colspan="6">imm6</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td colspan="5">Rd</td> 
+     </tr> 
+     <tr> 
+      <td></td> 
+      <td>op</td> 
+      <td>S</td> 
+      <td colspan="5"></td> 
+      <td colspan="2"></td> 
+      <td></td> 
+      <td colspan="5"></td> 
+      <td colspan="6"></td> 
+      <td colspan="5">Rn</td> 
+      <td colspan="5"></td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4>32-bit<span> (sf == 0)</span></h4> 
+   <a id="NEG_SUB_32_addsub_shift"></a> 
+   <p>NEG <a title="32-bit general-purpose destination register (field &quot;Rd&quot;)" class="document-topic">&lt;Wd&gt;</a>, <a title="32-bit general-purpose source register (field &quot;Rm&quot;)" class="document-topic">&lt;Wm&gt;</a>{, <a title="Optional shift type applied to second source operand, default LSL (field &quot;shift&quot;) [ASR,LSL,LSR]" class="document-topic">&lt;shift&gt;</a> #<a title="Shift amount [0-31], default 0 (field &quot;imm6&quot;)" class="document-topic">&lt;amount&gt;</a>}</p> 
+   <p> is equivalent to </p> 
+   <p><a href="SUB--shifted-register---Subtract--shifted-register--.html" class="document-topic">SUB</a> <a title="32-bit general-purpose destination register (field &quot;Rd&quot;)" class="document-topic">&lt;Wd&gt;</a>, WZR, <a title="32-bit general-purpose source register (field &quot;Rm&quot;)" class="document-topic">&lt;Wm&gt;</a> {, <a title="Optional shift type applied to second source operand, default LSL (field &quot;shift&quot;) [ASR,LSL,LSR]" class="document-topic">&lt;shift&gt;</a> #<a title="Shift amount [0-31], default 0 (field &quot;imm6&quot;)" class="document-topic">&lt;amount&gt;</a>}</p> 
+   <p> and is always the preferred disassembly. </p> 
+  </div> 
+  <div> 
+   <h4>64-bit<span> (sf == 1)</span></h4> 
+   <a id="NEG_SUB_64_addsub_shift"></a> 
+   <p>NEG <a title="64-bit general-purpose destination register (field &quot;Rd&quot;)" class="document-topic">&lt;Xd&gt;</a>, <a title="64-bit general-purpose source register (field &quot;Rm&quot;)" class="document-topic">&lt;Xm&gt;</a>{, <a title="Optional shift type applied to second source operand, default LSL (field &quot;shift&quot;) [ASR,LSL,LSR]" class="document-topic">&lt;shift&gt;</a> #<a title="Shift amount [0-63], default 0 (field &quot;imm6&quot;)" class="document-topic">&lt;amount&gt;</a>}</p> 
+   <p> is equivalent to </p> 
+   <p><a href="SUB--shifted-register---Subtract--shifted-register--.html" class="document-topic">SUB</a> <a title="64-bit general-purpose destination register (field &quot;Rd&quot;)" class="document-topic">&lt;Xd&gt;</a>, XZR, <a title="64-bit general-purpose source register (field &quot;Rm&quot;)" class="document-topic">&lt;Xm&gt;</a> {, <a title="Optional shift type applied to second source operand, default LSL (field &quot;shift&quot;) [ASR,LSL,LSR]" class="document-topic">&lt;shift&gt;</a> #<a title="Shift amount [0-63], default 0 (field &quot;imm6&quot;)" class="document-topic">&lt;amount&gt;</a>}</p> 
+   <p> and is always the preferred disassembly. </p> 
+  </div> 
+  <div></div> 
+  <h3>Assembler Symbols</h3> 
+  <div> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Wd&gt;</td> 
+      <td><a id="sa_wd"></a> <p>Is the 32-bit name of the general-purpose destination register, encoded in the "Rd" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Wm&gt;</td> 
+      <td><a id="sa_wm_1"></a> <p>Is the 32-bit name of the general-purpose source register, encoded in the "Rm" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Xd&gt;</td> 
+      <td><a id="sa_xd"></a> <p>Is the 64-bit name of the general-purpose destination register, encoded in the "Rd" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Xm&gt;</td> 
+      <td><a id="sa_xm_1"></a> <p>Is the 64-bit name of the general-purpose source register, encoded in the "Rm" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;shift&gt;</td> 
+      <td><a id="sa_shift"></a> <p>Is the optional shift type to be applied to the second source operand, defaulting to LSL and encoded in <q>shift</q>: </p> 
+       <table> 
+        <thead> 
+         <tr> 
+          <th>shift</th> 
+          <th>&lt;shift&gt;</th> 
+         </tr> 
+        </thead> 
+        <tbody> 
+         <tr> 
+          <td>00</td> 
+          <td>LSL</td> 
+         </tr> 
+         <tr> 
+          <td>01</td> 
+          <td>LSR</td> 
+         </tr> 
+         <tr> 
+          <td>10</td> 
+          <td>ASR</td> 
+         </tr> 
+         <tr> 
+          <td>11</td> 
+          <td>RESERVED</td> 
+         </tr> 
+        </tbody> 
+       </table> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;amount&gt;</td> 
+      <td><a id="sa_amount"></a> <p>For the 32-bit variant: is the shift amount, in the range 0 to 31, defaulting to 0 and encoded in the "imm6" field.</p> </td> 
+     </tr> 
+     <tr> 
+      <td></td> 
+      <td><a id="sa_amount_1"></a> <p>For the 64-bit variant: is the shift amount, in the range 0 to 63, defaulting to 0 and encoded in the "imm6" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div></div> 
+  <div> 
+   <h3>Operation</h3> 
+   <p>The description of <a href="SUB--shifted-register---Subtract--shifted-register--.html" class="document-topic">SUB (shifted register)</a> gives the operational pseudocode for this instruction.</p> 
+  </div> 
+  <h3>Operational information</h3> 
+  <p>If PSTATE.DIT is 1:</p> 
+  <ul> 
+   <li>The execution time of this instruction is independent of: 
+    <ul> 
+     <li>The values of the data supplied in any of its registers.</li> 
+     <li>The values of the NZCV flags.</li> 
+    </ul></li> 
+   <li>The response of this instruction to asynchronous exceptions does not vary based on: 
+    <ul> 
+     <li>The values of the data supplied in any of its registers.</li> 
+     <li>The values of the NZCV flags.</li> 
+    </ul></li> 
+  </ul>  
+ </body>
+</html>

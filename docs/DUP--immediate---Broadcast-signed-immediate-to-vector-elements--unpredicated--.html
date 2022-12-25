@@ -1,0 +1,227 @@
+<html>
+ <head>  <link rel="stylesheet" href="../def-style.css"></head> 
+ <body> 
+  <h2>DUP (immediate)</h2> 
+  <p>Broadcast signed immediate to vector elements (unpredicated)</p> 
+  <p>Unconditionally broadcast the signed integer immediate into each element of the destination vector. This instruction is unpredicated.</p> 
+  <p>The immediate operand is a signed value in the range -128 to +127, and for element widths of 16 bits or higher it may also be a signed multiple of 256 in the range -32768 to +32512 (excluding 0).</p> 
+  <p>The immediate is encoded in 8 bits with an optional left shift by 8. The preferred disassembly when the shift option is specified is "#&lt;simm8&gt;, LSL #8". However an assembler and disassembler may also allow use of the shifted 16-bit value unless the immediate is 0 and the shift amount is 8, which must be unambiguously described as "#0, LSL #8".</p> 
+  <p>This instruction is used by the alias <a href="MOV--immediate--unpredicated---Move-signed-immediate-to-vector-elements--unpredicated---an-alias-of-DUP--immediate--.html" title="Move signed immediate to vector elements (unpredicated)" class="document-topic">MOV (immediate, unpredicated)</a>.</p> 
+  <p>This instruction is used by the pseudo-instruction <a href="FMOV--zero--unpredicated---Move-floating-point--0-0-to-vector-elements--unpredicated---an-alias-of-DUP--immediate--.html" title="Move floating-point +0" class="document-topic">FMOV (zero, unpredicated)</a>.</p> 
+  <p></p> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td colspan="2">size</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>sh</td> 
+      <td colspan="8">imm8</td> 
+      <td colspan="5">Zd</td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4></h4> 
+   <a id="dup_z_i_"></a> 
+   <p>DUP <a title="Destination scalable vector register (field &quot;Zd&quot;)" class="document-topic">&lt;Zd&gt;</a>.<a title="Size specifier (field &quot;size&quot;) [B,D,H,S]" class="document-topic">&lt;T&gt;</a>, #<a title="Signed immediate [-128-127] (field &quot;imm8&quot;)" class="document-topic">&lt;imm&gt;</a>{, <a title="Optional left shift to apply to the immediate, default LSL #0 (field &quot;sh&quot;) [LSL #0,LSL #8]" class="document-topic">&lt;shift&gt;</a>}</p> 
+  </div> 
+  <pre>if !<a title="function: boolean HaveSVE()" class="document-topic">HaveSVE</a>() &amp;&amp; !<a title="function: boolean HaveSME()" class="document-topic">HaveSME</a>() then UNDEFINED;
+if size:sh == '001' then UNDEFINED;
+constant integer esize = 8 &lt;&lt; <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(size);
+integer d = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Zd);
+integer imm = <a title="function: integer SInt(bits(N) x)" class="document-topic">SInt</a>(imm8);
+if sh == '1' then imm = imm &lt;&lt; 8;</pre> 
+  <div></div> 
+  <h3>Assembler Symbols</h3> 
+  <div> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Zd&gt;</td> 
+      <td><a id="sa_zd"></a> <p>Is the name of the destination scalable vector register, encoded in the "Zd" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;T&gt;</td> 
+      <td><a id="sa_t"></a> <p>Is the size specifier, encoded in <q>size</q>: </p> 
+       <table> 
+        <thead> 
+         <tr> 
+          <th>size</th> 
+          <th>&lt;T&gt;</th> 
+         </tr> 
+        </thead> 
+        <tbody> 
+         <tr> 
+          <td>00</td> 
+          <td>B</td> 
+         </tr> 
+         <tr> 
+          <td>01</td> 
+          <td>H</td> 
+         </tr> 
+         <tr> 
+          <td>10</td> 
+          <td>S</td> 
+         </tr> 
+         <tr> 
+          <td>11</td> 
+          <td>D</td> 
+         </tr> 
+        </tbody> 
+       </table> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;imm&gt;</td> 
+      <td><a id="sa_imm"></a> <p>Is a signed immediate in the range -128 to 127, encoded in the "imm8" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;shift&gt;</td> 
+      <td><a id="sa_shift"></a> <p>Is the optional left shift to apply to the immediate, defaulting to LSL #0 and encoded in <q>sh</q>: </p> 
+       <table> 
+        <thead> 
+         <tr> 
+          <th>sh</th> 
+          <th>&lt;shift&gt;</th> 
+         </tr> 
+        </thead> 
+        <tbody> 
+         <tr> 
+          <td>0</td> 
+          <td>LSL #0</td> 
+         </tr> 
+         <tr> 
+          <td>1</td> 
+          <td>LSL #8</td> 
+         </tr> 
+        </tbody> 
+       </table> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div></div> 
+  <h3>Alias Conditions</h3> 
+  <table> 
+   <thead> 
+    <tr> 
+     <th>Alias</th> 
+     <th>Is preferred when</th> 
+    </tr> 
+   </thead> 
+   <tbody> 
+    <tr> 
+     <td><a title="Move floating-point +0" href="FMOV--zero--unpredicated---Move-floating-point--0-0-to-vector-elements--unpredicated---an-alias-of-DUP--immediate--.html" class="document-topic">FMOV (zero, unpredicated)</a></td> 
+     <td><span>Never</span></td> 
+    </tr> 
+    <tr> 
+     <td><a href="MOV--immediate--unpredicated---Move-signed-immediate-to-vector-elements--unpredicated---an-alias-of-DUP--immediate--.html" title="Move signed immediate to vector elements (unpredicated)" class="document-topic">MOV (immediate, unpredicated)</a></td> 
+     <td><span>Unconditionally</span></td> 
+    </tr> 
+   </tbody> 
+  </table> 
+  <div> 
+   <a id="execute"></a> 
+   <h3>Operation</h3> 
+   <pre><a title="function: CheckSVEEnabled()" class="document-topic">CheckSVEEnabled</a>();
+constant integer VL = <a title="accessor: integer CurrentVL" class="document-topic">CurrentVL</a>;
+constant integer PL = VL DIV 8;
+bits(VL) result = <a title="function: bits(M*N) Replicate(bits(M) x, integer N)" class="document-topic">Replicate</a>(imm&lt;esize-1:0&gt;, VL DIV esize);
+<a title="accessor: Z[integer n, integer width] = bits(width) value" class="document-topic">Z</a>[d, VL] = result;</pre> 
+  </div> 
+  <h3>Operational information</h3> 
+  <p>If FEAT_SVE2 is implemented or FEAT_SME is implemented, then if PSTATE.DIT is 1:</p> 
+  <ul> 
+   <li>The execution time of this instruction is independent of: 
+    <ul> 
+     <li>The values of the data supplied in any of its registers.</li> 
+     <li>The values of the NZCV flags.</li> 
+    </ul></li> 
+   <li>The response of this instruction to asynchronous exceptions does not vary based on: 
+    <ul> 
+     <li>The values of the data supplied in any of its registers.</li> 
+     <li>The values of the NZCV flags.</li> 
+    </ul></li> 
+  </ul>  
+ </body>
+</html>

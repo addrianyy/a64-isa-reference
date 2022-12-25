@@ -1,0 +1,560 @@
+<html>
+ <head>  <link rel="stylesheet" href="../def-style.css"></head> 
+ <body> 
+  <h2>FTMAD</h2> 
+  <p>Floating-point trigonometric multiply-add coefficient</p> 
+  <p>The <span>FTMAD</span> instruction calculates the series terms for either <small>sin(x)</small> or <small>cos(x)</small>, where the argument <small>x</small> has been adjusted to be in the range -π/4 &lt; <small>x</small> ≤ π/4.</p> 
+  <p>To calculate the series terms of <small>sin(x)</small> and <small>cos(x)</small> the initial source operands of <span>FTMAD</span> should be zero in the first source vector and <small>x</small><sup>2</sup> in the second source vector. The <span>FTMAD</span> instruction is then executed eight times to calculate the sum of eight series terms, which gives a result of sufficient precision.</p> 
+  <p>The <span>FTMAD</span> instruction multiplies each element of the first source vector by the absolute value of the corresponding element of the second source vector and performs a fused addition of each product with a value obtained from a table of hard-wired coefficients, and places the results destructively in the first source vector.</p> 
+  <p>The coefficients are different for <small>sin(x)</small> and <small>cos(x)</small>, and are selected by a combination of the sign bit in the second source element and an immediate index in the range 0 to 7.</p> 
+  <p></p> 
+  <p>Double-precision coefficient table for sin(x) (s2&lt;63&gt; == '0')</p> 
+  <table> 
+   <thead> 
+    <tr> 
+     <th>Index</th> 
+     <th>Hexadecimal</th> 
+     <th>Decimal</th> 
+     <th>Exact Value</th> 
+    </tr> 
+   </thead> 
+   <tbody> 
+    <tr> 
+     <td>0</td> 
+     <td>3ff0 0000 0000 0000</td> 
+     <td>1.0</td> 
+     <td>= 1/1!</td> 
+    </tr> 
+    <tr> 
+     <td>1</td> 
+     <td>bfc5 5555 5555 5543</td> 
+     <td>-0.1666666666666661</td> 
+     <td>&gt; -1/3!</td> 
+    </tr> 
+    <tr> 
+     <td>2</td> 
+     <td>3f81 1111 1110 f30c</td> 
+     <td>0.8333333333320002e-02</td> 
+     <td>&lt; 1/5!</td> 
+    </tr> 
+    <tr> 
+     <td>3</td> 
+     <td>bf2a 01a0 19b9 2fc6</td> 
+     <td>-0.1984126982840213e-03</td> 
+     <td>&gt; -1/7!</td> 
+    </tr> 
+    <tr> 
+     <td>4</td> 
+     <td>3ec7 1de3 51f3 d22b</td> 
+     <td>0.2755731329901505e-05</td> 
+     <td>&lt; 1/9!</td> 
+    </tr> 
+    <tr> 
+     <td>5</td> 
+     <td>be5a e5e2 b60f 7b91</td> 
+     <td>-0.2505070584637887e-07</td> 
+     <td>&gt; -1/11!</td> 
+    </tr> 
+    <tr> 
+     <td>6</td> 
+     <td>3de5 d840 8868 552f</td> 
+     <td>0.1589413637195215e-09</td> 
+     <td>&lt; 1/13!</td> 
+    </tr> 
+    <tr> 
+     <td>7</td> 
+     <td>0000 0000 0000 0000</td> 
+     <td>0.0</td> 
+     <td>&gt; -1/15!</td> 
+    </tr> 
+   </tbody> 
+  </table> 
+  <p>Double-precision coefficient table for cos(x) (s2&lt;63&gt; == '1')</p> 
+  <table> 
+   <thead> 
+    <tr> 
+     <th>Index</th> 
+     <th>Hexadecimal</th> 
+     <th>Decimal</th> 
+     <th>Exact Value</th> 
+    </tr> 
+   </thead> 
+   <tbody> 
+    <tr> 
+     <td>0</td> 
+     <td>3ff0 0000 0000 0000</td> 
+     <td>1.0</td> 
+     <td>= 1/0!</td> 
+    </tr> 
+    <tr> 
+     <td>1</td> 
+     <td>bfe0 0000 0000 0000</td> 
+     <td>-0.5000000000000000</td> 
+     <td>= -1/2!</td> 
+    </tr> 
+    <tr> 
+     <td>2</td> 
+     <td>3fa5 5555 5555 5536</td> 
+     <td>0.4166666666666645e-01</td> 
+     <td>&lt; 1/4!</td> 
+    </tr> 
+    <tr> 
+     <td>3</td> 
+     <td>bf56 c16c 16c1 3a0b</td> 
+     <td>-0.1388888888886111e-02</td> 
+     <td>&gt; -1/6!</td> 
+    </tr> 
+    <tr> 
+     <td>4</td> 
+     <td>3efa 01a0 19b1 e8d8</td> 
+     <td>0.2480158728388683e-04</td> 
+     <td>&lt; 1/8!</td> 
+    </tr> 
+    <tr> 
+     <td>5</td> 
+     <td>be92 7e4f 7282 f468</td> 
+     <td>-0.2755731309913950e-06</td> 
+     <td>&gt; -1/10!</td> 
+    </tr> 
+    <tr> 
+     <td>6</td> 
+     <td>3e21 ee96 d264 1b13</td> 
+     <td>0.2087558253975872e-08</td> 
+     <td>&lt; 1/12!</td> 
+    </tr> 
+    <tr> 
+     <td>7</td> 
+     <td>bda8 f763 80fb b401</td> 
+     <td>-0.1135338700720054e-10</td> 
+     <td>&gt; -1/14!</td> 
+    </tr> 
+   </tbody> 
+  </table> 
+  <p>Single-precision coefficient table for sin(x) (s2&lt;31&gt; == '0')</p> 
+  <table> 
+   <thead> 
+    <tr> 
+     <th>Index</th> 
+     <th>Hexadecimal</th> 
+     <th>Decimal</th> 
+     <th>Exact Value</th> 
+    </tr> 
+   </thead> 
+   <tbody> 
+    <tr> 
+     <td>0</td> 
+     <td>3f80 0000</td> 
+     <td>1.0</td> 
+     <td>= 1/1!</td> 
+    </tr> 
+    <tr> 
+     <td>1</td> 
+     <td>be2a aaab</td> 
+     <td>-1.666666716337e-01</td> 
+     <td>&gt; -1/3!</td> 
+    </tr> 
+    <tr> 
+     <td>2</td> 
+     <td>3c08 8886</td> 
+     <td>8.333330973983e-03</td> 
+     <td>&lt; 1/5!</td> 
+    </tr> 
+    <tr> 
+     <td>3</td> 
+     <td>b950 08b9</td> 
+     <td>-1.983967522392e-04</td> 
+     <td>&gt; -1/7!</td> 
+    </tr> 
+    <tr> 
+     <td>4</td> 
+     <td>3636 9d6d</td> 
+     <td>2.721174723774e-06</td> 
+     <td>&lt; 1/9!</td> 
+    </tr> 
+    <tr> 
+     <td>5</td> 
+     <td>0000 0000</td> 
+     <td>0.0</td> 
+     <td>&gt; -1/11!</td> 
+    </tr> 
+    <tr> 
+     <td>6</td> 
+     <td>0000 0000</td> 
+     <td>0.0</td> 
+     <td>&lt; 1/13!</td> 
+    </tr> 
+    <tr> 
+     <td>7</td> 
+     <td>0000 0000</td> 
+     <td>0.0</td> 
+     <td>&gt; -1/15!</td> 
+    </tr> 
+   </tbody> 
+  </table> 
+  <p>Single-precision coefficient table for cos(x) (s2&lt;31&gt; == '1')</p> 
+  <table> 
+   <thead> 
+    <tr> 
+     <th>Index</th> 
+     <th>Hexadecimal</th> 
+     <th>Decimal</th> 
+     <th>Exact Value</th> 
+    </tr> 
+   </thead> 
+   <tbody> 
+    <tr> 
+     <td>0</td> 
+     <td>3f80 0000</td> 
+     <td>1.0</td> 
+     <td>= 1/0!</td> 
+    </tr> 
+    <tr> 
+     <td>1</td> 
+     <td>bf00 0000</td> 
+     <td>-5.000000000000e-01</td> 
+     <td>= -1/2!</td> 
+    </tr> 
+    <tr> 
+     <td>2</td> 
+     <td>3d2a aaa6</td> 
+     <td>4.166664928198e-02</td> 
+     <td>&lt; 1/4!</td> 
+    </tr> 
+    <tr> 
+     <td>3</td> 
+     <td>bab6 0705</td> 
+     <td>-1.388759003021e-03</td> 
+     <td>&gt; -1/6!</td> 
+    </tr> 
+    <tr> 
+     <td>4</td> 
+     <td>37cd 37cc</td> 
+     <td>2.446388680255e-05</td> 
+     <td>&lt; 1/8!</td> 
+    </tr> 
+    <tr> 
+     <td>5</td> 
+     <td>0000 0000</td> 
+     <td>0.0</td> 
+     <td>&gt; -1/10!</td> 
+    </tr> 
+    <tr> 
+     <td>6</td> 
+     <td>0000 0000</td> 
+     <td>0.0</td> 
+     <td>&lt; 1/12!</td> 
+    </tr> 
+    <tr> 
+     <td>7</td> 
+     <td>0000 0000</td> 
+     <td>0.0</td> 
+     <td>&gt; -1/14!</td> 
+    </tr> 
+   </tbody> 
+  </table> 
+  <p>Half-precision coefficient table for sin(x) (s2&lt;15&gt; == '0')</p> 
+  <table> 
+   <thead> 
+    <tr> 
+     <th>Index</th> 
+     <th>Hexadecimal</th> 
+     <th>Decimal</th> 
+     <th>Exact Value</th> 
+    </tr> 
+   </thead> 
+   <tbody> 
+    <tr> 
+     <td>0</td> 
+     <td>3c00</td> 
+     <td>1.0</td> 
+     <td>= 1/1!</td> 
+    </tr> 
+    <tr> 
+     <td>1</td> 
+     <td>b155</td> 
+     <td>-1.666666716337e-01</td> 
+     <td>&gt; -1/3!</td> 
+    </tr> 
+    <tr> 
+     <td>2</td> 
+     <td>2030</td> 
+     <td>8.333330973983e-03</td> 
+     <td>&lt; 1/5!</td> 
+    </tr> 
+    <tr> 
+     <td>3</td> 
+     <td>0000</td> 
+     <td>0.0</td> 
+     <td>&gt; -1/7!</td> 
+    </tr> 
+    <tr> 
+     <td>4</td> 
+     <td>0000</td> 
+     <td>0.0</td> 
+     <td>&lt; 1/9!</td> 
+    </tr> 
+    <tr> 
+     <td>5</td> 
+     <td>0000</td> 
+     <td>0.0</td> 
+     <td>&gt; -1/11!</td> 
+    </tr> 
+    <tr> 
+     <td>6</td> 
+     <td>0000</td> 
+     <td>0.0</td> 
+     <td>&lt; 1/13!</td> 
+    </tr> 
+    <tr> 
+     <td>7</td> 
+     <td>0000</td> 
+     <td>0.0</td> 
+     <td>&gt; -1/15!</td> 
+    </tr> 
+   </tbody> 
+  </table> 
+  <p>Half-precision coefficient table for cos(x) (s2&lt;15&gt; == '1')</p> 
+  <table> 
+   <thead> 
+    <tr> 
+     <th>Index</th> 
+     <th>Hexadecimal</th> 
+     <th>Decimal</th> 
+     <th>Exact Value</th> 
+    </tr> 
+   </thead> 
+   <tbody> 
+    <tr> 
+     <td>0</td> 
+     <td>3c00</td> 
+     <td>1.0</td> 
+     <td>= 1/0!</td> 
+    </tr> 
+    <tr> 
+     <td>1</td> 
+     <td>b800</td> 
+     <td>-5.000000000000e-01</td> 
+     <td>= -1/2!</td> 
+    </tr> 
+    <tr> 
+     <td>2</td> 
+     <td>293a</td> 
+     <td>4.166664928198e-02</td> 
+     <td>&lt; 1/4!</td> 
+    </tr> 
+    <tr> 
+     <td>3</td> 
+     <td>0000</td> 
+     <td>0.0</td> 
+     <td>&gt; -1/6!</td> 
+    </tr> 
+    <tr> 
+     <td>4</td> 
+     <td>0000</td> 
+     <td>0.0</td> 
+     <td>&lt; 1/8!</td> 
+    </tr> 
+    <tr> 
+     <td>5</td> 
+     <td>0000</td> 
+     <td>0.0</td> 
+     <td>&gt; -1/10!</td> 
+    </tr> 
+    <tr> 
+     <td>6</td> 
+     <td>0000</td> 
+     <td>0.0</td> 
+     <td>&lt; 1/12!</td> 
+    </tr> 
+    <tr> 
+     <td>7</td> 
+     <td>0000</td> 
+     <td>0.0</td> 
+     <td>&gt; -1/14!</td> 
+    </tr> 
+   </tbody> 
+  </table> 
+  <p>This instruction is illegal when executed in Streaming SVE mode, unless FEAT_SME_FA64 is implemented and enabled.</p> 
+  <p></p> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td colspan="2">size</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td colspan="3">imm3</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td colspan="5">Zm</td> 
+      <td colspan="5">Zdn</td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4></h4> 
+   <a id="ftmad_z_zzi_"></a> 
+   <p>FTMAD <a title="First source and destination scalable vector register (field &quot;Zdn&quot;)" class="document-topic">&lt;Zdn&gt;</a>.<a title="Size specifier (field &quot;size&quot;) [D,H,S]" class="document-topic">&lt;T&gt;</a>, <a title="First source and destination scalable vector register (field &quot;Zdn&quot;)" class="document-topic">&lt;Zdn&gt;</a>.<a title="Size specifier (field &quot;size&quot;) [D,H,S]" class="document-topic">&lt;T&gt;</a>, <a title="Second source scalable vector register (field &quot;Zm&quot;)" class="document-topic">&lt;Zm&gt;</a>.<a title="Size specifier (field &quot;size&quot;) [D,H,S]" class="document-topic">&lt;T&gt;</a>, #<a title="Unsigned immediate operand [0-7] (field &quot;imm3&quot;)" class="document-topic">&lt;imm&gt;</a></p> 
+  </div> 
+  <pre>if !<a title="function: boolean HaveSVE()" class="document-topic">HaveSVE</a>() then UNDEFINED;
+if size == '00' then UNDEFINED;
+constant integer esize = 8 &lt;&lt; <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(size);
+integer dn = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Zdn);
+integer m = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Zm);
+integer imm = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(imm3);</pre> 
+  <div></div> 
+  <h3>Assembler Symbols</h3> 
+  <div> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Zdn&gt;</td> 
+      <td><a id="sa_zdn"></a> <p>Is the name of the first source and destination scalable vector register, encoded in the "Zdn" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;T&gt;</td> 
+      <td><a id="sa_t"></a> <p>Is the size specifier, encoded in <q>size</q>: </p> 
+       <table> 
+        <thead> 
+         <tr> 
+          <th>size</th> 
+          <th>&lt;T&gt;</th> 
+         </tr> 
+        </thead> 
+        <tbody> 
+         <tr> 
+          <td>00</td> 
+          <td>RESERVED</td> 
+         </tr> 
+         <tr> 
+          <td>01</td> 
+          <td>H</td> 
+         </tr> 
+         <tr> 
+          <td>10</td> 
+          <td>S</td> 
+         </tr> 
+         <tr> 
+          <td>11</td> 
+          <td>D</td> 
+         </tr> 
+        </tbody> 
+       </table> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Zm&gt;</td> 
+      <td><a id="sa_zm"></a> <p>Is the name of the second source scalable vector register, encoded in the "Zm" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;imm&gt;</td> 
+      <td><a id="sa_imm"></a> <p>Is the unsigned immediate operand, in the range 0 to 7, encoded in the "imm3" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div></div> 
+  <div> 
+   <a id="execute"></a> 
+   <h3>Operation</h3> 
+   <pre><a title="function: CheckNonStreamingSVEEnabled()" class="document-topic">CheckNonStreamingSVEEnabled</a>();
+constant integer VL = <a title="accessor: integer CurrentVL" class="document-topic">CurrentVL</a>;
+constant integer PL = VL DIV 8;
+constant integer elements = VL DIV esize;
+bits(VL) operand1 = <a title="accessor: bits(width) Z[integer n, integer width]" class="document-topic">Z</a>[dn, VL];
+bits(VL) operand2 = <a title="accessor: bits(width) Z[integer n, integer width]" class="document-topic">Z</a>[m, VL];
+bits(VL) result;
+
+for e = 0 to elements-1
+    bits(esize) element1 = <a title="accessor: bits(size) Elem[bits(N) vector, integer e, integer size]" class="document-topic">Elem</a>[operand1, e, esize];
+    bits(esize) element2 = <a title="accessor: bits(size) Elem[bits(N) vector, integer e, integer size]" class="document-topic">Elem</a>[operand2, e, esize];
+    <a title="accessor: Elem[bits(N) &amp;vector, integer e, integer size] = bits(size) value" class="document-topic">Elem</a>[result, e, esize] = <a title="function: bits(N) FPTrigMAdd(integer x_in, bits(N) op1, bits(N) op2_in, FPCRType fpcr)" class="document-topic">FPTrigMAdd</a>(imm, element1, element2, FPCR[]);
+
+<a title="accessor: Z[integer n, integer width] = bits(width) value" class="document-topic">Z</a>[dn, VL] = result;</pre> 
+  </div> 
+  <h3>Operational information</h3> 
+  <p> This instruction might be immediately preceded in program order by a <span>MOVPRFX</span> instruction. The <span>MOVPRFX</span> instruction must conform to all of the following requirements, otherwise the behavior of the <span>MOVPRFX</span> and this instruction is <small>unpredictable</small>: </p> 
+  <ul> 
+   <li>The <span>MOVPRFX</span> instruction must be unpredicated.</li> 
+   <li>The <span>MOVPRFX</span> instruction must specify the same destination register as this instruction.</li> 
+   <li>The destination register must not refer to architectural register state referenced by any other source operand register of this instruction.</li> 
+  </ul>  
+ </body>
+</html>

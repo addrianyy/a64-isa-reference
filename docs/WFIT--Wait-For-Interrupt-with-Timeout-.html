@@ -1,0 +1,117 @@
+<html>
+ <head>  <link rel="stylesheet" href="../def-style.css"></head> 
+ <body> 
+  <h2>WFIT</h2> 
+  <p>Wait For Interrupt with Timeout is a hint instruction that indicates that the PE can enter a low-power state and remain there until either a local timeout event or a wakeup event occurs. For more information, see <em>Wait For Interrupt</em>.</p> 
+  <p>As described in <em>Wait For Interrupt</em>, the execution of a <span>WFIT</span> instruction that would otherwise cause entry to a low-power state can be trapped to a higher Exception level.</p> 
+  <h3><a id="iclass_system"></a>System<span><br></br>(FEAT_WFxT) </span></h3> 
+  <p></p> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td colspan="5">Rd</td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4></h4> 
+   <a id="WFIT_only_systeminstrswithreg"></a> 
+   <p>WFIT <a title="64-bit general-purpose source register (field &quot;Rd&quot;)" class="document-topic">&lt;Xt&gt;</a></p> 
+  </div> 
+  <pre>if !<a title="function: boolean HaveFeatWFxT()" class="document-topic">HaveFeatWFxT</a>() then UNDEFINED;
+
+integer d = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Rd);</pre> 
+  <div></div> 
+  <h3>Assembler Symbols</h3> 
+  <div> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Xt&gt;</td> 
+      <td><a id="sa_xt"></a> <p>Is the 64-bit name of the general-purpose source register, encoded in the "Rd" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div></div> 
+  <div> 
+   <a id="execute"></a> 
+   <h3>Operation</h3> 
+   <pre>integer localtimeout = UInt(X[d, 64]);
+
+if <a title="function: boolean Halted()" class="document-topic">Halted</a>() &amp;&amp; <a title="function: boolean ConstrainUnpredictableBool(Unpredictable which)" class="document-topic">ConstrainUnpredictableBool</a>(<a title="enumeration Unpredictable {  Unpredictable_VMSR,  Unpredictable_WBOVERLAPLD,  Unpredictable_WBOVERLAPST,  Unpredictable_LDPOVERLAP,  Unpredictable_BASEOVERLAP,  Unpredictable_DATAOVERLAP,  Unpredictable_DEVPAGE2,  Unpredictable_INSTRDEVICE,  Unpredictable_RESCPACR,  Unpredictable_RESMAIR,  Unpredictable_S1CTAGGED,  Unpredictable_S2RESMEMATTR,  Unpredictable_RESTEXCB,  Unpredictable_RESPRRR,  Unpredictable_RESDACR,  Unpredictable_RESVTCRS,  Unpredictable_RESTnSZ,  Unpredictable_RESTCF,  Unpredictable_DEVICETAGSTORE,  Unpredictable_OORTnSZ,  Unpredictable_LARGEIPA,  Unpredictable_ESRCONDPASS,  Unpredictable_ILZEROIT,  Unpredictable_ILZEROT,  Unpredictable_BPVECTORCATCHPRI,  Unpredictable_VCMATCHHALF,   Unpredictable_VCMATCHDAPA,  Unpredictable_WPMASKANDBAS,  Unpredictable_WPBASCONTIGUOUS,  Unpredictable_RESWPMASK,  Unpredictable_WPMASKEDBITS,  Unpredictable_RESBPWPCTRL,  Unpredictable_BPNOTIMPL,  Unpredictable_RESBPTYPE,  Unpredictable_BPNOTCTXCMP,  Unpredictable_BPMATCHHALF,  Unpredictable_BPMISMATCHHALF,  Unpredictable_RESTARTALIGNPC,  Unpredictable_RESTARTZEROUPPERPC,  Unpredictable_ZEROUPPER,   Unpredictable_ERETZEROUPPERPC,   Unpredictable_A32FORCEALIGNPC,  Unpredictable_SMD,  Unpredictable_NONFAULT,  Unpredictable_SVEZEROUPPER,  Unpredictable_SVELDNFDATA,  Unpredictable_SVELDNFZERO,  Unpredictable_CHECKSPNONEACTIVE,  Unpredictable_SMEZEROUPPER,  Unpredictable_NVNV1,  Unpredictable_Shareability,  Unpredictable_AFUPDATE,  Unpredictable_DBUPDATE,  Unpredictable_IESBinDebug,  Unpredictable_BADPMSFCR,  Unpredictable_ZEROBTYPE,  Unpredictable_EL2TIMESTAMP, Unpredictable_EL1TIMESTAMP,  Unpredictable_RESERVEDNSxB,  Unpredictable_WFxTDEBUG,  Unpredictable_LS64UNSUPPORTED,   Unpredictable_MISALIGNEDATOMIC,  Unpredictable_CLEARERRITEZERO,   Unpredictable_ALUEXCEPTIONRETURN,  Unpredictable_IGNORETRAPINDEBUG,  Unpredictable_DBGxVR_RESS,  Unpredictable_PMUEVENTCOUNTER,  Unpredictable_PMSCR_PCT,   Unpredictable_CounterReservedForEL2,  Unpredictable_BRBFILTRATE,   Unpredictable_MOPSOVERLAP31,  Unpredictable_STOREONLYTAGCHECKEDCAS,  Unpredictable_RESTC }" class="document-topic">Unpredictable_WFxTDEBUG</a>) then
+    <a title="function: EndOfInstruction()" class="document-topic">EndOfInstruction</a>();
+
+<a title="function: Hint_WFI(integer localtimeout, WFxType wfxtype)" class="document-topic">Hint_WFI</a>(localtimeout, <a title="enumeration WFxType {WFxType_WFE, WFxType_WFI, WFxType_WFET, WFxType_WFIT}" class="document-topic">WFxType_WFIT</a>);</pre> 
+  </div>  
+ </body>
+</html>

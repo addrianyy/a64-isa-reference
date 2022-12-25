@@ -1,0 +1,168 @@
+<html>
+ <head>  <link rel="stylesheet" href="../def-style.css"></head> 
+ <body> 
+  <h2>BRB</h2> 
+  <p>Branch Record Buffer. For more information, see <em>op0==0b01, cache maintenance, TLB maintenance, and address translation instructions</em>.</p> 
+  <p> This is an alias of <a href="SYS--System-instruction-.html" class="document-topic">SYS</a>. This means: </p> 
+  <ul> 
+   <li> The encodings in this description are named to match the encodings of <a href="SYS--System-instruction-.html" class="document-topic">SYS</a>. </li> 
+   <li>The description of <a href="SYS--System-instruction-.html" class="document-topic">SYS</a> gives the operational pseudocode, any <small>constrained unpredictable</small> behavior, and any operational information for this instruction.</li> 
+  </ul> 
+  <h3><a id="iclass_system"></a>System<span><br></br>(FEAT_BRBE) </span></h3> 
+  <p></p> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td colspan="3">op2</td> 
+      <td colspan="5">Rt</td> 
+     </tr> 
+     <tr> 
+      <td colspan="10"></td> 
+      <td>L</td> 
+      <td colspan="2"></td> 
+      <td colspan="3">op1</td> 
+      <td colspan="4">CRn</td> 
+      <td colspan="4">CRm</td> 
+      <td colspan="3"></td> 
+      <td colspan="5"></td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4></h4> 
+   <a id="BRB_SYS_CR_systeminstrs"></a> 
+   <p>BRB <a title="BRB instruction name, as listed for BRB system instruction group (field &quot;op2&quot;) [IALL (FEAT_BRBE),INJ (FEAT_BRBE)]" class="document-topic">&lt;brb_op&gt;</a>{, <a title="64-bit optional general-purpose source register, default '11111' (field &quot;Rt&quot;)" class="document-topic">&lt;Xt&gt;</a>}</p> 
+   <p> is equivalent to </p> 
+   <p><a href="SYS--System-instruction-.html" class="document-topic">SYS</a> #1, C7, C2, #<a title="3-bit unsigned immediate [0-7] (field &quot;op2&quot;)" class="document-topic">&lt;op2&gt;</a>{, <a title="64-bit optional general-purpose source register, default '11111' (field &quot;Rt&quot;)" class="document-topic">&lt;Xt&gt;</a>}</p> 
+   <p> and is the preferred disassembly when <span>SysOp('001','0111','0010',op2) == Sys_BRB</span>. </p> 
+  </div> 
+  <div></div> 
+  <h3>Assembler Symbols</h3> 
+  <div> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;brb_op&gt;</td> 
+      <td><a id="sa_brb_op"></a> <p>Is a BRB instruction name, as listed for the BRB system instruction group, encoded in <q>op2</q>: </p> 
+       <table> 
+        <thead> 
+         <tr> 
+          <th>op2</th> 
+          <th>&lt;brb_op&gt;</th> 
+          <th>Architectural Feature</th> 
+         </tr> 
+        </thead> 
+        <tbody> 
+         <tr> 
+          <td>100</td> 
+          <td>IALL</td> 
+          <td> FEAT_BRBE </td> 
+         </tr> 
+         <tr> 
+          <td>101</td> 
+          <td>INJ</td> 
+          <td> FEAT_BRBE </td> 
+         </tr> 
+        </tbody> 
+       </table> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;op2&gt;</td> 
+      <td><a id="sa_op2"></a> <p>Is a 3-bit unsigned immediate, in the range 0 to 7, encoded in the "op2" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Xt&gt;</td> 
+      <td><a id="sa_xt"></a> <p>Is the 64-bit name of the optional general-purpose source register, defaulting to '11111', encoded in the "Rt" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div></div> 
+  <div> 
+   <h3>Operation</h3> 
+   <p>The description of <a href="SYS--System-instruction-.html" class="document-topic">SYS</a> gives the operational pseudocode for this instruction.</p> 
+  </div>  
+ </body>
+</html>

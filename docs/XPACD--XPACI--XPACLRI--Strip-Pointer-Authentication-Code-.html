@@ -1,0 +1,221 @@
+<html>
+ <head>  <link rel="stylesheet" href="../def-style.css"></head> 
+ <body> 
+  <h2>XPACD, XPACI, XPACLRI</h2> 
+  <p>Strip Pointer Authentication Code. This instruction removes the pointer authentication code from an address. The address is in the specified general-purpose register for <span>XPACI</span> and <span>XPACD</span>, and is in LR for <span>XPACLRI</span>.</p> 
+  <p>The <span>XPACD</span> instruction is used for data addresses, and <span>XPACI</span> and <span>XPACLRI</span> are used for instruction addresses.</p> 
+  <p> It has encodings from 2 classes: <a class="document-topic">Integer</a> and <a class="document-topic">System</a> </p> 
+  <h3><a id="iclass_general"></a>Integer<span><br></br>(FEAT_PAuth) </span></h3> 
+  <p></p> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>D</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td colspan="5">Rd</td> 
+     </tr> 
+     <tr> 
+      <td></td> 
+      <td></td> 
+      <td></td> 
+      <td colspan="8"></td> 
+      <td colspan="5"></td> 
+      <td></td> 
+      <td></td> 
+      <td colspan="3"></td> 
+      <td></td> 
+      <td colspan="5">Rn</td> 
+      <td colspan="5"></td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4>XPACD<span> (D == 1)</span></h4> 
+   <a id="XPACD_64Z_dp_1src"></a> 
+   <p>XPACD <a title="64-bit general-purpose destination register (field &quot;Rd&quot;)" class="document-topic">&lt;Xd&gt;</a></p> 
+  </div> 
+  <div> 
+   <h4>XPACI<span> (D == 0)</span></h4> 
+   <a id="XPACI_64Z_dp_1src"></a> 
+   <p>XPACI <a title="64-bit general-purpose destination register (field &quot;Rd&quot;)" class="document-topic">&lt;Xd&gt;</a></p> 
+  </div> 
+  <pre>boolean data = (D == '1');
+integer d = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Rd);
+integer n = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Rn);
+
+if !<a title="function: boolean HavePACExt()" class="document-topic">HavePACExt</a>() then
+    UNDEFINED;
+
+if n != 31 then UNDEFINED;</pre> 
+  <h3><a id="iclass_system"></a>System<span><br></br>(FEAT_PAuth) </span></h3> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4></h4> 
+   <a id="XPACLRI_HI_hints"></a> 
+   <p>XPACLRI</p> 
+  </div> 
+  <pre>integer d = 30;
+boolean data = FALSE;</pre> 
+  <div></div> 
+  <h3>Assembler Symbols</h3> 
+  <div> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Xd&gt;</td> 
+      <td><a id="sa_xd"></a> <p>Is the 64-bit name of the general-purpose destination register, encoded in the "Rd" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div></div> 
+  <div> 
+   <a id="execute"></a> 
+   <h3>Operation</h3> 
+   <pre>if <a title="function: boolean HavePACExt()" class="document-topic">HavePACExt</a>() then
+    <a title="accessor: X[integer n, integer width] = bits(width) value" class="document-topic">X</a>[d, 64] = Strip(X[d, 64], data);</pre> 
+  </div>  
+ </body>
+</html>

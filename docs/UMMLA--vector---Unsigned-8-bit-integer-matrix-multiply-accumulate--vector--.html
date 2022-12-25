@@ -1,0 +1,156 @@
+<html>
+ <head>  <link rel="stylesheet" href="../def-style.css"></head> 
+ <body> 
+  <h2>UMMLA (vector)</h2> 
+  <p>Unsigned 8-bit integer matrix multiply-accumulate. This instruction multiplies the 2x8 matrix of unsigned 8-bit integer values in the first source vector by the 8x2 matrix of unsigned 8-bit integer values in the second source vector. The resulting 2x2 32-bit integer matrix product is destructively added to the 32-bit integer matrix accumulator in the destination vector. This is equivalent to performing an 8-way dot product per destination element.</p> 
+  <p>From Armv8.2 to Armv8.5, this is an <small>optional</small> instruction. From Armv8.6 it is mandatory for implementations that include Advanced SIMD to support it. <em>ID_AA64ISAR1_EL1</em>.I8MM indicates whether this instruction is supported.</p> 
+  <h3><a id="iclass_simd"></a>Vector<span><br></br>(FEAT_I8MM) </span></h3> 
+  <p></p> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td colspan="5">Rm</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td colspan="5">Rn</td> 
+      <td colspan="5">Rd</td> 
+     </tr> 
+     <tr> 
+      <td></td> 
+      <td></td> 
+      <td>U</td> 
+      <td colspan="5"></td> 
+      <td colspan="2"></td> 
+      <td></td> 
+      <td colspan="5"></td> 
+      <td></td> 
+      <td colspan="3"></td> 
+      <td>B</td> 
+      <td></td> 
+      <td colspan="5"></td> 
+      <td colspan="5"></td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4></h4> 
+   <a id="UMMLA_asimdsame2_G"></a> 
+   <p>UMMLA <a title="SIMD&amp;FP third source and destination register (field &quot;Rd&quot;)" class="document-topic">&lt;Vd&gt;</a>.4S, <a title="First SIMD&amp;FP source register (field &quot;Rn&quot;)" class="document-topic">&lt;Vn&gt;</a>.16B, <a title="Second SIMD&amp;FP source register (field &quot;Rm&quot;)" class="document-topic">&lt;Vm&gt;</a>.16B</p> 
+  </div> 
+  <pre>if !<a title="function: boolean HaveInt8MatMulExt()" class="document-topic">HaveInt8MatMulExt</a>() then UNDEFINED;
+boolean op1_unsigned;
+boolean op2_unsigned;
+case B:U of
+    when '00' op1_unsigned = FALSE; op2_unsigned = FALSE;
+    when '01' op1_unsigned = TRUE;  op2_unsigned = TRUE;
+    when '10' op1_unsigned = TRUE;  op2_unsigned = FALSE;
+    when '11' UNDEFINED;
+integer n = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Rn);
+integer m = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Rm);
+integer d = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Rd);</pre> 
+  <div></div> 
+  <h3>Assembler Symbols</h3> 
+  <div> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Vd&gt;</td> 
+      <td><a id="sa_vd"></a> <p>Is the name of the SIMD&amp;FP third source and destination register, encoded in the "Rd" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Vn&gt;</td> 
+      <td><a id="sa_vn"></a> <p>Is the name of the first SIMD&amp;FP source register, encoded in the "Rn" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Vm&gt;</td> 
+      <td><a id="sa_vm"></a> <p>Is the name of the second SIMD&amp;FP source register, encoded in the "Rm" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div></div> 
+  <div> 
+   <a id="execute"></a> 
+   <h3>Operation</h3> 
+   <pre><a title="function: CheckFPAdvSIMDEnabled64()" class="document-topic">CheckFPAdvSIMDEnabled64</a>();
+bits(128) operand1 = <a title="accessor: bits(width) V[integer n, integer width]" class="document-topic">V</a>[n, 128];
+bits(128) operand2 = <a title="accessor: bits(width) V[integer n, integer width]" class="document-topic">V</a>[m, 128];
+bits(128) addend   = <a title="accessor: bits(width) V[integer n, integer width]" class="document-topic">V</a>[d, 128];
+
+<a title="accessor: V[integer n, integer width] = bits(width) value" class="document-topic">V</a>[d, 128] = <a title="function: bits(N) MatMulAdd(bits(N) addend, bits(N) op1, bits(N) op2, boolean op1_unsigned, boolean op2_unsigned)" class="document-topic">MatMulAdd</a>(addend, operand1, operand2, op1_unsigned, op2_unsigned);</pre> 
+  </div>  
+ </body>
+</html>

@@ -1,0 +1,306 @@
+<html>
+ <head>  <link rel="stylesheet" href="../def-style.css"></head> 
+ <body> 
+  <h2>ST2G</h2> 
+  <p>Store Allocation Tags stores an Allocation Tag to two Tag granules of memory. The address used for the store is calculated from the base register and an immediate signed offset scaled by the Tag granule. The Allocation Tag is calculated from the Logical Address Tag in the source register.</p> 
+  <p>This instruction generates an Unchecked access.</p> 
+  <p> It has encodings from 3 classes: <a class="document-topic">Post-index</a> , <a class="document-topic">Pre-index</a> and <a class="document-topic">Signed offset</a> </p> 
+  <h3><a id="iclass_post_indexed"></a>Post-index<span><br></br>(FEAT_MTE) </span></h3> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td colspan="9">imm9</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td colspan="5">Xn</td> 
+      <td colspan="5">Xt</td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4></h4> 
+   <a id="ST2G_64Spost_ldsttags"></a> 
+   <p>ST2G <a title="64-bit general-purpose source register or SP (field &quot;Xt&quot;)" class="document-topic">&lt;Xt|SP&gt;</a>, [<a title="64-bit general-purpose base register or SP (field &quot;Xn&quot;)" class="document-topic">&lt;Xn|SP&gt;</a>], #<a title="Optional signed immediate offset, multiple of 16 [-4096-4080], default 0 (field &quot;imm9&quot;)" class="document-topic">&lt;simm&gt;</a></p> 
+  </div> 
+  <pre>if !<a title="function: boolean HaveMTEExt()" class="document-topic">HaveMTEExt</a>() then UNDEFINED;
+integer n = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Xn);
+integer t = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Xt);
+bits(64) offset = <a title="function: bits(N) LSL(bits(N) x, integer shift)" class="document-topic">LSL</a>(<a title="function: bits(N) SignExtend(bits(M) x, integer N)" class="document-topic">SignExtend</a>(imm9, 64), <a title="constant integer LOG2_TAG_GRANULE = 4" class="document-topic">LOG2_TAG_GRANULE</a>);
+boolean writeback = TRUE;
+boolean postindex = TRUE;
+boolean zero_data = FALSE;</pre> 
+  <h3><a id="iclass_pre_indexed"></a>Pre-index<span><br></br>(FEAT_MTE) </span></h3> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td colspan="9">imm9</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td colspan="5">Xn</td> 
+      <td colspan="5">Xt</td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4></h4> 
+   <a id="ST2G_64Spre_ldsttags"></a> 
+   <p>ST2G <a title="64-bit general-purpose source register or SP (field &quot;Xt&quot;)" class="document-topic">&lt;Xt|SP&gt;</a>, [<a title="64-bit general-purpose base register or SP (field &quot;Xn&quot;)" class="document-topic">&lt;Xn|SP&gt;</a>, #<a title="Optional signed immediate offset, multiple of 16 [-4096-4080], default 0 (field &quot;imm9&quot;)" class="document-topic">&lt;simm&gt;</a>]!</p> 
+  </div> 
+  <pre>if !<a title="function: boolean HaveMTEExt()" class="document-topic">HaveMTEExt</a>() then UNDEFINED;
+integer n = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Xn);
+integer t = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Xt);
+bits(64) offset = <a title="function: bits(N) LSL(bits(N) x, integer shift)" class="document-topic">LSL</a>(<a title="function: bits(N) SignExtend(bits(M) x, integer N)" class="document-topic">SignExtend</a>(imm9, 64), <a title="constant integer LOG2_TAG_GRANULE = 4" class="document-topic">LOG2_TAG_GRANULE</a>);
+boolean writeback = TRUE;
+boolean postindex = FALSE;
+boolean zero_data = FALSE;</pre> 
+  <h3><a id="iclass_signed_scaled_offset"></a>Signed offset<span><br></br>(FEAT_MTE) </span></h3> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td colspan="9">imm9</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td colspan="5">Xn</td> 
+      <td colspan="5">Xt</td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4></h4> 
+   <a id="ST2G_64Soffset_ldsttags"></a> 
+   <p>ST2G <a title="64-bit general-purpose source register or SP (field &quot;Xt&quot;)" class="document-topic">&lt;Xt|SP&gt;</a>, [<a title="64-bit general-purpose base register or SP (field &quot;Xn&quot;)" class="document-topic">&lt;Xn|SP&gt;</a>{, #<a title="Optional signed immediate offset, multiple of 16 [-4096-4080], default 0 (field &quot;imm9&quot;)" class="document-topic">&lt;simm&gt;</a>}]</p> 
+  </div> 
+  <pre>if !<a title="function: boolean HaveMTEExt()" class="document-topic">HaveMTEExt</a>() then UNDEFINED;
+integer n = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Xn);
+integer t = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Xt);
+bits(64) offset = <a title="function: bits(N) LSL(bits(N) x, integer shift)" class="document-topic">LSL</a>(<a title="function: bits(N) SignExtend(bits(M) x, integer N)" class="document-topic">SignExtend</a>(imm9, 64), <a title="constant integer LOG2_TAG_GRANULE = 4" class="document-topic">LOG2_TAG_GRANULE</a>);
+boolean writeback = FALSE;
+boolean postindex = FALSE;
+boolean zero_data = FALSE;</pre> 
+  <div></div> 
+  <h3>Assembler Symbols</h3> 
+  <div> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Xt|SP&gt;</td> 
+      <td><a id="sa_xt_sp"></a> <p>Is the 64-bit name of the general-purpose source register or stack pointer, encoded in the "Xt" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Xn|SP&gt;</td> 
+      <td><a id="sa_xn_sp"></a> <p>Is the 64-bit name of the general-purpose base register or stack pointer, encoded in the "Xn" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;simm&gt;</td> 
+      <td><a id="sa_simm"></a> <p>Is the optional signed immediate offset, a multiple of 16 in the range -4096 to 4080, defaulting to 0 and encoded in the "imm9" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div></div> 
+  <div> 
+   <a id="execute"></a> 
+   <h3>Operation</h3> 
+   <pre>bits(64) address;
+bits(64) data = if t == 31 then <a title="accessor: bits(64) SP[]" class="document-topic">SP</a>[] else <a title="accessor: bits(width) X[integer n, integer width]" class="document-topic">X</a>[t, 64];
+bits(4) tag = <a title="function: bits(4) AArch64.AllocationTagFromAddress(bits(64) tagged_address)" class="document-topic">AArch64.AllocationTagFromAddress</a>(data);
+
+if n == 31 then
+    <a title="function: CheckSPAlignment()" class="document-topic">CheckSPAlignment</a>();
+    address = <a title="accessor: bits(64) SP[]" class="document-topic">SP</a>[];
+else
+    address = <a title="accessor: bits(width) X[integer n, integer width]" class="document-topic">X</a>[n, 64];
+
+if !postindex then
+    address = address + offset;
+
+<a title="type AccessDescriptor is ( AccessType acctype, bits(2) el, SecurityState ss, boolean acqsc, boolean acqpc, boolean relsc, boolean limitedordered, boolean exclusive, boolean atomicop, MemAtomicOp modop, boolean nontemporal, boolean read, boolean write, CacheOp cacheop, CacheOpScope opscope, CacheType cachetype, boolean pan, boolean transactional, boolean nonfault, boolean firstfault, boolean first, boolean contiguous, boolean streamingsve, boolean ls64, boolean mops, boolean rcw, boolean rcws, boolean toplevel, VARange varange, boolean a32lsmd, boolean tagchecked, boolean tagaccess, MPAMinfo mpam )" class="document-topic">AccessDescriptor</a> accdesc = <a title="function: AccessDescriptor CreateAccDescLDGSTG(MemOp memop)" class="document-topic">CreateAccDescLDGSTG</a>(<a title="enumeration MemOp {MemOp_LOAD, MemOp_STORE, MemOp_PREFETCH}" class="document-topic">MemOp_STORE</a>);
+
+if zero_data then
+    if !<a title="function: boolean IsAligned(integer x, integer y)" class="document-topic">IsAligned</a>(address, <a title="constant integer TAG_GRANULE = 1 << LOG2_TAG_GRANULE" class="document-topic">TAG_GRANULE</a>) then
+        <a title="function: AArch64.Abort(bits(64) vaddress, FaultRecord fault)" class="document-topic">AArch64.Abort</a>(address, <a title="function: FaultRecord AlignmentFault(AccessDescriptor accdesc)" class="document-topic">AlignmentFault</a>(accdesc));
+
+    Mem[address, TAG_GRANULE, accdesc] = <a title="function: bits(N) Zeros(integer N)" class="document-topic">Zeros</a>(<a title="constant integer TAG_GRANULE = 1 << LOG2_TAG_GRANULE" class="document-topic">TAG_GRANULE</a> * 8);
+    Mem[address+TAG_GRANULE, TAG_GRANULE, accdesc] = <a title="function: bits(N) Zeros(integer N)" class="document-topic">Zeros</a>(<a title="constant integer TAG_GRANULE = 1 << LOG2_TAG_GRANULE" class="document-topic">TAG_GRANULE</a> * 8);
+
+<a title="accessor: AArch64.MemTag[bits(64) address, AccessDescriptor accdesc_in] = bits(4) value" class="document-topic">AArch64.MemTag</a>[address, accdesc] = tag;
+<a title="accessor: AArch64.MemTag[bits(64) address, AccessDescriptor accdesc_in] = bits(4) value" class="document-topic">AArch64.MemTag</a>[address+<a title="constant integer TAG_GRANULE = 1 << LOG2_TAG_GRANULE" class="document-topic">TAG_GRANULE</a>, accdesc] = tag;
+
+if writeback then
+    if postindex then
+        address = address + offset;
+
+    if n == 31 then
+        <a title="accessor: SP[] = bits(64) value" class="document-topic">SP</a>[] = address;
+    else
+        <a title="accessor: X[integer n, integer width] = bits(width) value" class="document-topic">X</a>[n, 64] = address;</pre> 
+  </div>  
+ </body>
+</html>

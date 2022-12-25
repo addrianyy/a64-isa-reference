@@ -1,0 +1,181 @@
+<html>
+ <head>  <link rel="stylesheet" href="../def-style.css"></head> 
+ <body> 
+  <h2>FACLE</h2> 
+  <p>Floating-point absolute compare less than or equal</p> 
+  <p>Compare active absolute values of floating-point elements in the first source vector being less than or equal to corresponding absolute values of elements in the second source vector, and place the boolean results of the comparison in the corresponding elements of the destination predicate. Inactive elements in the destination predicate register are set to zero. Does not set the condition flags.</p> 
+  <p> This is a pseudo-instruction of <a href="FAC-cc---Floating-point-absolute-compare-vectors-.html" class="document-topic">FAC&lt;cc&gt;</a>. This means: </p> 
+  <ul> 
+   <li> The encodings in this description are named to match the encodings of <a href="FAC-cc---Floating-point-absolute-compare-vectors-.html" class="document-topic">FAC&lt;cc&gt;</a>. </li> 
+   <li> The assembler syntax is used only for assembly, and is not used on disassembly. </li> 
+   <li>The description of <a href="FAC-cc---Floating-point-absolute-compare-vectors-.html" class="document-topic">FAC&lt;cc&gt;</a> gives the operational pseudocode, any <small>constrained unpredictable</small> behavior, and any operational information for this instruction.</li> 
+  </ul> 
+  <p></p> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td colspan="2">size</td> 
+      <td>0</td> 
+      <td colspan="5">Zm</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td colspan="3">Pg</td> 
+      <td colspan="5">Zn</td> 
+      <td>1</td> 
+      <td colspan="4">Pd</td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4></h4> 
+   <a id="FACLE_facge_p_p_zz_"></a> 
+   <p>FACLE <a title="Destination scalable predicate register (field &quot;Pd&quot;)" class="document-topic">&lt;Pd&gt;</a>.<a title="Size specifier (field &quot;size&quot;) [D,H,S]" class="document-topic">&lt;T&gt;</a>, <a title="Governing scalable predicate register P0-P7 (field &quot;Pg&quot;)" class="document-topic">&lt;Pg&gt;</a>/Z, <a title="Second source scalable vector register (field &quot;Zm&quot;)" class="document-topic">&lt;Zm&gt;</a>.<a title="Size specifier (field &quot;size&quot;) [D,H,S]" class="document-topic">&lt;T&gt;</a>, <a title="First source scalable vector register (field &quot;Zn&quot;)" class="document-topic">&lt;Zn&gt;</a>.<a title="Size specifier (field &quot;size&quot;) [D,H,S]" class="document-topic">&lt;T&gt;</a></p> 
+   <p> is equivalent to </p> 
+   <p><a href="FAC-cc---Floating-point-absolute-compare-vectors-.html" class="document-topic">FACGE</a> <a title="Destination scalable predicate register (field &quot;Pd&quot;)" class="document-topic">&lt;Pd&gt;</a>.<a title="Size specifier (field &quot;size&quot;) [D,H,S]" class="document-topic">&lt;T&gt;</a>, <a title="Governing scalable predicate register P0-P7 (field &quot;Pg&quot;)" class="document-topic">&lt;Pg&gt;</a>/Z, <a title="First source scalable vector register (field &quot;Zn&quot;)" class="document-topic">&lt;Zn&gt;</a>.<a title="Size specifier (field &quot;size&quot;) [D,H,S]" class="document-topic">&lt;T&gt;</a>, <a title="Second source scalable vector register (field &quot;Zm&quot;)" class="document-topic">&lt;Zm&gt;</a>.<a title="Size specifier (field &quot;size&quot;) [D,H,S]" class="document-topic">&lt;T&gt;</a></p> 
+  </div> 
+  <div></div> 
+  <h3>Assembler Symbols</h3> 
+  <div> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Pd&gt;</td> 
+      <td><a id="sa_pd"></a> <p>Is the name of the destination scalable predicate register, encoded in the "Pd" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Zm&gt;</td> 
+      <td><a id="sa_zm"></a> <p>Is the name of the second source scalable vector register, encoded in the "Zm" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Zn&gt;</td> 
+      <td><a id="sa_zn"></a> <p>Is the name of the first source scalable vector register, encoded in the "Zn" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;T&gt;</td> 
+      <td><a id="sa_t"></a> <p>Is the size specifier, encoded in <q>size</q>: </p> 
+       <table> 
+        <thead> 
+         <tr> 
+          <th>size</th> 
+          <th>&lt;T&gt;</th> 
+         </tr> 
+        </thead> 
+        <tbody> 
+         <tr> 
+          <td>00</td> 
+          <td>RESERVED</td> 
+         </tr> 
+         <tr> 
+          <td>01</td> 
+          <td>H</td> 
+         </tr> 
+         <tr> 
+          <td>10</td> 
+          <td>S</td> 
+         </tr> 
+         <tr> 
+          <td>11</td> 
+          <td>D</td> 
+         </tr> 
+        </tbody> 
+       </table> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Pg&gt;</td> 
+      <td><a id="sa_pg"></a> <p>Is the name of the governing scalable predicate register P0-P7, encoded in the "Pg" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div></div> 
+  <div> 
+   <h3>Operation</h3> 
+   <p>The description of <a href="FAC-cc---Floating-point-absolute-compare-vectors-.html" class="document-topic">FAC&lt;cc&gt;</a> gives the operational pseudocode for this instruction.</p> 
+  </div> 
+  <h3>Operational information</h3> 
+  <p>If FEAT_SME is implemented and the PE is in Streaming SVE mode, then any subsequent instruction which is dependent on the predicate register written by this instruction might be significantly delayed.</p>  
+ </body>
+</html>

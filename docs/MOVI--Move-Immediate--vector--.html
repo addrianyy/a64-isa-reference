@@ -1,0 +1,379 @@
+<html>
+ <head>  <link rel="stylesheet" href="../def-style.css"></head> 
+ <body> 
+  <h2>MOVI</h2> 
+  <p>Move Immediate (vector). This instruction places an immediate constant into every vector element of the destination SIMD&amp;FP register.</p> 
+  <p>Depending on the settings in the <em>CPACR_EL1</em>, <em>CPTR_EL2</em>, and <em>CPTR_EL3</em> registers, and the current Security state and Exception level, an attempt to execute the instruction might be trapped.</p> 
+  <p></p> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>0</td> 
+      <td>Q</td> 
+      <td>op</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>a</td> 
+      <td>b</td> 
+      <td>c</td> 
+      <td colspan="4">cmode</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>d</td> 
+      <td>e</td> 
+      <td>f</td> 
+      <td>g</td> 
+      <td>h</td> 
+      <td colspan="5">Rd</td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4>8-bit<span> (op == 0 &amp;&amp; cmode == 1110)</span></h4> 
+   <a id="MOVI_asimdimm_N_b"></a> 
+   <p>MOVI <a title="SIMD&amp;FP destination register (field &quot;Rd&quot;)" class="document-topic">&lt;Vd&gt;</a>.<a title="Arrangement specifier (field &quot;Q&quot;) [8B,16B]" class="document-topic">&lt;T&gt;</a>, #<a title="8-bit immediate (field &quot;a:b:c:d:e:f:g:h&quot;)" class="document-topic">&lt;imm8&gt;</a>{, LSL #0}</p> 
+  </div> 
+  <div> 
+   <h4>16-bit shifted immediate<span> (op == 0 &amp;&amp; cmode == 10x0)</span></h4> 
+   <a id="MOVI_asimdimm_L_hl"></a> 
+   <p>MOVI <a title="SIMD&amp;FP destination register (field &quot;Rd&quot;)" class="document-topic">&lt;Vd&gt;</a>.<a title="Arrangement specifier (field &quot;Q&quot;) [4H,8H]" class="document-topic">&lt;T&gt;</a>, #<a title="8-bit immediate (field &quot;a:b:c:d:e:f:g:h&quot;)" class="document-topic">&lt;imm8&gt;</a>{, LSL #<a title="Shift amount (field &quot;cmode<1>&quot;) [0,8]" class="document-topic">&lt;amount&gt;</a>}</p> 
+  </div> 
+  <div> 
+   <h4>32-bit shifted immediate<span> (op == 0 &amp;&amp; cmode == 0xx0)</span></h4> 
+   <a id="MOVI_asimdimm_L_sl"></a> 
+   <p>MOVI <a title="SIMD&amp;FP destination register (field &quot;Rd&quot;)" class="document-topic">&lt;Vd&gt;</a>.<a title="Arrangement specifier (field &quot;Q&quot;) [2S,4S]" class="document-topic">&lt;T&gt;</a>, #<a title="8-bit immediate (field &quot;a:b:c:d:e:f:g:h&quot;)" class="document-topic">&lt;imm8&gt;</a>{, LSL #<a title="Shift amount (field &quot;cmode<2:1>&quot;) [0,8,16,24]" class="document-topic">&lt;amount&gt;</a>}</p> 
+  </div> 
+  <div> 
+   <h4>32-bit shifting ones<span> (op == 0 &amp;&amp; cmode == 110x)</span></h4> 
+   <a id="MOVI_asimdimm_M_sm"></a> 
+   <p>MOVI <a title="SIMD&amp;FP destination register (field &quot;Rd&quot;)" class="document-topic">&lt;Vd&gt;</a>.<a title="Arrangement specifier (field &quot;Q&quot;) [2S,4S]" class="document-topic">&lt;T&gt;</a>, #<a title="8-bit immediate (field &quot;a:b:c:d:e:f:g:h&quot;)" class="document-topic">&lt;imm8&gt;</a>, MSL #<a title="Shift amount (field &quot;cmode<0>&quot;) [8,16]" class="document-topic">&lt;amount&gt;</a></p> 
+  </div> 
+  <div> 
+   <h4>64-bit scalar<span> (Q == 0 &amp;&amp; op == 1 &amp;&amp; cmode == 1110)</span></h4> 
+   <a id="MOVI_asimdimm_D_ds"></a> 
+   <p>MOVI <a title="64-bit SIMD&amp;FP destination register (field &quot;Rd&quot;)" class="document-topic">&lt;Dd&gt;</a>, #<a title="64-bit immediate 'aaaaaaaabbbbbbbbccccccccddddddddeeeeeeeeffffffffgggggggghhhhhhhh' (field &quot;a:b:c:d:e:f:g:h&quot;)" class="document-topic">&lt;imm&gt;</a></p> 
+  </div> 
+  <div> 
+   <h4>64-bit vector<span> (Q == 1 &amp;&amp; op == 1 &amp;&amp; cmode == 1110)</span></h4> 
+   <a id="MOVI_asimdimm_D2_d"></a> 
+   <p>MOVI <a title="SIMD&amp;FP destination register (field &quot;Rd&quot;)" class="document-topic">&lt;Vd&gt;</a>.2D, #<a title="64-bit immediate 'aaaaaaaabbbbbbbbccccccccddddddddeeeeeeeeffffffffgggggggghhhhhhhh' (field &quot;a:b:c:d:e:f:g:h&quot;)" class="document-topic">&lt;imm&gt;</a></p> 
+  </div> 
+  <pre>integer rd = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Rd);
+
+integer datasize = if Q == '1' then 128 else 64;
+bits(datasize) imm;
+bits(64) imm64;
+
+<a title="enumeration ImmediateOp {ImmediateOp_MOVI, ImmediateOp_MVNI, ImmediateOp_ORR, ImmediateOp_BIC}" class="document-topic">ImmediateOp</a> operation;
+case cmode:op of
+    when '0xx00' operation = <a title="enumeration ImmediateOp {ImmediateOp_MOVI, ImmediateOp_MVNI, ImmediateOp_ORR, ImmediateOp_BIC}" class="document-topic">ImmediateOp_MOVI</a>;
+    when '0xx01' operation = <a title="enumeration ImmediateOp {ImmediateOp_MOVI, ImmediateOp_MVNI, ImmediateOp_ORR, ImmediateOp_BIC}" class="document-topic">ImmediateOp_MVNI</a>;
+    when '0xx10' operation = <a title="enumeration ImmediateOp {ImmediateOp_MOVI, ImmediateOp_MVNI, ImmediateOp_ORR, ImmediateOp_BIC}" class="document-topic">ImmediateOp_ORR</a>;
+    when '0xx11' operation = <a title="enumeration ImmediateOp {ImmediateOp_MOVI, ImmediateOp_MVNI, ImmediateOp_ORR, ImmediateOp_BIC}" class="document-topic">ImmediateOp_BIC</a>;
+    when '10x00' operation = <a title="enumeration ImmediateOp {ImmediateOp_MOVI, ImmediateOp_MVNI, ImmediateOp_ORR, ImmediateOp_BIC}" class="document-topic">ImmediateOp_MOVI</a>;
+    when '10x01' operation = <a title="enumeration ImmediateOp {ImmediateOp_MOVI, ImmediateOp_MVNI, ImmediateOp_ORR, ImmediateOp_BIC}" class="document-topic">ImmediateOp_MVNI</a>;
+    when '10x10' operation = <a title="enumeration ImmediateOp {ImmediateOp_MOVI, ImmediateOp_MVNI, ImmediateOp_ORR, ImmediateOp_BIC}" class="document-topic">ImmediateOp_ORR</a>;
+    when '10x11' operation = <a title="enumeration ImmediateOp {ImmediateOp_MOVI, ImmediateOp_MVNI, ImmediateOp_ORR, ImmediateOp_BIC}" class="document-topic">ImmediateOp_BIC</a>;
+    when '110x0' operation = <a title="enumeration ImmediateOp {ImmediateOp_MOVI, ImmediateOp_MVNI, ImmediateOp_ORR, ImmediateOp_BIC}" class="document-topic">ImmediateOp_MOVI</a>;
+    when '110x1' operation = <a title="enumeration ImmediateOp {ImmediateOp_MOVI, ImmediateOp_MVNI, ImmediateOp_ORR, ImmediateOp_BIC}" class="document-topic">ImmediateOp_MVNI</a>;
+    when '1110x' operation = <a title="enumeration ImmediateOp {ImmediateOp_MOVI, ImmediateOp_MVNI, ImmediateOp_ORR, ImmediateOp_BIC}" class="document-topic">ImmediateOp_MOVI</a>;
+    when '11110' operation = <a title="enumeration ImmediateOp {ImmediateOp_MOVI, ImmediateOp_MVNI, ImmediateOp_ORR, ImmediateOp_BIC}" class="document-topic">ImmediateOp_MOVI</a>;
+    when '11111'
+        // FMOV Dn,#imm is in main FP instruction set
+        if Q == '0' then UNDEFINED;
+        operation = <a title="enumeration ImmediateOp {ImmediateOp_MOVI, ImmediateOp_MVNI, ImmediateOp_ORR, ImmediateOp_BIC}" class="document-topic">ImmediateOp_MOVI</a>;
+
+imm64 = <a title="function: bits(64) AdvSIMDExpandImm(bit op, bits(4) cmode, bits(8) imm8)" class="document-topic">AdvSIMDExpandImm</a>(op, cmode, a:b:c:d:e:f:g:h);
+imm = <a title="function: bits(M*N) Replicate(bits(M) x, integer N)" class="document-topic">Replicate</a>(imm64, datasize DIV 64);</pre> 
+  <div></div> 
+  <h3>Assembler Symbols</h3> 
+  <div> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Dd&gt;</td> 
+      <td><a id="sa_dd"></a> <p>Is the 64-bit name of the SIMD&amp;FP destination register, encoded in the "Rd" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Vd&gt;</td> 
+      <td><a id="sa_vd"></a> <p>Is the name of the SIMD&amp;FP destination register, encoded in the "Rd" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;imm&gt;</td> 
+      <td><a id="sa_imm"></a> <p>Is a 64-bit immediate 'aaaaaaaabbbbbbbbccccccccddddddddeeeeeeeeffffffffgggggggghhhhhhhh', encoded in "a:b:c:d:e:f:g:h".</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;T&gt;</td> 
+      <td><a id="sa_t_2"></a> <p>For the 8-bit variant: is an arrangement specifier, encoded in <q>Q</q>: </p> 
+       <table> 
+        <thead> 
+         <tr> 
+          <th>Q</th> 
+          <th>&lt;T&gt;</th> 
+         </tr> 
+        </thead> 
+        <tbody> 
+         <tr> 
+          <td>0</td> 
+          <td>8B</td> 
+         </tr> 
+         <tr> 
+          <td>1</td> 
+          <td>16B</td> 
+         </tr> 
+        </tbody> 
+       </table> </td> 
+     </tr> 
+     <tr> 
+      <td></td> 
+      <td><a id="sa_t"></a> <p>For the 16-bit variant: is an arrangement specifier, encoded in <q>Q</q>: </p> 
+       <table> 
+        <thead> 
+         <tr> 
+          <th>Q</th> 
+          <th>&lt;T&gt;</th> 
+         </tr> 
+        </thead> 
+        <tbody> 
+         <tr> 
+          <td>0</td> 
+          <td>4H</td> 
+         </tr> 
+         <tr> 
+          <td>1</td> 
+          <td>8H</td> 
+         </tr> 
+        </tbody> 
+       </table> </td> 
+     </tr> 
+     <tr> 
+      <td></td> 
+      <td><a id="sa_t_1"></a> <p>For the 32-bit variant: is an arrangement specifier, encoded in <q>Q</q>: </p> 
+       <table> 
+        <thead> 
+         <tr> 
+          <th>Q</th> 
+          <th>&lt;T&gt;</th> 
+         </tr> 
+        </thead> 
+        <tbody> 
+         <tr> 
+          <td>0</td> 
+          <td>2S</td> 
+         </tr> 
+         <tr> 
+          <td>1</td> 
+          <td>4S</td> 
+         </tr> 
+        </tbody> 
+       </table> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;imm8&gt;</td> 
+      <td><a id="sa_imm8"></a> <p>Is an 8-bit immediate encoded in "a:b:c:d:e:f:g:h".</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;amount&gt;</td> 
+      <td><a id="sa_amount"></a> <p>For the 16-bit shifted immediate variant: is the shift amount encoded in <q>cmode&lt;1&gt;</q>: </p> 
+       <table> 
+        <thead> 
+         <tr> 
+          <th>cmode&lt;1&gt;</th> 
+          <th>&lt;amount&gt;</th> 
+         </tr> 
+        </thead> 
+        <tbody> 
+         <tr> 
+          <td>0</td> 
+          <td>0</td> 
+         </tr> 
+         <tr> 
+          <td>1</td> 
+          <td>8</td> 
+         </tr> 
+        </tbody> 
+       </table> defaulting to 0 if LSL is omitted. </td> 
+     </tr> 
+     <tr> 
+      <td></td> 
+      <td><a id="sa_amount_1"></a> <p>For the 32-bit shifted immediate variant: is the shift amount encoded in <q>cmode&lt;2:1&gt;</q>: </p> 
+       <table> 
+        <thead> 
+         <tr> 
+          <th>cmode&lt;2:1&gt;</th> 
+          <th>&lt;amount&gt;</th> 
+         </tr> 
+        </thead> 
+        <tbody> 
+         <tr> 
+          <td>00</td> 
+          <td>0</td> 
+         </tr> 
+         <tr> 
+          <td>01</td> 
+          <td>8</td> 
+         </tr> 
+         <tr> 
+          <td>10</td> 
+          <td>16</td> 
+         </tr> 
+         <tr> 
+          <td>11</td> 
+          <td>24</td> 
+         </tr> 
+        </tbody> 
+       </table> defaulting to 0 if LSL is omitted. </td> 
+     </tr> 
+     <tr> 
+      <td></td> 
+      <td><a id="sa_amount_2"></a> <p>For the 32-bit shifting ones variant: is the shift amount encoded in <q>cmode&lt;0&gt;</q>: </p> 
+       <table> 
+        <thead> 
+         <tr> 
+          <th>cmode&lt;0&gt;</th> 
+          <th>&lt;amount&gt;</th> 
+         </tr> 
+        </thead> 
+        <tbody> 
+         <tr> 
+          <td>0</td> 
+          <td>8</td> 
+         </tr> 
+         <tr> 
+          <td>1</td> 
+          <td>16</td> 
+         </tr> 
+        </tbody> 
+       </table> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div></div> 
+  <div> 
+   <a id="execute"></a> 
+   <h3>Operation</h3> 
+   <pre><a title="function: CheckFPAdvSIMDEnabled64()" class="document-topic">CheckFPAdvSIMDEnabled64</a>();
+bits(datasize) operand;
+bits(datasize) result;
+
+case operation of
+    when <a title="enumeration ImmediateOp {ImmediateOp_MOVI, ImmediateOp_MVNI, ImmediateOp_ORR, ImmediateOp_BIC}" class="document-topic">ImmediateOp_MOVI</a>
+        result = imm;
+    when <a title="enumeration ImmediateOp {ImmediateOp_MOVI, ImmediateOp_MVNI, ImmediateOp_ORR, ImmediateOp_BIC}" class="document-topic">ImmediateOp_MVNI</a>
+        result = NOT(imm);
+    when <a title="enumeration ImmediateOp {ImmediateOp_MOVI, ImmediateOp_MVNI, ImmediateOp_ORR, ImmediateOp_BIC}" class="document-topic">ImmediateOp_ORR</a>
+        operand = <a title="accessor: bits(width) V[integer n, integer width]" class="document-topic">V</a>[rd, datasize];
+        result = operand OR imm;
+    when <a title="enumeration ImmediateOp {ImmediateOp_MOVI, ImmediateOp_MVNI, ImmediateOp_ORR, ImmediateOp_BIC}" class="document-topic">ImmediateOp_BIC</a>
+        operand = <a title="accessor: bits(width) V[integer n, integer width]" class="document-topic">V</a>[rd, datasize];
+        result = operand AND NOT(imm);
+
+<a title="accessor: V[integer n, integer width] = bits(width) value" class="document-topic">V</a>[rd, datasize] = result;</pre> 
+  </div> 
+  <h3>Operational information</h3> 
+  <p>If PSTATE.DIT is 1:</p> 
+  <ul> 
+   <li>The execution time of this instruction is independent of: 
+    <ul> 
+     <li>The values of the data supplied in any of its registers.</li> 
+     <li>The values of the NZCV flags.</li> 
+    </ul></li> 
+   <li>The response of this instruction to asynchronous exceptions does not vary based on: 
+    <ul> 
+     <li>The values of the data supplied in any of its registers.</li> 
+     <li>The values of the NZCV flags.</li> 
+    </ul></li> 
+  </ul>  
+ </body>
+</html>

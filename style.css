@@ -1,0 +1,98 @@
+@import url('https://fonts.googleapis.com/css?family=Fira+Sans&display=swap');
+
+html, body {
+    box-sizing: border-box;
+    
+    width: 100%;
+    height: 100%;
+    
+    margin: 0;
+    padding: 0;
+
+    overflow: hidden;
+
+    background-color: #353535;
+    color: rgb(221,221,221);
+
+    font-family: "Fira Sans", arial, sans-serif;;
+}
+
+:root {
+    color-scheme: dark;
+}
+
+*, *:before, *:after {
+    box-sizing: inherit;
+
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    display: flex;
+    padding: 1.2em;
+    height: 100%;
+    color: rgb(221,221,221);
+}
+
+.left-pane {
+    height: 100%;
+    width: 20%;
+
+    overflow: hidden;
+}
+
+.right-pane {
+    height: 100%;
+    width: 65%;
+
+    margin-left: 1em;
+    padding-left: 1.5em;
+
+
+    border-left: 0.2em #464646 solid;
+}
+
+#search-box {
+    width: 100%;
+    margin-bottom: 0.5em;
+}
+
+#instructions-container {
+    overflow-y: auto;
+    height: 100%;
+    padding-right: 0.2em;
+}
+
+a {
+    color: rgb(210, 153, 29);
+    text-decoration: none;
+}
+
+a:hover {
+    color: rgb(210, 153, 29);
+    text-decoration: underline;
+}
+
+td {
+    padding-bottom: 0.2em;
+}
+
+input {
+    font-family: "Fira Sans", arial, sans-serif;
+    font-size: 1.1em;
+    padding: 0.3em;
+}
+  
+iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+
+a.currentlySelected {
+    color: red;
+    font-weight: bold;
+    font-size: 1.2em;
+}
+

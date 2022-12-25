@@ -1,0 +1,180 @@
+<html>
+ <head>  <link rel="stylesheet" href="../def-style.css"></head> 
+ <body> 
+  <h2>PNEXT</h2> 
+  <p>Find next active predicate</p> 
+  <p>An instruction used to construct a loop which iterates over all true elements in the vector select predicate register. If all elements in the first source predicate register are false it determines the first true element in the vector select predicate register, otherwise it determines the next true element in the vector select predicate register that follows the last true element in the first source predicate register. All elements of the destination predicate register are set to false, except the element corresponding to the determined vector select element, if any, which is set to true. Sets the <small>First</small> (N), <small>None</small> (Z), <small>!Last</small> (C) condition flags based on the predicate result, and the V flag to zero.</p> 
+  <p></p> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td colspan="2">size</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td colspan="4">Pv</td> 
+      <td>0</td> 
+      <td colspan="4">Pdn</td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4></h4> 
+   <a id="pnext_p_p_p_"></a> 
+   <p>PNEXT <a title="First source and destination scalable predicate register (field &quot;Pdn&quot;)" class="document-topic">&lt;Pdn&gt;</a>.<a title="Size specifier (field &quot;size&quot;) [B,D,H,S]" class="document-topic">&lt;T&gt;</a>, <a title="Vector select predicate register (field &quot;Pv&quot;)" class="document-topic">&lt;Pv&gt;</a>, <a title="First source and destination scalable predicate register (field &quot;Pdn&quot;)" class="document-topic">&lt;Pdn&gt;</a>.<a title="Size specifier (field &quot;size&quot;) [B,D,H,S]" class="document-topic">&lt;T&gt;</a></p> 
+  </div> 
+  <pre>if !<a title="function: boolean HaveSVE()" class="document-topic">HaveSVE</a>() &amp;&amp; !<a title="function: boolean HaveSME()" class="document-topic">HaveSME</a>() then UNDEFINED;
+constant integer esize = 8 &lt;&lt; <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(size);
+integer v = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Pv);
+integer dn = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Pdn);</pre> 
+  <div></div> 
+  <h3>Assembler Symbols</h3> 
+  <div> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Pdn&gt;</td> 
+      <td><a id="sa_pdn"></a> <p>Is the name of the first source and destination scalable predicate register, encoded in the "Pdn" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;T&gt;</td> 
+      <td><a id="sa_t"></a> <p>Is the size specifier, encoded in <q>size</q>: </p> 
+       <table> 
+        <thead> 
+         <tr> 
+          <th>size</th> 
+          <th>&lt;T&gt;</th> 
+         </tr> 
+        </thead> 
+        <tbody> 
+         <tr> 
+          <td>00</td> 
+          <td>B</td> 
+         </tr> 
+         <tr> 
+          <td>01</td> 
+          <td>H</td> 
+         </tr> 
+         <tr> 
+          <td>10</td> 
+          <td>S</td> 
+         </tr> 
+         <tr> 
+          <td>11</td> 
+          <td>D</td> 
+         </tr> 
+        </tbody> 
+       </table> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Pv&gt;</td> 
+      <td><a id="sa_pv"></a> <p>Is the name of the vector select predicate register, encoded in the "Pv" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div></div> 
+  <div> 
+   <a id="execute"></a> 
+   <h3>Operation</h3> 
+   <pre><a title="function: CheckSVEEnabled()" class="document-topic">CheckSVEEnabled</a>();
+constant integer VL = <a title="accessor: integer CurrentVL" class="document-topic">CurrentVL</a>;
+constant integer PL = VL DIV 8;
+constant integer elements = VL DIV esize;
+bits(PL) mask = <a title="accessor: bits(width) P[integer n, integer width]" class="document-topic">P</a>[v, PL];
+bits(PL) operand = <a title="accessor: bits(width) P[integer n, integer width]" class="document-topic">P</a>[dn, PL];
+bits(PL) result;
+constant integer psize = esize DIV 8;
+
+integer next = <a title="function: integer LastActiveElement(bits(N) mask, integer esize)" class="document-topic">LastActiveElement</a>(operand, esize) + 1;
+
+while next &lt; elements &amp;&amp; (!<a title="function: boolean ActivePredicateElement(bits(N) pred, integer e, integer esize)" class="document-topic">ActivePredicateElement</a>(mask, next, esize)) do
+    next = next + 1;
+
+result = <a title="function: bits(N) Zeros(integer N)" class="document-topic">Zeros</a>(PL);
+if next &lt; elements then
+    <a title="accessor: Elem[bits(N) &amp;vector, integer e, integer size] = bits(size) value" class="document-topic">Elem</a>[result, next, psize] = <a title="function: bits(N) ZeroExtend(bits(M) x, integer N)" class="document-topic">ZeroExtend</a>('1', psize);
+
+PSTATE.&lt;N,Z,C,V&gt; = <a title="function: bits(4) PredTest(bits(N) mask, bits(N) result, integer esize)" class="document-topic">PredTest</a>(mask, result, esize);
+<a title="accessor: P[integer n, integer width] = bits(width) value" class="document-topic">P</a>[dn, PL] = result;</pre> 
+  </div> 
+  <h3>Operational information</h3> 
+  <p>If FEAT_SME is implemented and the PE is in Streaming SVE mode, then any subsequent instruction which is dependent on the NZCV condition flags written by this instruction might be significantly delayed.</p>  
+ </body>
+</html>

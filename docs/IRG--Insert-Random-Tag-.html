@@ -1,0 +1,154 @@
+<html>
+ <head>  <link rel="stylesheet" href="../def-style.css"></head> 
+ <body> 
+  <h2>IRG</h2> 
+  <p>Insert Random Tag inserts a random Logical Address Tag into the address in the first source register, and writes the result to the destination register. Any tags specified in the optional second source register or in GCR_EL1.Exclude are excluded from the selection of the random Logical Address Tag.</p> 
+  <h3><a id="iclass_general"></a>Integer<span><br></br>(FEAT_MTE) </span></h3> 
+  <p></p> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td colspan="5">Xm</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td colspan="5">Xn</td> 
+      <td colspan="5">Xd</td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4></h4> 
+   <a id="IRG_64I_dp_2src"></a> 
+   <p>IRG <a title="64-bit destination general-purpose register or SP (field &quot;Xd&quot;)" class="document-topic">&lt;Xd|SP&gt;</a>, <a title="First 64-bit source general-purpose register or SP (field &quot;Xn&quot;)" class="document-topic">&lt;Xn|SP&gt;</a>{, <a title="Second 64-bit general-purpose source register (field &quot;Xm&quot;)" class="document-topic">&lt;Xm&gt;</a>}</p> 
+  </div> 
+  <pre>if !<a title="function: boolean HaveMTEExt()" class="document-topic">HaveMTEExt</a>() then UNDEFINED;
+integer d = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Xd);
+integer n = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Xn);
+integer m = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Xm);</pre> 
+  <div></div> 
+  <h3>Assembler Symbols</h3> 
+  <div> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Xd|SP&gt;</td> 
+      <td><a id="sa_xd_sp"></a> <p>Is the 64-bit name of the destination general-purpose register or stack pointer, encoded in the "Xd" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Xn|SP&gt;</td> 
+      <td><a id="sa_xn_sp"></a> <p>Is the 64-bit name of the first source general-purpose register or stack pointer, encoded in the "Xn" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Xm&gt;</td> 
+      <td><a id="sa_xm"></a> <p>Is the 64-bit name of the second general-purpose source register, encoded in the "Xm" field. Defaults to XZR if absent.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div></div> 
+  <div> 
+   <a id="execute"></a> 
+   <h3>Operation</h3> 
+   <pre>bits(64) operand = if n == 31 then <a title="accessor: bits(64) SP[]" class="document-topic">SP</a>[] else <a title="accessor: bits(width) X[integer n, integer width]" class="document-topic">X</a>[n, 64];
+bits(64) exclude_reg = <a title="accessor: bits(width) X[integer n, integer width]" class="document-topic">X</a>[m, 64];
+bits(16) exclude = exclude_reg&lt;15:0&gt; OR GCR_EL1.Exclude;
+bits(4) rtag;
+
+if <a title="function: boolean AArch64.AllocationTagAccessIsEnabled(bits(2) el)" class="document-topic">AArch64.AllocationTagAccessIsEnabled</a>(PSTATE.EL) then
+    if GCR_EL1.RRND == '1' then
+        if <a title="function: boolean IsOnes(bits(N) x)" class="document-topic">IsOnes</a>(exclude) then
+            rtag = '0000';
+        else
+            rtag = <a title="function: bits(4) ChooseRandomNonExcludedTag(bits(16) exclude_in)" class="document-topic">ChooseRandomNonExcludedTag</a>(exclude);
+    else
+        bits(4) start = RGSR_EL1.TAG;
+        bits(4) offset = <a title="function: bits(4) AArch64.RandomTag()" class="document-topic">AArch64.RandomTag</a>();
+
+        rtag = <a title="function: bits(4) AArch64.ChooseNonExcludedTag(bits(4) tag_in, bits(4) offset_in, bits(16) exclude)" class="document-topic">AArch64.ChooseNonExcludedTag</a>(start, offset, exclude);
+
+        RGSR_EL1.TAG = rtag;
+else
+    rtag = '0000';
+
+bits(64) result = <a title="function: bits(64) AArch64.AddressWithAllocationTag(bits(64) address, bits(4) allocation_tag)" class="document-topic">AArch64.AddressWithAllocationTag</a>(operand, rtag);
+
+if d == 31 then
+    <a title="accessor: SP[] = bits(64) value" class="document-topic">SP</a>[] = result;
+else
+    <a title="accessor: X[integer n, integer width] = bits(width) value" class="document-topic">X</a>[d, 64] = result;</pre> 
+  </div>  
+ </body>
+</html>

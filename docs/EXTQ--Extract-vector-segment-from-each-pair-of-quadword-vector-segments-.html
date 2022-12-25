@@ -1,0 +1,162 @@
+<html>
+ <head>  <link rel="stylesheet" href="../def-style.css"></head> 
+ <body> 
+  <h2>EXTQ</h2> 
+  <p>Extract vector segment from each pair of quadword vector segments</p> 
+  <p>For each 128-bit vector segment of the result, copy the indexed byte up to and including the last byte of the corresponding first source vector segment to the bottom of the result segment, then fill the remainder of the result segment starting from the first byte of the corresponding second source vector segment. The result segments are destructively placed in the corresponding first source vector segment. This instruction is unpredicated.</p> 
+  <h3><a id="iclass_sve2"></a>SVE2<span><br></br>(FEAT_SVE2p1) </span></h3> 
+  <p></p> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td colspan="4">imm4</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td colspan="5">Zm</td> 
+      <td colspan="5">Zdn</td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4></h4> 
+   <a id="extq_z_zi_des"></a> 
+   <p>EXTQ <a title="First source and destination scalable vector register (field &quot;Zdn&quot;)" class="document-topic">&lt;Zdn&gt;</a>.B, <a title="First source and destination scalable vector register (field &quot;Zdn&quot;)" class="document-topic">&lt;Zdn&gt;</a>.B, <a title="Second source scalable vector register (field &quot;Zm&quot;)" class="document-topic">&lt;Zm&gt;</a>.B, #<a title="Unsigned immediate operand [0-15] (field &quot;imm4&quot;)" class="document-topic">&lt;imm&gt;</a></p> 
+  </div> 
+  <pre>if !<a title="function: boolean HaveSVE2p1()" class="document-topic">HaveSVE2p1</a>() &amp;&amp; !<a title="function: boolean HaveSME2p1()" class="document-topic">HaveSME2p1</a>() then UNDEFINED;
+integer dn = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Zdn);
+integer m = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Zm);
+constant integer position = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(imm4) &lt;&lt; 3;</pre> 
+  <div></div> 
+  <h3>Assembler Symbols</h3> 
+  <div> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Zdn&gt;</td> 
+      <td><a id="sa_zdn"></a> <p>Is the name of the first source and destination scalable vector register, encoded in the "Zdn" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Zm&gt;</td> 
+      <td><a id="sa_zm"></a> <p>Is the name of the second source scalable vector register, encoded in the "Zm" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;imm&gt;</td> 
+      <td><a id="sa_imm"></a> <p>Is the unsigned immediate operand, in the range 0 to 15, encoded in the "imm4" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div></div> 
+  <div> 
+   <a id="execute"></a> 
+   <h3>Operation</h3> 
+   <pre><a title="function: CheckSVEEnabled()" class="document-topic">CheckSVEEnabled</a>();
+constant integer VL = <a title="accessor: integer CurrentVL" class="document-topic">CurrentVL</a>;
+constant integer PL = VL DIV 8;
+constant integer segments = VL DIV 128;
+bits(VL) operand1 = <a title="accessor: bits(width) Z[integer n, integer width]" class="document-topic">Z</a>[dn, VL];
+bits(VL) operand2 = <a title="accessor: bits(width) Z[integer n, integer width]" class="document-topic">Z</a>[m, VL];
+bits(VL) result;
+
+for s = 0 to segments-1
+    bits(256) concat = <a title="accessor: bits(size) Elem[bits(N) vector, integer e, integer size]" class="document-topic">Elem</a>[operand2, s, 128] : <a title="accessor: bits(size) Elem[bits(N) vector, integer e, integer size]" class="document-topic">Elem</a>[operand1, s, 128];
+    <a title="accessor: Elem[bits(N) &amp;vector, integer e, integer size] = bits(size) value" class="document-topic">Elem</a>[result, s, 128] = concat&lt;position+127:position&gt;;
+
+<a title="accessor: Z[integer n, integer width] = bits(width) value" class="document-topic">Z</a>[dn, VL] = result;</pre> 
+  </div> 
+  <h3>Operational information</h3> 
+  <p>If PSTATE.DIT is 1:</p> 
+  <ul> 
+   <li>The execution time of this instruction is independent of: 
+    <ul> 
+     <li>The values of the data supplied in any of its registers.</li> 
+     <li>The values of the NZCV flags.</li> 
+    </ul></li> 
+   <li>The response of this instruction to asynchronous exceptions does not vary based on: 
+    <ul> 
+     <li>The values of the data supplied in any of its registers.</li> 
+     <li>The values of the NZCV flags.</li> 
+    </ul></li> 
+  </ul> 
+  <p> This instruction might be immediately preceded in program order by a <span>MOVPRFX</span> instruction. The <span>MOVPRFX</span> instruction must conform to all of the following requirements, otherwise the behavior of the <span>MOVPRFX</span> and this instruction is <small>unpredictable</small>: </p> 
+  <ul> 
+   <li>The <span>MOVPRFX</span> instruction must be unpredicated.</li> 
+   <li>The <span>MOVPRFX</span> instruction must specify the same destination register as this instruction.</li> 
+   <li>The destination register must not refer to architectural register state referenced by any other source operand register of this instruction.</li> 
+  </ul>  
+ </body>
+</html>

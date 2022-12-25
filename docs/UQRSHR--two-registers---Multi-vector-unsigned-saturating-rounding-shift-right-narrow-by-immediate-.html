@@ -1,0 +1,167 @@
+<html>
+ <head>  <link rel="stylesheet" href="../def-style.css"></head> 
+ <body> 
+  <h2>UQRSHR (two registers)</h2> 
+  <p>Multi-vector unsigned saturating rounding shift right narrow by immediate</p> 
+  <p>Shift right by an immediate value, the unsigned integer value in each element of the two source vectors and place the rounded results in the half-width destination elements. Each result element is saturated to the half-width N-bit element's unsigned integer range 0 to (2<sup>N</sup>)-1. The immediate shift amount is an unsigned value in the range 1 to 16.</p> 
+  <p>This instruction is unpredicated.</p> 
+  <h3><a id="iclass_mortlach2"></a>SME2<span><br></br>(FEAT_SME2) </span></h3> 
+  <p></p> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td colspan="4">imm4</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td colspan="4">Zn</td> 
+      <td>1</td> 
+      <td colspan="5">Zd</td> 
+     </tr> 
+     <tr> 
+      <td colspan="11"></td> 
+      <td></td> 
+      <td colspan="4"></td> 
+      <td colspan="6"></td> 
+      <td colspan="4"></td> 
+      <td>U</td> 
+      <td colspan="5"></td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4></h4> 
+   <a id="uqrshr_z_mz2_"></a> 
+   <p>UQRSHR <a title="Destination scalable vector register (field &quot;Zd&quot;)" class="document-topic">&lt;Zd&gt;</a>.H, { <a title="First scalable vector register of a multi-vector sequence (field Zn)" class="document-topic">&lt;Zn1&gt;</a>.S-<a title="Second scalable vector register of a multi-vector sequence (field Zn)" class="document-topic">&lt;Zn2&gt;</a>.S }, #<a title="Immediate shift amount [1-16] (field &quot;imm4&quot;)" class="document-topic">&lt;const&gt;</a></p> 
+  </div> 
+  <pre>if !<a title="function: boolean HaveSME2()" class="document-topic">HaveSME2</a>() then UNDEFINED;
+constant integer esize = 16;
+integer n = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Zn:'0');
+integer d = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Zd);
+integer shift = esize - <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(imm4);</pre> 
+  <div></div> 
+  <h3>Assembler Symbols</h3> 
+  <div> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Zd&gt;</td> 
+      <td><a id="sa_zd"></a> <p>Is the name of the destination scalable vector register, encoded in the "Zd" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Zn1&gt;</td> 
+      <td><a id="sa_zn1"></a> <p>Is the name of the first scalable vector register of a multi-vector sequence, encoded as "Zn" times 2.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Zn2&gt;</td> 
+      <td><a id="sa_zn2"></a> <p>Is the name of the second scalable vector register of a multi-vector sequence, encoded as "Zn" times 2 plus 1.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;const&gt;</td> 
+      <td><a id="sa_const"></a> <p>Is the immediate shift amount, in the range 1 to 16, encoded in the "imm4" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div></div> 
+  <div> 
+   <a id="execute"></a> 
+   <h3>Operation</h3> 
+   <pre><a title="function: CheckStreamingSVEEnabled()" class="document-topic">CheckStreamingSVEEnabled</a>();
+constant integer VL = <a title="accessor: integer CurrentVL" class="document-topic">CurrentVL</a>;
+constant integer elements = VL DIV (2 * esize);
+bits(VL) result;
+integer round_const = 1 &lt;&lt; (shift-1);
+
+for r = 0 to 1
+    bits(VL) operand = <a title="accessor: bits(width) Z[integer n, integer width]" class="document-topic">Z</a>[n+r, VL];
+    for e = 0 to elements-1
+        bits(2 * esize) element = <a title="accessor: bits(size) Elem[bits(N) vector, integer e, integer size]" class="document-topic">Elem</a>[operand, e, 2 * esize];
+        integer res = (<a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(element) + round_const) &gt;&gt; shift;
+        <a title="accessor: Elem[bits(N) &amp;vector, integer e, integer size] = bits(size) value" class="document-topic">Elem</a>[result, r*elements + e, esize] = <a title="function: bits(N) UnsignedSat(integer i, integer N)" class="document-topic">UnsignedSat</a>(res, esize);
+
+<a title="accessor: Z[integer n, integer width] = bits(width) value" class="document-topic">Z</a>[d, VL] = result;</pre> 
+  </div>  
+ </body>
+</html>

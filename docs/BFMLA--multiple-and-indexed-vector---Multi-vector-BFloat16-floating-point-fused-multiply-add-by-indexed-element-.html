@@ -1,0 +1,326 @@
+<html>
+ <head>  <link rel="stylesheet" href="../def-style.css"></head> 
+ <body> 
+  <h2>BFMLA (multiple and indexed vector)</h2> 
+  <p>Multi-vector BFloat16 floating-point fused multiply-add by indexed element</p> 
+  <p>The instruction operates on two or four ZA single-vector groups.</p> 
+  <p>Multiply the indexed element of the second source vector by the corresponding BFloat16 floating-point elements of the two or four first source vectors and destructively add without intermediate rounding to the corresponding elements of the two or four ZA single-vector groups.</p> 
+  <p>The elements within the second source vector are specified using an immediate element index which selects the same element position within each 128-bit vector segment. The index range is from 0 to 7, encoded in 3 bits. The vector numbers forming the single-vector group within each half or each quarter of the ZA array are selected by the sum of the vector select register and immediate offset, modulo half or quarter the number of ZA array vectors.</p> 
+  <p>The <small>vector group</small> symbol, VGx2 or VGx4, indicates that the ZA operand consists of two or four ZA single-vector groups respectively. The <small>vector group</small> symbol is preferred for disassembly, but optional in assembler source code.</p> 
+  <p>This instruction follows SME2.1 ZA-targeting non-widening BFloat16 numerical behaviors.</p> 
+  <p>This instruction is unpredicated.</p> 
+  <p>ID_AA64SMFR0_EL1.B16B16 indicates whether this instruction is implemented.</p> 
+  <p> It has encodings from 2 classes: <a class="document-topic">Two ZA single-vectors</a> and <a class="document-topic">Four ZA single-vectors</a> </p> 
+  <h3><a id="iclass_sme_vgx2_single"></a>Two ZA single-vectors<span><br></br>(FEAT_B16B16) </span></h3> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td colspan="4">Zm</td> 
+      <td>0</td> 
+      <td colspan="2">Rv</td> 
+      <td>1</td> 
+      <td colspan="2">i3h</td> 
+      <td colspan="4">Zn</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>i3l</td> 
+      <td colspan="3">off3</td> 
+     </tr> 
+     <tr> 
+      <td colspan="12"></td> 
+      <td colspan="4"></td> 
+      <td></td> 
+      <td colspan="2"></td> 
+      <td></td> 
+      <td colspan="2"></td> 
+      <td colspan="4"></td> 
+      <td></td> 
+      <td>S</td> 
+      <td></td> 
+      <td colspan="3"></td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4></h4> 
+   <a id="bfmla_za_zzi_h2xi"></a> 
+   <p>BFMLA ZA.H[<a title="32-bit vector select register W8-W11 (field &quot;Rv&quot;)" class="document-topic">&lt;Wv&gt;</a>, <a title="Vector select offset [0-7] (field &quot;off3&quot;)" class="document-topic">&lt;offs&gt;</a>{, VGx2}], { <a title="First scalable vector register of a multi-vector sequence (field Zn)" class="document-topic">&lt;Zn1&gt;</a>.H-<a title="Second scalable vector register of a multi-vector sequence (field Zn)" class="document-topic">&lt;Zn2&gt;</a>.H }, <a title="Second source scalable vector register Z0-Z15 (field &quot;Zm&quot;)" class="document-topic">&lt;Zm&gt;</a>.H[<a title="Element index [0-7] (field &quot;i3h:i3l&quot;)" class="document-topic">&lt;index&gt;</a>]</p> 
+  </div> 
+  <pre>if !<a title="function: boolean HaveSMEB16B16()" class="document-topic">HaveSMEB16B16</a>() then UNDEFINED;
+integer v = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>('010':Rv);
+constant integer esize = 16;
+integer n = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Zn:'0');
+integer m = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>('0':Zm);
+integer offset = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(off3);
+integer index = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(i3h:i3l);
+boolean sub_op = FALSE;
+constant integer nreg = 2;</pre> 
+  <h3><a id="iclass_sme_vgx4_single"></a>Four ZA single-vectors<span><br></br>(FEAT_B16B16) </span></h3> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td colspan="4">Zm</td> 
+      <td>1</td> 
+      <td colspan="2">Rv</td> 
+      <td>1</td> 
+      <td colspan="2">i3h</td> 
+      <td colspan="3">Zn</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>i3l</td> 
+      <td colspan="3">off3</td> 
+     </tr> 
+     <tr> 
+      <td colspan="12"></td> 
+      <td colspan="4"></td> 
+      <td></td> 
+      <td colspan="2"></td> 
+      <td></td> 
+      <td colspan="2"></td> 
+      <td colspan="3"></td> 
+      <td></td> 
+      <td></td> 
+      <td>S</td> 
+      <td></td> 
+      <td colspan="3"></td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4></h4> 
+   <a id="bfmla_za_zzi_h4xi"></a> 
+   <p>BFMLA ZA.H[<a title="32-bit vector select register W8-W11 (field &quot;Rv&quot;)" class="document-topic">&lt;Wv&gt;</a>, <a title="Vector select offset [0-7] (field &quot;off3&quot;)" class="document-topic">&lt;offs&gt;</a>{, VGx4}], { <a title="First scalable vector register of a multi-vector sequence (field Zn)" class="document-topic">&lt;Zn1&gt;</a>.H-<a title="Fourth scalable vector register of a multi-vector sequence (field Zn)" class="document-topic">&lt;Zn4&gt;</a>.H }, <a title="Second source scalable vector register Z0-Z15 (field &quot;Zm&quot;)" class="document-topic">&lt;Zm&gt;</a>.H[<a title="Element index [0-7] (field &quot;i3h:i3l&quot;)" class="document-topic">&lt;index&gt;</a>]</p> 
+  </div> 
+  <pre>if !<a title="function: boolean HaveSMEB16B16()" class="document-topic">HaveSMEB16B16</a>() then UNDEFINED;
+integer v = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>('010':Rv);
+constant integer esize = 16;
+integer n = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Zn:'00');
+integer m = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>('0':Zm);
+integer offset = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(off3);
+integer index = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(i3h:i3l);
+boolean sub_op = FALSE;
+constant integer nreg = 4;</pre> 
+  <div></div> 
+  <h3>Assembler Symbols</h3> 
+  <div> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Wv&gt;</td> 
+      <td><a id="sa_wv"></a> <p>Is the 32-bit name of the vector select register W8-W11, encoded in the "Rv" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;offs&gt;</td> 
+      <td><a id="sa_offs"></a> <p>Is the vector select offset, in the range 0 to 7, encoded in the "off3" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Zn1&gt;</td> 
+      <td><a id="sa_zn1"></a> <p>For the two ZA single-vectors variant: is the name of the first scalable vector register of a multi-vector sequence, encoded as "Zn" times 2.</p> </td> 
+     </tr> 
+     <tr> 
+      <td></td> 
+      <td><a id="sa_zn1_1"></a> <p>For the four ZA single-vectors variant: is the name of the first scalable vector register of a multi-vector sequence, encoded as "Zn" times 4.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Zn4&gt;</td> 
+      <td><a id="sa_zn4"></a> <p>Is the name of the fourth scalable vector register of a multi-vector sequence, encoded as "Zn" times 4 plus 3.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Zn2&gt;</td> 
+      <td><a id="sa_zn2"></a> <p>Is the name of the second scalable vector register of a multi-vector sequence, encoded as "Zn" times 2 plus 1.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Zm&gt;</td> 
+      <td><a id="sa_zm"></a> <p>Is the name of the second source scalable vector register Z0-Z15, encoded in the "Zm" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;index&gt;</td> 
+      <td><a id="sa_index"></a> <p>Is the element index, in the range 0 to 7, encoded in the "i3h:i3l" fields.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div></div> 
+  <div> 
+   <a id="execute"></a> 
+   <h3>Operation</h3> 
+   <pre><a title="function: CheckStreamingSVEAndZAEnabled()" class="document-topic">CheckStreamingSVEAndZAEnabled</a>();
+constant integer VL = <a title="accessor: integer CurrentVL" class="document-topic">CurrentVL</a>;
+constant integer elements = VL DIV 16;
+integer vectors = VL DIV 8;
+integer vstride = vectors DIV nreg;
+integer eltspersegment = 128 DIV 16;
+bits(32) vbase = <a title="accessor: bits(width) X[integer n, integer width]" class="document-topic">X</a>[v, 32];
+integer vec = (<a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(vbase) + offset) MOD vstride;
+bits(VL) result;
+
+for r = 0 to nreg-1
+    bits(VL) operand1 = <a title="accessor: bits(width) Z[integer n, integer width]" class="document-topic">Z</a>[n+r, VL];
+    bits(VL) operand2 = <a title="accessor: bits(width) Z[integer n, integer width]" class="document-topic">Z</a>[m, VL];
+    bits(VL) operand3 = <a title="accessor: bits(width) ZAvector[integer index, integer width]" class="document-topic">ZAvector</a>[vec, VL];
+    for e = 0 to elements-1
+        bits(16) element1 = <a title="accessor: bits(size) Elem[bits(N) vector, integer e, integer size]" class="document-topic">Elem</a>[operand1, e, 16];
+        integer segmentbase = e - (e MOD eltspersegment);
+        integer s = segmentbase + index;
+        bits(16) element2 = <a title="accessor: bits(size) Elem[bits(N) vector, integer e, integer size]" class="document-topic">Elem</a>[operand2, s, 16];
+        bits(16) element3 = <a title="accessor: bits(size) Elem[bits(N) vector, integer e, integer size]" class="document-topic">Elem</a>[operand3, e, 16];
+        if sub_op then element1 = <a title="function: bits(16) BFNeg(bits(16) op)" class="document-topic">BFNeg</a>(element1);
+        <a title="accessor: Elem[bits(N) &amp;vector, integer e, integer size] = bits(size) value" class="document-topic">Elem</a>[result, e, 16] = <a title="function: bits(16) BFMulAdd_ZA(bits(16) addend, bits(16) op1, bits(16) op2, FPCRType fpcr_in)" class="document-topic">BFMulAdd_ZA</a>(element3, element1, element2, FPCR[]);
+    <a title="accessor: ZAvector[integer index, integer width] = bits(width) value" class="document-topic">ZAvector</a>[vec, VL] = result;
+    vec = vec + vstride;</pre> 
+  </div>  
+ </body>
+</html>

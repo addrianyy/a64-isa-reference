@@ -1,0 +1,167 @@
+<html>
+ <head>  <link rel="stylesheet" href="../def-style.css"></head> 
+ <body> 
+  <h2>GCSSTTR</h2> 
+  <p>Guarded Control Stack unprivileged Store stores a doubleword from a register to memory. The address that is used for the store is calculated from a base register.</p> 
+  <p>Memory accesses made by the instruction behave as if the instruction was executed at EL0 if the <em>Effective value</em> of PSTATE.UAO is 0 and either:</p> 
+  <ul> 
+   <li>The instruction is executed at EL1 and <em>HCR_EL2</em>.{NV, NV1} is not {1, 1}.</li> 
+   <li>The instruction is executed at EL2 when the <em>Effective value</em> of <em>HCR_EL2</em>.{E2H, TGE} is {1, 1}.</li> 
+  </ul> 
+  <p>Otherwise, the memory access operates with the restrictions determined by the Exception level at which the instruction is executed.</p> 
+  <h3><a id="iclass_general"></a>Integer<span><br></br>(FEAT_GCS) </span></h3> 
+  <p></p> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td colspan="5">Rn</td> 
+      <td colspan="5">Rt</td> 
+     </tr> 
+     <tr> 
+      <td colspan="5"></td> 
+      <td></td> 
+      <td colspan="11"></td> 
+      <td colspan="3">opc</td> 
+      <td colspan="2"></td> 
+      <td colspan="5"></td> 
+      <td colspan="5"></td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4></h4> 
+   <a id="GCSSTTR_64_ldst_gcs"></a> 
+   <p>GCSSTTR <a title="64-bit general-purpose register to be transferred (field &quot;Rt&quot;)" class="document-topic">&lt;Xt&gt;</a>, [<a title="64-bit general-purpose base register or SP (field &quot;Rn&quot;)" class="document-topic">&lt;Xn|SP&gt;</a>]</p> 
+  </div> 
+  <pre>if !<a title="function: boolean HaveGCS()" class="document-topic">HaveGCS</a>() then UNDEFINED;
+bits(2) effective_el;
+integer n = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Rn);
+integer t = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Rt);
+boolean is_gcssttr = (opc == '001');
+
+if is_gcssttr then
+    boolean privileged;
+    case PSTATE.EL of
+        when <a title="constant bits(2) EL0 = '00'" class="document-topic">EL0</a> privileged = FALSE;
+        when <a title="constant bits(2) EL1 = '01'" class="document-topic">EL1</a> privileged = <a title="function: boolean EL2Enabled()" class="document-topic">EL2Enabled</a>() &amp;&amp; <a title="function: boolean HaveNVExt()" class="document-topic">HaveNVExt</a>() &amp;&amp; HCR_EL2.&lt;NV,NV1&gt; == '11';
+        when <a title="constant bits(2) EL2 = '10'" class="document-topic">EL2</a> privileged = !(<a title="function: boolean HaveVirtHostExt()" class="document-topic">HaveVirtHostExt</a>() &amp;&amp; HCR_EL2.&lt;E2H,TGE&gt; == '11');
+        when <a title="constant bits(2) EL3 = '11'" class="document-topic">EL3</a> privileged = TRUE;
+    if <a title="function: boolean HaveUAOExt()" class="document-topic">HaveUAOExt</a>() &amp;&amp; PSTATE.UAO == '1' then
+        privileged = PSTATE.EL != <a title="constant bits(2) EL0 = '00'" class="document-topic">EL0</a>;
+    if privileged then
+        effective_el = PSTATE.EL;
+    else
+        effective_el = <a title="constant bits(2) EL0 = '00'" class="document-topic">EL0</a>;
+else
+    effective_el = PSTATE.EL;</pre> 
+  <div></div> 
+  <h3>Assembler Symbols</h3> 
+  <div> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Xt&gt;</td> 
+      <td><a id="sa_xt"></a> <p>Is the 64-bit name of the general-purpose register to be transferred, encoded in the "Rt" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Xn|SP&gt;</td> 
+      <td><a id="sa_xn_sp"></a> <p>Is the 64-bit name of the general-purpose base register or stack pointer, encoded in the "Rn" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div></div> 
+  <div> 
+   <a id="execute"></a> 
+   <h3>Operation</h3> 
+   <pre>bits(64) address;
+bits(64) data;
+
+if effective_el == PSTATE.EL then
+    <a title="function: CheckGCSSTRTrap()" class="document-topic">CheckGCSSTRTrap</a>();
+
+<a title="type AccessDescriptor is ( AccessType acctype, bits(2) el, SecurityState ss, boolean acqsc, boolean acqpc, boolean relsc, boolean limitedordered, boolean exclusive, boolean atomicop, MemAtomicOp modop, boolean nontemporal, boolean read, boolean write, CacheOp cacheop, CacheOpScope opscope, CacheType cachetype, boolean pan, boolean transactional, boolean nonfault, boolean firstfault, boolean first, boolean contiguous, boolean streamingsve, boolean ls64, boolean mops, boolean rcw, boolean rcws, boolean toplevel, VARange varange, boolean a32lsmd, boolean tagchecked, boolean tagaccess, MPAMinfo mpam )" class="document-topic">AccessDescriptor</a> accdesc = <a title="function: AccessDescriptor CreateAccDescGCS(bits(2) el, MemOp memop)" class="document-topic">CreateAccDescGCS</a>(effective_el, <a title="enumeration MemOp {MemOp_LOAD, MemOp_STORE, MemOp_PREFETCH}" class="document-topic">MemOp_STORE</a>);
+
+if n == 31 then
+    <a title="function: CheckSPAlignment()" class="document-topic">CheckSPAlignment</a>();
+    address = <a title="accessor: bits(64) SP[]" class="document-topic">SP</a>[];
+else
+    address = <a title="accessor: bits(width) X[integer n, integer width]" class="document-topic">X</a>[n, 64];
+
+data = <a title="accessor: bits(width) X[integer n, integer width]" class="document-topic">X</a>[t, 64];
+Mem[address, 8, accdesc] = data;</pre> 
+  </div>  
+ </body>
+</html>

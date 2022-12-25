@@ -1,0 +1,315 @@
+<html>
+ <head>  <link rel="stylesheet" href="../def-style.css"></head> 
+ <body> 
+  <h2>FMOV (vector, immediate)</h2> 
+  <p>Floating-point move immediate (vector). This instruction copies an immediate floating-point constant into every element of the SIMD&amp;FP destination register.</p> 
+  <p>Depending on the settings in the <em>CPACR_EL1</em>, <em>CPTR_EL2</em>, and <em>CPTR_EL3</em> registers, and the current Security state and Exception level, an attempt to execute the instruction might be trapped.</p> 
+  <p> It has encodings from 2 classes: <a class="document-topic">Half-precision</a> and <a class="document-topic">Single-precision and double-precision</a> </p> 
+  <h3><a id="iclass_per_half"></a>Half-precision<span><br></br>(FEAT_FP16) </span></h3> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>0</td> 
+      <td>Q</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>a</td> 
+      <td>b</td> 
+      <td>c</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>d</td> 
+      <td>e</td> 
+      <td>f</td> 
+      <td>g</td> 
+      <td>h</td> 
+      <td colspan="5">Rd</td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4></h4> 
+   <a id="FMOV_asimdimm_H_h"></a> 
+   <p>FMOV <a title="SIMD&amp;FP destination register (field &quot;Rd&quot;)" class="document-topic">&lt;Vd&gt;</a>.<a title="Arrangement specifier (field &quot;Q&quot;) [4H,8H]" class="document-topic">&lt;T&gt;</a>, #<a title="Signed floating-point constant with 3-bit exponent and normalized 4 bits of precision (field &quot;a:b:c:d:e:f:g:h&quot;)" class="document-topic">&lt;imm&gt;</a></p> 
+  </div> 
+  <pre>if !<a title="function: boolean HaveFP16Ext()" class="document-topic">HaveFP16Ext</a>() then UNDEFINED;
+
+integer rd = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Rd);
+
+integer datasize = if Q == '1' then 128 else 64;
+bits(datasize) imm;
+
+imm8 = a:b:c:d:e:f:g:h;
+imm16 = imm8&lt;7&gt;:NOT(imm8&lt;6&gt;):<a title="function: bits(M*N) Replicate(bits(M) x, integer N)" class="document-topic">Replicate</a>(imm8&lt;6&gt;,2):imm8&lt;5:0&gt;:<a title="function: bits(N) Zeros(integer N)" class="document-topic">Zeros</a>(6);
+
+imm = <a title="function: bits(M*N) Replicate(bits(M) x, integer N)" class="document-topic">Replicate</a>(imm16, datasize DIV 16);</pre> 
+  <h3><a id="iclass_single_and_double"></a>Single-precision and double-precision</h3> 
+  <p></p> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>0</td> 
+      <td>Q</td> 
+      <td>op</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>a</td> 
+      <td>b</td> 
+      <td>c</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>d</td> 
+      <td>e</td> 
+      <td>f</td> 
+      <td>g</td> 
+      <td>h</td> 
+      <td colspan="5">Rd</td> 
+     </tr> 
+     <tr> 
+      <td></td> 
+      <td></td> 
+      <td></td> 
+      <td colspan="10"></td> 
+      <td></td> 
+      <td></td> 
+      <td></td> 
+      <td colspan="4">cmode</td> 
+      <td></td> 
+      <td></td> 
+      <td></td> 
+      <td></td> 
+      <td></td> 
+      <td></td> 
+      <td></td> 
+      <td colspan="5"></td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4>Single-precision<span> (op == 0)</span></h4> 
+   <a id="FMOV_asimdimm_S_s"></a> 
+   <p>FMOV <a title="SIMD&amp;FP destination register (field &quot;Rd&quot;)" class="document-topic">&lt;Vd&gt;</a>.<a title="Arrangement specifier (field &quot;Q&quot;) [2S,4S]" class="document-topic">&lt;T&gt;</a>, #<a title="Signed floating-point constant with 3-bit exponent and normalized 4 bits of precision (field &quot;a:b:c:d:e:f:g:h&quot;)" class="document-topic">&lt;imm&gt;</a></p> 
+  </div> 
+  <div> 
+   <h4>Double-precision<span> (Q == 1 &amp;&amp; op == 1)</span></h4> 
+   <a id="FMOV_asimdimm_D2_d"></a> 
+   <p>FMOV <a title="SIMD&amp;FP destination register (field &quot;Rd&quot;)" class="document-topic">&lt;Vd&gt;</a>.2D, #<a title="Signed floating-point constant with 3-bit exponent and normalized 4 bits of precision (field &quot;a:b:c:d:e:f:g:h&quot;)" class="document-topic">&lt;imm&gt;</a></p> 
+  </div> 
+  <pre>integer rd = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Rd);
+
+integer datasize = if Q == '1' then 128 else 64;
+bits(datasize) imm;
+bits(64) imm64;
+
+<a title="enumeration ImmediateOp {ImmediateOp_MOVI, ImmediateOp_MVNI, ImmediateOp_ORR, ImmediateOp_BIC}" class="document-topic">ImmediateOp</a> operation;
+case cmode:op of
+    when '0xx00' operation = <a title="enumeration ImmediateOp {ImmediateOp_MOVI, ImmediateOp_MVNI, ImmediateOp_ORR, ImmediateOp_BIC}" class="document-topic">ImmediateOp_MOVI</a>;
+    when '0xx01' operation = <a title="enumeration ImmediateOp {ImmediateOp_MOVI, ImmediateOp_MVNI, ImmediateOp_ORR, ImmediateOp_BIC}" class="document-topic">ImmediateOp_MVNI</a>;
+    when '0xx10' operation = <a title="enumeration ImmediateOp {ImmediateOp_MOVI, ImmediateOp_MVNI, ImmediateOp_ORR, ImmediateOp_BIC}" class="document-topic">ImmediateOp_ORR</a>;
+    when '0xx11' operation = <a title="enumeration ImmediateOp {ImmediateOp_MOVI, ImmediateOp_MVNI, ImmediateOp_ORR, ImmediateOp_BIC}" class="document-topic">ImmediateOp_BIC</a>;
+    when '10x00' operation = <a title="enumeration ImmediateOp {ImmediateOp_MOVI, ImmediateOp_MVNI, ImmediateOp_ORR, ImmediateOp_BIC}" class="document-topic">ImmediateOp_MOVI</a>;
+    when '10x01' operation = <a title="enumeration ImmediateOp {ImmediateOp_MOVI, ImmediateOp_MVNI, ImmediateOp_ORR, ImmediateOp_BIC}" class="document-topic">ImmediateOp_MVNI</a>;
+    when '10x10' operation = <a title="enumeration ImmediateOp {ImmediateOp_MOVI, ImmediateOp_MVNI, ImmediateOp_ORR, ImmediateOp_BIC}" class="document-topic">ImmediateOp_ORR</a>;
+    when '10x11' operation = <a title="enumeration ImmediateOp {ImmediateOp_MOVI, ImmediateOp_MVNI, ImmediateOp_ORR, ImmediateOp_BIC}" class="document-topic">ImmediateOp_BIC</a>;
+    when '110x0' operation = <a title="enumeration ImmediateOp {ImmediateOp_MOVI, ImmediateOp_MVNI, ImmediateOp_ORR, ImmediateOp_BIC}" class="document-topic">ImmediateOp_MOVI</a>;
+    when '110x1' operation = <a title="enumeration ImmediateOp {ImmediateOp_MOVI, ImmediateOp_MVNI, ImmediateOp_ORR, ImmediateOp_BIC}" class="document-topic">ImmediateOp_MVNI</a>;
+    when '1110x' operation = <a title="enumeration ImmediateOp {ImmediateOp_MOVI, ImmediateOp_MVNI, ImmediateOp_ORR, ImmediateOp_BIC}" class="document-topic">ImmediateOp_MOVI</a>;
+    when '11110' operation = <a title="enumeration ImmediateOp {ImmediateOp_MOVI, ImmediateOp_MVNI, ImmediateOp_ORR, ImmediateOp_BIC}" class="document-topic">ImmediateOp_MOVI</a>;
+    when '11111'
+        // FMOV Dn,#imm is in main FP instruction set
+        if Q == '0' then UNDEFINED;
+        operation = <a title="enumeration ImmediateOp {ImmediateOp_MOVI, ImmediateOp_MVNI, ImmediateOp_ORR, ImmediateOp_BIC}" class="document-topic">ImmediateOp_MOVI</a>;
+
+imm64 = <a title="function: bits(64) AdvSIMDExpandImm(bit op, bits(4) cmode, bits(8) imm8)" class="document-topic">AdvSIMDExpandImm</a>(op, cmode, a:b:c:d:e:f:g:h);
+imm = <a title="function: bits(M*N) Replicate(bits(M) x, integer N)" class="document-topic">Replicate</a>(imm64, datasize DIV 64);</pre> 
+  <div></div> 
+  <h3>Assembler Symbols</h3> 
+  <div> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Vd&gt;</td> 
+      <td><a id="sa_vd"></a> <p>Is the name of the SIMD&amp;FP destination register, encoded in the "Rd" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;T&gt;</td> 
+      <td><a id="sa_t_1"></a> <p>For the half-precision variant: is an arrangement specifier, encoded in <q>Q</q>: </p> 
+       <table> 
+        <thead> 
+         <tr> 
+          <th>Q</th> 
+          <th>&lt;T&gt;</th> 
+         </tr> 
+        </thead> 
+        <tbody> 
+         <tr> 
+          <td>0</td> 
+          <td>4H</td> 
+         </tr> 
+         <tr> 
+          <td>1</td> 
+          <td>8H</td> 
+         </tr> 
+        </tbody> 
+       </table> </td> 
+     </tr> 
+     <tr> 
+      <td></td> 
+      <td><a id="sa_t"></a> <p>For the single-precision variant: is an arrangement specifier, encoded in <q>Q</q>: </p> 
+       <table> 
+        <thead> 
+         <tr> 
+          <th>Q</th> 
+          <th>&lt;T&gt;</th> 
+         </tr> 
+        </thead> 
+        <tbody> 
+         <tr> 
+          <td>0</td> 
+          <td>2S</td> 
+         </tr> 
+         <tr> 
+          <td>1</td> 
+          <td>4S</td> 
+         </tr> 
+        </tbody> 
+       </table> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;imm&gt;</td> 
+      <td><a id="sa_imm"></a> <p>Is a signed floating-point constant with 3-bit exponent and normalized 4 bits of precision, encoded in "a:b:c:d:e:f:g:h". For details of the range of constants available and the encoding of &lt;imm&gt;, see <em>Modified immediate constants in A64 floating-point instructions</em>.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div></div> 
+  <div> 
+   <a id="execute"></a> 
+   <h3>Operation</h3> 
+   <pre><a title="function: CheckFPAdvSIMDEnabled64()" class="document-topic">CheckFPAdvSIMDEnabled64</a>();
+
+<a title="accessor: V[integer n, integer width] = bits(width) value" class="document-topic">V</a>[rd, datasize] = imm;</pre> 
+  </div>  
+ </body>
+</html>

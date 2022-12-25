@@ -1,0 +1,163 @@
+<html>
+ <head>  <link rel="stylesheet" href="../def-style.css"></head> 
+ <body> 
+  <h2>TBZ</h2> 
+  <p>Test bit and Branch if Zero compares the value of a test bit with zero, and conditionally branches to a label at a PC-relative offset if the comparison is equal. It provides a hint that this is not a subroutine call or return. This instruction does not affect condition flags.</p> 
+  <p></p> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>b5</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td colspan="5">b40</td> 
+      <td colspan="14">imm14</td> 
+      <td colspan="5">Rt</td> 
+     </tr> 
+     <tr> 
+      <td></td> 
+      <td colspan="6"></td> 
+      <td>op</td> 
+      <td colspan="5"></td> 
+      <td colspan="14"></td> 
+      <td colspan="5"></td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4></h4> 
+   <a id="TBZ_only_testbranch"></a> 
+   <p>TBZ <a title="Width specifier (field &quot;b5&quot;) [W,X]" class="document-topic">&lt;R&gt;</a><a title="General-purpose register number [0-30] to be tested or ZR (31) (field &quot;Rt&quot;)" class="document-topic">&lt;t&gt;</a>, #<a title="Bit number to be tested [0-63] (field &quot;b5:b40&quot;)" class="document-topic">&lt;imm&gt;</a>, <a title="Label to be conditionally branched to (field imm14)" class="document-topic">&lt;label&gt;</a></p> 
+  </div> 
+  <pre>integer t = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Rt);
+
+integer datasize = if b5 == '1' then 64 else 32;
+integer bit_pos = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(b5:b40);
+bit bit_val = op;
+bits(64) offset = <a title="function: bits(N) SignExtend(bits(M) x, integer N)" class="document-topic">SignExtend</a>(imm14:'00', 64);</pre> 
+  <div></div> 
+  <h3>Assembler Symbols</h3> 
+  <div> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;R&gt;</td> 
+      <td><a id="sa_r"></a> <p>Is a width specifier, encoded in <q>b5</q>: </p> 
+       <table> 
+        <thead> 
+         <tr> 
+          <th>b5</th> 
+          <th>&lt;R&gt;</th> 
+         </tr> 
+        </thead> 
+        <tbody> 
+         <tr> 
+          <td>0</td> 
+          <td>W</td> 
+         </tr> 
+         <tr> 
+          <td>1</td> 
+          <td>X</td> 
+         </tr> 
+        </tbody> 
+       </table> In assembler source code an 'X' specifier is always permitted, but a 'W' specifier is only permitted when the bit number is less than 32. </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;t&gt;</td> 
+      <td><a id="sa_t"></a> <p>Is the number [0-30] of the general-purpose register to be tested or the name ZR (31), encoded in the "Rt" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;imm&gt;</td> 
+      <td><a id="sa_imm"></a> <p>Is the bit number to be tested, in the range 0 to 63, encoded in "b5:b40".</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;label&gt;</td> 
+      <td><a id="sa_label"></a> <p>Is the program label to be conditionally branched to. Its offset from the address of this instruction, in the range +/-32KB, is encoded as "imm14" times 4.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div></div> 
+  <div> 
+   <a id="execute"></a> 
+   <h3>Operation</h3> 
+   <pre>bits(datasize) operand = <a title="accessor: bits(width) X[integer n, integer width]" class="document-topic">X</a>[t, datasize];
+boolean branch_conditional = TRUE;
+if operand&lt;bit_pos&gt; == bit_val then
+    <a title="function: BranchTo(bits(N) target, BranchType branch_type, boolean branch_conditional)" class="document-topic">BranchTo</a>(<a title="accessor: bits(64) PC[]" class="document-topic">PC</a>[] + offset, <a title="enumeration BranchType { BranchType_DIRCALL, BranchType_INDCALL, BranchType_ERET, BranchType_DBGEXIT, BranchType_RET, BranchType_DIR, BranchType_INDIR, BranchType_EXCEPTION, BranchType_TMFAIL, BranchType_RESET, BranchType_UNKNOWN}" class="document-topic">BranchType_DIR</a>, branch_conditional);
+else
+    <a title="function: BranchNotTaken(BranchType branchtype, boolean branch_conditional)" class="document-topic">BranchNotTaken</a>(<a title="enumeration BranchType { BranchType_DIRCALL, BranchType_INDCALL, BranchType_ERET, BranchType_DBGEXIT, BranchType_RET, BranchType_DIR, BranchType_INDIR, BranchType_EXCEPTION, BranchType_TMFAIL, BranchType_RESET, BranchType_UNKNOWN}" class="document-topic">BranchType_DIR</a>, branch_conditional);</pre> 
+  </div>  
+ </body>
+</html>

@@ -1,0 +1,177 @@
+<html>
+ <head>  <link rel="stylesheet" href="../def-style.css"></head> 
+ <body> 
+  <h2>FMOV (zero, unpredicated)</h2> 
+  <p>Move floating-point +0.0 to vector elements (unpredicated)</p> 
+  <p>Unconditionally broadcast the floating-point constant +0.0 into each element of the destination vector. This instruction is unpredicated.</p> 
+  <p> This is a pseudo-instruction of <a href="DUP--immediate---Broadcast-signed-immediate-to-vector-elements--unpredicated--.html" class="document-topic">DUP (immediate)</a>. This means: </p> 
+  <ul> 
+   <li> The encodings in this description are named to match the encodings of <a href="DUP--immediate---Broadcast-signed-immediate-to-vector-elements--unpredicated--.html" class="document-topic">DUP (immediate)</a>. </li> 
+   <li> The assembler syntax is used only for assembly, and is not used on disassembly. </li> 
+   <li>The description of <a href="DUP--immediate---Broadcast-signed-immediate-to-vector-elements--unpredicated--.html" class="document-topic">DUP (immediate)</a> gives the operational pseudocode, any <small>constrained unpredictable</small> behavior, and any operational information for this instruction.</li> 
+  </ul> 
+  <p></p> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td colspan="2">size</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td colspan="5">Zd</td> 
+     </tr> 
+     <tr> 
+      <td colspan="8"></td> 
+      <td colspan="2"></td> 
+      <td colspan="3"></td> 
+      <td></td> 
+      <td></td> 
+      <td colspan="3"></td> 
+      <td>sh</td> 
+      <td colspan="8">imm8</td> 
+      <td colspan="5"></td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4></h4> 
+   <a id="FMOV_dup_z_i_"></a> 
+   <p>FMOV <a title="Destination scalable vector register (field &quot;Zd&quot;)" class="document-topic">&lt;Zd&gt;</a>.<a title="Size specifier (field &quot;size&quot;) [D,H,S]" class="document-topic">&lt;T&gt;</a>, #0.0</p> 
+   <p> is equivalent to </p> 
+   <p><a href="DUP--immediate---Broadcast-signed-immediate-to-vector-elements--unpredicated--.html" class="document-topic">DUP</a> <a title="Destination scalable vector register (field &quot;Zd&quot;)" class="document-topic">&lt;Zd&gt;</a>.<a title="Size specifier (field &quot;size&quot;) [D,H,S]" class="document-topic">&lt;T&gt;</a>, #0</p> 
+  </div> 
+  <div></div> 
+  <h3>Assembler Symbols</h3> 
+  <div> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Zd&gt;</td> 
+      <td><a id="sa_zd"></a> <p>Is the name of the destination scalable vector register, encoded in the "Zd" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;T&gt;</td> 
+      <td><a id="sa_t_1"></a> <p>Is the size specifier, encoded in <q>size</q>: </p> 
+       <table> 
+        <thead> 
+         <tr> 
+          <th>size</th> 
+          <th>&lt;T&gt;</th> 
+         </tr> 
+        </thead> 
+        <tbody> 
+         <tr> 
+          <td>00</td> 
+          <td>RESERVED</td> 
+         </tr> 
+         <tr> 
+          <td>01</td> 
+          <td>H</td> 
+         </tr> 
+         <tr> 
+          <td>10</td> 
+          <td>S</td> 
+         </tr> 
+         <tr> 
+          <td>11</td> 
+          <td>D</td> 
+         </tr> 
+        </tbody> 
+       </table> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div></div> 
+  <div> 
+   <h3>Operation</h3> 
+   <p>The description of <a href="DUP--immediate---Broadcast-signed-immediate-to-vector-elements--unpredicated--.html" class="document-topic">DUP (immediate)</a> gives the operational pseudocode for this instruction.</p> 
+  </div> 
+  <h3>Operational information</h3> 
+  <p>If FEAT_SVE2 is implemented or FEAT_SME is implemented, then if PSTATE.DIT is 1:</p> 
+  <ul> 
+   <li>The execution time of this instruction is independent of: 
+    <ul> 
+     <li>The values of the data supplied in any of its registers.</li> 
+     <li>The values of the NZCV flags.</li> 
+    </ul></li> 
+   <li>The response of this instruction to asynchronous exceptions does not vary based on: 
+    <ul> 
+     <li>The values of the data supplied in any of its registers.</li> 
+     <li>The values of the NZCV flags.</li> 
+    </ul></li> 
+  </ul>  
+ </body>
+</html>

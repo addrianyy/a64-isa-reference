@@ -1,0 +1,115 @@
+<html>
+ <head>  <link rel="stylesheet" href="../def-style.css"></head> 
+ <body> 
+  <h2>AXFLAG</h2> 
+  <p>Convert floating-point condition flags from Arm to external format. This instruction converts the state of the PSTATE.{N,Z,C,V} flags from a form representing the result of an Arm floating-point scalar compare instruction to an alternative representation required by some software.</p> 
+  <h3><a id="iclass_system"></a>System<span><br></br>(FEAT_FlagM2) </span></h3> 
+  <p></p> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>(0)</td> 
+      <td>(0)</td> 
+      <td>(0)</td> 
+      <td>(0)</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+     </tr> 
+     <tr> 
+      <td colspan="10"></td> 
+      <td></td> 
+      <td colspan="2"></td> 
+      <td colspan="3"></td> 
+      <td colspan="4"></td> 
+      <td colspan="4">CRm</td> 
+      <td colspan="3"></td> 
+      <td colspan="5"></td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4></h4> 
+   <a id="AXFLAG_M_pstate"></a> 
+   <p>AXFLAG</p> 
+  </div> 
+  <pre>if !<a title="function: boolean HaveFlagFormatExt()" class="document-topic">HaveFlagFormatExt</a>() then UNDEFINED;</pre> 
+  <div></div> 
+  <div> 
+   <a id="execute"></a> 
+   <h3>Operation</h3> 
+   <pre>bit n = '0';
+bit z = PSTATE.Z OR PSTATE.V;
+bit c = PSTATE.C AND NOT(PSTATE.V);
+bit v = '0';
+
+PSTATE.N = n;
+PSTATE.Z = z;
+PSTATE.C = c;
+PSTATE.V = v;</pre> 
+  </div>  
+ </body>
+</html>

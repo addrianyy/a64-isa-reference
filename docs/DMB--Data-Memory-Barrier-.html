@@ -1,0 +1,217 @@
+<html>
+ <head>  <link rel="stylesheet" href="../def-style.css"></head> 
+ <body> 
+  <h2>DMB</h2> 
+  <p>Data Memory Barrier is a memory barrier that ensures the ordering of observations of memory accesses, see <em>Data Memory Barrier</em>.</p> 
+  <p></p> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td colspan="4">CRm</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+     </tr> 
+     <tr> 
+      <td colspan="10"></td> 
+      <td></td> 
+      <td colspan="2"></td> 
+      <td colspan="3"></td> 
+      <td colspan="4"></td> 
+      <td colspan="4"></td> 
+      <td></td> 
+      <td colspan="2">opc</td> 
+      <td colspan="5"></td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4></h4> 
+   <a id="DMB_BO_barriers"></a> 
+   <p>DMB <a title="Specifies the limitation on the barrier operation" class="document-topic">&lt;option&gt;</a>|#<a title="4-bit unsigned immediate [0-15] (field &quot;CRm&quot;)" class="document-topic">&lt;imm&gt;</a></p> 
+  </div> 
+  <pre><a title="enumeration MBReqDomain    {MBReqDomain_Nonshareable, MBReqDomain_InnerShareable, MBReqDomain_OuterShareable, MBReqDomain_FullSystem}" class="document-topic">MBReqDomain</a> domain;
+<a title="enumeration MBReqTypes     {MBReqTypes_Reads, MBReqTypes_Writes, MBReqTypes_All}" class="document-topic">MBReqTypes</a> types;
+case CRm&lt;3:2&gt; of
+    when '00' domain = <a title="enumeration MBReqDomain    {MBReqDomain_Nonshareable, MBReqDomain_InnerShareable, MBReqDomain_OuterShareable, MBReqDomain_FullSystem}" class="document-topic">MBReqDomain_OuterShareable</a>;
+    when '01' domain = <a title="enumeration MBReqDomain    {MBReqDomain_Nonshareable, MBReqDomain_InnerShareable, MBReqDomain_OuterShareable, MBReqDomain_FullSystem}" class="document-topic">MBReqDomain_Nonshareable</a>;
+    when '10' domain = <a title="enumeration MBReqDomain    {MBReqDomain_Nonshareable, MBReqDomain_InnerShareable, MBReqDomain_OuterShareable, MBReqDomain_FullSystem}" class="document-topic">MBReqDomain_InnerShareable</a>;
+    when '11' domain = <a title="enumeration MBReqDomain    {MBReqDomain_Nonshareable, MBReqDomain_InnerShareable, MBReqDomain_OuterShareable, MBReqDomain_FullSystem}" class="document-topic">MBReqDomain_FullSystem</a>;
+case CRm&lt;1:0&gt; of
+    when '00' types = <a title="enumeration MBReqTypes     {MBReqTypes_Reads, MBReqTypes_Writes, MBReqTypes_All}" class="document-topic">MBReqTypes_All</a>; domain = <a title="enumeration MBReqDomain    {MBReqDomain_Nonshareable, MBReqDomain_InnerShareable, MBReqDomain_OuterShareable, MBReqDomain_FullSystem}" class="document-topic">MBReqDomain_FullSystem</a>;
+    when '01' types = <a title="enumeration MBReqTypes     {MBReqTypes_Reads, MBReqTypes_Writes, MBReqTypes_All}" class="document-topic">MBReqTypes_Reads</a>;
+    when '10' types = <a title="enumeration MBReqTypes     {MBReqTypes_Reads, MBReqTypes_Writes, MBReqTypes_All}" class="document-topic">MBReqTypes_Writes</a>;
+    when '11' types = <a title="enumeration MBReqTypes     {MBReqTypes_Reads, MBReqTypes_Writes, MBReqTypes_All}" class="document-topic">MBReqTypes_All</a>;</pre> 
+  <div></div> 
+  <h3>Assembler Symbols</h3> 
+  <div> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;option&gt;</td> 
+      <td><a id="sa_option"></a> <p>Specifies the limitation on the barrier operation. Values are:</p> 
+       <dl> 
+        <dt>
+          SY 
+        </dt> 
+        <dd>
+          Full system is the required shareability domain, reads and writes are the required access types, both before and after the barrier instruction. This option is referred to as the full system barrier. Encoded as CRm = 0b1111. 
+        </dd> 
+        <dt>
+          ST 
+        </dt> 
+        <dd>
+          Full system is the required shareability domain, writes are the required access type, both before and after the barrier instruction. Encoded as CRm = 0b1110. 
+        </dd> 
+        <dt>
+          LD 
+        </dt> 
+        <dd>
+          Full system is the required shareability domain, reads are the required access type before the barrier instruction, and reads and writes are the required access types after the barrier instruction. Encoded as CRm = 0b1101. 
+        </dd> 
+        <dt>
+          ISH 
+        </dt> 
+        <dd>
+          Inner Shareable is the required shareability domain, reads and writes are the required access types, both before and after the barrier instruction. Encoded as CRm = 0b1011. 
+        </dd> 
+        <dt>
+          ISHST 
+        </dt> 
+        <dd>
+          Inner Shareable is the required shareability domain, writes are the required access type, both before and after the barrier instruction. Encoded as CRm = 0b1010. 
+        </dd> 
+        <dt>
+          ISHLD 
+        </dt> 
+        <dd>
+          Inner Shareable is the required shareability domain, reads are the required access type before the barrier instruction, and reads and writes are the required access types after the barrier instruction. Encoded as CRm = 0b1001. 
+        </dd> 
+        <dt>
+          NSH 
+        </dt> 
+        <dd>
+          Non-shareable is the required shareability domain, reads and writes are the required access, both before and after the barrier instruction. Encoded as CRm = 0b0111. 
+        </dd> 
+        <dt>
+          NSHST 
+        </dt> 
+        <dd>
+          Non-shareable is the required shareability domain, writes are the required access type, both before and after the barrier instruction. Encoded as CRm = 0b0110. 
+        </dd> 
+        <dt>
+          NSHLD 
+        </dt> 
+        <dd>
+          Non-shareable is the required shareability domain, reads are the required access type before the barrier instruction, and reads and writes are the required access types after the barrier instruction. Encoded as CRm = 0b0101. 
+        </dd> 
+        <dt>
+          OSH 
+        </dt> 
+        <dd>
+          Outer Shareable is the required shareability domain, reads and writes are the required access types, both before and after the barrier instruction. Encoded as CRm = 0b0011. 
+        </dd> 
+        <dt>
+          OSHST 
+        </dt> 
+        <dd>
+          Outer Shareable is the required shareability domain, writes are the required access type, both before and after the barrier instruction. Encoded as CRm = 0b0010. 
+        </dd> 
+        <dt>
+          OSHLD 
+        </dt> 
+        <dd>
+          Outer Shareable is the required shareability domain, reads are the required access type before the barrier instruction, and reads and writes are the required access types after the barrier instruction. Encoded as CRm = 0b0001. 
+        </dd> 
+       </dl> <p>All other encodings of CRm that are not listed above are reserved, and can be encoded using the #&lt;imm&gt; syntax. All unsupported and reserved options must execute as a full system barrier operation, but software must not rely on this behavior. For more information on whether an access is before or after a barrier instruction, see <em>Data Memory Barrier (DMB)</em> or see <em>Data Synchronization Barrier (DSB)</em>.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;imm&gt;</td> 
+      <td><a id="sa_imm"></a> <p>Is a 4-bit unsigned immediate, in the range 0 to 15, encoded in the "CRm" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div></div> 
+  <div> 
+   <a id="execute"></a> 
+   <h3>Operation</h3> 
+   <pre><a title="function: DataMemoryBarrier(MBReqDomain domain, MBReqTypes types)" class="document-topic">DataMemoryBarrier</a>(domain, types);</pre> 
+  </div>  
+ </body>
+</html>

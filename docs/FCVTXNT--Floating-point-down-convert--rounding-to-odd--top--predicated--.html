@@ -1,0 +1,145 @@
+<html>
+ <head>  <link rel="stylesheet" href="../def-style.css"></head> 
+ <body> 
+  <h2>FCVTXNT</h2> 
+  <p>Floating-point down convert, rounding to odd (top, predicated)</p> 
+  <p>Convert active double-precision floating-point elements from the source vector to single-precision, rounding to Odd, and place the results in the odd-numbered 32-bit elements of the destination vector, leaving the even-numbered elements unchanged. Inactive elements in the destination vector register remain unmodified.</p> 
+  <p>Rounding to Odd (aka Von Neumann rounding) permits a two-step conversion from double-precision to half-precision without incurring intermediate rounding errors.</p> 
+  <p></p> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td colspan="3">Pg</td> 
+      <td colspan="5">Zn</td> 
+      <td colspan="5">Zd</td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4></h4> 
+   <a id="fcvtxnt_z_p_z_d2s"></a> 
+   <p>FCVTXNT <a title="Destination scalable vector register (field &quot;Zd&quot;)" class="document-topic">&lt;Zd&gt;</a>.S, <a title="Governing scalable predicate register P0-P7 (field &quot;Pg&quot;)" class="document-topic">&lt;Pg&gt;</a>/M, <a title="First source scalable vector register (field &quot;Zn&quot;)" class="document-topic">&lt;Zn&gt;</a>.D</p> 
+  </div> 
+  <pre>if !<a title="function: boolean HaveSVE2()" class="document-topic">HaveSVE2</a>() &amp;&amp; !<a title="function: boolean HaveSME()" class="document-topic">HaveSME</a>() then UNDEFINED;
+constant integer esize = 64;
+integer g = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Pg);
+integer n = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Zn);
+integer d = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Zd);</pre> 
+  <div></div> 
+  <h3>Assembler Symbols</h3> 
+  <div> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Zd&gt;</td> 
+      <td><a id="sa_zd"></a> <p>Is the name of the destination scalable vector register, encoded in the "Zd" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Pg&gt;</td> 
+      <td><a id="sa_pg"></a> <p>Is the name of the governing scalable predicate register P0-P7, encoded in the "Pg" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Zn&gt;</td> 
+      <td><a id="sa_zn"></a> <p>Is the name of the first source scalable vector register, encoded in the "Zn" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div></div> 
+  <div> 
+   <a id="execute"></a> 
+   <h3>Operation</h3> 
+   <pre><a title="function: CheckSVEEnabled()" class="document-topic">CheckSVEEnabled</a>();
+constant integer VL = <a title="accessor: integer CurrentVL" class="document-topic">CurrentVL</a>;
+constant integer PL = VL DIV 8;
+constant integer elements = VL DIV esize;
+bits(PL) mask = <a title="accessor: bits(width) P[integer n, integer width]" class="document-topic">P</a>[g, PL];
+bits(VL) operand = if <a title="function: boolean AnyActiveElement(bits(N) mask, integer esize)" class="document-topic">AnyActiveElement</a>(mask, esize) then <a title="accessor: bits(width) Z[integer n, integer width]" class="document-topic">Z</a>[n, VL] else <a title="function: bits(N) Zeros(integer N)" class="document-topic">Zeros</a>(VL);
+bits(VL) result = <a title="accessor: bits(width) Z[integer n, integer width]" class="document-topic">Z</a>[d, VL];
+
+for e = 0 to elements-1
+    if <a title="function: boolean ActivePredicateElement(bits(N) pred, integer e, integer esize)" class="document-topic">ActivePredicateElement</a>(mask, e, esize) then
+        bits(esize) element = <a title="accessor: bits(size) Elem[bits(N) vector, integer e, integer size]" class="document-topic">Elem</a>[operand, e, esize];
+        <a title="accessor: Elem[bits(N) &amp;vector, integer e, integer size] = bits(size) value" class="document-topic">Elem</a>[result, 2*e + 1, esize DIV 2] = <a title="function: bits(M) FPConvertSVE(bits(N) op, FPCRType fpcr_in, FPRounding rounding, integer M)" class="document-topic">FPConvertSVE</a>(element, FPCR[], <a title="enumeration FPRounding  {FPRounding_TIEEVEN, FPRounding_POSINF, FPRounding_NEGINF,  FPRounding_ZERO, FPRounding_TIEAWAY, FPRounding_ODD}" class="document-topic">FPRounding_ODD</a>, esize DIV 2);
+
+<a title="accessor: Z[integer n, integer width] = bits(width) value" class="document-topic">Z</a>[d, VL] = result;</pre> 
+  </div>  
+ </body>
+</html>

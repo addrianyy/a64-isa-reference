@@ -1,0 +1,249 @@
+<html>
+ <head>  <link rel="stylesheet" href="../def-style.css"></head> 
+ <body> 
+  <h2>PUNPKHI, PUNPKLO</h2> 
+  <p>Unpack and widen half of predicate</p> 
+  <p>Unpack elements from the lowest or highest half of the source predicate and place in elements of twice their size within the destination predicate. This instruction is unpredicated.</p> 
+  <p> It has encodings from 2 classes: <a class="document-topic">High half</a> and <a class="document-topic">Low half</a> </p> 
+  <h3><a id="iclass_sve_high_half"></a>High half</h3> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td colspan="4">Pn</td> 
+      <td>0</td> 
+      <td colspan="4">Pd</td> 
+     </tr> 
+     <tr> 
+      <td colspan="15"></td> 
+      <td>H</td> 
+      <td colspan="6"></td> 
+      <td></td> 
+      <td colspan="4"></td> 
+      <td></td> 
+      <td colspan="4"></td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4></h4> 
+   <a id="punpkhi_p_p_"></a> 
+   <p>PUNPKHI <a title="Destination scalable predicate register (field &quot;Pd&quot;)" class="document-topic">&lt;Pd&gt;</a>.H, <a title="Source scalable predicate register (field &quot;Pn&quot;)" class="document-topic">&lt;Pn&gt;</a>.B</p> 
+  </div> 
+  <pre>if !<a title="function: boolean HaveSVE()" class="document-topic">HaveSVE</a>() &amp;&amp; !<a title="function: boolean HaveSME()" class="document-topic">HaveSME</a>() then UNDEFINED;
+constant integer esize = 16;
+integer n = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Pn);
+integer d = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Pd);
+boolean hi = TRUE;</pre> 
+  <h3><a id="iclass_sve_low_half"></a>Low half</h3> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td colspan="4">Pn</td> 
+      <td>0</td> 
+      <td colspan="4">Pd</td> 
+     </tr> 
+     <tr> 
+      <td colspan="15"></td> 
+      <td>H</td> 
+      <td colspan="6"></td> 
+      <td></td> 
+      <td colspan="4"></td> 
+      <td></td> 
+      <td colspan="4"></td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4></h4> 
+   <a id="punpklo_p_p_"></a> 
+   <p>PUNPKLO <a title="Destination scalable predicate register (field &quot;Pd&quot;)" class="document-topic">&lt;Pd&gt;</a>.H, <a title="Source scalable predicate register (field &quot;Pn&quot;)" class="document-topic">&lt;Pn&gt;</a>.B</p> 
+  </div> 
+  <pre>if !<a title="function: boolean HaveSVE()" class="document-topic">HaveSVE</a>() &amp;&amp; !<a title="function: boolean HaveSME()" class="document-topic">HaveSME</a>() then UNDEFINED;
+constant integer esize = 16;
+integer n = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Pn);
+integer d = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Pd);
+boolean hi = FALSE;</pre> 
+  <div></div> 
+  <h3>Assembler Symbols</h3> 
+  <div> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Pd&gt;</td> 
+      <td><a id="sa_pd"></a> <p>Is the name of the destination scalable predicate register, encoded in the "Pd" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Pn&gt;</td> 
+      <td><a id="sa_pn"></a> <p>Is the name of the source scalable predicate register, encoded in the "Pn" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div></div> 
+  <div> 
+   <a id="execute"></a> 
+   <h3>Operation</h3> 
+   <pre><a title="function: CheckSVEEnabled()" class="document-topic">CheckSVEEnabled</a>();
+constant integer VL = <a title="accessor: integer CurrentVL" class="document-topic">CurrentVL</a>;
+constant integer PL = VL DIV 8;
+constant integer elements = VL DIV esize;
+bits(PL) operand = <a title="accessor: bits(width) P[integer n, integer width]" class="document-topic">P</a>[n, PL];
+bits(PL) result;
+constant integer psize = esize DIV 8;
+
+for e = 0 to elements-1
+    bit pbit = <a title="function: bit PredicateElement(bits(N) pred, integer e, integer esize)" class="document-topic">PredicateElement</a>(operand, if hi then e + elements else e, esize DIV 2);
+    <a title="accessor: Elem[bits(N) &amp;vector, integer e, integer size] = bits(size) value" class="document-topic">Elem</a>[result, e, psize] = <a title="function: bits(N) ZeroExtend(bits(M) x, integer N)" class="document-topic">ZeroExtend</a>(pbit, psize);
+
+<a title="accessor: P[integer n, integer width] = bits(width) value" class="document-topic">P</a>[d, PL] = result;</pre> 
+  </div> 
+  <h3>Operational information</h3> 
+  <p>If FEAT_SVE2 is implemented or FEAT_SME is implemented, then if PSTATE.DIT is 1:</p> 
+  <ul> 
+   <li>The execution time of this instruction is independent of: 
+    <ul> 
+     <li>The values of the data supplied in any of its registers.</li> 
+     <li>The values of the NZCV flags.</li> 
+    </ul></li> 
+   <li>The response of this instruction to asynchronous exceptions does not vary based on: 
+    <ul> 
+     <li>The values of the data supplied in any of its registers.</li> 
+     <li>The values of the NZCV flags.</li> 
+    </ul></li> 
+  </ul>  
+ </body>
+</html>

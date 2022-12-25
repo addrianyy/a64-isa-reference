@@ -1,0 +1,142 @@
+<html>
+ <head>  <link rel="stylesheet" href="../def-style.css"></head> 
+ <body> 
+  <h2>SUBP</h2> 
+  <p>Subtract Pointer subtracts the 56-bit address held in the second source register from the 56-bit address held in the first source register, sign-extends the result to 64-bits, and writes the result to the destination register.</p> 
+  <h3><a id="iclass_general"></a>Integer<span><br></br>(FEAT_MTE) </span></h3> 
+  <p></p> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td colspan="5">Xm</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td colspan="5">Xn</td> 
+      <td colspan="5">Xd</td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4></h4> 
+   <a id="SUBP_64S_dp_2src"></a> 
+   <p>SUBP <a title="64-bit general-purpose destination register (field &quot;Xd&quot;)" class="document-topic">&lt;Xd&gt;</a>, <a title="First 64-bit source general-purpose register or SP (field &quot;Xn&quot;)" class="document-topic">&lt;Xn|SP&gt;</a>, <a title="Second 64-bit general-purpose source register or SP (field &quot;Xm&quot;)" class="document-topic">&lt;Xm|SP&gt;</a></p> 
+  </div> 
+  <pre>if !<a title="function: boolean HaveMTEExt()" class="document-topic">HaveMTEExt</a>() then UNDEFINED;
+integer d = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Xd);
+integer n = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Xn);
+integer m = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Xm);
+boolean setflags = FALSE;</pre> 
+  <div></div> 
+  <h3>Assembler Symbols</h3> 
+  <div> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Xd&gt;</td> 
+      <td><a id="sa_xd"></a> <p>Is the 64-bit name of the general-purpose destination register, encoded in the "Xd" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Xn|SP&gt;</td> 
+      <td><a id="sa_xn_sp"></a> <p>Is the 64-bit name of the first source general-purpose register or stack pointer, encoded in the "Xn" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Xm|SP&gt;</td> 
+      <td><a id="sa_xm_sp"></a> <p>Is the 64-bit name of the second general-purpose source register or stack pointer, encoded in the "Xm" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div></div> 
+  <div> 
+   <a id="execute"></a> 
+   <h3>Operation</h3> 
+   <pre>bits(64) operand1 = if n == 31 then <a title="accessor: bits(64) SP[]" class="document-topic">SP</a>[] else <a title="accessor: bits(width) X[integer n, integer width]" class="document-topic">X</a>[n, 64];
+bits(64) operand2 = if m == 31 then <a title="accessor: bits(64) SP[]" class="document-topic">SP</a>[] else <a title="accessor: bits(width) X[integer n, integer width]" class="document-topic">X</a>[m, 64];
+operand1 = <a title="function: bits(N) SignExtend(bits(M) x, integer N)" class="document-topic">SignExtend</a>(operand1&lt;55:0&gt;, 64);
+operand2 = <a title="function: bits(N) SignExtend(bits(M) x, integer N)" class="document-topic">SignExtend</a>(operand2&lt;55:0&gt;, 64);
+
+bits(64) result;
+bits(4) nzcv;
+
+operand2 = NOT(operand2);
+(result, nzcv) = <a title="function: (bits(N), bits(4)) AddWithCarry(bits(N) x, bits(N) y, bit carry_in)" class="document-topic">AddWithCarry</a>(operand1, operand2, '1');
+
+if setflags then
+    PSTATE.&lt;N,Z,C,V&gt; = nzcv;
+<a title="accessor: X[integer n, integer width] = bits(width) value" class="document-topic">X</a>[d, 64] = result;</pre> 
+  </div>  
+ </body>
+</html>

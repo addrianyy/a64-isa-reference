@@ -1,0 +1,510 @@
+<html>
+ <head>  <link rel="stylesheet" href="../def-style.css"></head> 
+ <body> 
+  <h2>SQDMULH (by element)</h2> 
+  <p>Signed saturating Doubling Multiply returning High half (by element). This instruction multiplies each vector element in the first source SIMD&amp;FP register by the specified vector element of the second source SIMD&amp;FP register, doubles the results, places the most significant half of the final results into a vector, and writes the vector to the destination SIMD&amp;FP register.</p> 
+  <p>The results are truncated. For rounded results, see <em>SQRDMULH</em>.</p> 
+  <p>Depending on the settings in the <em>CPACR_EL1</em>, <em>CPTR_EL2</em>, and <em>CPTR_EL3</em> registers, and the current Security state and Exception level, an attempt to execute the instruction might be trapped.</p> 
+  <p> It has encodings from 2 classes: <a class="document-topic">Scalar</a> and <a class="document-topic">Vector</a> </p> 
+  <h3><a id="iclass_2reg_scalar"></a>Scalar</h3> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td colspan="2">size</td> 
+      <td>L</td> 
+      <td>M</td> 
+      <td colspan="4">Rm</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>H</td> 
+      <td>0</td> 
+      <td colspan="5">Rn</td> 
+      <td colspan="5">Rd</td> 
+     </tr> 
+     <tr> 
+      <td colspan="2"></td> 
+      <td></td> 
+      <td colspan="5"></td> 
+      <td colspan="2"></td> 
+      <td></td> 
+      <td></td> 
+      <td colspan="4"></td> 
+      <td colspan="3"></td> 
+      <td>op</td> 
+      <td></td> 
+      <td></td> 
+      <td colspan="5"></td> 
+      <td colspan="5"></td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4></h4> 
+   <a id="SQDMULH_asisdelem_R"></a> 
+   <p>SQDMULH <a title="Width specifier (field &quot;size&quot;) [H,S]" class="document-topic">&lt;V&gt;</a><a title="SIMD&amp;FP destination register number (field &quot;Rd&quot;)" class="document-topic">&lt;d&gt;</a>, <a title="Width specifier (field &quot;size&quot;) [H,S]" class="document-topic">&lt;V&gt;</a><a title="First SIMD&amp;FP source register number (field &quot;Rn&quot;)" class="document-topic">&lt;n&gt;</a>, <a title="Second SIMD&amp;FP source register (field &quot;size:M:Rm&quot;)" class="document-topic">&lt;Vm&gt;</a>.<a title="Element size specifier (field &quot;size&quot;) [H,S]" class="document-topic">&lt;Ts&gt;</a>[<a title="Element index (field &quot;size:L:H:M&quot;) [H:L,H:L:M]" class="document-topic">&lt;index&gt;</a>]</p> 
+  </div> 
+  <pre>integer idxdsize = if H == '1' then 128 else 64;
+integer index;
+bit Rmhi;
+case size of
+    when '01' index = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(H:L:M); Rmhi = '0';
+    when '10' index = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(H:L);   Rmhi = M;
+    otherwise UNDEFINED;
+
+integer d = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Rd);
+integer n = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Rn);
+integer m = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Rmhi:Rm);
+
+integer esize = 8 &lt;&lt; <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(size);
+integer datasize = esize;
+integer elements = 1;
+
+boolean round = (op == '1');</pre> 
+  <h3><a id="iclass_2reg_element"></a>Vector</h3> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>0</td> 
+      <td>Q</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td colspan="2">size</td> 
+      <td>L</td> 
+      <td>M</td> 
+      <td colspan="4">Rm</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>H</td> 
+      <td>0</td> 
+      <td colspan="5">Rn</td> 
+      <td colspan="5">Rd</td> 
+     </tr> 
+     <tr> 
+      <td></td> 
+      <td></td> 
+      <td></td> 
+      <td colspan="5"></td> 
+      <td colspan="2"></td> 
+      <td></td> 
+      <td></td> 
+      <td colspan="4"></td> 
+      <td colspan="3"></td> 
+      <td>op</td> 
+      <td></td> 
+      <td></td> 
+      <td colspan="5"></td> 
+      <td colspan="5"></td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4></h4> 
+   <a id="SQDMULH_asimdelem_R"></a> 
+   <p>SQDMULH <a title="SIMD&amp;FP destination register (field &quot;Rd&quot;)" class="document-topic">&lt;Vd&gt;</a>.<a title="Arrangement specifier (field &quot;size:Q&quot;) [2S,4H,4S,8H]" class="document-topic">&lt;T&gt;</a>, <a title="First SIMD&amp;FP source register (field &quot;Rn&quot;)" class="document-topic">&lt;Vn&gt;</a>.<a title="Arrangement specifier (field &quot;size:Q&quot;) [2S,4H,4S,8H]" class="document-topic">&lt;T&gt;</a>, <a title="Second SIMD&amp;FP source register (field &quot;size:M:Rm&quot;)" class="document-topic">&lt;Vm&gt;</a>.<a title="Element size specifier (field &quot;size&quot;) [H,S]" class="document-topic">&lt;Ts&gt;</a>[<a title="Element index (field &quot;size:L:H:M&quot;) [H:L,H:L:M]" class="document-topic">&lt;index&gt;</a>]</p> 
+  </div> 
+  <pre>integer idxdsize = if H == '1' then 128 else 64;
+integer index;
+bit Rmhi;
+case size of
+    when '01' index = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(H:L:M); Rmhi = '0';
+    when '10' index = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(H:L);   Rmhi = M;
+    otherwise UNDEFINED;
+
+integer d = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Rd);
+integer n = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Rn);
+integer m = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Rmhi:Rm);
+
+integer esize = 8 &lt;&lt; <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(size);
+integer datasize = if Q == '1' then 128 else 64;
+integer elements = datasize DIV esize;
+
+boolean round = (op == '1');</pre> 
+  <div></div> 
+  <h3>Assembler Symbols</h3> 
+  <div> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;V&gt;</td> 
+      <td><a id="sa_v"></a> <p>Is a width specifier, encoded in <q>size</q>: </p> 
+       <table> 
+        <thead> 
+         <tr> 
+          <th>size</th> 
+          <th>&lt;V&gt;</th> 
+         </tr> 
+        </thead> 
+        <tbody> 
+         <tr> 
+          <td>00</td> 
+          <td>RESERVED</td> 
+         </tr> 
+         <tr> 
+          <td>01</td> 
+          <td>H</td> 
+         </tr> 
+         <tr> 
+          <td>10</td> 
+          <td>S</td> 
+         </tr> 
+         <tr> 
+          <td>11</td> 
+          <td>RESERVED</td> 
+         </tr> 
+        </tbody> 
+       </table> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;d&gt;</td> 
+      <td><a id="sa_d"></a> <p>Is the number of the SIMD&amp;FP destination register, encoded in the "Rd" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;n&gt;</td> 
+      <td><a id="sa_n"></a> <p>Is the number of the first SIMD&amp;FP source register, encoded in the "Rn" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Vd&gt;</td> 
+      <td><a id="sa_vd"></a> <p>Is the name of the SIMD&amp;FP destination register, encoded in the "Rd" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;T&gt;</td> 
+      <td><a id="sa_t"></a> <p>Is an arrangement specifier, encoded in <q>size:Q</q>: </p> 
+       <table> 
+        <thead> 
+         <tr> 
+          <th>size</th> 
+          <th>Q</th> 
+          <th>&lt;T&gt;</th> 
+         </tr> 
+        </thead> 
+        <tbody> 
+         <tr> 
+          <td>00</td> 
+          <td>x</td> 
+          <td>RESERVED</td> 
+         </tr> 
+         <tr> 
+          <td>01</td> 
+          <td>0</td> 
+          <td>4H</td> 
+         </tr> 
+         <tr> 
+          <td>01</td> 
+          <td>1</td> 
+          <td>8H</td> 
+         </tr> 
+         <tr> 
+          <td>10</td> 
+          <td>0</td> 
+          <td>2S</td> 
+         </tr> 
+         <tr> 
+          <td>10</td> 
+          <td>1</td> 
+          <td>4S</td> 
+         </tr> 
+         <tr> 
+          <td>11</td> 
+          <td>x</td> 
+          <td>RESERVED</td> 
+         </tr> 
+        </tbody> 
+       </table> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Vn&gt;</td> 
+      <td><a id="sa_vn"></a> <p>Is the name of the first SIMD&amp;FP source register, encoded in the "Rn" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Vm&gt;</td> 
+      <td><a id="sa_vm"></a> <p>Is the name of the second SIMD&amp;FP source register, encoded in <q>size:M:Rm</q>: </p> 
+       <table> 
+        <thead> 
+         <tr> 
+          <th>size</th> 
+          <th>&lt;Vm&gt;</th> 
+         </tr> 
+        </thead> 
+        <tbody> 
+         <tr> 
+          <td>00</td> 
+          <td>RESERVED</td> 
+         </tr> 
+         <tr> 
+          <td>01</td> 
+          <td>0:Rm</td> 
+         </tr> 
+         <tr> 
+          <td>10</td> 
+          <td>M:Rm</td> 
+         </tr> 
+         <tr> 
+          <td>11</td> 
+          <td>RESERVED</td> 
+         </tr> 
+        </tbody> 
+       </table> Restricted to V0-V15 when element size &lt;Ts&gt; is H. </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Ts&gt;</td> 
+      <td><a id="sa_ts"></a> <p>Is an element size specifier, encoded in <q>size</q>: </p> 
+       <table> 
+        <thead> 
+         <tr> 
+          <th>size</th> 
+          <th>&lt;Ts&gt;</th> 
+         </tr> 
+        </thead> 
+        <tbody> 
+         <tr> 
+          <td>00</td> 
+          <td>RESERVED</td> 
+         </tr> 
+         <tr> 
+          <td>01</td> 
+          <td>H</td> 
+         </tr> 
+         <tr> 
+          <td>10</td> 
+          <td>S</td> 
+         </tr> 
+         <tr> 
+          <td>11</td> 
+          <td>RESERVED</td> 
+         </tr> 
+        </tbody> 
+       </table> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;index&gt;</td> 
+      <td><a id="sa_index"></a> <p>Is the element index, encoded in <q>size:L:H:M</q>: </p> 
+       <table> 
+        <thead> 
+         <tr> 
+          <th>size</th> 
+          <th>&lt;index&gt;</th> 
+         </tr> 
+        </thead> 
+        <tbody> 
+         <tr> 
+          <td>00</td> 
+          <td>RESERVED</td> 
+         </tr> 
+         <tr> 
+          <td>01</td> 
+          <td>H:L:M</td> 
+         </tr> 
+         <tr> 
+          <td>10</td> 
+          <td>H:L</td> 
+         </tr> 
+         <tr> 
+          <td>11</td> 
+          <td>RESERVED</td> 
+         </tr> 
+        </tbody> 
+       </table> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div></div> 
+  <div> 
+   <a id="execute"></a> 
+   <h3>Operation</h3> 
+   <pre><a title="function: CheckFPAdvSIMDEnabled64()" class="document-topic">CheckFPAdvSIMDEnabled64</a>();
+bits(datasize) operand1 = <a title="accessor: bits(width) V[integer n, integer width]" class="document-topic">V</a>[n, datasize];
+bits(idxdsize) operand2 = <a title="accessor: bits(width) V[integer n, integer width]" class="document-topic">V</a>[m, idxdsize];
+bits(datasize) result;
+integer round_const = if round then 1 &lt;&lt; (esize - 1) else 0;
+integer element1;
+integer element2;
+integer product;
+boolean sat;
+
+element2 = <a title="function: integer SInt(bits(N) x)" class="document-topic">SInt</a>(<a title="accessor: bits(size) Elem[bits(N) vector, integer e, integer size]" class="document-topic">Elem</a>[operand2, index, esize]);
+for e = 0 to elements-1
+    element1 = <a title="function: integer SInt(bits(N) x)" class="document-topic">SInt</a>(<a title="accessor: bits(size) Elem[bits(N) vector, integer e, integer size]" class="document-topic">Elem</a>[operand1, e, esize]);
+    product = (2 * element1 * element2) + round_const;
+    // The following only saturates if element1 and element2 equal -(2^(esize-1))
+    (<a title="accessor: Elem[bits(N) &amp;vector, integer e, integer size] = bits(size) value" class="document-topic">Elem</a>[result, e, esize], sat) = <a title="function: (bits(N), boolean) SignedSatQ(integer i, integer N)" class="document-topic">SignedSatQ</a>(product &gt;&gt; esize, esize);
+    if sat then FPSR.QC = '1';
+
+<a title="accessor: V[integer n, integer width] = bits(width) value" class="document-topic">V</a>[d, datasize] = result;</pre> 
+  </div> 
+  <h3>Operational information</h3> 
+  <p>If PSTATE.DIT is 1:</p> 
+  <ul> 
+   <li>The execution time of this instruction is independent of: 
+    <ul> 
+     <li>The values of the data supplied in any of its registers.</li> 
+     <li>The values of the NZCV flags.</li> 
+    </ul></li> 
+   <li>The response of this instruction to asynchronous exceptions does not vary based on: 
+    <ul> 
+     <li>The values of the data supplied in any of its registers.</li> 
+     <li>The values of the NZCV flags.</li> 
+    </ul></li> 
+  </ul>  
+ </body>
+</html>

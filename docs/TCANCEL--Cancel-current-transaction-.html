@@ -1,0 +1,103 @@
+<html>
+ <head>  <link rel="stylesheet" href="../def-style.css"></head> 
+ <body> 
+  <h2>TCANCEL</h2> 
+  <p>This instruction exits Transactional state and discards all state modifications that were performed transactionally. Execution continues at the instruction that follows the TSTART instruction of the outer transaction. The destination register of the TSTART instruction of the outer transaction is written with the immediate operand of TCANCEL.</p> 
+  <h3><a id="iclass_system"></a>System<span><br></br>(FEAT_TME) </span></h3> 
+  <p></p> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td colspan="16">imm16</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4></h4> 
+   <a id="TCANCEL_EX_exception"></a> 
+   <p>TCANCEL #<a title="16-bit unsigned immediate [0-65535] (field &quot;imm16&quot;)" class="document-topic">&lt;imm&gt;</a></p> 
+  </div> 
+  <pre>if !<a title="function: boolean HaveTME()" class="document-topic">HaveTME</a>() then UNDEFINED;
+boolean  retry  = (imm16&lt;15&gt; == '1');
+bits(15) reason = imm16&lt;14:0&gt;;</pre> 
+  <div></div> 
+  <h3>Assembler Symbols</h3> 
+  <div> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;imm&gt;</td> 
+      <td><a id="sa_imm"></a> <p>Is a 16-bit unsigned immediate, in the range 0 to 65535, encoded in the "imm16" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div></div> 
+  <div> 
+   <a id="execute"></a> 
+   <h3>Operation</h3> 
+   <pre>if !<a title="function: boolean IsTMEEnabled()" class="document-topic">IsTMEEnabled</a>() then UNDEFINED;
+
+if TSTATE.depth &gt; 0 then
+    <a title="function: FailTransaction(TMFailure cause, boolean retry, boolean interrupt, bits(15) reason)" class="document-topic">FailTransaction</a>(<a title="enumeration TMFailure { TMFailure_CNCL, TMFailure_DBG, TMFailure_ERR, TMFailure_NEST, TMFailure_SIZE, TMFailure_MEM, TMFailure_TRIVIAL, TMFailure_IMP }" class="document-topic">TMFailure_CNCL</a>, retry, FALSE, reason);</pre> 
+  </div>  
+ </body>
+</html>

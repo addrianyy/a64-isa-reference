@@ -1,0 +1,255 @@
+<html>
+ <head>  <link rel="stylesheet" href="../def-style.css"></head> 
+ <body> 
+  <h2>FMIN (scalar)</h2> 
+  <p>Floating-point Minimum (scalar). This instruction compares the first and second source SIMD&amp;FP register values, and writes the smaller of the two floating-point values to the destination SIMD&amp;FP register.</p> 
+  <p>This instruction can generate a floating-point exception. Depending on the settings in <em>FPCR</em>, the exception results in either a flag being set in <em>FPSR</em>, or a synchronous exception being generated. For more information, see <em>Floating-point exception traps</em>.</p> 
+  <p>Depending on the settings in the <em>CPACR_EL1</em>, <em>CPTR_EL2</em>, and <em>CPTR_EL3</em> registers, and the current Security state and Exception level, an attempt to execute the instruction might be trapped.</p> 
+  <p></p> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td colspan="2">ftype</td> 
+      <td>1</td> 
+      <td colspan="5">Rm</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td colspan="5">Rn</td> 
+      <td colspan="5">Rd</td> 
+     </tr> 
+     <tr> 
+      <td></td> 
+      <td></td> 
+      <td></td> 
+      <td colspan="5"></td> 
+      <td colspan="2"></td> 
+      <td></td> 
+      <td colspan="5"></td> 
+      <td colspan="2"></td> 
+      <td colspan="2">op</td> 
+      <td colspan="2"></td> 
+      <td colspan="5"></td> 
+      <td colspan="5"></td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4>Half-precision<span> (ftype == 11)</span><span><br></br>(FEAT_FP16) </span></h4> 
+   <a id="FMIN_H_floatdp2"></a> 
+   <p>FMIN <a title="16-bit SIMD&amp;FP destination register (field &quot;Rd&quot;)" class="document-topic">&lt;Hd&gt;</a>, <a title="First 16-bit SIMD&amp;FP source register (field &quot;Rn&quot;)" class="document-topic">&lt;Hn&gt;</a>, <a title="Second 16-bit SIMD&amp;FP source register (field &quot;Rm&quot;)" class="document-topic">&lt;Hm&gt;</a></p> 
+  </div> 
+  <div> 
+   <h4>Single-precision<span> (ftype == 00)</span></h4> 
+   <a id="FMIN_S_floatdp2"></a> 
+   <p>FMIN <a title="32-bit SIMD&amp;FP destination register (field &quot;Rd&quot;)" class="document-topic">&lt;Sd&gt;</a>, <a title="First 32-bit SIMD&amp;FP source register (field &quot;Rn&quot;)" class="document-topic">&lt;Sn&gt;</a>, <a title="Second 32-bit SIMD&amp;FP source register (field &quot;Rm&quot;)" class="document-topic">&lt;Sm&gt;</a></p> 
+  </div> 
+  <div> 
+   <h4>Double-precision<span> (ftype == 01)</span></h4> 
+   <a id="FMIN_D_floatdp2"></a> 
+   <p>FMIN <a title="64-bit SIMD&amp;FP destination register (field &quot;Rd&quot;)" class="document-topic">&lt;Dd&gt;</a>, <a title="First 64-bit SIMD&amp;FP source register (field &quot;Rn&quot;)" class="document-topic">&lt;Dn&gt;</a>, <a title="Second 64-bit SIMD&amp;FP source register (field &quot;Rm&quot;)" class="document-topic">&lt;Dm&gt;</a></p> 
+  </div> 
+  <pre>integer d = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Rd);
+integer n = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Rn);
+integer m = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Rm);
+
+integer esize;
+case ftype of
+    when '00' esize = 32;
+    when '01' esize = 64;
+    when '10' UNDEFINED;
+    when '11'
+        if <a title="function: boolean HaveFP16Ext()" class="document-topic">HaveFP16Ext</a>() then
+            esize = 16;
+        else
+            UNDEFINED;
+
+<a title="enumeration FPMaxMinOp  {FPMaxMinOp_MAX, FPMaxMinOp_MIN, FPMaxMinOp_MAXNUM, FPMaxMinOp_MINNUM}" class="document-topic">FPMaxMinOp</a> operation;
+case op of
+    when '00' operation = <a title="enumeration FPMaxMinOp  {FPMaxMinOp_MAX, FPMaxMinOp_MIN, FPMaxMinOp_MAXNUM, FPMaxMinOp_MINNUM}" class="document-topic">FPMaxMinOp_MAX</a>;
+    when '01' operation = <a title="enumeration FPMaxMinOp  {FPMaxMinOp_MAX, FPMaxMinOp_MIN, FPMaxMinOp_MAXNUM, FPMaxMinOp_MINNUM}" class="document-topic">FPMaxMinOp_MIN</a>;
+    when '10' operation = <a title="enumeration FPMaxMinOp  {FPMaxMinOp_MAX, FPMaxMinOp_MIN, FPMaxMinOp_MAXNUM, FPMaxMinOp_MINNUM}" class="document-topic">FPMaxMinOp_MAXNUM</a>;
+    when '11' operation = <a title="enumeration FPMaxMinOp  {FPMaxMinOp_MAX, FPMaxMinOp_MIN, FPMaxMinOp_MAXNUM, FPMaxMinOp_MINNUM}" class="document-topic">FPMaxMinOp_MINNUM</a>;</pre> 
+  <div></div> 
+  <h3>Assembler Symbols</h3> 
+  <div> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Dd&gt;</td> 
+      <td><a id="sa_dd"></a> <p>Is the 64-bit name of the SIMD&amp;FP destination register, encoded in the "Rd" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Dn&gt;</td> 
+      <td><a id="sa_dn"></a> <p>Is the 64-bit name of the first SIMD&amp;FP source register, encoded in the "Rn" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Dm&gt;</td> 
+      <td><a id="sa_dm"></a> <p>Is the 64-bit name of the second SIMD&amp;FP source register, encoded in the "Rm" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Hd&gt;</td> 
+      <td><a id="sa_hd"></a> <p>Is the 16-bit name of the SIMD&amp;FP destination register, encoded in the "Rd" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Hn&gt;</td> 
+      <td><a id="sa_hn"></a> <p>Is the 16-bit name of the first SIMD&amp;FP source register, encoded in the "Rn" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Hm&gt;</td> 
+      <td><a id="sa_hm"></a> <p>Is the 16-bit name of the second SIMD&amp;FP source register, encoded in the "Rm" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Sd&gt;</td> 
+      <td><a id="sa_sd"></a> <p>Is the 32-bit name of the SIMD&amp;FP destination register, encoded in the "Rd" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Sn&gt;</td> 
+      <td><a id="sa_sn"></a> <p>Is the 32-bit name of the first SIMD&amp;FP source register, encoded in the "Rn" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Sm&gt;</td> 
+      <td><a id="sa_sm"></a> <p>Is the 32-bit name of the second SIMD&amp;FP source register, encoded in the "Rm" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div></div> 
+  <div> 
+   <a id="execute"></a> 
+   <h3>Operation</h3> 
+   <pre><a title="function: CheckFPEnabled64()" class="document-topic">CheckFPEnabled64</a>();
+bits(esize) operand1 = <a title="accessor: bits(width) V[integer n, integer width]" class="document-topic">V</a>[n, esize];
+bits(esize) operand2 = <a title="accessor: bits(width) V[integer n, integer width]" class="document-topic">V</a>[m, esize];
+
+<a title="type FPCRType" class="document-topic">FPCRType</a> fpcr    = FPCR[];
+boolean merge    = <a title="function: boolean IsMerging(FPCRType fpcr)" class="document-topic">IsMerging</a>(fpcr);
+bits(128) result = if merge then <a title="accessor: bits(width) V[integer n, integer width]" class="document-topic">V</a>[n, 128] else <a title="function: bits(N) Zeros(integer N)" class="document-topic">Zeros</a>(128);
+
+case operation of
+    when <a title="enumeration FPMaxMinOp  {FPMaxMinOp_MAX, FPMaxMinOp_MIN, FPMaxMinOp_MAXNUM, FPMaxMinOp_MINNUM}" class="document-topic">FPMaxMinOp_MAX</a>    <a title="accessor: Elem[bits(N) &amp;vector, integer e, integer size] = bits(size) value" class="document-topic">Elem</a>[result, 0, esize] = <a title="function: bits(N) FPMax(bits(N) op1, bits(N) op2, FPCRType fpcr)" class="document-topic">FPMax</a>(operand1, operand2, fpcr);
+    when <a title="enumeration FPMaxMinOp  {FPMaxMinOp_MAX, FPMaxMinOp_MIN, FPMaxMinOp_MAXNUM, FPMaxMinOp_MINNUM}" class="document-topic">FPMaxMinOp_MIN</a>    <a title="accessor: Elem[bits(N) &amp;vector, integer e, integer size] = bits(size) value" class="document-topic">Elem</a>[result, 0, esize] = <a title="function: bits(N) FPMin(bits(N) op1, bits(N) op2, FPCRType fpcr)" class="document-topic">FPMin</a>(operand1, operand2, fpcr);
+    when <a title="enumeration FPMaxMinOp  {FPMaxMinOp_MAX, FPMaxMinOp_MIN, FPMaxMinOp_MAXNUM, FPMaxMinOp_MINNUM}" class="document-topic">FPMaxMinOp_MAXNUM</a> <a title="accessor: Elem[bits(N) &amp;vector, integer e, integer size] = bits(size) value" class="document-topic">Elem</a>[result, 0, esize] = <a title="function: bits(N) FPMaxNum(bits(N) op1_in, bits(N) op2_in, FPCRType fpcr)" class="document-topic">FPMaxNum</a>(operand1, operand2, fpcr);
+    when <a title="enumeration FPMaxMinOp  {FPMaxMinOp_MAX, FPMaxMinOp_MIN, FPMaxMinOp_MAXNUM, FPMaxMinOp_MINNUM}" class="document-topic">FPMaxMinOp_MINNUM</a> <a title="accessor: Elem[bits(N) &amp;vector, integer e, integer size] = bits(size) value" class="document-topic">Elem</a>[result, 0, esize] = <a title="function: bits(N) FPMinNum(bits(N) op1_in, bits(N) op2_in, FPCRType fpcr)" class="document-topic">FPMinNum</a>(operand1, operand2, fpcr);
+
+<a title="accessor: V[integer n, integer width] = bits(width) value" class="document-topic">V</a>[d, 128] = result;</pre> 
+  </div>  
+ </body>
+</html>

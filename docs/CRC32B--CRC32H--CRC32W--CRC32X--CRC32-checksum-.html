@@ -1,0 +1,197 @@
+<html>
+ <head>  <link rel="stylesheet" href="../def-style.css"></head> 
+ <body> 
+  <h2>CRC32B, CRC32H, CRC32W, CRC32X</h2> 
+  <p><span>CRC32</span> checksum performs a cyclic redundancy check (CRC) calculation on a value held in a general-purpose register. It takes an input CRC value in the first source operand, performs a CRC on the input value in the second source operand, and returns the output CRC value. The second source operand can be 8, 16, 32, or 64 bits. To align with common usage, the bit order of the values is reversed as part of the operation, and the polynomial 0x04C11DB7 is used for the CRC calculation.</p> 
+  <p>In an Armv8.0 implementation, this is an <small>optional</small> instruction. From Armv8.1, it is mandatory for all implementations to implement this instruction.</p> 
+  <blockquote title="Note info"> 
+   <h4>Note</h4> 
+   <p><em>ID_AA64ISAR0_EL1</em>.CRC32 indicates whether this instruction is supported.</p> 
+  </blockquote> 
+  <h3><a id="iclass_crc"></a>CRC<span><br></br>(FEAT_CRC32) </span></h3> 
+  <p></p> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>sf</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td colspan="5">Rm</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td colspan="2">sz</td> 
+      <td colspan="5">Rn</td> 
+      <td colspan="5">Rd</td> 
+     </tr> 
+     <tr> 
+      <td></td> 
+      <td></td> 
+      <td></td> 
+      <td colspan="8"></td> 
+      <td colspan="5"></td> 
+      <td colspan="3"></td> 
+      <td>C</td> 
+      <td colspan="2"></td> 
+      <td colspan="5"></td> 
+      <td colspan="5"></td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4>CRC32B<span> (sf == 0 &amp;&amp; sz == 00)</span></h4> 
+   <a id="CRC32B_32C_dp_2src"></a> 
+   <p>CRC32B <a title="32-bit general-purpose accumulator output register (field &quot;Rd&quot;)" class="document-topic">&lt;Wd&gt;</a>, <a title="32-bit general-purpose accumulator input register (field &quot;Rn&quot;)" class="document-topic">&lt;Wn&gt;</a>, <a title="32-bit general-purpose data source register (field &quot;Rm&quot;)" class="document-topic">&lt;Wm&gt;</a></p> 
+  </div> 
+  <div> 
+   <h4>CRC32H<span> (sf == 0 &amp;&amp; sz == 01)</span></h4> 
+   <a id="CRC32H_32C_dp_2src"></a> 
+   <p>CRC32H <a title="32-bit general-purpose accumulator output register (field &quot;Rd&quot;)" class="document-topic">&lt;Wd&gt;</a>, <a title="32-bit general-purpose accumulator input register (field &quot;Rn&quot;)" class="document-topic">&lt;Wn&gt;</a>, <a title="32-bit general-purpose data source register (field &quot;Rm&quot;)" class="document-topic">&lt;Wm&gt;</a></p> 
+  </div> 
+  <div> 
+   <h4>CRC32W<span> (sf == 0 &amp;&amp; sz == 10)</span></h4> 
+   <a id="CRC32W_32C_dp_2src"></a> 
+   <p>CRC32W <a title="32-bit general-purpose accumulator output register (field &quot;Rd&quot;)" class="document-topic">&lt;Wd&gt;</a>, <a title="32-bit general-purpose accumulator input register (field &quot;Rn&quot;)" class="document-topic">&lt;Wn&gt;</a>, <a title="32-bit general-purpose data source register (field &quot;Rm&quot;)" class="document-topic">&lt;Wm&gt;</a></p> 
+  </div> 
+  <div> 
+   <h4>CRC32X<span> (sf == 1 &amp;&amp; sz == 11)</span></h4> 
+   <a id="CRC32X_64C_dp_2src"></a> 
+   <p>CRC32X <a title="32-bit general-purpose accumulator output register (field &quot;Rd&quot;)" class="document-topic">&lt;Wd&gt;</a>, <a title="32-bit general-purpose accumulator input register (field &quot;Rn&quot;)" class="document-topic">&lt;Wn&gt;</a>, <a title="64-bit general-purpose data source register (field &quot;Rm&quot;)" class="document-topic">&lt;Xm&gt;</a></p> 
+  </div> 
+  <pre>if !<a title="function: boolean HaveCRCExt()" class="document-topic">HaveCRCExt</a>() then UNDEFINED;
+integer d = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Rd);
+integer n = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Rn);
+integer m = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Rm);
+if sf == '1' &amp;&amp; sz != '11' then UNDEFINED;
+if sf == '0' &amp;&amp; sz == '11' then UNDEFINED;
+integer size = 8 &lt;&lt; <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(sz);   // 2-bit size field -&gt; 8, 16, 32, 64
+boolean crc32c = (C == '1');</pre> 
+  <div></div> 
+  <h3>Assembler Symbols</h3> 
+  <div> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Wd&gt;</td> 
+      <td><a id="sa_wd"></a> <p>Is the 32-bit name of the general-purpose accumulator output register, encoded in the "Rd" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Wn&gt;</td> 
+      <td><a id="sa_wn"></a> <p>Is the 32-bit name of the general-purpose accumulator input register, encoded in the "Rn" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Xm&gt;</td> 
+      <td><a id="sa_xm"></a> <p>Is the 64-bit name of the general-purpose data source register, encoded in the "Rm" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Wm&gt;</td> 
+      <td><a id="sa_wm"></a> <p>Is the 32-bit name of the general-purpose data source register, encoded in the "Rm" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div></div> 
+  <div> 
+   <a id="execute"></a> 
+   <h3>Operation</h3> 
+   <pre>bits(32)      acc     = <a title="accessor: bits(width) X[integer n, integer width]" class="document-topic">X</a>[n, 32];     // accumulator
+bits(size)    val     = <a title="accessor: bits(width) X[integer n, integer width]" class="document-topic">X</a>[m, size];   // input value
+bits(32)      poly    = (if crc32c then 0x1EDC6F41 else 0x04C11DB7)&lt;31:0&gt;;
+
+bits(32+size) tempacc = <a title="function: bits(N) BitReverse(bits(N) data)" class="document-topic">BitReverse</a>(acc) : <a title="function: bits(N) Zeros(integer N)" class="document-topic">Zeros</a>(size);
+bits(size+32) tempval = <a title="function: bits(N) BitReverse(bits(N) data)" class="document-topic">BitReverse</a>(val) : <a title="function: bits(N) Zeros(integer N)" class="document-topic">Zeros</a>(32);
+
+// Poly32Mod2 on a bitstring does a polynomial Modulus over {0,1} operation
+<a title="accessor: X[integer n, integer width] = bits(width) value" class="document-topic">X</a>[d, 32] = <a title="function: bits(N) BitReverse(bits(N) data)" class="document-topic">BitReverse</a>(<a title="function: bits(32) Poly32Mod2(bits(N) data_in, bits(32) poly)" class="document-topic">Poly32Mod2</a>(tempacc EOR tempval, poly));</pre> 
+  </div> 
+  <h3>Operational information</h3> 
+  <p>If PSTATE.DIT is 1:</p> 
+  <ul> 
+   <li>The execution time of this instruction is independent of: 
+    <ul> 
+     <li>The values of the data supplied in any of its registers.</li> 
+     <li>The values of the NZCV flags.</li> 
+    </ul></li> 
+   <li>The response of this instruction to asynchronous exceptions does not vary based on: 
+    <ul> 
+     <li>The values of the data supplied in any of its registers.</li> 
+     <li>The values of the NZCV flags.</li> 
+    </ul></li> 
+  </ul>  
+ </body>
+</html>

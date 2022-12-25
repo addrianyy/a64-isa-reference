@@ -1,0 +1,271 @@
+<html>
+ <head>  <link rel="stylesheet" href="../def-style.css"></head> 
+ <body> 
+  <h2>SQINCD (vector)</h2> 
+  <p>Signed saturating increment vector by multiple of 64-bit predicate constraint element count</p> 
+  <p>Determines the number of active 64-bit elements implied by the named predicate constraint, multiplies that by an immediate in the range 1 to 16 inclusive, and then uses the result to increment all destination vector elements. The results are saturated to the 64-bit signed integer range.</p> 
+  <p>The named predicate constraint limits the number of active elements in a single predicate to:</p> 
+  <ul> 
+   <li> A fixed number (VL1 to VL256) </li> 
+   <li> The largest power of two (POW2) </li> 
+   <li> The largest multiple of three or four (MUL3 or MUL4) </li> 
+   <li> All available, implicitly a multiple of two (ALL). </li> 
+  </ul> 
+  <p>Unspecified or out of range constraint encodings generate an empty predicate or zero element count rather than Undefined Instruction exception.</p> 
+  <p></p> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td colspan="4">imm4</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td colspan="5">pattern</td> 
+      <td colspan="5">Zdn</td> 
+     </tr> 
+     <tr> 
+      <td colspan="8"></td> 
+      <td>size&lt;1&gt;</td> 
+      <td>size&lt;0&gt;</td> 
+      <td colspan="2"></td> 
+      <td colspan="4"></td> 
+      <td colspan="4"></td> 
+      <td>D</td> 
+      <td>U</td> 
+      <td colspan="5"></td> 
+      <td colspan="5"></td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4></h4> 
+   <a id="sqincd_z_zs_"></a> 
+   <p>SQINCD <a title="Source and destination scalable vector register (field &quot;Zdn&quot;)" class="document-topic">&lt;Zdn&gt;</a>.D{, <a title="Optional pattern specifier, default ALL (field &quot;pattern&quot;) [#uimm5,ALL,MUL3,MUL4,POW2,VL1,VL2,VL3,VL4,VL5,VL6,VL7,VL8,VL16,VL32,VL64,VL128,VL256]" class="document-topic">&lt;pattern&gt;</a>{, MUL #<a title="Immediate multiplier [1-16], default 1 (field &quot;imm4&quot;)" class="document-topic">&lt;imm&gt;</a>}}</p> 
+  </div> 
+  <pre>if !<a title="function: boolean HaveSVE()" class="document-topic">HaveSVE</a>() &amp;&amp; !<a title="function: boolean HaveSME()" class="document-topic">HaveSME</a>() then UNDEFINED;
+constant integer esize = 64;
+integer dn = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Zdn);
+bits(5) pat = pattern;
+integer imm = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(imm4) + 1;
+boolean unsigned = FALSE;</pre> 
+  <div></div> 
+  <h3>Assembler Symbols</h3> 
+  <div> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Zdn&gt;</td> 
+      <td><a id="sa_zdn"></a> <p>Is the name of the source and destination scalable vector register, encoded in the "Zdn" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;pattern&gt;</td> 
+      <td><a id="sa_pattern"></a> <p>Is the optional pattern specifier, defaulting to ALL, encoded in <q>pattern</q>: </p> 
+       <table> 
+        <thead> 
+         <tr> 
+          <th>pattern</th> 
+          <th>&lt;pattern&gt;</th> 
+         </tr> 
+        </thead> 
+        <tbody> 
+         <tr> 
+          <td>00000</td> 
+          <td>POW2</td> 
+         </tr> 
+         <tr> 
+          <td>00001</td> 
+          <td>VL1</td> 
+         </tr> 
+         <tr> 
+          <td>00010</td> 
+          <td>VL2</td> 
+         </tr> 
+         <tr> 
+          <td>00011</td> 
+          <td>VL3</td> 
+         </tr> 
+         <tr> 
+          <td>00100</td> 
+          <td>VL4</td> 
+         </tr> 
+         <tr> 
+          <td>00101</td> 
+          <td>VL5</td> 
+         </tr> 
+         <tr> 
+          <td>00110</td> 
+          <td>VL6</td> 
+         </tr> 
+         <tr> 
+          <td>00111</td> 
+          <td>VL7</td> 
+         </tr> 
+         <tr> 
+          <td>01000</td> 
+          <td>VL8</td> 
+         </tr> 
+         <tr> 
+          <td>01001</td> 
+          <td>VL16</td> 
+         </tr> 
+         <tr> 
+          <td>01010</td> 
+          <td>VL32</td> 
+         </tr> 
+         <tr> 
+          <td>01011</td> 
+          <td>VL64</td> 
+         </tr> 
+         <tr> 
+          <td>01100</td> 
+          <td>VL128</td> 
+         </tr> 
+         <tr> 
+          <td>01101</td> 
+          <td>VL256</td> 
+         </tr> 
+         <tr> 
+          <td>0111x</td> 
+          <td>#uimm5</td> 
+         </tr> 
+         <tr> 
+          <td>101x1</td> 
+          <td>#uimm5</td> 
+         </tr> 
+         <tr> 
+          <td>10110</td> 
+          <td>#uimm5</td> 
+         </tr> 
+         <tr> 
+          <td>1x0x1</td> 
+          <td>#uimm5</td> 
+         </tr> 
+         <tr> 
+          <td>1x010</td> 
+          <td>#uimm5</td> 
+         </tr> 
+         <tr> 
+          <td>1xx00</td> 
+          <td>#uimm5</td> 
+         </tr> 
+         <tr> 
+          <td>11101</td> 
+          <td>MUL4</td> 
+         </tr> 
+         <tr> 
+          <td>11110</td> 
+          <td>MUL3</td> 
+         </tr> 
+         <tr> 
+          <td>11111</td> 
+          <td>ALL</td> 
+         </tr> 
+        </tbody> 
+       </table> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;imm&gt;</td> 
+      <td><a id="sa_imm"></a> <p>Is the immediate multiplier, in the range 1 to 16, defaulting to 1, encoded in the "imm4" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div></div> 
+  <div> 
+   <a id="execute"></a> 
+   <h3>Operation</h3> 
+   <pre><a title="function: CheckSVEEnabled()" class="document-topic">CheckSVEEnabled</a>();
+constant integer VL = <a title="accessor: integer CurrentVL" class="document-topic">CurrentVL</a>;
+constant integer elements = VL DIV esize;
+integer count = <a title="function: integer DecodePredCount(bits(5) pattern, integer esize)" class="document-topic">DecodePredCount</a>(pat, esize);
+bits(VL) operand1 = <a title="accessor: bits(width) Z[integer n, integer width]" class="document-topic">Z</a>[dn, VL];
+bits(VL) result;
+
+for e = 0 to elements-1
+    integer element1 = <a title="function: integer Int(bits(N) x, boolean unsigned)" class="document-topic">Int</a>(<a title="accessor: bits(size) Elem[bits(N) vector, integer e, integer size]" class="document-topic">Elem</a>[operand1, e, esize], unsigned);
+    (<a title="accessor: Elem[bits(N) &amp;vector, integer e, integer size] = bits(size) value" class="document-topic">Elem</a>[result, e, esize], -) = <a title="function: (bits(N), boolean) SatQ(integer i, integer N, boolean unsigned)" class="document-topic">SatQ</a>(element1 + (count * imm), esize, unsigned);
+
+<a title="accessor: Z[integer n, integer width] = bits(width) value" class="document-topic">Z</a>[dn, VL] = result;</pre> 
+  </div> 
+  <h3>Operational information</h3> 
+  <p> This instruction might be immediately preceded in program order by a <span>MOVPRFX</span> instruction. The <span>MOVPRFX</span> instruction must conform to all of the following requirements, otherwise the behavior of the <span>MOVPRFX</span> and this instruction is <small>unpredictable</small>: </p> 
+  <ul> 
+   <li>The <span>MOVPRFX</span> instruction must be unpredicated.</li> 
+   <li>The <span>MOVPRFX</span> instruction must specify the same destination register as this instruction.</li> 
+   <li>The destination register must not refer to architectural register state referenced by any other source operand register of this instruction.</li> 
+  </ul>  
+ </body>
+</html>

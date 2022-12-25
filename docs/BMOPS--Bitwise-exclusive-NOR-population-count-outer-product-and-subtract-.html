@@ -1,0 +1,205 @@
+<html>
+ <head>  <link rel="stylesheet" href="../def-style.css"></head> 
+ <body> 
+  <h2>BMOPS</h2> 
+  <p>Bitwise exclusive NOR population count outer product and subtract</p> 
+  <p>This instruction works with 32-bit element ZA tile. This instruction generates an outer product of the first source SVL<sub>S</sub>×1 vector and the second source 1×SVL<sub>S</sub> vector. Each outer product element is obtained as population count of the bitwise XNOR result of the corresponding 32-bit elements of the first source vector and the second source vector. Each source vector is independently predicated by a corresponding governing predicate. When either source vector element is inactive the corresponding destination tile element remains unmodified. The resulting SVL<sub>S</sub>×SVL<sub>S</sub> product is then destructively subtracted from the destination tile.</p> 
+  <h3><a id="iclass_mortlach2"></a>SME2<span><br></br>(FEAT_SME2) </span></h3> 
+  <p></p> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td colspan="5">Zm</td> 
+      <td colspan="3">Pm</td> 
+      <td colspan="3">Pn</td> 
+      <td colspan="5">Zn</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td colspan="2">ZAda</td> 
+     </tr> 
+     <tr> 
+      <td colspan="2"></td> 
+      <td colspan="9"></td> 
+      <td colspan="5"></td> 
+      <td colspan="3"></td> 
+      <td colspan="3"></td> 
+      <td colspan="5"></td> 
+      <td>S</td> 
+      <td></td> 
+      <td></td> 
+      <td colspan="2"></td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4></h4> 
+   <a id="bmops_za_pp_zz_32"></a> 
+   <p>BMOPS <a title="ZA tile ZA0-ZA3 (field &quot;ZAda&quot;)" class="document-topic">&lt;ZAda&gt;</a>.S, <a title="First governing scalable predicate register P0-P7 (field &quot;Pn&quot;)" class="document-topic">&lt;Pn&gt;</a>/M, <a title="Second governing scalable predicate register P0-P7 (field &quot;Pm&quot;)" class="document-topic">&lt;Pm&gt;</a>/M, <a title="First source scalable vector register (field &quot;Zn&quot;)" class="document-topic">&lt;Zn&gt;</a>.S, <a title="Second source scalable vector register (field &quot;Zm&quot;)" class="document-topic">&lt;Zm&gt;</a>.S</p> 
+  </div> 
+  <pre>if !<a title="function: boolean HaveSME2()" class="document-topic">HaveSME2</a>() then UNDEFINED;
+constant integer esize = 32;
+integer a = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Pn);
+integer b = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Pm);
+integer n = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Zn);
+integer m = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Zm);
+integer da = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(ZAda);
+boolean sub_op = TRUE;</pre> 
+  <div></div> 
+  <h3>Assembler Symbols</h3> 
+  <div> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;ZAda&gt;</td> 
+      <td><a id="sa_zada"></a> <p>Is the name of the ZA tile ZA0-ZA3, encoded in the "ZAda" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Pn&gt;</td> 
+      <td><a id="sa_pn"></a> <p>Is the name of the first governing scalable predicate register P0-P7, encoded in the "Pn" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Pm&gt;</td> 
+      <td><a id="sa_pm"></a> <p>Is the name of the second governing scalable predicate register P0-P7, encoded in the "Pm" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Zn&gt;</td> 
+      <td><a id="sa_zn"></a> <p>Is the name of the first source scalable vector register, encoded in the "Zn" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Zm&gt;</td> 
+      <td><a id="sa_zm"></a> <p>Is the name of the second source scalable vector register, encoded in the "Zm" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div></div> 
+  <div> 
+   <a id="execute"></a> 
+   <h3>Operation</h3> 
+   <pre><a title="function: CheckStreamingSVEAndZAEnabled()" class="document-topic">CheckStreamingSVEAndZAEnabled</a>();
+constant integer VL = <a title="accessor: integer CurrentVL" class="document-topic">CurrentVL</a>;
+constant integer PL = VL DIV 8;
+constant integer dim = VL DIV esize;
+bits(PL) mask1 = <a title="accessor: bits(width) P[integer n, integer width]" class="document-topic">P</a>[a, PL];
+bits(PL) mask2 = <a title="accessor: bits(width) P[integer n, integer width]" class="document-topic">P</a>[b, PL];
+bits(VL) operand1 = <a title="accessor: bits(width) Z[integer n, integer width]" class="document-topic">Z</a>[n, VL];
+bits(VL) operand2 = <a title="accessor: bits(width) Z[integer n, integer width]" class="document-topic">Z</a>[m, VL];
+bits(dim*dim*esize) operand3 = <a title="accessor: bits(width) ZAtile[integer tile, integer esize, integer width]" class="document-topic">ZAtile</a>[da, esize, dim*dim*esize];
+bits(dim*dim*esize) result;
+
+for row = 0 to dim-1
+    bits(esize) element1 = <a title="accessor: bits(size) Elem[bits(N) vector, integer e, integer size]" class="document-topic">Elem</a>[operand1, row, esize];
+    for col = 0 to dim-1
+        bits(esize) element2 = <a title="accessor: bits(size) Elem[bits(N) vector, integer e, integer size]" class="document-topic">Elem</a>[operand2, col, esize];
+        bits(esize) element3 = <a title="accessor: bits(size) Elem[bits(N) vector, integer e, integer size]" class="document-topic">Elem</a>[operand3, row*dim + col, esize];
+        if (<a title="function: boolean ActivePredicateElement(bits(N) pred, integer e, integer esize)" class="document-topic">ActivePredicateElement</a>(mask1, row, esize) &amp;&amp;
+              <a title="function: boolean ActivePredicateElement(bits(N) pred, integer e, integer esize)" class="document-topic">ActivePredicateElement</a>(mask2, col, esize)) then
+            integer res = <a title="function: integer BitCount(bits(N) x)" class="document-topic">BitCount</a>(NOT(element1 EOR element2));
+            if sub_op then res = -res;
+            <a title="accessor: Elem[bits(N) &amp;vector, integer e, integer size] = bits(size) value" class="document-topic">Elem</a>[result, row*dim + col, esize] = element3 + res;
+        else
+            <a title="accessor: Elem[bits(N) &amp;vector, integer e, integer size] = bits(size) value" class="document-topic">Elem</a>[result, row*dim + col, esize] = element3;
+<a title="accessor: ZAtile[integer tile, integer esize, integer width] = bits(width) value" class="document-topic">ZAtile</a>[da, esize, dim*dim*esize] = result;</pre> 
+  </div> 
+  <h3>Operational information</h3> 
+  <p>If PSTATE.DIT is 1:</p> 
+  <ul> 
+   <li>The execution time of this instruction is independent of: 
+    <ul> 
+     <li>The values of the data supplied in any of its operand registers when its governing predicate registers contain the same value for each execution.</li> 
+     <li>The values of the NZCV flags.</li> 
+    </ul></li> 
+   <li>The response of this instruction to asynchronous exceptions does not vary based on: 
+    <ul> 
+     <li>The values of the data supplied in any of its operand registers when its governing predicate registers contain the same value for each execution.</li> 
+     <li>The values of the NZCV flags.</li> 
+    </ul></li> 
+  </ul>  
+ </body>
+</html>

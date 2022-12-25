@@ -1,0 +1,141 @@
+<html>
+ <head>  <link rel="stylesheet" href="../def-style.css"></head> 
+ <body> 
+  <h2>PACDA, PACDZA</h2> 
+  <p>Pointer Authentication Code for Data address, using key A. This instruction computes and inserts a pointer authentication code for a data address, using a modifier and key A.</p> 
+  <p>The address is in the general-purpose register that is specified by &lt;Xd&gt;.</p> 
+  <p>The modifier is:</p> 
+  <ul> 
+   <li>In the general-purpose register or stack pointer that is specified by &lt;Xn|SP&gt; for <span>PACDA</span>.</li> 
+   <li>The value zero, for <span>PACDZA</span>.</li> 
+  </ul> 
+  <h3><a id="iclass_general"></a>Integer<span><br></br>(FEAT_PAuth) </span></h3> 
+  <p></p> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>Z</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td colspan="5">Rn</td> 
+      <td colspan="5">Rd</td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4>PACDA<span> (Z == 0)</span></h4> 
+   <a id="PACDA_64P_dp_1src"></a> 
+   <p>PACDA <a title="64-bit general-purpose destination register (field &quot;Rd&quot;)" class="document-topic">&lt;Xd&gt;</a>, <a title="64-bit general-purpose source register or SP (field &quot;Rn&quot;)" class="document-topic">&lt;Xn|SP&gt;</a></p> 
+  </div> 
+  <div> 
+   <h4>PACDZA<span> (Z == 1 &amp;&amp; Rn == 11111)</span></h4> 
+   <a id="PACDZA_64Z_dp_1src"></a> 
+   <p>PACDZA <a title="64-bit general-purpose destination register (field &quot;Rd&quot;)" class="document-topic">&lt;Xd&gt;</a></p> 
+  </div> 
+  <pre>boolean source_is_sp = FALSE;
+integer d = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Rd);
+integer n = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Rn);
+
+if !<a title="function: boolean HavePACExt()" class="document-topic">HavePACExt</a>() then
+    UNDEFINED;
+
+if Z == '0' then // PACDA
+    if n == 31 then source_is_sp = TRUE;
+else // PACDZA
+    if n != 31 then UNDEFINED;</pre> 
+  <div></div> 
+  <h3>Assembler Symbols</h3> 
+  <div> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Xd&gt;</td> 
+      <td><a id="sa_xd"></a> <p>Is the 64-bit name of the general-purpose destination register, encoded in the "Rd" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Xn|SP&gt;</td> 
+      <td><a id="sa_xn_sp"></a> <p>Is the 64-bit name of the general-purpose source register or stack pointer, encoded in the "Rn" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div></div> 
+  <div> 
+   <a id="execute"></a> 
+   <h3>Operation</h3> 
+   <pre>if source_is_sp then
+    <a title="accessor: X[integer n, integer width] = bits(width) value" class="document-topic">X</a>[d, 64] = AddPACDA(X[d, 64], SP[]);
+else
+    <a title="accessor: X[integer n, integer width] = bits(width) value" class="document-topic">X</a>[d, 64] = AddPACDA(X[d, 64], X[n, 64]);</pre> 
+  </div>  
+ </body>
+</html>

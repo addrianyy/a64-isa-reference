@@ -1,0 +1,241 @@
+<html>
+ <head>  <link rel="stylesheet" href="../def-style.css"></head> 
+ <body> 
+  <h2>SYS</h2> 
+  <p>System instruction. For more information, see <em>Op0 equals 0b01, cache maintenance, TLB maintenance, and address translation instructions</em> for the encodings of System instructions.</p> 
+  <p>This instruction is used by the aliases <a href="AT--Address-Translate--an-alias-of-SYS-.html" title="Address translate" class="document-topic">AT</a>, <a href="BRB--Branch-Record-Buffer--an-alias-of-SYS-.html" title="Branch record buffer" class="document-topic">BRB</a>, <a title="CFP" href="CFP--Control-Flow-Prediction-Restriction-by-Context--an-alias-of-SYS-.html" class="document-topic">CFP</a>, <a title="COSP" href="COSP--Clear-Other-Speculative-Predictions-by-Context--an-alias-of-SYS-.html" class="document-topic">COSP</a>, <a title="CPP" href="CPP--Cache-Prefetch-Prediction-Restriction-by-Context--an-alias-of-SYS-.html" class="document-topic">CPP</a>, <a title="Data cache operation" href="DC--Data-Cache-operation--an-alias-of-SYS-.html" class="document-topic">DC</a>, <a href="DVP--Data-Value-Prediction-Restriction-by-Context--an-alias-of-SYS-.html" title="DVP" class="document-topic">DVP</a>, <a href="GCSPOPCX--Guarded-Control-Stack-Pop-and-Compare-exception-return-record--an-alias-of-SYS-.html" title="GCSPOPCX" class="document-topic">GCSPOPCX</a>, <a href="GCSPOPX--Guarded-Control-Stack-Pop-exception-return-record--an-alias-of-SYS-.html" title="GCSPOPX" class="document-topic">GCSPOPX</a>, <a title="GCSPUSHM" href="GCSPUSHM--Guarded-Control-Stack-Push--an-alias-of-SYS-.html" class="document-topic">GCSPUSHM</a>, <a title="GCSPUSHX" href="GCSPUSHX--Guarded-Control-Stack-Push-exception-return-record--an-alias-of-SYS-.html" class="document-topic">GCSPUSHX</a>, <a href="GCSSS1--Guarded-Control-Stack-Switch-Stack-1--an-alias-of-SYS-.html" title="GCSSS1" class="document-topic">GCSSS1</a>, <a title="Instruction cache operation" href="IC--Instruction-Cache-operation--an-alias-of-SYS-.html" class="document-topic">IC</a>, <a href="TLBI--TLB-Invalidate-operation--an-alias-of-SYS-.html" title="TLB invalidate operation" class="document-topic">TLBI</a>, and <a href="TRCIT--Trace-Instrumentation--an-alias-of-SYS-.html" title="TRCIT" class="document-topic">TRCIT</a>.</p> 
+  <p></p> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td colspan="3">op1</td> 
+      <td colspan="4">CRn</td> 
+      <td colspan="4">CRm</td> 
+      <td colspan="3">op2</td> 
+      <td colspan="5">Rt</td> 
+     </tr> 
+     <tr> 
+      <td colspan="10"></td> 
+      <td>L</td> 
+      <td colspan="2"></td> 
+      <td colspan="3"></td> 
+      <td colspan="4"></td> 
+      <td colspan="4"></td> 
+      <td colspan="3"></td> 
+      <td colspan="5"></td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4></h4> 
+   <a id="SYS_CR_systeminstrs"></a> 
+   <p>SYS #<a title="3-bit unsigned immediate [0-7] (field &quot;op1&quot;)" class="document-topic">&lt;op1&gt;</a>, <a title="Name 'Cn', with 'n' [0-15] (field &quot;CRn&quot;)" class="document-topic">&lt;Cn&gt;</a>, <a title="Name 'Cm', with 'm' [0-15] (field &quot;CRm&quot;)" class="document-topic">&lt;Cm&gt;</a>, #<a title="3-bit unsigned immediate [0-7] (field &quot;op2&quot;)" class="document-topic">&lt;op2&gt;</a>{, <a title="64-bit optional general-purpose source register, default '11111' (field &quot;Rt&quot;)" class="document-topic">&lt;Xt&gt;</a>}</p> 
+  </div> 
+  <pre><a title="function: AArch64.CheckSystemAccess(bits(2) op0, bits(3) op1, bits(4) crn, bits(4) crm, bits(3) op2, bits(5) rt, bit read)" class="document-topic">AArch64.CheckSystemAccess</a>('01', op1, CRn, CRm, op2, Rt, L);
+
+integer t = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Rt);
+
+integer sys_op0 = 1;
+integer sys_op1 = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(op1);
+integer sys_op2 = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(op2);
+integer sys_crn = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(CRn);
+integer sys_crm = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(CRm);
+boolean has_result = (L == '1');</pre> 
+  <div></div> 
+  <h3>Assembler Symbols</h3> 
+  <div> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;op1&gt;</td> 
+      <td><a id="sa_op1"></a> <p>Is a 3-bit unsigned immediate, in the range 0 to 7, encoded in the "op1" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Cn&gt;</td> 
+      <td><a id="sa_cn"></a> <p>Is a name 'Cn', with 'n' in the range 0 to 15, encoded in the "CRn" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Cm&gt;</td> 
+      <td><a id="sa_cm"></a> <p>Is a name 'Cm', with 'm' in the range 0 to 15, encoded in the "CRm" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;op2&gt;</td> 
+      <td><a id="sa_op2"></a> <p>Is a 3-bit unsigned immediate, in the range 0 to 7, encoded in the "op2" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Xt&gt;</td> 
+      <td><a id="sa_xt"></a> <p>Is the 64-bit name of the optional general-purpose source register, defaulting to '11111', encoded in the "Rt" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div></div> 
+  <h3>Alias Conditions</h3> 
+  <table> 
+   <thead> 
+    <tr> 
+     <th>Alias</th> 
+     <th>Is preferred when</th> 
+    </tr> 
+   </thead> 
+   <tbody> 
+    <tr> 
+     <td><a href="AT--Address-Translate--an-alias-of-SYS-.html" title="Address translate" class="document-topic">AT</a></td> 
+     <td><span>CRn == '0111' &amp;&amp; CRm == '100x' &amp;&amp; <a title="function: SystemOp SysOp(bits(3) op1, bits(4) CRn, bits(4) CRm, bits(3) op2)" class="document-topic">SysOp</a>(op1,'0111',CRm,op2) == <a title="enumeration SystemOp {Sys_AT, Sys_BRB, Sys_DC, Sys_IC, Sys_TLBI, Sys_SYS}" class="document-topic">Sys_AT</a></span></td> 
+    </tr> 
+    <tr> 
+     <td><a title="Branch record buffer" href="BRB--Branch-Record-Buffer--an-alias-of-SYS-.html" class="document-topic">BRB</a></td> 
+     <td><span>op1 == '001' &amp;&amp; CRn == '0111' &amp;&amp; CRm == '0010' &amp;&amp; <a title="function: SystemOp SysOp(bits(3) op1, bits(4) CRn, bits(4) CRm, bits(3) op2)" class="document-topic">SysOp</a>('001','0111','0010',op2) == <a title="enumeration SystemOp {Sys_AT, Sys_BRB, Sys_DC, Sys_IC, Sys_TLBI, Sys_SYS}" class="document-topic">Sys_BRB</a></span></td> 
+    </tr> 
+    <tr> 
+     <td><a title="CFP" href="CFP--Control-Flow-Prediction-Restriction-by-Context--an-alias-of-SYS-.html" class="document-topic">CFP</a></td> 
+     <td><span>op1 == '011' &amp;&amp; CRn == '0111' &amp;&amp; CRm == '0011' &amp;&amp; op2 == '100'</span></td> 
+    </tr> 
+    <tr> 
+     <td><a href="COSP--Clear-Other-Speculative-Predictions-by-Context--an-alias-of-SYS-.html" title="COSP" class="document-topic">COSP</a></td> 
+     <td><span>op1 == '011' &amp;&amp; CRn == '0111' &amp;&amp; CRm == '0011' &amp;&amp; op2 == '110'</span></td> 
+    </tr> 
+    <tr> 
+     <td><a href="CPP--Cache-Prefetch-Prediction-Restriction-by-Context--an-alias-of-SYS-.html" title="CPP" class="document-topic">CPP</a></td> 
+     <td><span>op1 == '011' &amp;&amp; CRn == '0111' &amp;&amp; CRm == '0011' &amp;&amp; op2 == '111'</span></td> 
+    </tr> 
+    <tr> 
+     <td><a title="Data cache operation" href="DC--Data-Cache-operation--an-alias-of-SYS-.html" class="document-topic">DC</a></td> 
+     <td><span>CRn == '0111' &amp;&amp; <a title="function: SystemOp SysOp(bits(3) op1, bits(4) CRn, bits(4) CRm, bits(3) op2)" class="document-topic">SysOp</a>(op1,'0111',CRm,op2) == <a title="enumeration SystemOp {Sys_AT, Sys_BRB, Sys_DC, Sys_IC, Sys_TLBI, Sys_SYS}" class="document-topic">Sys_DC</a></span></td> 
+    </tr> 
+    <tr> 
+     <td><a href="DVP--Data-Value-Prediction-Restriction-by-Context--an-alias-of-SYS-.html" title="DVP" class="document-topic">DVP</a></td> 
+     <td><span>op1 == '011' &amp;&amp; CRn == '0111' &amp;&amp; CRm == '0011' &amp;&amp; op2 == '101'</span></td> 
+    </tr> 
+    <tr> 
+     <td><a title="GCSPOPCX" href="GCSPOPCX--Guarded-Control-Stack-Pop-and-Compare-exception-return-record--an-alias-of-SYS-.html" class="document-topic">GCSPOPCX</a></td> 
+     <td><span>op1 == '000' &amp;&amp; CRn == '0111' &amp;&amp; CRm == '0111' &amp;&amp; op2 == '101'</span></td> 
+    </tr> 
+    <tr> 
+     <td><a href="GCSPOPX--Guarded-Control-Stack-Pop-exception-return-record--an-alias-of-SYS-.html" title="GCSPOPX" class="document-topic">GCSPOPX</a></td> 
+     <td><span>op1 == '000' &amp;&amp; CRn == '0111' &amp;&amp; CRm == '0111' &amp;&amp; op2 == '110'</span></td> 
+    </tr> 
+    <tr> 
+     <td><a title="GCSPUSHM" href="GCSPUSHM--Guarded-Control-Stack-Push--an-alias-of-SYS-.html" class="document-topic">GCSPUSHM</a></td> 
+     <td><span>op1 == '011' &amp;&amp; CRn == '0111' &amp;&amp; CRm == '0111' &amp;&amp; op2 == '000'</span></td> 
+    </tr> 
+    <tr> 
+     <td><a href="GCSPUSHX--Guarded-Control-Stack-Push-exception-return-record--an-alias-of-SYS-.html" title="GCSPUSHX" class="document-topic">GCSPUSHX</a></td> 
+     <td><span>op1 == '000' &amp;&amp; CRn == '0111' &amp;&amp; CRm == '0111' &amp;&amp; op2 == '100'</span></td> 
+    </tr> 
+    <tr> 
+     <td><a title="GCSSS1" href="GCSSS1--Guarded-Control-Stack-Switch-Stack-1--an-alias-of-SYS-.html" class="document-topic">GCSSS1</a></td> 
+     <td><span>op1 == '011' &amp;&amp; CRn == '0111' &amp;&amp; CRm == '0111' &amp;&amp; op2 == '010'</span></td> 
+    </tr> 
+    <tr> 
+     <td><a title="Instruction cache operation" href="IC--Instruction-Cache-operation--an-alias-of-SYS-.html" class="document-topic">IC</a></td> 
+     <td><span>CRn == '0111' &amp;&amp; <a title="function: SystemOp SysOp(bits(3) op1, bits(4) CRn, bits(4) CRm, bits(3) op2)" class="document-topic">SysOp</a>(op1,'0111',CRm,op2) == <a title="enumeration SystemOp {Sys_AT, Sys_BRB, Sys_DC, Sys_IC, Sys_TLBI, Sys_SYS}" class="document-topic">Sys_IC</a></span></td> 
+    </tr> 
+    <tr> 
+     <td><a title="TLB invalidate operation" href="TLBI--TLB-Invalidate-operation--an-alias-of-SYS-.html" class="document-topic">TLBI</a></td> 
+     <td><span>CRn == '100x' &amp;&amp; <a title="function: SystemOp SysOp(bits(3) op1, bits(4) CRn, bits(4) CRm, bits(3) op2)" class="document-topic">SysOp</a>(op1,CRn,CRm,op2) == <a title="enumeration SystemOp {Sys_AT, Sys_BRB, Sys_DC, Sys_IC, Sys_TLBI, Sys_SYS}" class="document-topic">Sys_TLBI</a></span></td> 
+    </tr> 
+    <tr> 
+     <td><a href="TRCIT--Trace-Instrumentation--an-alias-of-SYS-.html" title="TRCIT" class="document-topic">TRCIT</a></td> 
+     <td><span>op1 == '011' &amp;&amp; CRn == '0111' &amp;&amp; CRm == '0010' &amp;&amp; op2 == '111'</span></td> 
+    </tr> 
+   </tbody> 
+  </table> 
+  <div> 
+   <a id="execute"></a> 
+   <h3>Operation</h3> 
+   <pre>if has_result then
+    // No architecturally defined instructions here.
+    <a title="function: AArch64.SysInstrWithResult(integer op0, integer op1, integer crn, integer crm, integer op2, integer t)" class="document-topic">AArch64.SysInstrWithResult</a>(sys_op0, sys_op1, sys_crn, sys_crm, sys_op2, t);
+else
+    <a title="function: AArch64.SysInstr(integer op0, integer op1, integer crn, integer crm, integer op2, integer t)" class="document-topic">AArch64.SysInstr</a>(sys_op0, sys_op1, sys_crn, sys_crm, sys_op2, t);</pre> 
+  </div>  
+ </body>
+</html>

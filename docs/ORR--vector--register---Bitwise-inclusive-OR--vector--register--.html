@@ -1,0 +1,219 @@
+<html>
+ <head>  <link rel="stylesheet" href="../def-style.css"></head> 
+ <body> 
+  <h2>ORR (vector, register)</h2> 
+  <p>Bitwise inclusive OR (vector, register). This instruction performs a bitwise OR between the two source SIMD&amp;FP registers, and writes the result to the destination SIMD&amp;FP register.</p> 
+  <p>Depending on the settings in the <em>CPACR_EL1</em>, <em>CPTR_EL2</em>, and <em>CPTR_EL3</em> registers, and the current Security state and Exception level, an attempt to execute the instruction might be trapped.</p> 
+  <p>This instruction is used by the alias <a title="Move vector" href="MOV--vector---Move-vector--an-alias-of-ORR--vector--register--.html" class="document-topic">MOV (vector)</a>.</p> 
+  <p></p> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>0</td> 
+      <td>Q</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td colspan="5">Rm</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td colspan="5">Rn</td> 
+      <td colspan="5">Rd</td> 
+     </tr> 
+     <tr> 
+      <td></td> 
+      <td></td> 
+      <td></td> 
+      <td colspan="5"></td> 
+      <td colspan="2">size</td> 
+      <td></td> 
+      <td colspan="5"></td> 
+      <td colspan="5"></td> 
+      <td></td> 
+      <td colspan="5"></td> 
+      <td colspan="5"></td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4></h4> 
+   <a id="ORR_asimdsame_only"></a> 
+   <p>ORR <a title="SIMD&amp;FP destination register (field &quot;Rd&quot;)" class="document-topic">&lt;Vd&gt;</a>.<a title="Arrangement specifier (field &quot;Q&quot;) [8B,16B]" class="document-topic">&lt;T&gt;</a>, <a title="First SIMD&amp;FP source register (field &quot;Rn&quot;)" class="document-topic">&lt;Vn&gt;</a>.<a title="Arrangement specifier (field &quot;Q&quot;) [8B,16B]" class="document-topic">&lt;T&gt;</a>, <a title="Second SIMD&amp;FP source register (field &quot;Rm&quot;)" class="document-topic">&lt;Vm&gt;</a>.<a title="Arrangement specifier (field &quot;Q&quot;) [8B,16B]" class="document-topic">&lt;T&gt;</a></p> 
+  </div> 
+  <pre>integer d = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Rd);
+integer n = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Rn);
+integer m = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Rm);
+integer esize = 8;
+integer datasize = if Q == '1' then 128 else 64;
+integer elements = datasize DIV esize;
+
+boolean invert = (size&lt;0&gt; == '1');
+<a title="enumeration LogicalOp   {LogicalOp_AND, LogicalOp_EOR, LogicalOp_ORR}" class="document-topic">LogicalOp</a> op = if size&lt;1&gt; == '1' then <a title="enumeration LogicalOp   {LogicalOp_AND, LogicalOp_EOR, LogicalOp_ORR}" class="document-topic">LogicalOp_ORR</a> else <a title="enumeration LogicalOp   {LogicalOp_AND, LogicalOp_EOR, LogicalOp_ORR}" class="document-topic">LogicalOp_AND</a>;</pre> 
+  <div></div> 
+  <h3>Assembler Symbols</h3> 
+  <div> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Vd&gt;</td> 
+      <td><a id="sa_vd"></a> <p>Is the name of the SIMD&amp;FP destination register, encoded in the "Rd" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;T&gt;</td> 
+      <td><a id="sa_t"></a> <p>Is an arrangement specifier, encoded in <q>Q</q>: </p> 
+       <table> 
+        <thead> 
+         <tr> 
+          <th>Q</th> 
+          <th>&lt;T&gt;</th> 
+         </tr> 
+        </thead> 
+        <tbody> 
+         <tr> 
+          <td>0</td> 
+          <td>8B</td> 
+         </tr> 
+         <tr> 
+          <td>1</td> 
+          <td>16B</td> 
+         </tr> 
+        </tbody> 
+       </table> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Vn&gt;</td> 
+      <td><a id="sa_vn"></a> <p>Is the name of the first SIMD&amp;FP source register, encoded in the "Rn" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Vm&gt;</td> 
+      <td><a id="sa_vm"></a> <p>Is the name of the second SIMD&amp;FP source register, encoded in the "Rm" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div></div> 
+  <h3>Alias Conditions</h3> 
+  <table> 
+   <thead> 
+    <tr> 
+     <th>Alias</th> 
+     <th>Is preferred when</th> 
+    </tr> 
+   </thead> 
+   <tbody> 
+    <tr> 
+     <td><a href="MOV--vector---Move-vector--an-alias-of-ORR--vector--register--.html" title="Move vector" class="document-topic">MOV (vector)</a></td> 
+     <td><span>Rm == Rn</span></td> 
+    </tr> 
+   </tbody> 
+  </table> 
+  <div> 
+   <a id="execute"></a> 
+   <h3>Operation</h3> 
+   <pre><a title="function: CheckFPAdvSIMDEnabled64()" class="document-topic">CheckFPAdvSIMDEnabled64</a>();
+bits(datasize) operand1 = <a title="accessor: bits(width) V[integer n, integer width]" class="document-topic">V</a>[n, datasize];
+bits(datasize) operand2 = <a title="accessor: bits(width) V[integer n, integer width]" class="document-topic">V</a>[m, datasize];
+bits(datasize) result;
+
+if invert then operand2 = NOT(operand2);
+
+case op of
+    when <a title="enumeration LogicalOp   {LogicalOp_AND, LogicalOp_EOR, LogicalOp_ORR}" class="document-topic">LogicalOp_AND</a>
+        result = operand1 AND operand2;
+    when <a title="enumeration LogicalOp   {LogicalOp_AND, LogicalOp_EOR, LogicalOp_ORR}" class="document-topic">LogicalOp_ORR</a>
+        result = operand1 OR operand2;
+
+<a title="accessor: V[integer n, integer width] = bits(width) value" class="document-topic">V</a>[d, datasize] = result;</pre> 
+  </div> 
+  <h3>Operational information</h3> 
+  <p>If PSTATE.DIT is 1:</p> 
+  <ul> 
+   <li>The execution time of this instruction is independent of: 
+    <ul> 
+     <li>The values of the data supplied in any of its registers.</li> 
+     <li>The values of the NZCV flags.</li> 
+    </ul></li> 
+   <li>The response of this instruction to asynchronous exceptions does not vary based on: 
+    <ul> 
+     <li>The values of the data supplied in any of its registers.</li> 
+     <li>The values of the NZCV flags.</li> 
+    </ul></li> 
+  </ul>  
+ </body>
+</html>

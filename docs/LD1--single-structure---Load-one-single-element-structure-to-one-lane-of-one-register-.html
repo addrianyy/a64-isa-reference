@@ -1,0 +1,392 @@
+<html>
+ <head>  <link rel="stylesheet" href="../def-style.css"></head> 
+ <body> 
+  <h2>LD1 (single structure)</h2> 
+  <p>Load one single-element structure to one lane of one register. This instruction loads a single-element structure from memory and writes the result to the specified lane of the SIMD&amp;FP register without affecting the other bits of the register.</p> 
+  <p>Depending on the settings in the <em>CPACR_EL1</em>, <em>CPTR_EL2</em>, and <em>CPTR_EL3</em> registers, and the current Security state and Exception level, an attempt to execute the instruction might be trapped.</p> 
+  <p> It has encodings from 2 classes: <a class="document-topic">No offset</a> and <a class="document-topic">Post-index</a> </p> 
+  <h3><a id="iclass_as_no_post_index"></a>No offset</h3> 
+  <p></p> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>0</td> 
+      <td>Q</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>x</td> 
+      <td>x</td> 
+      <td>0</td> 
+      <td>S</td> 
+      <td colspan="2">size</td> 
+      <td colspan="5">Rn</td> 
+      <td colspan="5">Rt</td> 
+     </tr> 
+     <tr> 
+      <td></td> 
+      <td></td> 
+      <td colspan="7"></td> 
+      <td>L</td> 
+      <td>R</td> 
+      <td colspan="4"></td> 
+      <td>o2</td> 
+      <td colspan="3">opcode</td> 
+      <td></td> 
+      <td colspan="2"></td> 
+      <td colspan="5"></td> 
+      <td colspan="5"></td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4>8-bit<span> (opcode == 000)</span></h4> 
+   <a id="LD1_asisdlso_B1_1b"></a> 
+   <p>LD1 { <a title="First or only SIMD&amp;FP register to be transferred (field &quot;Rt&quot;)" class="document-topic">&lt;Vt&gt;</a>.B }[<a title="Element index (field &quot;Q:S:size&quot;)" class="document-topic">&lt;index&gt;</a>], [<a title="64-bit general-purpose base register or SP (field &quot;Rn&quot;)" class="document-topic">&lt;Xn|SP&gt;</a>]</p> 
+  </div> 
+  <div> 
+   <h4>16-bit<span> (opcode == 010 &amp;&amp; size == x0)</span></h4> 
+   <a id="LD1_asisdlso_H1_1h"></a> 
+   <p>LD1 { <a title="First or only SIMD&amp;FP register to be transferred (field &quot;Rt&quot;)" class="document-topic">&lt;Vt&gt;</a>.H }[<a title="Element index (field &quot;Q:S:size<1>&quot;)" class="document-topic">&lt;index&gt;</a>], [<a title="64-bit general-purpose base register or SP (field &quot;Rn&quot;)" class="document-topic">&lt;Xn|SP&gt;</a>]</p> 
+  </div> 
+  <div> 
+   <h4>32-bit<span> (opcode == 100 &amp;&amp; size == 00)</span></h4> 
+   <a id="LD1_asisdlso_S1_1s"></a> 
+   <p>LD1 { <a title="First or only SIMD&amp;FP register to be transferred (field &quot;Rt&quot;)" class="document-topic">&lt;Vt&gt;</a>.S }[<a title="Element index (field &quot;Q:S&quot;)" class="document-topic">&lt;index&gt;</a>], [<a title="64-bit general-purpose base register or SP (field &quot;Rn&quot;)" class="document-topic">&lt;Xn|SP&gt;</a>]</p> 
+  </div> 
+  <div> 
+   <h4>64-bit<span> (opcode == 100 &amp;&amp; S == 0 &amp;&amp; size == 01)</span></h4> 
+   <a id="LD1_asisdlso_D1_1d"></a> 
+   <p>LD1 { <a title="First or only SIMD&amp;FP register to be transferred (field &quot;Rt&quot;)" class="document-topic">&lt;Vt&gt;</a>.D }[<a title="Element index (field &quot;Q&quot;)" class="document-topic">&lt;index&gt;</a>], [<a title="64-bit general-purpose base register or SP (field &quot;Rn&quot;)" class="document-topic">&lt;Xn|SP&gt;</a>]</p> 
+  </div> 
+  <pre>integer t = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Rt);
+integer n = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Rn);
+integer m = integer UNKNOWN;
+boolean wback = FALSE;
+boolean nontemporal = FALSE;
+boolean tagchecked = wback || n != 31;</pre> 
+  <h3><a id="iclass_as_post_index"></a>Post-index</h3> 
+  <p></p> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>0</td> 
+      <td>Q</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td colspan="5">Rm</td> 
+      <td>x</td> 
+      <td>x</td> 
+      <td>0</td> 
+      <td>S</td> 
+      <td colspan="2">size</td> 
+      <td colspan="5">Rn</td> 
+      <td colspan="5">Rt</td> 
+     </tr> 
+     <tr> 
+      <td></td> 
+      <td></td> 
+      <td colspan="7"></td> 
+      <td>L</td> 
+      <td>R</td> 
+      <td colspan="5"></td> 
+      <td colspan="3">opcode</td> 
+      <td></td> 
+      <td colspan="2"></td> 
+      <td colspan="5"></td> 
+      <td colspan="5"></td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4>8-bit, immediate offset<span> (Rm == 11111 &amp;&amp; opcode == 000)</span></h4> 
+   <a id="LD1_asisdlsop_B1_i1b"></a> 
+   <p>LD1 { <a title="First or only SIMD&amp;FP register to be transferred (field &quot;Rt&quot;)" class="document-topic">&lt;Vt&gt;</a>.B }[<a title="Element index (field &quot;Q:S:size&quot;)" class="document-topic">&lt;index&gt;</a>], [<a title="64-bit general-purpose base register or SP (field &quot;Rn&quot;)" class="document-topic">&lt;Xn|SP&gt;</a>], #1</p> 
+  </div> 
+  <div> 
+   <h4>8-bit, register offset<span> (Rm != 11111 &amp;&amp; opcode == 000)</span></h4> 
+   <a id="LD1_asisdlsop_BX1_r1b"></a> 
+   <p>LD1 { <a title="First or only SIMD&amp;FP register to be transferred (field &quot;Rt&quot;)" class="document-topic">&lt;Vt&gt;</a>.B }[<a title="Element index (field &quot;Q:S:size&quot;)" class="document-topic">&lt;index&gt;</a>], [<a title="64-bit general-purpose base register or SP (field &quot;Rn&quot;)" class="document-topic">&lt;Xn|SP&gt;</a>], <a title="64-bit general-purpose post-index register, excluding XZR (field &quot;Rm&quot;)" class="document-topic">&lt;Xm&gt;</a></p> 
+  </div> 
+  <div> 
+   <h4>16-bit, immediate offset<span> (Rm == 11111 &amp;&amp; opcode == 010 &amp;&amp; size == x0)</span></h4> 
+   <a id="LD1_asisdlsop_H1_i1h"></a> 
+   <p>LD1 { <a title="First or only SIMD&amp;FP register to be transferred (field &quot;Rt&quot;)" class="document-topic">&lt;Vt&gt;</a>.H }[<a title="Element index (field &quot;Q:S:size<1>&quot;)" class="document-topic">&lt;index&gt;</a>], [<a title="64-bit general-purpose base register or SP (field &quot;Rn&quot;)" class="document-topic">&lt;Xn|SP&gt;</a>], #2</p> 
+  </div> 
+  <div> 
+   <h4>16-bit, register offset<span> (Rm != 11111 &amp;&amp; opcode == 010 &amp;&amp; size == x0)</span></h4> 
+   <a id="LD1_asisdlsop_HX1_r1h"></a> 
+   <p>LD1 { <a title="First or only SIMD&amp;FP register to be transferred (field &quot;Rt&quot;)" class="document-topic">&lt;Vt&gt;</a>.H }[<a title="Element index (field &quot;Q:S:size<1>&quot;)" class="document-topic">&lt;index&gt;</a>], [<a title="64-bit general-purpose base register or SP (field &quot;Rn&quot;)" class="document-topic">&lt;Xn|SP&gt;</a>], <a title="64-bit general-purpose post-index register, excluding XZR (field &quot;Rm&quot;)" class="document-topic">&lt;Xm&gt;</a></p> 
+  </div> 
+  <div> 
+   <h4>32-bit, immediate offset<span> (Rm == 11111 &amp;&amp; opcode == 100 &amp;&amp; size == 00)</span></h4> 
+   <a id="LD1_asisdlsop_S1_i1s"></a> 
+   <p>LD1 { <a title="First or only SIMD&amp;FP register to be transferred (field &quot;Rt&quot;)" class="document-topic">&lt;Vt&gt;</a>.S }[<a title="Element index (field &quot;Q:S&quot;)" class="document-topic">&lt;index&gt;</a>], [<a title="64-bit general-purpose base register or SP (field &quot;Rn&quot;)" class="document-topic">&lt;Xn|SP&gt;</a>], #4</p> 
+  </div> 
+  <div> 
+   <h4>32-bit, register offset<span> (Rm != 11111 &amp;&amp; opcode == 100 &amp;&amp; size == 00)</span></h4> 
+   <a id="LD1_asisdlsop_SX1_r1s"></a> 
+   <p>LD1 { <a title="First or only SIMD&amp;FP register to be transferred (field &quot;Rt&quot;)" class="document-topic">&lt;Vt&gt;</a>.S }[<a title="Element index (field &quot;Q:S&quot;)" class="document-topic">&lt;index&gt;</a>], [<a title="64-bit general-purpose base register or SP (field &quot;Rn&quot;)" class="document-topic">&lt;Xn|SP&gt;</a>], <a title="64-bit general-purpose post-index register, excluding XZR (field &quot;Rm&quot;)" class="document-topic">&lt;Xm&gt;</a></p> 
+  </div> 
+  <div> 
+   <h4>64-bit, immediate offset<span> (Rm == 11111 &amp;&amp; opcode == 100 &amp;&amp; S == 0 &amp;&amp; size == 01)</span></h4> 
+   <a id="LD1_asisdlsop_D1_i1d"></a> 
+   <p>LD1 { <a title="First or only SIMD&amp;FP register to be transferred (field &quot;Rt&quot;)" class="document-topic">&lt;Vt&gt;</a>.D }[<a title="Element index (field &quot;Q&quot;)" class="document-topic">&lt;index&gt;</a>], [<a title="64-bit general-purpose base register or SP (field &quot;Rn&quot;)" class="document-topic">&lt;Xn|SP&gt;</a>], #8</p> 
+  </div> 
+  <div> 
+   <h4>64-bit, register offset<span> (Rm != 11111 &amp;&amp; opcode == 100 &amp;&amp; S == 0 &amp;&amp; size == 01)</span></h4> 
+   <a id="LD1_asisdlsop_DX1_r1d"></a> 
+   <p>LD1 { <a title="First or only SIMD&amp;FP register to be transferred (field &quot;Rt&quot;)" class="document-topic">&lt;Vt&gt;</a>.D }[<a title="Element index (field &quot;Q&quot;)" class="document-topic">&lt;index&gt;</a>], [<a title="64-bit general-purpose base register or SP (field &quot;Rn&quot;)" class="document-topic">&lt;Xn|SP&gt;</a>], <a title="64-bit general-purpose post-index register, excluding XZR (field &quot;Rm&quot;)" class="document-topic">&lt;Xm&gt;</a></p> 
+  </div> 
+  <pre>integer t = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Rt);
+integer n = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Rn);
+integer m = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Rm);
+boolean wback = TRUE;
+boolean nontemporal = FALSE;
+boolean tagchecked = wback || n != 31;</pre> 
+  <div></div> 
+  <h3>Assembler Symbols</h3> 
+  <div> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Vt&gt;</td> 
+      <td><a id="sa_vt"></a> <p>Is the name of the first or only SIMD&amp;FP register to be transferred, encoded in the "Rt" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;index&gt;</td> 
+      <td><a id="sa_index"></a> <p>For the 8-bit variant: is the element index, encoded in "Q:S:size".</p> </td> 
+     </tr> 
+     <tr> 
+      <td></td> 
+      <td><a id="sa_index_2"></a> <p>For the 16-bit variant: is the element index, encoded in "Q:S:size&lt;1&gt;".</p> </td> 
+     </tr> 
+     <tr> 
+      <td></td> 
+      <td><a id="sa_index_3"></a> <p>For the 32-bit variant: is the element index, encoded in "Q:S".</p> </td> 
+     </tr> 
+     <tr> 
+      <td></td> 
+      <td><a id="sa_index_1"></a> <p>For the 64-bit variant: is the element index, encoded in "Q".</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Xn|SP&gt;</td> 
+      <td><a id="sa_xn_sp"></a> <p>Is the 64-bit name of the general-purpose base register or stack pointer, encoded in the "Rn" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Xm&gt;</td> 
+      <td><a id="sa_xm"></a> <p>Is the 64-bit name of the general-purpose post-index register, excluding XZR, encoded in the "Rm" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div></div> 
+  <div> 
+   <a id="postdecode"></a> 
+   <h3>Shared Decode</h3> 
+   <pre>integer init_scale = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(opcode&lt;2:1&gt;);
+integer scale = init_scale;
+integer selem = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(opcode&lt;0&gt;:R) + 1;
+boolean replicate = FALSE;
+integer index;
+
+case scale of
+    when 3
+        // load and replicate
+        if L == '0' || S == '1' then UNDEFINED;
+        scale = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(size);
+        replicate = TRUE;
+    when 0
+        index = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Q:S:size);       // B[0-15]
+    when 1
+        if size&lt;0&gt; == '1' then UNDEFINED;
+        index = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Q:S:size&lt;1&gt;);    // H[0-7]
+    when 2
+        if size&lt;1&gt; == '1' then UNDEFINED;
+        if size&lt;0&gt; == '0' then
+            index = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Q:S);        // S[0-3]
+        else
+            if S == '1' then UNDEFINED;
+            index = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Q);          // D[0-1]
+            scale = 3;
+
+<a title="enumeration MemOp {MemOp_LOAD, MemOp_STORE, MemOp_PREFETCH}" class="document-topic">MemOp</a> memop = if L == '1' then <a title="enumeration MemOp {MemOp_LOAD, MemOp_STORE, MemOp_PREFETCH}" class="document-topic">MemOp_LOAD</a> else <a title="enumeration MemOp {MemOp_LOAD, MemOp_STORE, MemOp_PREFETCH}" class="document-topic">MemOp_STORE</a>;
+integer datasize = if Q == '1' then 128 else 64;
+integer esize = 8 &lt;&lt; scale;</pre> 
+  </div> 
+  <div> 
+   <a id="execute"></a> 
+   <h3>Operation</h3> 
+   <pre><a title="function: CheckFPAdvSIMDEnabled64()" class="document-topic">CheckFPAdvSIMDEnabled64</a>();
+
+bits(64) address;
+bits(64) offs;
+bits(128) rval;
+bits(esize) element;
+constant integer ebytes = esize DIV 8;
+
+<a title="type AccessDescriptor is ( AccessType acctype, bits(2) el, SecurityState ss, boolean acqsc, boolean acqpc, boolean relsc, boolean limitedordered, boolean exclusive, boolean atomicop, MemAtomicOp modop, boolean nontemporal, boolean read, boolean write, CacheOp cacheop, CacheOpScope opscope, CacheType cachetype, boolean pan, boolean transactional, boolean nonfault, boolean firstfault, boolean first, boolean contiguous, boolean streamingsve, boolean ls64, boolean mops, boolean rcw, boolean rcws, boolean toplevel, VARange varange, boolean a32lsmd, boolean tagchecked, boolean tagaccess, MPAMinfo mpam )" class="document-topic">AccessDescriptor</a> accdesc = <a title="function: AccessDescriptor CreateAccDescASIMD(MemOp memop, boolean nontemporal, boolean tagchecked)" class="document-topic">CreateAccDescASIMD</a>(memop, nontemporal, tagchecked);
+
+if n == 31 then
+    <a title="function: CheckSPAlignment()" class="document-topic">CheckSPAlignment</a>();
+    address = <a title="accessor: bits(64) SP[]" class="document-topic">SP</a>[];
+else
+    address = <a title="accessor: bits(width) X[integer n, integer width]" class="document-topic">X</a>[n, 64];
+
+offs = <a title="function: bits(N) Zeros(integer N)" class="document-topic">Zeros</a>(64);
+if replicate then
+    // load and replicate to all elements
+    for s = 0 to selem-1
+        element = <a title="accessor: bits(size*8) Mem[bits(64) address, integer size, AccessDescriptor accdesc]" class="document-topic">Mem</a>[address + offs, ebytes, accdesc];
+        // replicate to fill 128- or 64-bit register
+        <a title="accessor: V[integer n, integer width] = bits(width) value" class="document-topic">V</a>[t, datasize] = <a title="function: bits(M*N) Replicate(bits(M) x, integer N)" class="document-topic">Replicate</a>(element, datasize DIV esize);
+        offs = offs + ebytes;
+        t = (t + 1) MOD 32;
+else
+    // load/store one element per register
+    for s = 0 to selem-1
+        rval = <a title="accessor: bits(width) V[integer n, integer width]" class="document-topic">V</a>[t, 128];
+        if memop == <a title="enumeration MemOp {MemOp_LOAD, MemOp_STORE, MemOp_PREFETCH}" class="document-topic">MemOp_LOAD</a> then
+            // insert into one lane of 128-bit register
+            <a title="accessor: Elem[bits(N) &amp;vector, integer e, integer size] = bits(size) value" class="document-topic">Elem</a>[rval, index, esize] = <a title="accessor: bits(size*8) Mem[bits(64) address, integer size, AccessDescriptor accdesc]" class="document-topic">Mem</a>[address + offs, ebytes, accdesc];
+            <a title="accessor: V[integer n, integer width] = bits(width) value" class="document-topic">V</a>[t, 128] = rval;
+        else // memop == MemOp_STORE
+            // extract from one lane of 128-bit register
+            Mem[address + offs, ebytes, accdesc] = <a title="accessor: bits(size) Elem[bits(N) vector, integer e, integer size]" class="document-topic">Elem</a>[rval, index, esize];
+        offs = offs + ebytes;
+        t = (t + 1) MOD 32;
+
+if wback then
+    if m != 31 then
+        offs = <a title="accessor: bits(width) X[integer n, integer width]" class="document-topic">X</a>[m, 64];
+    if n == 31 then
+        <a title="accessor: SP[] = bits(64) value" class="document-topic">SP</a>[] = address + offs;
+    else
+        <a title="accessor: X[integer n, integer width] = bits(width) value" class="document-topic">X</a>[n, 64] = address + offs;</pre> 
+  </div> 
+  <h3>Operational information</h3> 
+  <p>If PSTATE.DIT is 1, the timing of this instruction is insensitive to the value of the data being loaded or stored.</p>  
+ </body>
+</html>

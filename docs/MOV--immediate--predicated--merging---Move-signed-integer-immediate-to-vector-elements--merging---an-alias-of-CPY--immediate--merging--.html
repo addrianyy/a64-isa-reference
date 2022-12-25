@@ -1,0 +1,229 @@
+<html>
+ <head>  <link rel="stylesheet" href="../def-style.css"></head> 
+ <body> 
+  <h2>MOV (immediate, predicated, merging)</h2> 
+  <p>Move signed integer immediate to vector elements (merging)</p> 
+  <p>Move a signed integer immediate to each active element in the destination vector. Inactive elements in the destination vector register remain unmodified.</p> 
+  <p>The immediate operand is a signed value in the range -128 to +127, and for element widths of 16 bits or higher it may also be a signed multiple of 256 in the range -32768 to +32512 (excluding 0).</p> 
+  <p>The immediate is encoded in 8 bits with an optional left shift by 8. The preferred disassembly when the shift option is specified is "#&lt;simm8&gt;, LSL #8". However an assembler and disassembler may also allow use of the shifted 16-bit value unless the immediate is 0 and the shift amount is 8, which must be unambiguously described as "#0, LSL #8".</p> 
+  <p> This is an alias of <a href="CPY--immediate--merging---Copy-signed-integer-immediate-to-vector-elements--merging--.html" class="document-topic">CPY (immediate, merging)</a>. This means: </p> 
+  <ul> 
+   <li> The encodings in this description are named to match the encodings of <a href="CPY--immediate--merging---Copy-signed-integer-immediate-to-vector-elements--merging--.html" class="document-topic">CPY (immediate, merging)</a>. </li> 
+   <li>The description of <a href="CPY--immediate--merging---Copy-signed-integer-immediate-to-vector-elements--merging--.html" class="document-topic">CPY (immediate, merging)</a> gives the operational pseudocode, any <small>constrained unpredictable</small> behavior, and any operational information for this instruction.</li> 
+  </ul> 
+  <p></p> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td colspan="2">size</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td colspan="4">Pg</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>sh</td> 
+      <td colspan="8">imm8</td> 
+      <td colspan="5">Zd</td> 
+     </tr> 
+     <tr> 
+      <td colspan="8"></td> 
+      <td colspan="2"></td> 
+      <td colspan="2"></td> 
+      <td colspan="4"></td> 
+      <td></td> 
+      <td>M</td> 
+      <td></td> 
+      <td colspan="8"></td> 
+      <td colspan="5"></td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4></h4> 
+   <a id="MOV_cpy_z_p_i_"></a> 
+   <p>MOV <a title="Destination scalable vector register (field &quot;Zd&quot;)" class="document-topic">&lt;Zd&gt;</a>.<a title="Size specifier (field &quot;size&quot;) [B,D,H,S]" class="document-topic">&lt;T&gt;</a>, <a title="Governing scalable predicate register (field &quot;Pg&quot;)" class="document-topic">&lt;Pg&gt;</a>/M, #<a title="Signed immediate [-128-127] (field &quot;imm8&quot;)" class="document-topic">&lt;imm&gt;</a>{, <a title="Optional left shift to apply to the immediate, default LSL #0 (field &quot;sh&quot;) [LSL #0,LSL #8]" class="document-topic">&lt;shift&gt;</a>}</p> 
+   <p> is equivalent to </p> 
+   <p><a href="CPY--immediate--merging---Copy-signed-integer-immediate-to-vector-elements--merging--.html" class="document-topic">CPY</a> <a title="Destination scalable vector register (field &quot;Zd&quot;)" class="document-topic">&lt;Zd&gt;</a>.<a title="Size specifier (field &quot;size&quot;) [B,D,H,S]" class="document-topic">&lt;T&gt;</a>, <a title="Governing scalable predicate register (field &quot;Pg&quot;)" class="document-topic">&lt;Pg&gt;</a>/M, #<a title="Signed immediate [-128-127] (field &quot;imm8&quot;)" class="document-topic">&lt;imm&gt;</a>{, <a title="Optional left shift to apply to the immediate, default LSL #0 (field &quot;sh&quot;) [LSL #0,LSL #8]" class="document-topic">&lt;shift&gt;</a>}</p> 
+   <p> and is always the preferred disassembly. </p> 
+  </div> 
+  <div></div> 
+  <h3>Assembler Symbols</h3> 
+  <div> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Zd&gt;</td> 
+      <td><a id="sa_zd"></a> <p>Is the name of the destination scalable vector register, encoded in the "Zd" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;T&gt;</td> 
+      <td><a id="sa_t"></a> <p>Is the size specifier, encoded in <q>size</q>: </p> 
+       <table> 
+        <thead> 
+         <tr> 
+          <th>size</th> 
+          <th>&lt;T&gt;</th> 
+         </tr> 
+        </thead> 
+        <tbody> 
+         <tr> 
+          <td>00</td> 
+          <td>B</td> 
+         </tr> 
+         <tr> 
+          <td>01</td> 
+          <td>H</td> 
+         </tr> 
+         <tr> 
+          <td>10</td> 
+          <td>S</td> 
+         </tr> 
+         <tr> 
+          <td>11</td> 
+          <td>D</td> 
+         </tr> 
+        </tbody> 
+       </table> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Pg&gt;</td> 
+      <td><a id="sa_pg"></a> <p>Is the name of the governing scalable predicate register, encoded in the "Pg" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;imm&gt;</td> 
+      <td><a id="sa_imm"></a> <p>Is a signed immediate in the range -128 to 127, encoded in the "imm8" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;shift&gt;</td> 
+      <td><a id="sa_shift"></a> <p>Is the optional left shift to apply to the immediate, defaulting to LSL #0 and encoded in <q>sh</q>: </p> 
+       <table> 
+        <thead> 
+         <tr> 
+          <th>sh</th> 
+          <th>&lt;shift&gt;</th> 
+         </tr> 
+        </thead> 
+        <tbody> 
+         <tr> 
+          <td>0</td> 
+          <td>LSL #0</td> 
+         </tr> 
+         <tr> 
+          <td>1</td> 
+          <td>LSL #8</td> 
+         </tr> 
+        </tbody> 
+       </table> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div></div> 
+  <div> 
+   <h3>Operation</h3> 
+   <p>The description of <a href="CPY--immediate--merging---Copy-signed-integer-immediate-to-vector-elements--merging--.html" class="document-topic">CPY (immediate, merging)</a> gives the operational pseudocode for this instruction.</p> 
+  </div> 
+  <h3>Operational information</h3> 
+  <p>If FEAT_SVE2 is implemented or FEAT_SME is implemented, then if PSTATE.DIT is 1:</p> 
+  <ul> 
+   <li>The execution time of this instruction is independent of: 
+    <ul> 
+     <li>The values of the data supplied in any of its operand registers when its governing predicate register contains the same value for each execution.</li> 
+     <li>The values of the NZCV flags.</li> 
+    </ul></li> 
+   <li>The response of this instruction to asynchronous exceptions does not vary based on: 
+    <ul> 
+     <li>The values of the data supplied in any of its operand registers when its governing predicate register contains the same value for each execution.</li> 
+     <li>The values of the NZCV flags.</li> 
+    </ul></li> 
+  </ul> 
+  <p> This instruction might be immediately preceded in program order by a <span>MOVPRFX</span> instruction. The <span>MOVPRFX</span> instruction must conform to all of the following requirements, otherwise the behavior of the <span>MOVPRFX</span> and this instruction is <small>unpredictable</small>: </p> 
+  <ul> 
+   <li>The <span>MOVPRFX</span> instruction must be unpredicated, or be predicated using the same governing predicate register and source element size as this instruction.</li> 
+   <li>The <span>MOVPRFX</span> instruction must specify the same destination register as this instruction.</li> 
+   <li>The destination register must not refer to architectural register state referenced by any other source operand register of this instruction.</li> 
+  </ul>  
+ </body>
+</html>

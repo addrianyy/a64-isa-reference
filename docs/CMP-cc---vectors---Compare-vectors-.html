@@ -1,0 +1,718 @@
+<html>
+ <head>  <link rel="stylesheet" href="../def-style.css"></head> 
+ <body> 
+  <h2>CMP&lt;cc&gt; (vectors)</h2> 
+  <p>Compare vectors</p> 
+  <p>Compare active integer elements in the first source vector with corresponding elements in the second source vector, and place the boolean results of the specified comparison in the corresponding elements of the destination predicate. Inactive elements in the destination predicate register are set to zero. Sets the <small>First</small> (N), <small>None</small> (Z), <small>!Last</small> (C) condition flags based on the predicate result, and the V flag to zero.</p> 
+  <p></p> 
+  <table> 
+   <thead> 
+    <tr> 
+     <th>&lt;cc&gt;</th> 
+     <th>Comparison</th> 
+    </tr> 
+   </thead> 
+   <tbody> 
+    <tr> 
+     <td>EQ</td> 
+     <td>equal</td> 
+    </tr> 
+    <tr> 
+     <td>GE</td> 
+     <td>signed greater than or equal</td> 
+    </tr> 
+    <tr> 
+     <td>GT</td> 
+     <td>signed greater than</td> 
+    </tr> 
+    <tr> 
+     <td>HI</td> 
+     <td>unsigned higher than</td> 
+    </tr> 
+    <tr> 
+     <td>HS</td> 
+     <td>unsigned higher than or same</td> 
+    </tr> 
+    <tr> 
+     <td>NE</td> 
+     <td>not equal</td> 
+    </tr> 
+   </tbody> 
+  </table> 
+  <p>This instruction is used by the pseudo-instructions <a href="CMPLE--vectors---Compare-signed-less-than-or-equal-to-vector--setting-the-condition-flags--an-alias-of-CMP-cc---vectors--.html" title="Compare signed less than or equal to vector" class="document-topic">CMPLE (vectors)</a>, <a title="Compare unsigned lower than vector" href="CMPLO--vectors---Compare-unsigned-lower-than-vector--setting-the-condition-flags--an-alias-of-CMP-cc---vectors--.html" class="document-topic">CMPLO (vectors)</a>, <a title="Compare unsigned lower or same as vector" href="CMPLS--vectors---Compare-unsigned-lower-or-same-as-vector--setting-the-condition-flags--an-alias-of-CMP-cc---vectors--.html" class="document-topic">CMPLS (vectors)</a>, and <a title="Compare signed less than vector" href="CMPLT--vectors---Compare-signed-less-than-vector--setting-the-condition-flags--an-alias-of-CMP-cc---vectors--.html" class="document-topic">CMPLT (vectors)</a>.</p> 
+  <p> It has encodings from 6 classes: <a class="document-topic">Equal</a> , <a class="document-topic">Greater than</a> , <a class="document-topic">Greater than or equal</a> , <a class="document-topic">Higher</a> , <a class="document-topic">Higher or same</a> and <a class="document-topic">Not equal</a> </p> 
+  <h3><a id="iclass_eq"></a>Equal</h3> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td colspan="2">size</td> 
+      <td>0</td> 
+      <td colspan="5">Zm</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td colspan="3">Pg</td> 
+      <td colspan="5">Zn</td> 
+      <td>0</td> 
+      <td colspan="4">Pd</td> 
+     </tr> 
+     <tr> 
+      <td colspan="8"></td> 
+      <td colspan="2"></td> 
+      <td></td> 
+      <td colspan="5"></td> 
+      <td></td> 
+      <td></td> 
+      <td></td> 
+      <td colspan="3"></td> 
+      <td colspan="5"></td> 
+      <td>ne</td> 
+      <td colspan="4"></td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4></h4> 
+   <a id="cmpeq_p_p_zz_"></a> 
+   <p>CMPEQ <a title="Destination scalable predicate register (field &quot;Pd&quot;)" class="document-topic">&lt;Pd&gt;</a>.<a title="Size specifier (field &quot;size&quot;) [B,D,H,S]" class="document-topic">&lt;T&gt;</a>, <a title="Governing scalable predicate register P0-P7 (field &quot;Pg&quot;)" class="document-topic">&lt;Pg&gt;</a>/Z, <a title="First source scalable vector register (field &quot;Zn&quot;)" class="document-topic">&lt;Zn&gt;</a>.<a title="Size specifier (field &quot;size&quot;) [B,D,H,S]" class="document-topic">&lt;T&gt;</a>, <a title="Second source scalable vector register (field &quot;Zm&quot;)" class="document-topic">&lt;Zm&gt;</a>.<a title="Size specifier (field &quot;size&quot;) [B,D,H,S]" class="document-topic">&lt;T&gt;</a></p> 
+  </div> 
+  <pre>if !<a title="function: boolean HaveSVE()" class="document-topic">HaveSVE</a>() &amp;&amp; !<a title="function: boolean HaveSME()" class="document-topic">HaveSME</a>() then UNDEFINED;
+constant integer esize = 8 &lt;&lt; <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(size);
+integer g = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Pg);
+integer n = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Zn);
+integer m = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Zm);
+integer d = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Pd);
+<a title="enumeration SVECmp { Cmp_EQ, Cmp_NE, Cmp_GE, Cmp_GT, Cmp_LT, Cmp_LE, Cmp_UN }" class="document-topic">SVECmp</a> op = <a title="enumeration SVECmp { Cmp_EQ, Cmp_NE, Cmp_GE, Cmp_GT, Cmp_LT, Cmp_LE, Cmp_UN }" class="document-topic">Cmp_EQ</a>;
+boolean unsigned = FALSE;</pre> 
+  <h3><a id="iclass_gt"></a>Greater than</h3> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td colspan="2">size</td> 
+      <td>0</td> 
+      <td colspan="5">Zm</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td colspan="3">Pg</td> 
+      <td colspan="5">Zn</td> 
+      <td>1</td> 
+      <td colspan="4">Pd</td> 
+     </tr> 
+     <tr> 
+      <td colspan="8"></td> 
+      <td colspan="2"></td> 
+      <td></td> 
+      <td colspan="5"></td> 
+      <td></td> 
+      <td></td> 
+      <td></td> 
+      <td colspan="3"></td> 
+      <td colspan="5"></td> 
+      <td>ne</td> 
+      <td colspan="4"></td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4></h4> 
+   <a id="cmpgt_p_p_zz_"></a> 
+   <p>CMPGT <a title="Destination scalable predicate register (field &quot;Pd&quot;)" class="document-topic">&lt;Pd&gt;</a>.<a title="Size specifier (field &quot;size&quot;) [B,D,H,S]" class="document-topic">&lt;T&gt;</a>, <a title="Governing scalable predicate register P0-P7 (field &quot;Pg&quot;)" class="document-topic">&lt;Pg&gt;</a>/Z, <a title="First source scalable vector register (field &quot;Zn&quot;)" class="document-topic">&lt;Zn&gt;</a>.<a title="Size specifier (field &quot;size&quot;) [B,D,H,S]" class="document-topic">&lt;T&gt;</a>, <a title="Second source scalable vector register (field &quot;Zm&quot;)" class="document-topic">&lt;Zm&gt;</a>.<a title="Size specifier (field &quot;size&quot;) [B,D,H,S]" class="document-topic">&lt;T&gt;</a></p> 
+  </div> 
+  <pre>if !<a title="function: boolean HaveSVE()" class="document-topic">HaveSVE</a>() &amp;&amp; !<a title="function: boolean HaveSME()" class="document-topic">HaveSME</a>() then UNDEFINED;
+constant integer esize = 8 &lt;&lt; <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(size);
+integer g = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Pg);
+integer n = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Zn);
+integer m = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Zm);
+integer d = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Pd);
+<a title="enumeration SVECmp { Cmp_EQ, Cmp_NE, Cmp_GE, Cmp_GT, Cmp_LT, Cmp_LE, Cmp_UN }" class="document-topic">SVECmp</a> op = <a title="enumeration SVECmp { Cmp_EQ, Cmp_NE, Cmp_GE, Cmp_GT, Cmp_LT, Cmp_LE, Cmp_UN }" class="document-topic">Cmp_GT</a>;
+boolean unsigned = FALSE;</pre> 
+  <h3><a id="iclass_ge"></a>Greater than or equal</h3> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td colspan="2">size</td> 
+      <td>0</td> 
+      <td colspan="5">Zm</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td colspan="3">Pg</td> 
+      <td colspan="5">Zn</td> 
+      <td>0</td> 
+      <td colspan="4">Pd</td> 
+     </tr> 
+     <tr> 
+      <td colspan="8"></td> 
+      <td colspan="2"></td> 
+      <td></td> 
+      <td colspan="5"></td> 
+      <td></td> 
+      <td></td> 
+      <td></td> 
+      <td colspan="3"></td> 
+      <td colspan="5"></td> 
+      <td>ne</td> 
+      <td colspan="4"></td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4></h4> 
+   <a id="cmpge_p_p_zz_"></a> 
+   <p>CMPGE <a title="Destination scalable predicate register (field &quot;Pd&quot;)" class="document-topic">&lt;Pd&gt;</a>.<a title="Size specifier (field &quot;size&quot;) [B,D,H,S]" class="document-topic">&lt;T&gt;</a>, <a title="Governing scalable predicate register P0-P7 (field &quot;Pg&quot;)" class="document-topic">&lt;Pg&gt;</a>/Z, <a title="First source scalable vector register (field &quot;Zn&quot;)" class="document-topic">&lt;Zn&gt;</a>.<a title="Size specifier (field &quot;size&quot;) [B,D,H,S]" class="document-topic">&lt;T&gt;</a>, <a title="Second source scalable vector register (field &quot;Zm&quot;)" class="document-topic">&lt;Zm&gt;</a>.<a title="Size specifier (field &quot;size&quot;) [B,D,H,S]" class="document-topic">&lt;T&gt;</a></p> 
+  </div> 
+  <pre>if !<a title="function: boolean HaveSVE()" class="document-topic">HaveSVE</a>() &amp;&amp; !<a title="function: boolean HaveSME()" class="document-topic">HaveSME</a>() then UNDEFINED;
+constant integer esize = 8 &lt;&lt; <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(size);
+integer g = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Pg);
+integer n = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Zn);
+integer m = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Zm);
+integer d = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Pd);
+<a title="enumeration SVECmp { Cmp_EQ, Cmp_NE, Cmp_GE, Cmp_GT, Cmp_LT, Cmp_LE, Cmp_UN }" class="document-topic">SVECmp</a> op = <a title="enumeration SVECmp { Cmp_EQ, Cmp_NE, Cmp_GE, Cmp_GT, Cmp_LT, Cmp_LE, Cmp_UN }" class="document-topic">Cmp_GE</a>;
+boolean unsigned = FALSE;</pre> 
+  <h3><a id="iclass_hi"></a>Higher</h3> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td colspan="2">size</td> 
+      <td>0</td> 
+      <td colspan="5">Zm</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td colspan="3">Pg</td> 
+      <td colspan="5">Zn</td> 
+      <td>1</td> 
+      <td colspan="4">Pd</td> 
+     </tr> 
+     <tr> 
+      <td colspan="8"></td> 
+      <td colspan="2"></td> 
+      <td></td> 
+      <td colspan="5"></td> 
+      <td></td> 
+      <td></td> 
+      <td></td> 
+      <td colspan="3"></td> 
+      <td colspan="5"></td> 
+      <td>ne</td> 
+      <td colspan="4"></td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4></h4> 
+   <a id="cmphi_p_p_zz_"></a> 
+   <p>CMPHI <a title="Destination scalable predicate register (field &quot;Pd&quot;)" class="document-topic">&lt;Pd&gt;</a>.<a title="Size specifier (field &quot;size&quot;) [B,D,H,S]" class="document-topic">&lt;T&gt;</a>, <a title="Governing scalable predicate register P0-P7 (field &quot;Pg&quot;)" class="document-topic">&lt;Pg&gt;</a>/Z, <a title="First source scalable vector register (field &quot;Zn&quot;)" class="document-topic">&lt;Zn&gt;</a>.<a title="Size specifier (field &quot;size&quot;) [B,D,H,S]" class="document-topic">&lt;T&gt;</a>, <a title="Second source scalable vector register (field &quot;Zm&quot;)" class="document-topic">&lt;Zm&gt;</a>.<a title="Size specifier (field &quot;size&quot;) [B,D,H,S]" class="document-topic">&lt;T&gt;</a></p> 
+  </div> 
+  <pre>if !<a title="function: boolean HaveSVE()" class="document-topic">HaveSVE</a>() &amp;&amp; !<a title="function: boolean HaveSME()" class="document-topic">HaveSME</a>() then UNDEFINED;
+constant integer esize = 8 &lt;&lt; <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(size);
+integer g = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Pg);
+integer n = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Zn);
+integer m = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Zm);
+integer d = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Pd);
+<a title="enumeration SVECmp { Cmp_EQ, Cmp_NE, Cmp_GE, Cmp_GT, Cmp_LT, Cmp_LE, Cmp_UN }" class="document-topic">SVECmp</a> op = <a title="enumeration SVECmp { Cmp_EQ, Cmp_NE, Cmp_GE, Cmp_GT, Cmp_LT, Cmp_LE, Cmp_UN }" class="document-topic">Cmp_GT</a>;
+boolean unsigned = TRUE;</pre> 
+  <h3><a id="iclass_hs"></a>Higher or same</h3> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td colspan="2">size</td> 
+      <td>0</td> 
+      <td colspan="5">Zm</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td colspan="3">Pg</td> 
+      <td colspan="5">Zn</td> 
+      <td>0</td> 
+      <td colspan="4">Pd</td> 
+     </tr> 
+     <tr> 
+      <td colspan="8"></td> 
+      <td colspan="2"></td> 
+      <td></td> 
+      <td colspan="5"></td> 
+      <td></td> 
+      <td></td> 
+      <td></td> 
+      <td colspan="3"></td> 
+      <td colspan="5"></td> 
+      <td>ne</td> 
+      <td colspan="4"></td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4></h4> 
+   <a id="cmphs_p_p_zz_"></a> 
+   <p>CMPHS <a title="Destination scalable predicate register (field &quot;Pd&quot;)" class="document-topic">&lt;Pd&gt;</a>.<a title="Size specifier (field &quot;size&quot;) [B,D,H,S]" class="document-topic">&lt;T&gt;</a>, <a title="Governing scalable predicate register P0-P7 (field &quot;Pg&quot;)" class="document-topic">&lt;Pg&gt;</a>/Z, <a title="First source scalable vector register (field &quot;Zn&quot;)" class="document-topic">&lt;Zn&gt;</a>.<a title="Size specifier (field &quot;size&quot;) [B,D,H,S]" class="document-topic">&lt;T&gt;</a>, <a title="Second source scalable vector register (field &quot;Zm&quot;)" class="document-topic">&lt;Zm&gt;</a>.<a title="Size specifier (field &quot;size&quot;) [B,D,H,S]" class="document-topic">&lt;T&gt;</a></p> 
+  </div> 
+  <pre>if !<a title="function: boolean HaveSVE()" class="document-topic">HaveSVE</a>() &amp;&amp; !<a title="function: boolean HaveSME()" class="document-topic">HaveSME</a>() then UNDEFINED;
+constant integer esize = 8 &lt;&lt; <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(size);
+integer g = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Pg);
+integer n = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Zn);
+integer m = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Zm);
+integer d = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Pd);
+<a title="enumeration SVECmp { Cmp_EQ, Cmp_NE, Cmp_GE, Cmp_GT, Cmp_LT, Cmp_LE, Cmp_UN }" class="document-topic">SVECmp</a> op = <a title="enumeration SVECmp { Cmp_EQ, Cmp_NE, Cmp_GE, Cmp_GT, Cmp_LT, Cmp_LE, Cmp_UN }" class="document-topic">Cmp_GE</a>;
+boolean unsigned = TRUE;</pre> 
+  <h3><a id="iclass_ne"></a>Not equal</h3> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td colspan="2">size</td> 
+      <td>0</td> 
+      <td colspan="5">Zm</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td colspan="3">Pg</td> 
+      <td colspan="5">Zn</td> 
+      <td>1</td> 
+      <td colspan="4">Pd</td> 
+     </tr> 
+     <tr> 
+      <td colspan="8"></td> 
+      <td colspan="2"></td> 
+      <td></td> 
+      <td colspan="5"></td> 
+      <td></td> 
+      <td></td> 
+      <td></td> 
+      <td colspan="3"></td> 
+      <td colspan="5"></td> 
+      <td>ne</td> 
+      <td colspan="4"></td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4></h4> 
+   <a id="cmpne_p_p_zz_"></a> 
+   <p>CMPNE <a title="Destination scalable predicate register (field &quot;Pd&quot;)" class="document-topic">&lt;Pd&gt;</a>.<a title="Size specifier (field &quot;size&quot;) [B,D,H,S]" class="document-topic">&lt;T&gt;</a>, <a title="Governing scalable predicate register P0-P7 (field &quot;Pg&quot;)" class="document-topic">&lt;Pg&gt;</a>/Z, <a title="First source scalable vector register (field &quot;Zn&quot;)" class="document-topic">&lt;Zn&gt;</a>.<a title="Size specifier (field &quot;size&quot;) [B,D,H,S]" class="document-topic">&lt;T&gt;</a>, <a title="Second source scalable vector register (field &quot;Zm&quot;)" class="document-topic">&lt;Zm&gt;</a>.<a title="Size specifier (field &quot;size&quot;) [B,D,H,S]" class="document-topic">&lt;T&gt;</a></p> 
+  </div> 
+  <pre>if !<a title="function: boolean HaveSVE()" class="document-topic">HaveSVE</a>() &amp;&amp; !<a title="function: boolean HaveSME()" class="document-topic">HaveSME</a>() then UNDEFINED;
+constant integer esize = 8 &lt;&lt; <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(size);
+integer g = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Pg);
+integer n = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Zn);
+integer m = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Zm);
+integer d = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Pd);
+<a title="enumeration SVECmp { Cmp_EQ, Cmp_NE, Cmp_GE, Cmp_GT, Cmp_LT, Cmp_LE, Cmp_UN }" class="document-topic">SVECmp</a> op = <a title="enumeration SVECmp { Cmp_EQ, Cmp_NE, Cmp_GE, Cmp_GT, Cmp_LT, Cmp_LE, Cmp_UN }" class="document-topic">Cmp_NE</a>;
+boolean unsigned = FALSE;</pre> 
+  <div></div> 
+  <h3>Assembler Symbols</h3> 
+  <div> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Pd&gt;</td> 
+      <td><a id="sa_pd"></a> <p>Is the name of the destination scalable predicate register, encoded in the "Pd" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;T&gt;</td> 
+      <td><a id="sa_t"></a> <p>Is the size specifier, encoded in <q>size</q>: </p> 
+       <table> 
+        <thead> 
+         <tr> 
+          <th>size</th> 
+          <th>&lt;T&gt;</th> 
+         </tr> 
+        </thead> 
+        <tbody> 
+         <tr> 
+          <td>00</td> 
+          <td>B</td> 
+         </tr> 
+         <tr> 
+          <td>01</td> 
+          <td>H</td> 
+         </tr> 
+         <tr> 
+          <td>10</td> 
+          <td>S</td> 
+         </tr> 
+         <tr> 
+          <td>11</td> 
+          <td>D</td> 
+         </tr> 
+        </tbody> 
+       </table> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Pg&gt;</td> 
+      <td><a id="sa_pg"></a> <p>Is the name of the governing scalable predicate register P0-P7, encoded in the "Pg" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Zn&gt;</td> 
+      <td><a id="sa_zn"></a> <p>Is the name of the first source scalable vector register, encoded in the "Zn" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Zm&gt;</td> 
+      <td><a id="sa_zm"></a> <p>Is the name of the second source scalable vector register, encoded in the "Zm" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div></div> 
+  <div> 
+   <a id="execute"></a> 
+   <h3>Operation</h3> 
+   <pre><a title="function: CheckSVEEnabled()" class="document-topic">CheckSVEEnabled</a>();
+constant integer VL = <a title="accessor: integer CurrentVL" class="document-topic">CurrentVL</a>;
+constant integer PL = VL DIV 8;
+constant integer elements = VL DIV esize;
+bits(PL) mask = <a title="accessor: bits(width) P[integer n, integer width]" class="document-topic">P</a>[g, PL];
+bits(VL) operand1 = if <a title="function: boolean AnyActiveElement(bits(N) mask, integer esize)" class="document-topic">AnyActiveElement</a>(mask, esize) then <a title="accessor: bits(width) Z[integer n, integer width]" class="document-topic">Z</a>[n, VL] else <a title="function: bits(N) Zeros(integer N)" class="document-topic">Zeros</a>(VL);
+bits(VL) operand2 = if <a title="function: boolean AnyActiveElement(bits(N) mask, integer esize)" class="document-topic">AnyActiveElement</a>(mask, esize) then <a title="accessor: bits(width) Z[integer n, integer width]" class="document-topic">Z</a>[m, VL] else <a title="function: bits(N) Zeros(integer N)" class="document-topic">Zeros</a>(VL);
+bits(PL) result;
+constant integer psize = esize DIV 8;
+
+for e = 0 to elements-1
+    integer element1 = <a title="function: integer Int(bits(N) x, boolean unsigned)" class="document-topic">Int</a>(<a title="accessor: bits(size) Elem[bits(N) vector, integer e, integer size]" class="document-topic">Elem</a>[operand1, e, esize], unsigned);
+    if <a title="function: boolean ActivePredicateElement(bits(N) pred, integer e, integer esize)" class="document-topic">ActivePredicateElement</a>(mask, e, esize) then
+        boolean cond;
+        integer element2 = <a title="function: integer Int(bits(N) x, boolean unsigned)" class="document-topic">Int</a>(<a title="accessor: bits(size) Elem[bits(N) vector, integer e, integer size]" class="document-topic">Elem</a>[operand2, e, esize], unsigned);
+        case op of
+            when <a title="enumeration SVECmp { Cmp_EQ, Cmp_NE, Cmp_GE, Cmp_GT, Cmp_LT, Cmp_LE, Cmp_UN }" class="document-topic">Cmp_EQ</a> cond = element1 == element2;
+            when <a title="enumeration SVECmp { Cmp_EQ, Cmp_NE, Cmp_GE, Cmp_GT, Cmp_LT, Cmp_LE, Cmp_UN }" class="document-topic">Cmp_NE</a> cond = element1 != element2;
+            when <a title="enumeration SVECmp { Cmp_EQ, Cmp_NE, Cmp_GE, Cmp_GT, Cmp_LT, Cmp_LE, Cmp_UN }" class="document-topic">Cmp_GE</a> cond = element1 &gt;= element2;
+            when <a title="enumeration SVECmp { Cmp_EQ, Cmp_NE, Cmp_GE, Cmp_GT, Cmp_LT, Cmp_LE, Cmp_UN }" class="document-topic">Cmp_LT</a> cond = element1 &lt;  element2;
+            when <a title="enumeration SVECmp { Cmp_EQ, Cmp_NE, Cmp_GE, Cmp_GT, Cmp_LT, Cmp_LE, Cmp_UN }" class="document-topic">Cmp_GT</a> cond = element1 &gt;  element2;
+            when <a title="enumeration SVECmp { Cmp_EQ, Cmp_NE, Cmp_GE, Cmp_GT, Cmp_LT, Cmp_LE, Cmp_UN }" class="document-topic">Cmp_LE</a> cond = element1 &lt;= element2;
+        bit pbit = if cond then '1' else '0';
+        <a title="accessor: Elem[bits(N) &amp;vector, integer e, integer size] = bits(size) value" class="document-topic">Elem</a>[result, e, psize] = <a title="function: bits(N) ZeroExtend(bits(M) x, integer N)" class="document-topic">ZeroExtend</a>(pbit, psize);
+    else
+        <a title="accessor: Elem[bits(N) &amp;vector, integer e, integer size] = bits(size) value" class="document-topic">Elem</a>[result, e, psize] = <a title="function: bits(N) ZeroExtend(bits(M) x, integer N)" class="document-topic">ZeroExtend</a>('0', psize);
+
+PSTATE.&lt;N,Z,C,V&gt; = <a title="function: bits(4) PredTest(bits(N) mask, bits(N) result, integer esize)" class="document-topic">PredTest</a>(mask, result, esize);
+<a title="accessor: P[integer n, integer width] = bits(width) value" class="document-topic">P</a>[d, PL] = result;</pre> 
+  </div> 
+  <h3>Operational information</h3> 
+  <p>If FEAT_SVE2 is implemented or FEAT_SME is implemented, then if PSTATE.DIT is 1:</p> 
+  <ul> 
+   <li>The execution time of this instruction is independent of: 
+    <ul> 
+     <li>The values of the data supplied in any of its operand registers when its governing predicate register contains the same value for each execution.</li> 
+     <li>The values of the NZCV flags.</li> 
+    </ul></li> 
+   <li>The response of this instruction to asynchronous exceptions does not vary based on: 
+    <ul> 
+     <li>The values of the data supplied in any of its operand registers when its governing predicate register contains the same value for each execution.</li> 
+     <li>The values of the NZCV flags.</li> 
+    </ul></li> 
+  </ul> 
+  <p>If FEAT_SME is implemented and the PE is in Streaming SVE mode, then any subsequent instruction which is dependent on the predicate register or NZCV condition flags written by this instruction might be significantly delayed.</p>  
+ </body>
+</html>

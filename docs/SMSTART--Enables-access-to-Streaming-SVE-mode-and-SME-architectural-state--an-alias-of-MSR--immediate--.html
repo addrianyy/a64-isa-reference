@@ -1,0 +1,372 @@
+<html>
+ <head>  <link rel="stylesheet" href="../def-style.css"></head> 
+ <body> 
+  <h2>SMSTART</h2> 
+  <p>Enables access to Streaming SVE mode and SME architectural state.</p> 
+  <p>SMSTART enters Streaming SVE mode, and enables the SME ZA storage.</p> 
+  <p>SMSTART SM enters Streaming SVE mode, but does not enable the SME ZA storage.</p> 
+  <p>SMSTART ZA enables the SME ZA storage, but does not cause an entry to Streaming SVE mode.</p> 
+  <p> This is an alias of <a href="MSR--immediate---Move-immediate-value-to-Special-Register-.html" class="document-topic">MSR (immediate)</a>. This means: </p> 
+  <ul> 
+   <li> The encodings in this description are named to match the encodings of <a href="MSR--immediate---Move-immediate-value-to-Special-Register-.html" class="document-topic">MSR (immediate)</a>. </li> 
+   <li>The description of <a href="MSR--immediate---Move-immediate-value-to-Special-Register-.html" class="document-topic">MSR (immediate)</a> gives the operational pseudocode, any <small>constrained unpredictable</small> behavior, and any operational information for this instruction.</li> 
+  </ul> 
+  <h3><a id="iclass_system"></a>System<span><br></br>(FEAT_SME) </span></h3> 
+  <p></p> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>x</td> 
+      <td>x</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+     </tr> 
+     <tr> 
+      <td colspan="10"></td> 
+      <td></td> 
+      <td colspan="2"></td> 
+      <td colspan="3">op1</td> 
+      <td colspan="4"></td> 
+      <td colspan="4">CRm</td> 
+      <td colspan="3">op2</td> 
+      <td colspan="5"></td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4></h4> 
+   <a id="SMSTART_MSR_SI_pstate"></a> 
+   <p>SMSTART {<a title="Optional mode (field &quot;CRm<2:1>&quot;)" class="document-topic">&lt;option&gt;</a>}</p> 
+   <p> is equivalent to </p> 
+   <p><a href="MSR--immediate---Move-immediate-value-to-Special-Register-.html" class="document-topic">MSR</a> <a title="PSTATE field name (field &quot;op1:op2:CRm&quot;) [ALLINT (FEAT_NMI),DAIFClr,DAIFSet,DIT (FEAT_DIT),PAN (FEAT_PAN),PM (FEAT_EBEP),SEE(pstate),SPSel,SSBS (FEAT_SSBS),SVCRSM (FEAT_SME),SVCRSMZA (FEAT_SME),SVCRZA (FEAT_SME),TCO (FEAT_MTE),UAO (FEAT_UAO)]" class="document-topic">&lt;pstatefield&gt;</a>, #1</p> 
+   <p> and is always the preferred disassembly. </p> 
+  </div> 
+  <div></div> 
+  <h3>Assembler Symbols</h3> 
+  <div> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;option&gt;</td> 
+      <td><a id="sa_option"></a> <p>Is an optional mode, encoded in <q>CRm&lt;2:1&gt;</q>: </p> 
+       <table> 
+        <thead> 
+         <tr> 
+          <th>CRm&lt;2:1&gt;</th> 
+          <th>&lt;option&gt;</th> 
+         </tr> 
+        </thead> 
+        <tbody> 
+         <tr> 
+          <td>00</td> 
+          <td>RESERVED</td> 
+         </tr> 
+         <tr> 
+          <td>01</td> 
+          <td>SM</td> 
+         </tr> 
+         <tr> 
+          <td>10</td> 
+          <td>ZA</td> 
+         </tr> 
+         <tr> 
+          <td>11</td> 
+          <td>[no specifier]</td> 
+         </tr> 
+        </tbody> 
+       </table> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;pstatefield&gt;</td> 
+      <td><a id="sa_pstatefield"></a> <p>Is a PSTATE field name. For the MSR instruction, this is encoded in <q>op1:op2:CRm</q>: </p> 
+       <table> 
+        <thead> 
+         <tr> 
+          <th>op1</th> 
+          <th>op2</th> 
+          <th>CRm</th> 
+          <th>&lt;pstatefield&gt;</th> 
+          <th>Architectural Feature</th> 
+         </tr> 
+        </thead> 
+        <tbody> 
+         <tr> 
+          <td>000</td> 
+          <td>00x</td> 
+          <td>xxxx</td> 
+          <td><a class="document-topic">SEE PSTATE</a></td> 
+          <td> - </td> 
+         </tr> 
+         <tr> 
+          <td>000</td> 
+          <td>010</td> 
+          <td>xxxx</td> 
+          <td><a class="document-topic">SEE PSTATE</a></td> 
+          <td> - </td> 
+         </tr> 
+         <tr> 
+          <td>000</td> 
+          <td>011</td> 
+          <td>xxxx</td> 
+          <td>UAO</td> 
+          <td> FEAT_UAO </td> 
+         </tr> 
+         <tr> 
+          <td>000</td> 
+          <td>100</td> 
+          <td>xxxx</td> 
+          <td>PAN</td> 
+          <td> FEAT_PAN </td> 
+         </tr> 
+         <tr> 
+          <td>000</td> 
+          <td>101</td> 
+          <td>xxxx</td> 
+          <td>SPSel</td> 
+          <td> - </td> 
+         </tr> 
+         <tr> 
+          <td>000</td> 
+          <td>11x</td> 
+          <td>xxxx</td> 
+          <td>RESERVED</td> 
+          <td> - </td> 
+         </tr> 
+         <tr> 
+          <td>001</td> 
+          <td>000</td> 
+          <td>000x</td> 
+          <td>ALLINT</td> 
+          <td> FEAT_NMI </td> 
+         </tr> 
+         <tr> 
+          <td>001</td> 
+          <td>000</td> 
+          <td>001x</td> 
+          <td>PM</td> 
+          <td> FEAT_EBEP </td> 
+         </tr> 
+         <tr> 
+          <td>001</td> 
+          <td>000</td> 
+          <td>01xx</td> 
+          <td>RESERVED</td> 
+          <td> - </td> 
+         </tr> 
+         <tr> 
+          <td>001</td> 
+          <td>000</td> 
+          <td>1xxx</td> 
+          <td>RESERVED</td> 
+          <td> - </td> 
+         </tr> 
+         <tr> 
+          <td>001</td> 
+          <td>001</td> 
+          <td>xxxx</td> 
+          <td>RESERVED</td> 
+          <td> - </td> 
+         </tr> 
+         <tr> 
+          <td>001</td> 
+          <td>01x</td> 
+          <td>xxxx</td> 
+          <td>RESERVED</td> 
+          <td> - </td> 
+         </tr> 
+         <tr> 
+          <td>001</td> 
+          <td>1xx</td> 
+          <td>xxxx</td> 
+          <td>RESERVED</td> 
+          <td> - </td> 
+         </tr> 
+         <tr> 
+          <td>010</td> 
+          <td>xxx</td> 
+          <td>xxxx</td> 
+          <td>RESERVED</td> 
+          <td> - </td> 
+         </tr> 
+         <tr> 
+          <td>011</td> 
+          <td>000</td> 
+          <td>xxxx</td> 
+          <td>RESERVED</td> 
+          <td> - </td> 
+         </tr> 
+         <tr> 
+          <td>011</td> 
+          <td>001</td> 
+          <td>xxxx</td> 
+          <td>SSBS</td> 
+          <td> FEAT_SSBS </td> 
+         </tr> 
+         <tr> 
+          <td>011</td> 
+          <td>010</td> 
+          <td>xxxx</td> 
+          <td>DIT</td> 
+          <td> FEAT_DIT </td> 
+         </tr> 
+         <tr> 
+          <td>011</td> 
+          <td>011</td> 
+          <td>000x</td> 
+          <td>RESERVED</td> 
+          <td> - </td> 
+         </tr> 
+         <tr> 
+          <td>011</td> 
+          <td>011</td> 
+          <td>001x</td> 
+          <td>SVCRSM</td> 
+          <td> FEAT_SME </td> 
+         </tr> 
+         <tr> 
+          <td>011</td> 
+          <td>011</td> 
+          <td>010x</td> 
+          <td>SVCRZA</td> 
+          <td> FEAT_SME </td> 
+         </tr> 
+         <tr> 
+          <td>011</td> 
+          <td>011</td> 
+          <td>011x</td> 
+          <td>SVCRSMZA</td> 
+          <td> FEAT_SME </td> 
+         </tr> 
+         <tr> 
+          <td>011</td> 
+          <td>011</td> 
+          <td>1xxx</td> 
+          <td>RESERVED</td> 
+          <td> - </td> 
+         </tr> 
+         <tr> 
+          <td>011</td> 
+          <td>100</td> 
+          <td>xxxx</td> 
+          <td>TCO</td> 
+          <td> FEAT_MTE </td> 
+         </tr> 
+         <tr> 
+          <td>011</td> 
+          <td>101</td> 
+          <td>xxxx</td> 
+          <td>RESERVED</td> 
+          <td> - </td> 
+         </tr> 
+         <tr> 
+          <td>011</td> 
+          <td>110</td> 
+          <td>xxxx</td> 
+          <td>DAIFSet</td> 
+          <td> - </td> 
+         </tr> 
+         <tr> 
+          <td>011</td> 
+          <td>111</td> 
+          <td>xxxx</td> 
+          <td>DAIFClr</td> 
+          <td> - </td> 
+         </tr> 
+         <tr> 
+          <td>1xx</td> 
+          <td>xxx</td> 
+          <td>xxxx</td> 
+          <td>RESERVED</td> 
+          <td> - </td> 
+         </tr> 
+        </tbody> 
+       </table> For the SMSTART and SMSTOP aliases, this is encoded in "CRm&lt;2:1&gt;", where 0b01 specifies SVCRSM, 0b10 specifies SVCRZA, and 0b11 specifies SVCRSMZA. </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div></div> 
+  <div> 
+   <h3>Operation</h3> 
+   <p>The description of <a href="MSR--immediate---Move-immediate-value-to-Special-Register-.html" class="document-topic">MSR (immediate)</a> gives the operational pseudocode for this instruction.</p> 
+  </div>  
+ </body>
+</html>

@@ -1,0 +1,540 @@
+<html>
+ <head>  <link rel="stylesheet" href="../def-style.css"></head> 
+ <body> 
+  <h2>ST1 (multiple structures)</h2> 
+  <p>Store multiple single-element structures from one, two, three, or four registers. This instruction stores elements to memory from one, two, three, or four SIMD&amp;FP registers, without interleaving. Every element of each register is stored.</p> 
+  <p>Depending on the settings in the <em>CPACR_EL1</em>, <em>CPTR_EL2</em>, and <em>CPTR_EL3</em> registers, and the current Security state and Exception level, an attempt to execute the instruction might be trapped.</p> 
+  <p> It has encodings from 2 classes: <a class="document-topic">No offset</a> and <a class="document-topic">Post-index</a> </p> 
+  <h3><a id="iclass_as_no_post_index"></a>No offset</h3> 
+  <p></p> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>0</td> 
+      <td>Q</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>x</td> 
+      <td>x</td> 
+      <td>1</td> 
+      <td>x</td> 
+      <td colspan="2">size</td> 
+      <td colspan="5">Rn</td> 
+      <td colspan="5">Rt</td> 
+     </tr> 
+     <tr> 
+      <td></td> 
+      <td></td> 
+      <td colspan="7"></td> 
+      <td>L</td> 
+      <td colspan="6"></td> 
+      <td colspan="4">opcode</td> 
+      <td colspan="2"></td> 
+      <td colspan="5"></td> 
+      <td colspan="5"></td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4>One register<span> (opcode == 0111)</span></h4> 
+   <a id="ST1_asisdlse_R1_1v"></a> 
+   <p>ST1 { <a title="First or only SIMD&amp;FP register to be transferred (field &quot;Rt&quot;)" class="document-topic">&lt;Vt&gt;</a>.<a title="Arrangement specifier (field &quot;size:Q&quot;) [1D,2D,2S,4H,4S,8B,8H,16B]" class="document-topic">&lt;T&gt;</a> }, [<a title="64-bit general-purpose base register or SP (field &quot;Rn&quot;)" class="document-topic">&lt;Xn|SP&gt;</a>]</p> 
+  </div> 
+  <div> 
+   <h4>Two registers<span> (opcode == 1010)</span></h4> 
+   <a id="ST1_asisdlse_R2_2v"></a> 
+   <p>ST1 { <a title="First or only SIMD&amp;FP register to be transferred (field &quot;Rt&quot;)" class="document-topic">&lt;Vt&gt;</a>.<a title="Arrangement specifier (field &quot;size:Q&quot;) [1D,2D,2S,4H,4S,8B,8H,16B]" class="document-topic">&lt;T&gt;</a>, <a title="Second SIMD&amp;FP register to be transferred (field Rt)" class="document-topic">&lt;Vt2&gt;</a>.<a title="Arrangement specifier (field &quot;size:Q&quot;) [1D,2D,2S,4H,4S,8B,8H,16B]" class="document-topic">&lt;T&gt;</a> }, [<a title="64-bit general-purpose base register or SP (field &quot;Rn&quot;)" class="document-topic">&lt;Xn|SP&gt;</a>]</p> 
+  </div> 
+  <div> 
+   <h4>Three registers<span> (opcode == 0110)</span></h4> 
+   <a id="ST1_asisdlse_R3_3v"></a> 
+   <p>ST1 { <a title="First or only SIMD&amp;FP register to be transferred (field &quot;Rt&quot;)" class="document-topic">&lt;Vt&gt;</a>.<a title="Arrangement specifier (field &quot;size:Q&quot;) [1D,2D,2S,4H,4S,8B,8H,16B]" class="document-topic">&lt;T&gt;</a>, <a title="Second SIMD&amp;FP register to be transferred (field Rt)" class="document-topic">&lt;Vt2&gt;</a>.<a title="Arrangement specifier (field &quot;size:Q&quot;) [1D,2D,2S,4H,4S,8B,8H,16B]" class="document-topic">&lt;T&gt;</a>, <a title="Third SIMD&amp;FP register to be transferred (field Rt)" class="document-topic">&lt;Vt3&gt;</a>.<a title="Arrangement specifier (field &quot;size:Q&quot;) [1D,2D,2S,4H,4S,8B,8H,16B]" class="document-topic">&lt;T&gt;</a> }, [<a title="64-bit general-purpose base register or SP (field &quot;Rn&quot;)" class="document-topic">&lt;Xn|SP&gt;</a>]</p> 
+  </div> 
+  <div> 
+   <h4>Four registers<span> (opcode == 0010)</span></h4> 
+   <a id="ST1_asisdlse_R4_4v"></a> 
+   <p>ST1 { <a title="First or only SIMD&amp;FP register to be transferred (field &quot;Rt&quot;)" class="document-topic">&lt;Vt&gt;</a>.<a title="Arrangement specifier (field &quot;size:Q&quot;) [1D,2D,2S,4H,4S,8B,8H,16B]" class="document-topic">&lt;T&gt;</a>, <a title="Second SIMD&amp;FP register to be transferred (field Rt)" class="document-topic">&lt;Vt2&gt;</a>.<a title="Arrangement specifier (field &quot;size:Q&quot;) [1D,2D,2S,4H,4S,8B,8H,16B]" class="document-topic">&lt;T&gt;</a>, <a title="Third SIMD&amp;FP register to be transferred (field Rt)" class="document-topic">&lt;Vt3&gt;</a>.<a title="Arrangement specifier (field &quot;size:Q&quot;) [1D,2D,2S,4H,4S,8B,8H,16B]" class="document-topic">&lt;T&gt;</a>, <a title="Fourth SIMD&amp;FP register to be transferred (field Rt)" class="document-topic">&lt;Vt4&gt;</a>.<a title="Arrangement specifier (field &quot;size:Q&quot;) [1D,2D,2S,4H,4S,8B,8H,16B]" class="document-topic">&lt;T&gt;</a> }, [<a title="64-bit general-purpose base register or SP (field &quot;Rn&quot;)" class="document-topic">&lt;Xn|SP&gt;</a>]</p> 
+  </div> 
+  <pre>integer t = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Rt);
+integer n = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Rn);
+integer m = integer UNKNOWN;
+boolean wback = FALSE;
+boolean nontemporal = FALSE;
+boolean tagchecked = wback || n != 31;</pre> 
+  <h3><a id="iclass_as_post_index"></a>Post-index</h3> 
+  <p></p> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>0</td> 
+      <td>Q</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td colspan="5">Rm</td> 
+      <td>x</td> 
+      <td>x</td> 
+      <td>1</td> 
+      <td>x</td> 
+      <td colspan="2">size</td> 
+      <td colspan="5">Rn</td> 
+      <td colspan="5">Rt</td> 
+     </tr> 
+     <tr> 
+      <td></td> 
+      <td></td> 
+      <td colspan="7"></td> 
+      <td>L</td> 
+      <td></td> 
+      <td colspan="5"></td> 
+      <td colspan="4">opcode</td> 
+      <td colspan="2"></td> 
+      <td colspan="5"></td> 
+      <td colspan="5"></td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4>One register, immediate offset<span> (Rm == 11111 &amp;&amp; opcode == 0111)</span></h4> 
+   <a id="ST1_asisdlsep_I1_i1"></a> 
+   <p>ST1 { <a title="First or only SIMD&amp;FP register to be transferred (field &quot;Rt&quot;)" class="document-topic">&lt;Vt&gt;</a>.<a title="Arrangement specifier (field &quot;size:Q&quot;) [1D,2D,2S,4H,4S,8B,8H,16B]" class="document-topic">&lt;T&gt;</a> }, [<a title="64-bit general-purpose base register or SP (field &quot;Rn&quot;)" class="document-topic">&lt;Xn|SP&gt;</a>], <a title="Post-index immediate offset (field &quot;Q&quot;) [#8,#16]" class="document-topic">&lt;imm&gt;</a></p> 
+  </div> 
+  <div> 
+   <h4>One register, register offset<span> (Rm != 11111 &amp;&amp; opcode == 0111)</span></h4> 
+   <a id="ST1_asisdlsep_R1_r1"></a> 
+   <p>ST1 { <a title="First or only SIMD&amp;FP register to be transferred (field &quot;Rt&quot;)" class="document-topic">&lt;Vt&gt;</a>.<a title="Arrangement specifier (field &quot;size:Q&quot;) [1D,2D,2S,4H,4S,8B,8H,16B]" class="document-topic">&lt;T&gt;</a> }, [<a title="64-bit general-purpose base register or SP (field &quot;Rn&quot;)" class="document-topic">&lt;Xn|SP&gt;</a>], <a title="64-bit general-purpose post-index register, excluding XZR (field &quot;Rm&quot;)" class="document-topic">&lt;Xm&gt;</a></p> 
+  </div> 
+  <div> 
+   <h4>Two registers, immediate offset<span> (Rm == 11111 &amp;&amp; opcode == 1010)</span></h4> 
+   <a id="ST1_asisdlsep_I2_i2"></a> 
+   <p>ST1 { <a title="First or only SIMD&amp;FP register to be transferred (field &quot;Rt&quot;)" class="document-topic">&lt;Vt&gt;</a>.<a title="Arrangement specifier (field &quot;size:Q&quot;) [1D,2D,2S,4H,4S,8B,8H,16B]" class="document-topic">&lt;T&gt;</a>, <a title="Second SIMD&amp;FP register to be transferred (field Rt)" class="document-topic">&lt;Vt2&gt;</a>.<a title="Arrangement specifier (field &quot;size:Q&quot;) [1D,2D,2S,4H,4S,8B,8H,16B]" class="document-topic">&lt;T&gt;</a> }, [<a title="64-bit general-purpose base register or SP (field &quot;Rn&quot;)" class="document-topic">&lt;Xn|SP&gt;</a>], <a title="Post-index immediate offset (field &quot;Q&quot;) [#16,#32]" class="document-topic">&lt;imm&gt;</a></p> 
+  </div> 
+  <div> 
+   <h4>Two registers, register offset<span> (Rm != 11111 &amp;&amp; opcode == 1010)</span></h4> 
+   <a id="ST1_asisdlsep_R2_r2"></a> 
+   <p>ST1 { <a title="First or only SIMD&amp;FP register to be transferred (field &quot;Rt&quot;)" class="document-topic">&lt;Vt&gt;</a>.<a title="Arrangement specifier (field &quot;size:Q&quot;) [1D,2D,2S,4H,4S,8B,8H,16B]" class="document-topic">&lt;T&gt;</a>, <a title="Second SIMD&amp;FP register to be transferred (field Rt)" class="document-topic">&lt;Vt2&gt;</a>.<a title="Arrangement specifier (field &quot;size:Q&quot;) [1D,2D,2S,4H,4S,8B,8H,16B]" class="document-topic">&lt;T&gt;</a> }, [<a title="64-bit general-purpose base register or SP (field &quot;Rn&quot;)" class="document-topic">&lt;Xn|SP&gt;</a>], <a title="64-bit general-purpose post-index register, excluding XZR (field &quot;Rm&quot;)" class="document-topic">&lt;Xm&gt;</a></p> 
+  </div> 
+  <div> 
+   <h4>Three registers, immediate offset<span> (Rm == 11111 &amp;&amp; opcode == 0110)</span></h4> 
+   <a id="ST1_asisdlsep_I3_i3"></a> 
+   <p>ST1 { <a title="First or only SIMD&amp;FP register to be transferred (field &quot;Rt&quot;)" class="document-topic">&lt;Vt&gt;</a>.<a title="Arrangement specifier (field &quot;size:Q&quot;) [1D,2D,2S,4H,4S,8B,8H,16B]" class="document-topic">&lt;T&gt;</a>, <a title="Second SIMD&amp;FP register to be transferred (field Rt)" class="document-topic">&lt;Vt2&gt;</a>.<a title="Arrangement specifier (field &quot;size:Q&quot;) [1D,2D,2S,4H,4S,8B,8H,16B]" class="document-topic">&lt;T&gt;</a>, <a title="Third SIMD&amp;FP register to be transferred (field Rt)" class="document-topic">&lt;Vt3&gt;</a>.<a title="Arrangement specifier (field &quot;size:Q&quot;) [1D,2D,2S,4H,4S,8B,8H,16B]" class="document-topic">&lt;T&gt;</a> }, [<a title="64-bit general-purpose base register or SP (field &quot;Rn&quot;)" class="document-topic">&lt;Xn|SP&gt;</a>], <a title="Post-index immediate offset (field &quot;Q&quot;) [#24,#48]" class="document-topic">&lt;imm&gt;</a></p> 
+  </div> 
+  <div> 
+   <h4>Three registers, register offset<span> (Rm != 11111 &amp;&amp; opcode == 0110)</span></h4> 
+   <a id="ST1_asisdlsep_R3_r3"></a> 
+   <p>ST1 { <a title="First or only SIMD&amp;FP register to be transferred (field &quot;Rt&quot;)" class="document-topic">&lt;Vt&gt;</a>.<a title="Arrangement specifier (field &quot;size:Q&quot;) [1D,2D,2S,4H,4S,8B,8H,16B]" class="document-topic">&lt;T&gt;</a>, <a title="Second SIMD&amp;FP register to be transferred (field Rt)" class="document-topic">&lt;Vt2&gt;</a>.<a title="Arrangement specifier (field &quot;size:Q&quot;) [1D,2D,2S,4H,4S,8B,8H,16B]" class="document-topic">&lt;T&gt;</a>, <a title="Third SIMD&amp;FP register to be transferred (field Rt)" class="document-topic">&lt;Vt3&gt;</a>.<a title="Arrangement specifier (field &quot;size:Q&quot;) [1D,2D,2S,4H,4S,8B,8H,16B]" class="document-topic">&lt;T&gt;</a> }, [<a title="64-bit general-purpose base register or SP (field &quot;Rn&quot;)" class="document-topic">&lt;Xn|SP&gt;</a>], <a title="64-bit general-purpose post-index register, excluding XZR (field &quot;Rm&quot;)" class="document-topic">&lt;Xm&gt;</a></p> 
+  </div> 
+  <div> 
+   <h4>Four registers, immediate offset<span> (Rm == 11111 &amp;&amp; opcode == 0010)</span></h4> 
+   <a id="ST1_asisdlsep_I4_i4"></a> 
+   <p>ST1 { <a title="First or only SIMD&amp;FP register to be transferred (field &quot;Rt&quot;)" class="document-topic">&lt;Vt&gt;</a>.<a title="Arrangement specifier (field &quot;size:Q&quot;) [1D,2D,2S,4H,4S,8B,8H,16B]" class="document-topic">&lt;T&gt;</a>, <a title="Second SIMD&amp;FP register to be transferred (field Rt)" class="document-topic">&lt;Vt2&gt;</a>.<a title="Arrangement specifier (field &quot;size:Q&quot;) [1D,2D,2S,4H,4S,8B,8H,16B]" class="document-topic">&lt;T&gt;</a>, <a title="Third SIMD&amp;FP register to be transferred (field Rt)" class="document-topic">&lt;Vt3&gt;</a>.<a title="Arrangement specifier (field &quot;size:Q&quot;) [1D,2D,2S,4H,4S,8B,8H,16B]" class="document-topic">&lt;T&gt;</a>, <a title="Fourth SIMD&amp;FP register to be transferred (field Rt)" class="document-topic">&lt;Vt4&gt;</a>.<a title="Arrangement specifier (field &quot;size:Q&quot;) [1D,2D,2S,4H,4S,8B,8H,16B]" class="document-topic">&lt;T&gt;</a> }, [<a title="64-bit general-purpose base register or SP (field &quot;Rn&quot;)" class="document-topic">&lt;Xn|SP&gt;</a>], <a title="Post-index immediate offset (field &quot;Q&quot;) [#32,#64]" class="document-topic">&lt;imm&gt;</a></p> 
+  </div> 
+  <div> 
+   <h4>Four registers, register offset<span> (Rm != 11111 &amp;&amp; opcode == 0010)</span></h4> 
+   <a id="ST1_asisdlsep_R4_r4"></a> 
+   <p>ST1 { <a title="First or only SIMD&amp;FP register to be transferred (field &quot;Rt&quot;)" class="document-topic">&lt;Vt&gt;</a>.<a title="Arrangement specifier (field &quot;size:Q&quot;) [1D,2D,2S,4H,4S,8B,8H,16B]" class="document-topic">&lt;T&gt;</a>, <a title="Second SIMD&amp;FP register to be transferred (field Rt)" class="document-topic">&lt;Vt2&gt;</a>.<a title="Arrangement specifier (field &quot;size:Q&quot;) [1D,2D,2S,4H,4S,8B,8H,16B]" class="document-topic">&lt;T&gt;</a>, <a title="Third SIMD&amp;FP register to be transferred (field Rt)" class="document-topic">&lt;Vt3&gt;</a>.<a title="Arrangement specifier (field &quot;size:Q&quot;) [1D,2D,2S,4H,4S,8B,8H,16B]" class="document-topic">&lt;T&gt;</a>, <a title="Fourth SIMD&amp;FP register to be transferred (field Rt)" class="document-topic">&lt;Vt4&gt;</a>.<a title="Arrangement specifier (field &quot;size:Q&quot;) [1D,2D,2S,4H,4S,8B,8H,16B]" class="document-topic">&lt;T&gt;</a> }, [<a title="64-bit general-purpose base register or SP (field &quot;Rn&quot;)" class="document-topic">&lt;Xn|SP&gt;</a>], <a title="64-bit general-purpose post-index register, excluding XZR (field &quot;Rm&quot;)" class="document-topic">&lt;Xm&gt;</a></p> 
+  </div> 
+  <pre>integer t = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Rt);
+integer n = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Rn);
+integer m = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Rm);
+boolean wback = TRUE;
+boolean nontemporal = FALSE;
+boolean tagchecked = wback || n != 31;</pre> 
+  <div></div> 
+  <h3>Assembler Symbols</h3> 
+  <div> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Vt&gt;</td> 
+      <td><a id="sa_vt"></a> <p>Is the name of the first or only SIMD&amp;FP register to be transferred, encoded in the "Rt" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;T&gt;</td> 
+      <td><a id="sa_t"></a> <p>Is an arrangement specifier, encoded in <q>size:Q</q>: </p> 
+       <table> 
+        <thead> 
+         <tr> 
+          <th>size</th> 
+          <th>Q</th> 
+          <th>&lt;T&gt;</th> 
+         </tr> 
+        </thead> 
+        <tbody> 
+         <tr> 
+          <td>00</td> 
+          <td>0</td> 
+          <td>8B</td> 
+         </tr> 
+         <tr> 
+          <td>00</td> 
+          <td>1</td> 
+          <td>16B</td> 
+         </tr> 
+         <tr> 
+          <td>01</td> 
+          <td>0</td> 
+          <td>4H</td> 
+         </tr> 
+         <tr> 
+          <td>01</td> 
+          <td>1</td> 
+          <td>8H</td> 
+         </tr> 
+         <tr> 
+          <td>10</td> 
+          <td>0</td> 
+          <td>2S</td> 
+         </tr> 
+         <tr> 
+          <td>10</td> 
+          <td>1</td> 
+          <td>4S</td> 
+         </tr> 
+         <tr> 
+          <td>11</td> 
+          <td>0</td> 
+          <td>1D</td> 
+         </tr> 
+         <tr> 
+          <td>11</td> 
+          <td>1</td> 
+          <td>2D</td> 
+         </tr> 
+        </tbody> 
+       </table> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Vt2&gt;</td> 
+      <td><a id="sa_vt2"></a> <p>Is the name of the second SIMD&amp;FP register to be transferred, encoded as "Rt" plus 1 modulo 32.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Vt3&gt;</td> 
+      <td><a id="sa_vt3"></a> <p>Is the name of the third SIMD&amp;FP register to be transferred, encoded as "Rt" plus 2 modulo 32.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Vt4&gt;</td> 
+      <td><a id="sa_vt4"></a> <p>Is the name of the fourth SIMD&amp;FP register to be transferred, encoded as "Rt" plus 3 modulo 32.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Xn|SP&gt;</td> 
+      <td><a id="sa_xn_sp"></a> <p>Is the 64-bit name of the general-purpose base register or stack pointer, encoded in the "Rn" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;imm&gt;</td> 
+      <td><a id="sa_imm"></a> <p>For the one register, immediate offset variant: is the post-index immediate offset, encoded in <q>Q</q>: </p> 
+       <table> 
+        <thead> 
+         <tr> 
+          <th>Q</th> 
+          <th>&lt;imm&gt;</th> 
+         </tr> 
+        </thead> 
+        <tbody> 
+         <tr> 
+          <td>0</td> 
+          <td>#8</td> 
+         </tr> 
+         <tr> 
+          <td>1</td> 
+          <td>#16</td> 
+         </tr> 
+        </tbody> 
+       </table> </td> 
+     </tr> 
+     <tr> 
+      <td></td> 
+      <td><a id="sa_imm_1"></a> <p>For the two registers, immediate offset variant: is the post-index immediate offset, encoded in <q>Q</q>: </p> 
+       <table> 
+        <thead> 
+         <tr> 
+          <th>Q</th> 
+          <th>&lt;imm&gt;</th> 
+         </tr> 
+        </thead> 
+        <tbody> 
+         <tr> 
+          <td>0</td> 
+          <td>#16</td> 
+         </tr> 
+         <tr> 
+          <td>1</td> 
+          <td>#32</td> 
+         </tr> 
+        </tbody> 
+       </table> </td> 
+     </tr> 
+     <tr> 
+      <td></td> 
+      <td><a id="sa_imm_2"></a> <p>For the three registers, immediate offset variant: is the post-index immediate offset, encoded in <q>Q</q>: </p> 
+       <table> 
+        <thead> 
+         <tr> 
+          <th>Q</th> 
+          <th>&lt;imm&gt;</th> 
+         </tr> 
+        </thead> 
+        <tbody> 
+         <tr> 
+          <td>0</td> 
+          <td>#24</td> 
+         </tr> 
+         <tr> 
+          <td>1</td> 
+          <td>#48</td> 
+         </tr> 
+        </tbody> 
+       </table> </td> 
+     </tr> 
+     <tr> 
+      <td></td> 
+      <td><a id="sa_imm_3"></a> <p>For the four registers, immediate offset variant: is the post-index immediate offset, encoded in <q>Q</q>: </p> 
+       <table> 
+        <thead> 
+         <tr> 
+          <th>Q</th> 
+          <th>&lt;imm&gt;</th> 
+         </tr> 
+        </thead> 
+        <tbody> 
+         <tr> 
+          <td>0</td> 
+          <td>#32</td> 
+         </tr> 
+         <tr> 
+          <td>1</td> 
+          <td>#64</td> 
+         </tr> 
+        </tbody> 
+       </table> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Xm&gt;</td> 
+      <td><a id="sa_xm"></a> <p>Is the 64-bit name of the general-purpose post-index register, excluding XZR, encoded in the "Rm" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div></div> 
+  <div> 
+   <a id="postdecode"></a> 
+   <h3>Shared Decode</h3> 
+   <pre><a title="enumeration MemOp {MemOp_LOAD, MemOp_STORE, MemOp_PREFETCH}" class="document-topic">MemOp</a> memop = if L == '1' then <a title="enumeration MemOp {MemOp_LOAD, MemOp_STORE, MemOp_PREFETCH}" class="document-topic">MemOp_LOAD</a> else <a title="enumeration MemOp {MemOp_LOAD, MemOp_STORE, MemOp_PREFETCH}" class="document-topic">MemOp_STORE</a>;
+integer datasize = if Q == '1' then 128 else 64;
+integer esize = 8 &lt;&lt; <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(size);
+integer elements = datasize DIV esize;
+
+integer rpt;    // number of iterations
+integer selem;    // structure elements
+
+case opcode of
+    when '0000' rpt = 1; selem = 4;    // LD/ST4 (4 registers)
+    when '0010' rpt = 4; selem = 1;    // LD/ST1 (4 registers)
+    when '0100' rpt = 1; selem = 3;    // LD/ST3 (3 registers)
+    when '0110' rpt = 3; selem = 1;    // LD/ST1 (3 registers)
+    when '0111' rpt = 1; selem = 1;    // LD/ST1 (1 register)
+    when '1000' rpt = 1; selem = 2;    // LD/ST2 (2 registers)
+    when '1010' rpt = 2; selem = 1;    // LD/ST1 (2 registers)
+    otherwise UNDEFINED;
+
+// .1D format only permitted with LD1 &amp; ST1
+if size:Q == '110' &amp;&amp; selem != 1 then UNDEFINED;</pre> 
+  </div> 
+  <div> 
+   <a id="execute"></a> 
+   <h3>Operation</h3> 
+   <pre><a title="function: CheckFPAdvSIMDEnabled64()" class="document-topic">CheckFPAdvSIMDEnabled64</a>();
+
+bits(64) address;
+bits(64) offs;
+bits(datasize) rval;
+integer tt;
+constant integer ebytes = esize DIV 8;
+
+<a title="type AccessDescriptor is ( AccessType acctype, bits(2) el, SecurityState ss, boolean acqsc, boolean acqpc, boolean relsc, boolean limitedordered, boolean exclusive, boolean atomicop, MemAtomicOp modop, boolean nontemporal, boolean read, boolean write, CacheOp cacheop, CacheOpScope opscope, CacheType cachetype, boolean pan, boolean transactional, boolean nonfault, boolean firstfault, boolean first, boolean contiguous, boolean streamingsve, boolean ls64, boolean mops, boolean rcw, boolean rcws, boolean toplevel, VARange varange, boolean a32lsmd, boolean tagchecked, boolean tagaccess, MPAMinfo mpam )" class="document-topic">AccessDescriptor</a> accdesc = <a title="function: AccessDescriptor CreateAccDescASIMD(MemOp memop, boolean nontemporal, boolean tagchecked)" class="document-topic">CreateAccDescASIMD</a>(memop, nontemporal, tagchecked);
+if n == 31 then
+    <a title="function: CheckSPAlignment()" class="document-topic">CheckSPAlignment</a>();
+    address = <a title="accessor: bits(64) SP[]" class="document-topic">SP</a>[];
+else
+    address = <a title="accessor: bits(width) X[integer n, integer width]" class="document-topic">X</a>[n, 64];
+
+offs = <a title="function: bits(N) Zeros(integer N)" class="document-topic">Zeros</a>(64);
+for r = 0 to rpt-1
+    for e = 0 to elements-1
+        tt = (t + r) MOD 32;
+        for s = 0 to selem-1
+            rval = <a title="accessor: bits(width) V[integer n, integer width]" class="document-topic">V</a>[tt, datasize];
+            if memop == <a title="enumeration MemOp {MemOp_LOAD, MemOp_STORE, MemOp_PREFETCH}" class="document-topic">MemOp_LOAD</a> then
+                <a title="accessor: Elem[bits(N) &amp;vector, integer e, integer size] = bits(size) value" class="document-topic">Elem</a>[rval, e, esize] = <a title="accessor: bits(size*8) Mem[bits(64) address, integer size, AccessDescriptor accdesc]" class="document-topic">Mem</a>[address + offs, ebytes, accdesc];
+                <a title="accessor: V[integer n, integer width] = bits(width) value" class="document-topic">V</a>[tt, datasize] = rval;
+            else // memop == MemOp_STORE
+                Mem[address + offs, ebytes, accdesc] = <a title="accessor: bits(size) Elem[bits(N) vector, integer e, integer size]" class="document-topic">Elem</a>[rval, e, esize];
+            offs = offs + ebytes;
+            tt = (tt + 1) MOD 32;
+
+if wback then
+    if m != 31 then
+        offs = <a title="accessor: bits(width) X[integer n, integer width]" class="document-topic">X</a>[m, 64];
+    if n == 31 then
+        <a title="accessor: SP[] = bits(64) value" class="document-topic">SP</a>[] = address + offs;
+    else
+        <a title="accessor: X[integer n, integer width] = bits(width) value" class="document-topic">X</a>[n, 64] = address + offs;</pre> 
+  </div> 
+  <h3>Operational information</h3> 
+  <p>If PSTATE.DIT is 1, the timing of this instruction is insensitive to the value of the data being loaded or stored.</p>  
+ </body>
+</html>

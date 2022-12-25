@@ -1,0 +1,202 @@
+<html>
+ <head>  <link rel="stylesheet" href="../def-style.css"></head> 
+ <body> 
+  <h2>RCWSCLRP, RCWSCLRPA, RCWSCLRPL, RCWSCLRPAL</h2> 
+  <p>Read Check Write Software atomic bit Clear on quadword in memory atomically loads a 128-bit quadword from memory, performs a bitwise AND with the complement of the value held in a pair of registers on it, and conditionally stores the result back to memory. Storing of the result back to memory is conditional on RCW Checks and RCWS Checks. The value initially loaded from memory is returned in the same pair of registers. This instruction updates the condition flags based on the result of the update of memory.</p> 
+  <ul> 
+   <li><span>RCWSCLRPA</span> and <span>RCWSCLRPAL</span> load from memory with acquire semantics.</li> 
+   <li><span>RCWSCLRPL</span> and <span>RCWSCLRPAL</span> store to memory with release semantics.</li> 
+   <li><span>RCWSCLRP</span> has neither acquire nor release semantics.</li> 
+  </ul> 
+  <h3><a id="iclass_general"></a>Integer<span><br></br>(FEAT_D128 &amp;&amp; FEAT_THE) </span></h3> 
+  <p></p> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>A</td> 
+      <td>R</td> 
+      <td>1</td> 
+      <td colspan="5">Rt2</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td colspan="5">Rn</td> 
+      <td colspan="5">Rt</td> 
+     </tr> 
+     <tr> 
+      <td></td> 
+      <td>S</td> 
+      <td colspan="6"></td> 
+      <td></td> 
+      <td></td> 
+      <td></td> 
+      <td colspan="5"></td> 
+      <td>o3</td> 
+      <td colspan="3">opc</td> 
+      <td colspan="2"></td> 
+      <td colspan="5"></td> 
+      <td colspan="5"></td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4>RCWSCLRP<span> (A == 0 &amp;&amp; R == 0)</span></h4> 
+   <a id="RCWSCLRP_128_memop_128"></a> 
+   <p>RCWSCLRP <a title="First 64-bit general-purpose register to be transferred (field &quot;Rt&quot;)" class="document-topic">&lt;Xt1&gt;</a>, <a title="Second 64-bit general-purpose register to be transferred (field &quot;Rt2&quot;)" class="document-topic">&lt;Xt2&gt;</a>, [<a title="64-bit general-purpose base register or SP (field &quot;Rn&quot;)" class="document-topic">&lt;Xn|SP&gt;</a>]</p> 
+  </div> 
+  <div> 
+   <h4>RCWSCLRPA<span> (A == 1 &amp;&amp; R == 0)</span></h4> 
+   <a id="RCWSCLRPA_128_memop_128"></a> 
+   <p>RCWSCLRPA <a title="First 64-bit general-purpose register to be transferred (field &quot;Rt&quot;)" class="document-topic">&lt;Xt1&gt;</a>, <a title="Second 64-bit general-purpose register to be transferred (field &quot;Rt2&quot;)" class="document-topic">&lt;Xt2&gt;</a>, [<a title="64-bit general-purpose base register or SP (field &quot;Rn&quot;)" class="document-topic">&lt;Xn|SP&gt;</a>]</p> 
+  </div> 
+  <div> 
+   <h4>RCWSCLRPAL<span> (A == 1 &amp;&amp; R == 1)</span></h4> 
+   <a id="RCWSCLRPAL_128_memop_128"></a> 
+   <p>RCWSCLRPAL <a title="First 64-bit general-purpose register to be transferred (field &quot;Rt&quot;)" class="document-topic">&lt;Xt1&gt;</a>, <a title="Second 64-bit general-purpose register to be transferred (field &quot;Rt2&quot;)" class="document-topic">&lt;Xt2&gt;</a>, [<a title="64-bit general-purpose base register or SP (field &quot;Rn&quot;)" class="document-topic">&lt;Xn|SP&gt;</a>]</p> 
+  </div> 
+  <div> 
+   <h4>RCWSCLRPL<span> (A == 0 &amp;&amp; R == 1)</span></h4> 
+   <a id="RCWSCLRPL_128_memop_128"></a> 
+   <p>RCWSCLRPL <a title="First 64-bit general-purpose register to be transferred (field &quot;Rt&quot;)" class="document-topic">&lt;Xt1&gt;</a>, <a title="Second 64-bit general-purpose register to be transferred (field &quot;Rt2&quot;)" class="document-topic">&lt;Xt2&gt;</a>, [<a title="64-bit general-purpose base register or SP (field &quot;Rn&quot;)" class="document-topic">&lt;Xn|SP&gt;</a>]</p> 
+  </div> 
+  <pre>if !<a title="function: boolean Have128BitDescriptorExt()" class="document-topic">Have128BitDescriptorExt</a>() || !<a title="function: boolean HaveTHExt()" class="document-topic">HaveTHExt</a>() then UNDEFINED;
+if Rt  == '11111' then UNDEFINED;
+if Rt2 == '11111' then UNDEFINED;
+integer t    = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Rt);
+integer t2   = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Rt2);
+integer n    = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Rn);
+boolean soft = TRUE;
+
+boolean acquire = A == '1';
+boolean release = R == '1';
+<a title="enumeration MemAtomicOp { MemAtomicOp_GCSSS1, MemAtomicOp_ADD, MemAtomicOp_BIC, MemAtomicOp_EOR, MemAtomicOp_ORR, MemAtomicOp_SMAX, MemAtomicOp_SMIN, MemAtomicOp_UMAX, MemAtomicOp_UMIN, MemAtomicOp_SWP, MemAtomicOp_CAS }" class="document-topic">MemAtomicOp</a> op = if opc == '001' then <a title="enumeration MemAtomicOp { MemAtomicOp_GCSSS1, MemAtomicOp_ADD, MemAtomicOp_BIC, MemAtomicOp_EOR, MemAtomicOp_ORR, MemAtomicOp_SMAX, MemAtomicOp_SMIN, MemAtomicOp_UMAX, MemAtomicOp_UMIN, MemAtomicOp_SWP, MemAtomicOp_CAS }" class="document-topic">MemAtomicOp_BIC</a> else <a title="enumeration MemAtomicOp { MemAtomicOp_GCSSS1, MemAtomicOp_ADD, MemAtomicOp_BIC, MemAtomicOp_EOR, MemAtomicOp_ORR, MemAtomicOp_SMAX, MemAtomicOp_SMIN, MemAtomicOp_UMAX, MemAtomicOp_UMIN, MemAtomicOp_SWP, MemAtomicOp_CAS }" class="document-topic">MemAtomicOp_ORR</a>;
+boolean tagchecked = n != 31;</pre> 
+  <div></div> 
+  <h3>Assembler Symbols</h3> 
+  <div> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Xt1&gt;</td> 
+      <td><a id="sa_xt1"></a> <p>Is the 64-bit name of the first general-purpose register to be transferred, encoded in the "Rt" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Xt2&gt;</td> 
+      <td><a id="sa_xt2"></a> <p>Is the 64-bit name of the second general-purpose register to be transferred, encoded in the "Rt2" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Xn|SP&gt;</td> 
+      <td><a id="sa_xn_sp"></a> <p>Is the 64-bit name of the general-purpose base register or stack pointer, encoded in the "Rn" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div></div> 
+  <div> 
+   <a id="execute"></a> 
+   <h3>Operation</h3> 
+   <pre>if !<a title="function: boolean IsD128Enabled(bits(2) el)" class="document-topic">IsD128Enabled</a>(PSTATE.EL) then UNDEFINED;
+bits(64) address;
+bits(64) value1;
+bits(64) value2;
+bits(128) newdata;
+bits(128) readdata;
+bits(4) nzcv;
+
+<a title="type AccessDescriptor is ( AccessType acctype, bits(2) el, SecurityState ss, boolean acqsc, boolean acqpc, boolean relsc, boolean limitedordered, boolean exclusive, boolean atomicop, MemAtomicOp modop, boolean nontemporal, boolean read, boolean write, CacheOp cacheop, CacheOpScope opscope, CacheType cachetype, boolean pan, boolean transactional, boolean nonfault, boolean firstfault, boolean first, boolean contiguous, boolean streamingsve, boolean ls64, boolean mops, boolean rcw, boolean rcws, boolean toplevel, VARange varange, boolean a32lsmd, boolean tagchecked, boolean tagaccess, MPAMinfo mpam )" class="document-topic">AccessDescriptor</a> accdesc = <a title="function: AccessDescriptor CreateAccDescRCW(MemAtomicOp modop, boolean soft, boolean acquire, boolean release, boolean tagchecked)" class="document-topic">CreateAccDescRCW</a>(op, soft, acquire, release, tagchecked);
+
+if n == 31 then
+    <a title="function: CheckSPAlignment()" class="document-topic">CheckSPAlignment</a>();
+    address = <a title="accessor: bits(64) SP[]" class="document-topic">SP</a>[];
+else
+    address = <a title="accessor: bits(width) X[integer n, integer width]" class="document-topic">X</a>[n, 64];
+
+value1 = <a title="accessor: bits(width) X[integer n, integer width]" class="document-topic">X</a>[t, 64];
+value2 = <a title="accessor: bits(width) X[integer n, integer width]" class="document-topic">X</a>[t2, 64];
+
+newdata = if <a title="function: boolean BigEndian(AccessType acctype)" class="document-topic">BigEndian</a>(accdesc.acctype) then value1:value2 else value2:value1;
+
+bits(128) compdata = bits(128) UNKNOWN; // Irrelevant when not executing CAS
+(nzcv, readdata) = <a title="function: (bits(4), bits(size)) MemAtomicRCW(bits(64) address, bits(size) cmpoperand, bits(size) operand, AccessDescriptor accdesc_in)" class="document-topic">MemAtomicRCW</a>(address, compdata, newdata, accdesc);
+
+PSTATE.&lt;N,Z,C,V&gt; = nzcv;
+if <a title="function: boolean BigEndian(AccessType acctype)" class="document-topic">BigEndian</a>(accdesc.acctype) then
+    <a title="accessor: X[integer n, integer width] = bits(width) value" class="document-topic">X</a>[t, 64]  = readdata&lt;127:64&gt;;
+    <a title="accessor: X[integer n, integer width] = bits(width) value" class="document-topic">X</a>[t2, 64] = readdata&lt;63:0&gt;;
+else
+    <a title="accessor: X[integer n, integer width] = bits(width) value" class="document-topic">X</a>[t, 64]  = readdata&lt;63:0&gt;;
+    <a title="accessor: X[integer n, integer width] = bits(width) value" class="document-topic">X</a>[t2, 64] = readdata&lt;127:64&gt;;</pre> 
+  </div> 
+  <h3>Operational information</h3> 
+  <p>If PSTATE.DIT is 1, the timing of this instruction is insensitive to the value of the data being loaded or stored.</p>  
+ </body>
+</html>

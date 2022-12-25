@@ -1,0 +1,261 @@
+<html>
+ <head>  <link rel="stylesheet" href="../def-style.css"></head> 
+ <body> 
+  <h2>TBX</h2> 
+  <p>Table vector lookup extension. This instruction reads each value from the vector elements in the index source SIMD&amp;FP register, uses each result as an index to perform a lookup in a table of bytes that is described by one to four source table SIMD&amp;FP registers, places the lookup result in a vector, and writes the vector to the destination SIMD&amp;FP register. If an index is out of range for the table, the existing value in the vector element of the destination register is left unchanged. If more than one source register is used to describe the table, the first source register describes the lowest bytes of the table.</p> 
+  <p>Depending on the settings in the <em>CPACR_EL1</em>, <em>CPTR_EL2</em>, and <em>CPTR_EL3</em> registers, and the current Security state and Exception level, an attempt to execute the instruction might be trapped.</p> 
+  <p></p> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>0</td> 
+      <td>Q</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td colspan="5">Rm</td> 
+      <td>0</td> 
+      <td colspan="2">len</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td colspan="5">Rn</td> 
+      <td colspan="5">Rd</td> 
+     </tr> 
+     <tr> 
+      <td></td> 
+      <td></td> 
+      <td colspan="6"></td> 
+      <td colspan="2"></td> 
+      <td></td> 
+      <td colspan="5"></td> 
+      <td></td> 
+      <td colspan="2"></td> 
+      <td>op</td> 
+      <td colspan="2"></td> 
+      <td colspan="5"></td> 
+      <td colspan="5"></td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4>Two register table<span> (len == 01)</span></h4> 
+   <a id="TBX_asimdtbl_L2_2"></a> 
+   <p>TBX <a title="SIMD&amp;FP destination register (field &quot;Rd&quot;)" class="document-topic">&lt;Vd&gt;</a>.<a title="Arrangement specifier (field &quot;Q&quot;) [8B,16B]" class="document-topic">&lt;Ta&gt;</a>, { <a title="First SIMD&amp;FP table register (field &quot;Rn&quot;)" class="document-topic">&lt;Vn&gt;</a>.16B, <a title="Second SIMD&amp;FP table register, encoded as &quot;Rn&quot; plus 1 modulo 32 (field Rn)" class="document-topic">&lt;Vn+1&gt;</a>.16B }, <a title="SIMD&amp;FP index register (field &quot;Rm&quot;)" class="document-topic">&lt;Vm&gt;</a>.<a title="Arrangement specifier (field &quot;Q&quot;) [8B,16B]" class="document-topic">&lt;Ta&gt;</a></p> 
+  </div> 
+  <div> 
+   <h4>Three register table<span> (len == 10)</span></h4> 
+   <a id="TBX_asimdtbl_L3_3"></a> 
+   <p>TBX <a title="SIMD&amp;FP destination register (field &quot;Rd&quot;)" class="document-topic">&lt;Vd&gt;</a>.<a title="Arrangement specifier (field &quot;Q&quot;) [8B,16B]" class="document-topic">&lt;Ta&gt;</a>, { <a title="First SIMD&amp;FP table register (field &quot;Rn&quot;)" class="document-topic">&lt;Vn&gt;</a>.16B, <a title="Second SIMD&amp;FP table register, encoded as &quot;Rn&quot; plus 1 modulo 32 (field Rn)" class="document-topic">&lt;Vn+1&gt;</a>.16B, <a title="Third SIMD&amp;FP table register, encoded as &quot;Rn&quot; plus 2 modulo 32 (field Rn)" class="document-topic">&lt;Vn+2&gt;</a>.16B }, <a title="SIMD&amp;FP index register (field &quot;Rm&quot;)" class="document-topic">&lt;Vm&gt;</a>.<a title="Arrangement specifier (field &quot;Q&quot;) [8B,16B]" class="document-topic">&lt;Ta&gt;</a></p> 
+  </div> 
+  <div> 
+   <h4>Four register table<span> (len == 11)</span></h4> 
+   <a id="TBX_asimdtbl_L4_4"></a> 
+   <p>TBX <a title="SIMD&amp;FP destination register (field &quot;Rd&quot;)" class="document-topic">&lt;Vd&gt;</a>.<a title="Arrangement specifier (field &quot;Q&quot;) [8B,16B]" class="document-topic">&lt;Ta&gt;</a>, { <a title="First SIMD&amp;FP table register (field &quot;Rn&quot;)" class="document-topic">&lt;Vn&gt;</a>.16B, <a title="Second SIMD&amp;FP table register, encoded as &quot;Rn&quot; plus 1 modulo 32 (field Rn)" class="document-topic">&lt;Vn+1&gt;</a>.16B, <a title="Third SIMD&amp;FP table register, encoded as &quot;Rn&quot; plus 2 modulo 32 (field Rn)" class="document-topic">&lt;Vn+2&gt;</a>.16B, <a title="Fourth SIMD&amp;FP table register, encoded as &quot;Rn&quot; plus 3 modulo 32 (field Rn)" class="document-topic">&lt;Vn+3&gt;</a>.16B }, <a title="SIMD&amp;FP index register (field &quot;Rm&quot;)" class="document-topic">&lt;Vm&gt;</a>.<a title="Arrangement specifier (field &quot;Q&quot;) [8B,16B]" class="document-topic">&lt;Ta&gt;</a></p> 
+  </div> 
+  <div> 
+   <h4>Single register table<span> (len == 00)</span></h4> 
+   <a id="TBX_asimdtbl_L1_1"></a> 
+   <p>TBX <a title="SIMD&amp;FP destination register (field &quot;Rd&quot;)" class="document-topic">&lt;Vd&gt;</a>.<a title="Arrangement specifier (field &quot;Q&quot;) [8B,16B]" class="document-topic">&lt;Ta&gt;</a>, { <a title="SIMD&amp;FP table register (field &quot;Rn&quot;)" class="document-topic">&lt;Vn&gt;</a>.16B }, <a title="SIMD&amp;FP index register (field &quot;Rm&quot;)" class="document-topic">&lt;Vm&gt;</a>.<a title="Arrangement specifier (field &quot;Q&quot;) [8B,16B]" class="document-topic">&lt;Ta&gt;</a></p> 
+  </div> 
+  <pre>integer d = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Rd);
+integer n = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Rn);
+integer m = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Rm);
+
+integer datasize = if Q == '1' then 128 else 64;
+integer elements = datasize DIV 8;
+integer regs = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(len) + 1;
+boolean is_tbl = (op == '0');</pre> 
+  <div></div> 
+  <h3>Assembler Symbols</h3> 
+  <div> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Vd&gt;</td> 
+      <td><a id="sa_vd"></a> <p>Is the name of the SIMD&amp;FP destination register, encoded in the "Rd" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Ta&gt;</td> 
+      <td><a id="sa_ta"></a> <p>Is an arrangement specifier, encoded in <q>Q</q>: </p> 
+       <table> 
+        <thead> 
+         <tr> 
+          <th>Q</th> 
+          <th>&lt;Ta&gt;</th> 
+         </tr> 
+        </thead> 
+        <tbody> 
+         <tr> 
+          <td>0</td> 
+          <td>8B</td> 
+         </tr> 
+         <tr> 
+          <td>1</td> 
+          <td>16B</td> 
+         </tr> 
+        </tbody> 
+       </table> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Vn&gt;</td> 
+      <td><a id="sa_vn_1"></a> <p>For the four register table, three register table and two register table variant: is the name of the first SIMD&amp;FP table register, encoded in the "Rn" field.</p> </td> 
+     </tr> 
+     <tr> 
+      <td></td> 
+      <td><a id="sa_vn"></a> <p>For the single register table variant: is the name of the SIMD&amp;FP table register, encoded in the "Rn" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Vn+1&gt;</td> 
+      <td><a id="sa_vn_plus_1"></a> <p>Is the name of the second SIMD&amp;FP table register, encoded as "Rn" plus 1 modulo 32.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Vn+2&gt;</td> 
+      <td><a id="sa_vn_plus_2"></a> <p>Is the name of the third SIMD&amp;FP table register, encoded as "Rn" plus 2 modulo 32.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Vn+3&gt;</td> 
+      <td><a id="sa_vn_plus_3"></a> <p>Is the name of the fourth SIMD&amp;FP table register, encoded as "Rn" plus 3 modulo 32.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Vm&gt;</td> 
+      <td><a id="sa_vm"></a> <p>Is the name of the SIMD&amp;FP index register, encoded in the "Rm" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div></div> 
+  <div> 
+   <a id="execute"></a> 
+   <h3>Operation</h3> 
+   <pre><a title="function: CheckFPAdvSIMDEnabled64()" class="document-topic">CheckFPAdvSIMDEnabled64</a>();
+bits(datasize) indices = <a title="accessor: bits(width) V[integer n, integer width]" class="document-topic">V</a>[m, datasize];
+bits(128*regs) table = <a title="function: bits(N) Zeros(integer N)" class="document-topic">Zeros</a>(128*regs);
+bits(datasize) result;
+integer index;
+
+// Create table from registers
+for i = 0 to regs - 1
+    table&lt;128*i+127:128*i&gt; = <a title="accessor: bits(width) V[integer n, integer width]" class="document-topic">V</a>[n, 128];
+    n = (n + 1) MOD 32;
+
+result = if is_tbl then <a title="function: bits(N) Zeros(integer N)" class="document-topic">Zeros</a>(datasize) else <a title="accessor: bits(width) V[integer n, integer width]" class="document-topic">V</a>[d, datasize];
+for i = 0 to elements - 1
+    index = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(<a title="accessor: bits(size) Elem[bits(N) vector, integer e, integer size]" class="document-topic">Elem</a>[indices, i, 8]);
+    if index &lt; 16 * regs then
+        <a title="accessor: Elem[bits(N) &amp;vector, integer e, integer size] = bits(size) value" class="document-topic">Elem</a>[result, i, 8] = <a title="accessor: bits(size) Elem[bits(N) vector, integer e, integer size]" class="document-topic">Elem</a>[table, index, 8];
+
+<a title="accessor: V[integer n, integer width] = bits(width) value" class="document-topic">V</a>[d, datasize] = result;</pre> 
+  </div> 
+  <h3>Operational information</h3> 
+  <p>If PSTATE.DIT is 1:</p> 
+  <ul> 
+   <li>The execution time of this instruction is independent of: 
+    <ul> 
+     <li>The values of the data supplied in any of its registers.</li> 
+     <li>The values of the NZCV flags.</li> 
+    </ul></li> 
+   <li>The response of this instruction to asynchronous exceptions does not vary based on: 
+    <ul> 
+     <li>The values of the data supplied in any of its registers.</li> 
+     <li>The values of the NZCV flags.</li> 
+    </ul></li> 
+  </ul>  
+ </body>
+</html>

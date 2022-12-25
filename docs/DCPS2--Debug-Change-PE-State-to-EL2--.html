@@ -1,0 +1,130 @@
+<html>
+ <head>  <link rel="stylesheet" href="../def-style.css"></head> 
+ <body> 
+  <h2>DCPS2</h2> 
+  <p>Debug Change PE State to EL2, when executed in Debug state:</p> 
+  <ul> 
+   <li>If executed at EL0 or EL1 changes the current Exception level and SP to EL2 using SP_EL2.</li> 
+   <li>Otherwise, if executed at ELx, selects SP_ELx.</li> 
+  </ul> 
+  <p>The target exception level of a DCPS2 instruction is:</p> 
+  <ul> 
+   <li>EL2 if the instruction is executed at an exception level that is not EL3.</li> 
+   <li>EL3 if the instruction is executed at EL3.</li> 
+  </ul> 
+  <p>When the target Exception level of a DCPS2 instruction is ELx, on executing this instruction:</p> 
+  <ul> 
+   <li><em>ELR_ELx</em> becomes <small>unknown</small>.</li> 
+   <li><em>SPSR_ELx</em> becomes <small>unknown</small>.</li> 
+   <li><em>ESR_ELx</em> becomes <small>unknown</small>.</li> 
+   <li><em>DLR_EL0</em> and <em>DSPSR_EL0</em> become <small>unknown</small>.</li> 
+   <li>The endianness is set according to <em>SCTLR_ELx</em>.EE.</li> 
+  </ul> 
+  <p>This instruction is <small>undefined</small> at the following exception levels:</p> 
+  <ul> 
+   <li>All exception levels if EL2 is not implemented.</li> 
+   <li>At EL0 and EL1 if EL2 is disabled in the current Security state.</li> 
+  </ul> 
+  <p>This instruction is always <small>undefined</small> in Non-debug state.</p> 
+  <p>For more information on the operation of the DCPS&lt;n&gt; instructions, see <em>DCPS</em>.</p> 
+  <p></p> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td colspan="16">imm16</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+     <tr> 
+      <td colspan="8"></td> 
+      <td colspan="3"></td> 
+      <td colspan="16"></td> 
+      <td colspan="3"></td> 
+      <td colspan="2">LL</td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4></h4> 
+   <a id="DCPS2_DC_exception"></a> 
+   <p>DCPS2 {#<a title="Optional 16-bit unsigned immediate [0-65535], default 0 (field &quot;imm16&quot;)" class="document-topic">&lt;imm&gt;</a>}</p> 
+  </div> 
+  <pre>bits(2) target_level = LL;
+if LL == '00' then UNDEFINED;
+if !<a title="function: boolean Halted()" class="document-topic">Halted</a>() then UNDEFINED;</pre> 
+  <div></div> 
+  <h3>Assembler Symbols</h3> 
+  <div> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;imm&gt;</td> 
+      <td><a id="sa_imm"></a> <p>Is an optional 16-bit unsigned immediate, in the range 0 to 65535, defaulting to 0 and encoded in the "imm16" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div></div> 
+  <div> 
+   <a id="execute"></a> 
+   <h3>Operation</h3> 
+   <pre><a title="function: DCPSInstruction(bits(2) target_el)" class="document-topic">DCPSInstruction</a>(target_level);</pre> 
+  </div>  
+ </body>
+</html>

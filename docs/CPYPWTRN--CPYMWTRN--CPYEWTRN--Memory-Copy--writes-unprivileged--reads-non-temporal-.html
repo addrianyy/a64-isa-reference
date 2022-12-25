@@ -1,0 +1,496 @@
+<html>
+ <head>  <link rel="stylesheet" href="../def-style.css"></head> 
+ <body> 
+  <h2>CPYPWTRN, CPYMWTRN, CPYEWTRN</h2> 
+  <p>Memory Copy, writes unprivileged, reads non-temporal. These instructions perform a memory copy. The prologue, main, and epilogue instructions are expected to be run in succession and to appear consecutively in memory: CPYPWTRN, then CPYMWTRN, and then CPYEWTRN.</p> 
+  <p>CPYPWTRN performs some preconditioning of the arguments suitable for using the CPYMWTRN instruction, and performs an <small>implementation defined</small> amount of the memory copy. CPYMWTRN performs an <small>implementation defined</small> amount of the memory copy. CPYEWTRN performs the last part of the memory copy.</p> 
+  <blockquote title="Note info"> 
+   <h4>Note</h4> 
+   <p>The inclusion of <small>implementation defined</small> amounts of memory copy allows some optimization of the size that can be performed.</p> 
+  </blockquote> 
+  <p>For CPYPWTRN, the following saturation logic is applied:</p> 
+  <p>If Xn&lt;63:55&gt; != 000000000, the copy size Xn is saturated to 0x007FFFFFFFFFFFFF.</p> 
+  <p>After that saturation logic is applied, the direction of the memory copy is based on the following algorithm:</p> 
+  <p>If (Xs &gt; Xd) &amp;&amp; (Xd + saturated Xn) &gt; Xs, then direction = forward</p> 
+  <p>Elsif (Xs &lt; Xd) &amp;&amp; (Xs + saturated Xn) &gt; Xd, then direction = backward</p> 
+  <p>Else direction = <small>implementation defined</small> choice between forward and backward.</p> 
+  <p>The architecture supports two algorithms for the memory copy: option A and option B. Which algorithm is used is <small>implementation defined</small>.</p> 
+  <blockquote title="Note info"> 
+   <h4>Note</h4> 
+   <p>Portable software should not assume that the choice of algorithm is constant.</p> 
+  </blockquote> 
+  <p>After execution of CPYPWTRN, option A (which results in encoding PSTATE.C = 0):</p> 
+  <ul> 
+   <li>PSTATE.{N,Z,V} are set to {0,0,0}.</li> 
+   <li>If the copy is in the forward direction, then: 
+    <ul> 
+     <li>Xs holds the original Xs + saturated Xn.</li> 
+     <li>Xd holds the original Xd + saturated Xn.</li> 
+     <li>Xn holds -1* saturated Xn + an <small>implementation defined</small> number of bytes copied.</li> 
+    </ul></li> 
+   <li>If the copy is in the backward direction, then: 
+    <ul> 
+     <li>Xs and Xd are unchanged.</li> 
+     <li>Xn holds the saturated value of Xn - an <small>implementation defined</small> number of bytes copied.</li> 
+    </ul></li> 
+  </ul> 
+  <p>After execution of CPYPWTRN, option B (which results in encoding PSTATE.C = 1):</p> 
+  <ul> 
+   <li>If the copy is in the forward direction, then: 
+    <ul> 
+     <li>Xs holds the original Xs + an <small>implementation defined</small> number of bytes copied.</li> 
+     <li>Xd holds the original Xd + an <small>implementation defined</small> number of bytes copied.</li> 
+     <li>Xn holds the saturated Xn - an <small>implementation defined</small> number of bytes copied.</li> 
+     <li>PSTATE.{N,Z,V} are set to {0,0,0}.</li> 
+    </ul></li> 
+   <li>If the copy is in the backward direction, then: 
+    <ul> 
+     <li>Xs holds the original Xs + saturated Xn - an <small>implementation defined</small> number of bytes copied.</li> 
+     <li>Xd holds the original Xd + saturated Xn - an <small>implementation defined</small> number of bytes copied.</li> 
+     <li>Xn holds the saturated Xn - an <small>implementation defined</small> number of bytes copied.</li> 
+     <li>PSTATE.{N,Z,V} are set to {1,0,0}.</li> 
+    </ul></li> 
+  </ul> 
+  <p>For CPYMWTRN, option A (encoded by PSTATE.C = 0), the format of the arguments is:</p> 
+  <ul> 
+   <li>Xn is treated as a signed 64-bit number.</li> 
+   <li>If the copy is in the forward direction (Xn is a negative number), then: 
+    <ul> 
+     <li>Xn holds -1* the number of bytes remaining to be copied in the memory copy in total.</li> 
+     <li>Xs holds the lowest address that the copy is copied from -Xn.</li> 
+     <li>Xd holds the lowest address that the copy is made to -Xn.</li> 
+     <li>At the end of the instruction, the value of Xn is written back with -1* the number of bytes remaining to be copied in the memory copy in total.</li> 
+    </ul></li> 
+   <li>If the copy is in the backward direction (Xn is a positive number), then: 
+    <ul> 
+     <li>Xn holds the number of bytes remaining to be copied in the memory copy in total.</li> 
+     <li>Xs holds the highest address that the copy is copied from -Xn+1.</li> 
+     <li>Xd holds the highest address that the copy is copied to -Xn+1.</li> 
+     <li>At the end of the instruction, the value of Xn is written back with the number of bytes remaining to be copied in the memory copy in total.</li> 
+    </ul></li> 
+  </ul> 
+  <p>For CPYMWTRN, option B (encoded by PSTATE.C = 1), the format of the arguments is:</p> 
+  <ul> 
+   <li>Xn holds the number of bytes to be copied in the memory copy in total.</li> 
+   <li>If the copy is in the forward direction (PSTATE.N == 0), then: 
+    <ul> 
+     <li>Xs holds the lowest address that the copy is copied from.</li> 
+     <li>Xd holds the lowest address that the copy is copied to.</li> 
+     <li>At the end of the instruction: 
+      <ul> 
+       <li>the value of Xn is written back with the number of bytes remaining to be copied in the memory copy in total.</li> 
+       <li>the value of Xs is written back with the lowest address that has not been copied from.</li> 
+       <li>the value of Xd is written back with the lowest address that has not been copied to.</li> 
+      </ul></li> 
+    </ul></li> 
+   <li>If the copy is in the backward direction (PSTATE.N == 1), then: 
+    <ul> 
+     <li>Xs holds the highest address that the copy is copied from +1.</li> 
+     <li>Xd holds the highest address that the copy is copied to +1.</li> 
+     <li>At the end of the instruction: 
+      <ul> 
+       <li>the value of Xn is written back with the number of bytes remaining to be copied in the memory copy in total.</li> 
+       <li>the value of Xs is written back with the highest address that has not been copied from +1.</li> 
+       <li>the value of Xd is written back with the highest address that has not been copied to +1.</li> 
+      </ul></li> 
+    </ul></li> 
+  </ul> 
+  <p>For CPYEWTRN, option A (encoded by PSTATE.C = 0), the format of the arguments is:</p> 
+  <ul> 
+   <li>Xn is treated as a signed 64-bit number.</li> 
+   <li>If the copy is in the forward direction (Xn is a negative number), then: 
+    <ul> 
+     <li>Xn holds -1* the number of bytes remaining to be copied in the memory copy in total.</li> 
+     <li>Xs holds the lowest address that the copy is copied from -Xn.</li> 
+     <li>Xd holds the lowest address that the copy is made to -Xn.</li> 
+     <li>At the end of the instruction, the value of Xn is written back with 0.</li> 
+    </ul></li> 
+   <li>If the copy is in the backward direction (Xn is a positive number), then: 
+    <ul> 
+     <li>Xn holds the number of bytes remaining to be copied in the memory copy in total.</li> 
+     <li>Xs holds the highest address that the copy is copied from -Xn+1.</li> 
+     <li>Xd holds the highest address that the copy is copied to -Xn+1.</li> 
+     <li>At the end of the instruction, the value of Xn is written back with 0.</li> 
+    </ul></li> 
+  </ul> 
+  <p>For CPYEWTRN, option B (encoded by PSTATE.C = 1), the format of the arguments is:</p> 
+  <ul> 
+   <li>Xn holds the number of bytes to be copied in the memory copy in total.</li> 
+   <li>If the copy is in the forward direction (PSTATE.N == 0), then: 
+    <ul> 
+     <li>Xs holds the lowest address that the copy is copied from.</li> 
+     <li>Xd holds the lowest address that the copy is copied to.</li> 
+     <li>At the end of the instruction: 
+      <ul> 
+       <li>the value of Xn is written back with 0.</li> 
+       <li>the value of Xs is written back with the lowest address that has not been copied from.</li> 
+       <li>the value of Xd is written back with the lowest address that has not been copied to.</li> 
+      </ul></li> 
+    </ul></li> 
+   <li>If the copy is in the backward direction (PSTATE.N == 1), then: 
+    <ul> 
+     <li>Xs holds the highest address that the copy is copied from +1.</li> 
+     <li>Xd holds the highest address that the copy is copied to +1.</li> 
+     <li>At the end of the instruction: 
+      <ul> 
+       <li>the value of Xn is written back with 0.</li> 
+       <li>the value of Xs is written back with the highest address that has not been copied from +1.</li> 
+       <li>the value of Xd is written back with the highest address that has not been copied to +1.</li> 
+      </ul></li> 
+    </ul></li> 
+  </ul> 
+  <h3><a id="iclass_general"></a>Integer<span><br></br>(FEAT_MOPS) </span></h3> 
+  <p></p> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td colspan="2">sz</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td colspan="2">op1</td> 
+      <td>0</td> 
+      <td colspan="5">Rs</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td colspan="5">Rn</td> 
+      <td colspan="5">Rd</td> 
+     </tr> 
+     <tr> 
+      <td colspan="2"></td> 
+      <td colspan="3"></td> 
+      <td></td> 
+      <td colspan="2"></td> 
+      <td colspan="2"></td> 
+      <td></td> 
+      <td colspan="5"></td> 
+      <td colspan="4">op2</td> 
+      <td colspan="2"></td> 
+      <td colspan="5"></td> 
+      <td colspan="5"></td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4>Epilogue<span> (op1 == 10)</span></h4> 
+   <a id="CPYEWTRN_CPY_memcms"></a> 
+   <p>CPYEWTRN [<a title="64-bit general-purpose register that holds an encoding of destination address (field &quot;Rd&quot;)" class="document-topic">&lt;Xd&gt;</a>]!, [<a title="64-bit general-purpose register that holds an encoding of source address (field &quot;Rs&quot;)" class="document-topic">&lt;Xs&gt;</a>]!, <a title="64-bit general-purpose register that holds an encoding of number of bytes to be transferred and is set to zero at the end of the instruction (field &quot;Rn&quot;)" class="document-topic">&lt;Xn&gt;</a>!</p> 
+  </div> 
+  <div> 
+   <h4>Main<span> (op1 == 01)</span></h4> 
+   <a id="CPYMWTRN_CPY_memcms"></a> 
+   <p>CPYMWTRN [<a title="64-bit general-purpose register that holds an encoding of destination address (field &quot;Rd&quot;)" class="document-topic">&lt;Xd&gt;</a>]!, [<a title="64-bit general-purpose register that holds an encoding of source address (field &quot;Rs&quot;)" class="document-topic">&lt;Xs&gt;</a>]!, <a title="64-bit general-purpose register that holds an encoding of number of bytes to be transferred (field &quot;Rn&quot;)" class="document-topic">&lt;Xn&gt;</a>!</p> 
+  </div> 
+  <div> 
+   <h4>Prologue<span> (op1 == 00)</span></h4> 
+   <a id="CPYPWTRN_CPY_memcms"></a> 
+   <p>CPYPWTRN [<a title="64-bit general-purpose register that holds the destination address and is updated by the instruction (field &quot;Rd&quot;)" class="document-topic">&lt;Xd&gt;</a>]!, [<a title="64-bit general-purpose register that holds the source address and is updated by the instruction (field &quot;Rs&quot;)" class="document-topic">&lt;Xs&gt;</a>]!, <a title="64-bit general-purpose register that holds the number of bytes to be transferred and is updated by the instruction to encode the remaining size and destination (field &quot;Rn&quot;)" class="document-topic">&lt;Xn&gt;</a>!</p> 
+  </div> 
+  <pre>if !<a title="function: boolean HaveFeatMOPS()" class="document-topic">HaveFeatMOPS</a>() then UNDEFINED;
+if sz != '00' then UNDEFINED;
+
+integer d = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Rd);
+integer s = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Rs);
+integer n = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Rn);
+bits(4) options = op2;
+
+<a title="enumeration MOPSStage { MOPSStage_Prologue, MOPSStage_Main, MOPSStage_Epilogue }" class="document-topic">MOPSStage</a> stage;
+case op1 of
+    when '00' stage = <a title="enumeration MOPSStage { MOPSStage_Prologue, MOPSStage_Main, MOPSStage_Epilogue }" class="document-topic">MOPSStage_Prologue</a>;
+    when '01' stage = <a title="enumeration MOPSStage { MOPSStage_Prologue, MOPSStage_Main, MOPSStage_Epilogue }" class="document-topic">MOPSStage_Main</a>;
+    when '10' stage = <a title="enumeration MOPSStage { MOPSStage_Prologue, MOPSStage_Main, MOPSStage_Epilogue }" class="document-topic">MOPSStage_Epilogue</a>;
+    otherwise SEE "Memory Copy and Memory Set";
+
+<a title="function: CheckMOPSEnabled()" class="document-topic">CheckMOPSEnabled</a>();
+
+if s == n || s == d || n == d || d == 31 || s == 31 || n == 31 then
+    c = <a title="function: Constraint ConstrainUnpredictable(Unpredictable which)" class="document-topic">ConstrainUnpredictable</a>(<a title="enumeration Unpredictable {  Unpredictable_VMSR,  Unpredictable_WBOVERLAPLD,  Unpredictable_WBOVERLAPST,  Unpredictable_LDPOVERLAP,  Unpredictable_BASEOVERLAP,  Unpredictable_DATAOVERLAP,  Unpredictable_DEVPAGE2,  Unpredictable_INSTRDEVICE,  Unpredictable_RESCPACR,  Unpredictable_RESMAIR,  Unpredictable_S1CTAGGED,  Unpredictable_S2RESMEMATTR,  Unpredictable_RESTEXCB,  Unpredictable_RESPRRR,  Unpredictable_RESDACR,  Unpredictable_RESVTCRS,  Unpredictable_RESTnSZ,  Unpredictable_RESTCF,  Unpredictable_DEVICETAGSTORE,  Unpredictable_OORTnSZ,  Unpredictable_LARGEIPA,  Unpredictable_ESRCONDPASS,  Unpredictable_ILZEROIT,  Unpredictable_ILZEROT,  Unpredictable_BPVECTORCATCHPRI,  Unpredictable_VCMATCHHALF,   Unpredictable_VCMATCHDAPA,  Unpredictable_WPMASKANDBAS,  Unpredictable_WPBASCONTIGUOUS,  Unpredictable_RESWPMASK,  Unpredictable_WPMASKEDBITS,  Unpredictable_RESBPWPCTRL,  Unpredictable_BPNOTIMPL,  Unpredictable_RESBPTYPE,  Unpredictable_BPNOTCTXCMP,  Unpredictable_BPMATCHHALF,  Unpredictable_BPMISMATCHHALF,  Unpredictable_RESTARTALIGNPC,  Unpredictable_RESTARTZEROUPPERPC,  Unpredictable_ZEROUPPER,   Unpredictable_ERETZEROUPPERPC,   Unpredictable_A32FORCEALIGNPC,  Unpredictable_SMD,  Unpredictable_NONFAULT,  Unpredictable_SVEZEROUPPER,  Unpredictable_SVELDNFDATA,  Unpredictable_SVELDNFZERO,  Unpredictable_CHECKSPNONEACTIVE,  Unpredictable_SMEZEROUPPER,  Unpredictable_NVNV1,  Unpredictable_Shareability,  Unpredictable_AFUPDATE,  Unpredictable_DBUPDATE,  Unpredictable_IESBinDebug,  Unpredictable_BADPMSFCR,  Unpredictable_ZEROBTYPE,  Unpredictable_EL2TIMESTAMP, Unpredictable_EL1TIMESTAMP,  Unpredictable_RESERVEDNSxB,  Unpredictable_WFxTDEBUG,  Unpredictable_LS64UNSUPPORTED,   Unpredictable_MISALIGNEDATOMIC,  Unpredictable_CLEARERRITEZERO,   Unpredictable_ALUEXCEPTIONRETURN,  Unpredictable_IGNORETRAPINDEBUG,  Unpredictable_DBGxVR_RESS,  Unpredictable_PMUEVENTCOUNTER,  Unpredictable_PMSCR_PCT,   Unpredictable_CounterReservedForEL2,  Unpredictable_BRBFILTRATE,   Unpredictable_MOPSOVERLAP31,  Unpredictable_STOREONLYTAGCHECKEDCAS,  Unpredictable_RESTC }" class="document-topic">Unpredictable_MOPSOVERLAP31</a>);
+    assert c IN {<a title="enumeration Constraint    { Constraint_NONE,   Constraint_UNKNOWN,  Constraint_UNDEF, Constraint_UNDEFEL0, Constraint_NOP, Constraint_TRUE, Constraint_FALSE, Constraint_DISABLED, Constraint_UNCOND, Constraint_COND, Constraint_ADDITIONAL_DECODE,   Constraint_WBSUPPRESS, Constraint_FAULT, Constraint_LIMITED_ATOMICITY,   Constraint_NVNV1_00, Constraint_NVNV1_01, Constraint_NVNV1_11, Constraint_EL1TIMESTAMP, Constraint_EL2TIMESTAMP, Constraint_OSH, Constraint_ISH, Constraint_NSH,  Constraint_NC, Constraint_WT, Constraint_WB,   Constraint_FORCE, Constraint_FORCENOSLCHECK,  Constraint_MAPTOALLOCATED,  Constraint_PMSCR_PCT_VIRT }" class="document-topic">Constraint_UNDEF</a>, <a title="enumeration Constraint    { Constraint_NONE,   Constraint_UNKNOWN,  Constraint_UNDEF, Constraint_UNDEFEL0, Constraint_NOP, Constraint_TRUE, Constraint_FALSE, Constraint_DISABLED, Constraint_UNCOND, Constraint_COND, Constraint_ADDITIONAL_DECODE,   Constraint_WBSUPPRESS, Constraint_FAULT, Constraint_LIMITED_ATOMICITY,   Constraint_NVNV1_00, Constraint_NVNV1_01, Constraint_NVNV1_11, Constraint_EL1TIMESTAMP, Constraint_EL2TIMESTAMP, Constraint_OSH, Constraint_ISH, Constraint_NSH,  Constraint_NC, Constraint_WT, Constraint_WB,   Constraint_FORCE, Constraint_FORCENOSLCHECK,  Constraint_MAPTOALLOCATED,  Constraint_PMSCR_PCT_VIRT }" class="document-topic">Constraint_NOP</a>};
+    case c of
+        when <a title="enumeration Constraint    { Constraint_NONE,   Constraint_UNKNOWN,  Constraint_UNDEF, Constraint_UNDEFEL0, Constraint_NOP, Constraint_TRUE, Constraint_FALSE, Constraint_DISABLED, Constraint_UNCOND, Constraint_COND, Constraint_ADDITIONAL_DECODE,   Constraint_WBSUPPRESS, Constraint_FAULT, Constraint_LIMITED_ATOMICITY,   Constraint_NVNV1_00, Constraint_NVNV1_01, Constraint_NVNV1_11, Constraint_EL1TIMESTAMP, Constraint_EL2TIMESTAMP, Constraint_OSH, Constraint_ISH, Constraint_NSH,  Constraint_NC, Constraint_WT, Constraint_WB,   Constraint_FORCE, Constraint_FORCENOSLCHECK,  Constraint_MAPTOALLOCATED,  Constraint_PMSCR_PCT_VIRT }" class="document-topic">Constraint_UNDEF</a>      UNDEFINED;
+        when <a title="enumeration Constraint    { Constraint_NONE,   Constraint_UNKNOWN,  Constraint_UNDEF, Constraint_UNDEFEL0, Constraint_NOP, Constraint_TRUE, Constraint_FALSE, Constraint_DISABLED, Constraint_UNCOND, Constraint_COND, Constraint_ADDITIONAL_DECODE,   Constraint_WBSUPPRESS, Constraint_FAULT, Constraint_LIMITED_ATOMICITY,   Constraint_NVNV1_00, Constraint_NVNV1_01, Constraint_NVNV1_11, Constraint_EL1TIMESTAMP, Constraint_EL2TIMESTAMP, Constraint_OSH, Constraint_ISH, Constraint_NSH,  Constraint_NC, Constraint_WT, Constraint_WB,   Constraint_FORCE, Constraint_FORCENOSLCHECK,  Constraint_MAPTOALLOCATED,  Constraint_PMSCR_PCT_VIRT }" class="document-topic">Constraint_NOP</a>        <a title="function: EndOfInstruction()" class="document-topic">EndOfInstruction</a>();</pre> 
+  <div> 
+   <p>For information about the <small>constrained unpredictable</small> behavior of this instruction, see <em>Architectural Constraints on UNPREDICTABLE behaviors</em>, and particularly <em>Memory Copy and Memory Set CPY*</em>.</p> 
+  </div> 
+  <h3>Assembler Symbols</h3> 
+  <div> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Xd&gt;</td> 
+      <td><a id="sa_xd_1"></a> <p>For the epilogue and main variant: is the 64-bit name of the general-purpose register that holds an encoding of the destination address, encoded in the "Rd" field.</p> </td> 
+     </tr> 
+     <tr> 
+      <td></td> 
+      <td><a id="sa_xd"></a> <p>For the prologue variant: is the 64-bit name of the general-purpose register that holds the destination address and is updated by the instruction, encoded in the "Rd" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Xs&gt;</td> 
+      <td><a id="sa_xs_1"></a> <p>For the epilogue and main variant: is the 64-bit name of the general-purpose register that holds an encoding of the source address, encoded in the "Rs" field.</p> </td> 
+     </tr> 
+     <tr> 
+      <td></td> 
+      <td><a id="sa_xs"></a> <p>For the prologue variant: is the 64-bit name of the general-purpose register that holds the source address and is updated by the instruction, encoded in the "Rs" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Xn&gt;</td> 
+      <td><a id="sa_xn_2"></a> <p>For the epilogue variant: is the 64-bit name of the general-purpose register that holds an encoding of the number of bytes to be transferred and is set to zero at the end of the instruction, encoded in the "Rn" field.</p> </td> 
+     </tr> 
+     <tr> 
+      <td></td> 
+      <td><a id="sa_xn_1"></a> <p>For the main variant: is the 64-bit name of the general-purpose register that holds an encoding of the number of bytes to be transferred, encoded in the "Rn" field.</p> </td> 
+     </tr> 
+     <tr> 
+      <td></td> 
+      <td><a id="sa_xn"></a> <p>For the prologue variant: is the 64-bit name of the general-purpose register that holds the number of bytes to be transferred and is updated by the instruction to encode the remaining size and destination, encoded in the "Rn" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div></div> 
+  <div> 
+   <a id="execute"></a> 
+   <h3>Operation</h3> 
+   <pre>integer N = <a title="function: integer MaxBlockSizeCopiedBytes()" class="document-topic">MaxBlockSizeCopiedBytes</a>();
+bits(64) toaddress   = <a title="accessor: bits(width) X[integer n, integer width]" class="document-topic">X</a>[d, 64];
+bits(64) fromaddress = <a title="accessor: bits(width) X[integer n, integer width]" class="document-topic">X</a>[s, 64];
+bits(64) cpysize     = <a title="accessor: bits(width) X[integer n, integer width]" class="document-topic">X</a>[n, 64];
+bits(4) nzcv = PSTATE.&lt;N,Z,C,V&gt;;
+bits(64) stagecpysize;
+bits(8*N) readdata;
+integer B;
+
+boolean supports_option_a = <a title="function: boolean CPYOptionA()" class="document-topic">CPYOptionA</a>();
+boolean rprivileged;
+boolean wprivileged;
+
+case PSTATE.EL of
+    when <a title="constant bits(2) EL0 = '00'" class="document-topic">EL0</a>
+        rprivileged = FALSE;
+        wprivileged = FALSE;
+    when <a title="constant bits(2) EL1 = '01'" class="document-topic">EL1</a>
+        if <a title="function: boolean EL2Enabled()" class="document-topic">EL2Enabled</a>() &amp;&amp; <a title="function: boolean HaveNVExt()" class="document-topic">HaveNVExt</a>() &amp;&amp; HCR_EL2.&lt;NV,NV1&gt; == '11' then
+            rprivileged = TRUE;
+            wprivileged = TRUE;
+        else
+            rprivileged = options&lt;1&gt; == '0';
+            wprivileged = options&lt;0&gt; == '0';
+    when <a title="constant bits(2) EL2 = '10'" class="document-topic">EL2</a>
+        if <a title="function: boolean HaveVirtHostExt()" class="document-topic">HaveVirtHostExt</a>() &amp;&amp; HCR_EL2.&lt;E2H,TGE&gt; == '11' then
+            rprivileged = options&lt;1&gt; == '0';
+            wprivileged = options&lt;0&gt; == '0';
+        else
+            rprivileged = TRUE;
+            wprivileged = TRUE;
+    when <a title="constant bits(2) EL3 = '11'" class="document-topic">EL3</a>
+        rprivileged = TRUE;
+        wprivileged = TRUE;
+
+if <a title="function: boolean HaveUAOExt()" class="document-topic">HaveUAOExt</a>() &amp;&amp; PSTATE.UAO == '1' then
+    rprivileged = PSTATE.EL != <a title="constant bits(2) EL0 = '00'" class="document-topic">EL0</a>;
+    wprivileged = PSTATE.EL != <a title="constant bits(2) EL0 = '00'" class="document-topic">EL0</a>;
+
+boolean rnontemporal = options&lt;3&gt; == '1';
+boolean wnontemporal = options&lt;2&gt; == '1';
+<a title="type AccessDescriptor is ( AccessType acctype, bits(2) el, SecurityState ss, boolean acqsc, boolean acqpc, boolean relsc, boolean limitedordered, boolean exclusive, boolean atomicop, MemAtomicOp modop, boolean nontemporal, boolean read, boolean write, CacheOp cacheop, CacheOpScope opscope, CacheType cachetype, boolean pan, boolean transactional, boolean nonfault, boolean firstfault, boolean first, boolean contiguous, boolean streamingsve, boolean ls64, boolean mops, boolean rcw, boolean rcws, boolean toplevel, VARange varange, boolean a32lsmd, boolean tagchecked, boolean tagaccess, MPAMinfo mpam )" class="document-topic">AccessDescriptor</a> raccdesc = <a title="function: AccessDescriptor CreateAccDescMOPS(MemOp memop, boolean privileged, boolean nontemporal)" class="document-topic">CreateAccDescMOPS</a>(<a title="enumeration MemOp {MemOp_LOAD, MemOp_STORE, MemOp_PREFETCH}" class="document-topic">MemOp_LOAD</a>, rprivileged, rnontemporal);
+<a title="type AccessDescriptor is ( AccessType acctype, bits(2) el, SecurityState ss, boolean acqsc, boolean acqpc, boolean relsc, boolean limitedordered, boolean exclusive, boolean atomicop, MemAtomicOp modop, boolean nontemporal, boolean read, boolean write, CacheOp cacheop, CacheOpScope opscope, CacheType cachetype, boolean pan, boolean transactional, boolean nonfault, boolean firstfault, boolean first, boolean contiguous, boolean streamingsve, boolean ls64, boolean mops, boolean rcw, boolean rcws, boolean toplevel, VARange varange, boolean a32lsmd, boolean tagchecked, boolean tagaccess, MPAMinfo mpam )" class="document-topic">AccessDescriptor</a> waccdesc = <a title="function: AccessDescriptor CreateAccDescMOPS(MemOp memop, boolean privileged, boolean nontemporal)" class="document-topic">CreateAccDescMOPS</a>(<a title="enumeration MemOp {MemOp_LOAD, MemOp_STORE, MemOp_PREFETCH}" class="document-topic">MemOp_STORE</a>, wprivileged, wnontemporal);
+
+if stage == <a title="enumeration MOPSStage { MOPSStage_Prologue, MOPSStage_Main, MOPSStage_Epilogue }" class="document-topic">MOPSStage_Prologue</a> then
+    if cpysize&lt;63:55&gt; != '000000000' then cpysize = 0x007FFFFFFFFFFFFF&lt;63:0&gt;;
+
+    boolean forward;
+    if ((<a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(fromaddress&lt;55:0&gt;) &gt; <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(toaddress&lt;55:0&gt;)) &amp;&amp;
+    (<a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(fromaddress&lt;55:0&gt;) &lt; <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(toaddress&lt;55:0&gt;+cpysize&lt;55:0&gt;))) then
+        forward = TRUE;
+    elsif ((<a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(fromaddress&lt;55:0&gt;) &lt; <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(toaddress&lt;55:0&gt;)) &amp;&amp;
+    (<a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(fromaddress&lt;55:0&gt;+cpysize&lt;55:0&gt;) &gt; <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(toaddress&lt;55:0&gt;))) then
+        forward = FALSE;
+    else
+        forward = <a title="function: boolean MemCpyDirectionChoice(bits(64) fromaddress, bits(64) toaddress, bits(64) cpysize)" class="document-topic">MemCpyDirectionChoice</a>(fromaddress, toaddress, cpysize);
+
+    if supports_option_a then
+        nzcv = '0000';
+        if forward then
+            // Copy in the forward direction offsets the arguments.
+            toaddress   = toaddress + cpysize;
+            fromaddress = fromaddress + cpysize;
+            cpysize     = <a title="function: bits(N) Zeros(integer N)" class="document-topic">Zeros</a>(64) - cpysize;
+    else
+        if !forward then
+            // Copy in the reverse direction offsets the arguments.
+            toaddress   = toaddress + cpysize;
+            fromaddress = fromaddress + cpysize;
+            nzcv = '1010';
+        else
+            nzcv = '0010';
+
+    // IMP DEF selection of the amount covered by pre-processing.
+    stagecpysize = <a title="function: bits(64) CPYPreSizeChoice(bits(64) toaddress, bits(64) fromaddress, bits(64) cpysize)" class="document-topic">CPYPreSizeChoice</a>(toaddress, fromaddress, cpysize);
+    assert stagecpysize&lt;63&gt; == cpysize&lt;63&gt; || stagecpysize == <a title="function: bits(N) Zeros(integer N)" class="document-topic">Zeros</a>(64);
+
+    if <a title="function: integer SInt(bits(N) x)" class="document-topic">SInt</a>(cpysize) &gt; 0 then
+        assert <a title="function: integer SInt(bits(N) x)" class="document-topic">SInt</a>(stagecpysize) &lt;= <a title="function: integer SInt(bits(N) x)" class="document-topic">SInt</a>(cpysize);
+    else
+        assert <a title="function: integer SInt(bits(N) x)" class="document-topic">SInt</a>(stagecpysize) &gt;= <a title="function: integer SInt(bits(N) x)" class="document-topic">SInt</a>(cpysize);
+else
+    boolean zero_size_exceptions = <a title="function: boolean MemCpyZeroSizeCheck()" class="document-topic">MemCpyZeroSizeCheck</a>();
+
+    // Check if this version is consistent with the state of the call.
+    if zero_size_exceptions || <a title="function: integer SInt(bits(N) x)" class="document-topic">SInt</a>(cpysize) != 0 then
+        if supports_option_a then
+            if nzcv&lt;1&gt; == '1' then   // PSTATE.C
+                boolean wrong_option  = TRUE;
+                boolean from_epilogue = stage == <a title="enumeration MOPSStage { MOPSStage_Prologue, MOPSStage_Main, MOPSStage_Epilogue }" class="document-topic">MOPSStage_Epilogue</a>;
+                <a title="function: MismatchedMemCpyException(boolean option_a, integer destreg, integer srcreg, integer sizereg, boolean wrong_option, boolean from_epilogue, bits(4) options)" class="document-topic">MismatchedMemCpyException</a>(supports_option_a, d, s, n, wrong_option,
+                from_epilogue, options);
+        else
+            if nzcv&lt;1&gt; == '0' then   // PSTATE.C
+                boolean wrong_option  = TRUE;
+                boolean from_epilogue = stage == <a title="enumeration MOPSStage { MOPSStage_Prologue, MOPSStage_Main, MOPSStage_Epilogue }" class="document-topic">MOPSStage_Epilogue</a>;
+                <a title="function: MismatchedMemCpyException(boolean option_a, integer destreg, integer srcreg, integer sizereg, boolean wrong_option, boolean from_epilogue, bits(4) options)" class="document-topic">MismatchedMemCpyException</a>(supports_option_a, d, s, n, wrong_option,
+                from_epilogue, options);
+
+    bits(64) postsize = <a title="function: bits(64) CPYPostSizeChoice(bits(64) toaddress, bits(64) fromaddress, bits(64) cpysize)" class="document-topic">CPYPostSizeChoice</a>(toaddress, fromaddress, cpysize);
+    assert postsize&lt;63&gt; == cpysize&lt;63&gt; || <a title="function: integer SInt(bits(N) x)" class="document-topic">SInt</a>(postsize) == 0;
+
+    if stage == <a title="enumeration MOPSStage { MOPSStage_Prologue, MOPSStage_Main, MOPSStage_Epilogue }" class="document-topic">MOPSStage_Main</a> then
+        stagecpysize = cpysize - postsize;
+
+        // Check if the parameters to this instruction are valid.
+        if <a title="function: boolean MemCpyParametersIllformedM(bits(64) toaddress, bits(64) fromaddress, bits(64) cpysize)" class="document-topic">MemCpyParametersIllformedM</a>(toaddress, fromaddress, cpysize) then
+            boolean wrong_option  = FALSE;
+            boolean from_epilogue = FALSE;
+            <a title="function: MismatchedMemCpyException(boolean option_a, integer destreg, integer srcreg, integer sizereg, boolean wrong_option, boolean from_epilogue, bits(4) options)" class="document-topic">MismatchedMemCpyException</a>(supports_option_a, d, s, n, wrong_option,
+            from_epilogue, options);
+    else
+        stagecpysize = postsize;
+
+        // Check if the parameters to the epilogue are valid.
+        if (cpysize != postsize || <a title="function: boolean MemCpyParametersIllformedE(bits(64) toaddress, bits(64) fromaddress, bits(64) cpysize)" class="document-topic">MemCpyParametersIllformedE</a>(toaddress, fromaddress, cpysize)) then
+            boolean wrong_option  = FALSE;
+            boolean from_epilogue = TRUE;
+            <a title="function: MismatchedMemCpyException(boolean option_a, integer destreg, integer srcreg, integer sizereg, boolean wrong_option, boolean from_epilogue, bits(4) options)" class="document-topic">MismatchedMemCpyException</a>(supports_option_a, d, s, n, wrong_option,
+            from_epilogue, options);
+
+if supports_option_a then
+    while <a title="function: integer SInt(bits(N) x)" class="document-topic">SInt</a>(stagecpysize) != 0 do
+        // IMP DEF selection of the block size that is worked on. While many
+        // implementations might make this constant, that is not assumed.
+        B = <a title="function: integer CPYSizeChoice(bits(64) toaddress, bits(64) fromaddress, bits(64) cpysize)" class="document-topic">CPYSizeChoice</a>(toaddress, fromaddress, cpysize);
+
+        if <a title="function: integer SInt(bits(N) x)" class="document-topic">SInt</a>(cpysize) &lt; 0 then
+            assert B &lt;= -1*<a title="function: integer SInt(bits(N) x)" class="document-topic">SInt</a>(stagecpysize);
+
+            readdata&lt;B*8-1:0&gt; = <a title="accessor: bits(size*8) Mem[bits(64) address, integer size, AccessDescriptor accdesc]" class="document-topic">Mem</a>[fromaddress + cpysize, B, raccdesc];
+            Mem[toaddress + cpysize, B, waccdesc] = readdata&lt;B*8-1:0&gt;;
+            cpysize = cpysize + B;
+            stagecpysize = stagecpysize + B;
+        else
+            assert B &lt;= <a title="function: integer SInt(bits(N) x)" class="document-topic">SInt</a>(stagecpysize);
+
+            cpysize = cpysize - B;
+            stagecpysize = stagecpysize - B;
+            readdata&lt;B*8-1:0&gt; = <a title="accessor: bits(size*8) Mem[bits(64) address, integer size, AccessDescriptor accdesc]" class="document-topic">Mem</a>[fromaddress + cpysize, B, raccdesc];
+            Mem[toaddress + cpysize, B, waccdesc] = readdata&lt;B*8-1:0&gt;;
+
+        if stage != <a title="enumeration MOPSStage { MOPSStage_Prologue, MOPSStage_Main, MOPSStage_Epilogue }" class="document-topic">MOPSStage_Prologue</a> then
+            <a title="accessor: X[integer n, integer width] = bits(width) value" class="document-topic">X</a>[n, 64] = cpysize;
+else
+    while <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(stagecpysize) &gt; 0 do
+        // IMP DEF selection of the block size that is worked on. While many
+        // implementations might make this constant, that is not assumed.
+        B = <a title="function: integer CPYSizeChoice(bits(64) toaddress, bits(64) fromaddress, bits(64) cpysize)" class="document-topic">CPYSizeChoice</a>(toaddress, fromaddress, cpysize);
+        assert B &lt;= <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(stagecpysize);
+
+        if nzcv&lt;3&gt; == '0' then       // PSTATE.N
+            readdata&lt;B*8-1:0&gt; = <a title="accessor: bits(size*8) Mem[bits(64) address, integer size, AccessDescriptor accdesc]" class="document-topic">Mem</a>[fromaddress, B, raccdesc];
+            Mem[toaddress, B, waccdesc] = readdata&lt;B*8-1:0&gt;;
+            fromaddress = fromaddress + B;
+            toaddress   = toaddress + B;
+        else
+            readdata&lt;B*8-1:0&gt; = <a title="accessor: bits(size*8) Mem[bits(64) address, integer size, AccessDescriptor accdesc]" class="document-topic">Mem</a>[fromaddress - B, B, raccdesc];
+            Mem[toaddress - B, B, waccdesc] = readdata&lt;B*8-1:0&gt;;
+            fromaddress = fromaddress - B;
+            toaddress   = toaddress - B;
+
+        cpysize = cpysize - B;
+        stagecpysize = stagecpysize - B;
+
+        if stage != <a title="enumeration MOPSStage { MOPSStage_Prologue, MOPSStage_Main, MOPSStage_Epilogue }" class="document-topic">MOPSStage_Prologue</a> then
+            <a title="accessor: X[integer n, integer width] = bits(width) value" class="document-topic">X</a>[n, 64] = cpysize;
+            <a title="accessor: X[integer n, integer width] = bits(width) value" class="document-topic">X</a>[d, 64] = toaddress;
+            <a title="accessor: X[integer n, integer width] = bits(width) value" class="document-topic">X</a>[s,64] = fromaddress;
+
+if stage == <a title="enumeration MOPSStage { MOPSStage_Prologue, MOPSStage_Main, MOPSStage_Epilogue }" class="document-topic">MOPSStage_Prologue</a> then
+    <a title="accessor: X[integer n, integer width] = bits(width) value" class="document-topic">X</a>[n, 64] = cpysize;
+    <a title="accessor: X[integer n, integer width] = bits(width) value" class="document-topic">X</a>[d, 64] = toaddress;
+    <a title="accessor: X[integer n, integer width] = bits(width) value" class="document-topic">X</a>[s, 64] = fromaddress;
+    PSTATE.&lt;N,Z,C,V&gt; = nzcv;</pre> 
+  </div>  
+ </body>
+</html>

@@ -1,0 +1,219 @@
+<html>
+ <head>  <link rel="stylesheet" href="../def-style.css"></head> 
+ <body> 
+  <h2>EOR (vector)</h2> 
+  <p>Bitwise Exclusive-OR (vector). This instruction performs a bitwise exclusive-OR operation between the two source SIMD&amp;FP registers, and places the result in the destination SIMD&amp;FP register.</p> 
+  <p>Depending on the settings in the <em>CPACR_EL1</em>, <em>CPTR_EL2</em>, and <em>CPTR_EL3</em> registers, and the current Security state and Exception level, an attempt to execute the instruction might be trapped.</p> 
+  <p></p> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>0</td> 
+      <td>Q</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td colspan="5">Rm</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td colspan="5">Rn</td> 
+      <td colspan="5">Rd</td> 
+     </tr> 
+     <tr> 
+      <td></td> 
+      <td></td> 
+      <td></td> 
+      <td colspan="5"></td> 
+      <td colspan="2">opc2</td> 
+      <td></td> 
+      <td colspan="5"></td> 
+      <td colspan="5"></td> 
+      <td></td> 
+      <td colspan="5"></td> 
+      <td colspan="5"></td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4></h4> 
+   <a id="EOR_asimdsame_only"></a> 
+   <p>EOR <a title="SIMD&amp;FP destination register (field &quot;Rd&quot;)" class="document-topic">&lt;Vd&gt;</a>.<a title="Arrangement specifier (field &quot;Q&quot;) [8B,16B]" class="document-topic">&lt;T&gt;</a>, <a title="First SIMD&amp;FP source register (field &quot;Rn&quot;)" class="document-topic">&lt;Vn&gt;</a>.<a title="Arrangement specifier (field &quot;Q&quot;) [8B,16B]" class="document-topic">&lt;T&gt;</a>, <a title="Second SIMD&amp;FP source register (field &quot;Rm&quot;)" class="document-topic">&lt;Vm&gt;</a>.<a title="Arrangement specifier (field &quot;Q&quot;) [8B,16B]" class="document-topic">&lt;T&gt;</a></p> 
+  </div> 
+  <pre>integer d = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Rd);
+integer n = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Rn);
+integer m = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Rm);
+integer esize = 8;
+integer datasize = if Q == '1' then 128 else 64;
+integer elements = datasize DIV esize;
+
+<a title="enumeration VBitOp      {VBitOp_VBIF, VBitOp_VBIT, VBitOp_VBSL, VBitOp_VEOR}" class="document-topic">VBitOp</a> op;
+
+case opc2 of
+    when '00' op = <a title="enumeration VBitOp      {VBitOp_VBIF, VBitOp_VBIT, VBitOp_VBSL, VBitOp_VEOR}" class="document-topic">VBitOp_VEOR</a>;
+    when '01' op = <a title="enumeration VBitOp      {VBitOp_VBIF, VBitOp_VBIT, VBitOp_VBSL, VBitOp_VEOR}" class="document-topic">VBitOp_VBSL</a>;
+    when '10' op = <a title="enumeration VBitOp      {VBitOp_VBIF, VBitOp_VBIT, VBitOp_VBSL, VBitOp_VEOR}" class="document-topic">VBitOp_VBIT</a>;
+    when '11' op = <a title="enumeration VBitOp      {VBitOp_VBIF, VBitOp_VBIT, VBitOp_VBSL, VBitOp_VEOR}" class="document-topic">VBitOp_VBIF</a>;</pre> 
+  <div></div> 
+  <h3>Assembler Symbols</h3> 
+  <div> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Vd&gt;</td> 
+      <td><a id="sa_vd"></a> <p>Is the name of the SIMD&amp;FP destination register, encoded in the "Rd" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;T&gt;</td> 
+      <td><a id="sa_t"></a> <p>Is an arrangement specifier, encoded in <q>Q</q>: </p> 
+       <table> 
+        <thead> 
+         <tr> 
+          <th>Q</th> 
+          <th>&lt;T&gt;</th> 
+         </tr> 
+        </thead> 
+        <tbody> 
+         <tr> 
+          <td>0</td> 
+          <td>8B</td> 
+         </tr> 
+         <tr> 
+          <td>1</td> 
+          <td>16B</td> 
+         </tr> 
+        </tbody> 
+       </table> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Vn&gt;</td> 
+      <td><a id="sa_vn"></a> <p>Is the name of the first SIMD&amp;FP source register, encoded in the "Rn" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Vm&gt;</td> 
+      <td><a id="sa_vm"></a> <p>Is the name of the second SIMD&amp;FP source register, encoded in the "Rm" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div></div> 
+  <div> 
+   <a id="execute"></a> 
+   <h3>Operation</h3> 
+   <pre><a title="function: CheckFPAdvSIMDEnabled64()" class="document-topic">CheckFPAdvSIMDEnabled64</a>();
+bits(datasize) operand1;
+bits(datasize) operand2;
+bits(datasize) operand3;
+bits(datasize) operand4 = <a title="accessor: bits(width) V[integer n, integer width]" class="document-topic">V</a>[n, datasize];
+
+case op of
+    when <a title="enumeration VBitOp      {VBitOp_VBIF, VBitOp_VBIT, VBitOp_VBSL, VBitOp_VEOR}" class="document-topic">VBitOp_VEOR</a>
+        operand1 = <a title="accessor: bits(width) V[integer n, integer width]" class="document-topic">V</a>[m, datasize];
+        operand2 = <a title="function: bits(N) Zeros(integer N)" class="document-topic">Zeros</a>(datasize);
+        operand3 = <a title="function: bits(N) Ones(integer N)" class="document-topic">Ones</a>(datasize);
+    when <a title="enumeration VBitOp      {VBitOp_VBIF, VBitOp_VBIT, VBitOp_VBSL, VBitOp_VEOR}" class="document-topic">VBitOp_VBSL</a>
+        operand1 = <a title="accessor: bits(width) V[integer n, integer width]" class="document-topic">V</a>[m, datasize];
+        operand2 = operand1;
+        operand3 = <a title="accessor: bits(width) V[integer n, integer width]" class="document-topic">V</a>[d, datasize];
+    when <a title="enumeration VBitOp      {VBitOp_VBIF, VBitOp_VBIT, VBitOp_VBSL, VBitOp_VEOR}" class="document-topic">VBitOp_VBIT</a>
+        operand1 = <a title="accessor: bits(width) V[integer n, integer width]" class="document-topic">V</a>[d, datasize];
+        operand2 = operand1;
+        operand3 = <a title="accessor: bits(width) V[integer n, integer width]" class="document-topic">V</a>[m, datasize];
+    when <a title="enumeration VBitOp      {VBitOp_VBIF, VBitOp_VBIT, VBitOp_VBSL, VBitOp_VEOR}" class="document-topic">VBitOp_VBIF</a>
+        operand1 = <a title="accessor: bits(width) V[integer n, integer width]" class="document-topic">V</a>[d, datasize];
+        operand2 = operand1;
+        operand3 = NOT(<a title="accessor: bits(width) V[integer n, integer width]" class="document-topic">V</a>[m, datasize]);
+
+<a title="accessor: V[integer n, integer width] = bits(width) value" class="document-topic">V</a>[d, datasize] = operand1 EOR ((operand2 EOR operand4) AND operand3);</pre> 
+  </div> 
+  <h3>Operational information</h3> 
+  <p>If PSTATE.DIT is 1:</p> 
+  <ul> 
+   <li>The execution time of this instruction is independent of: 
+    <ul> 
+     <li>The values of the data supplied in any of its registers.</li> 
+     <li>The values of the NZCV flags.</li> 
+    </ul></li> 
+   <li>The response of this instruction to asynchronous exceptions does not vary based on: 
+    <ul> 
+     <li>The values of the data supplied in any of its registers.</li> 
+     <li>The values of the NZCV flags.</li> 
+    </ul></li> 
+  </ul>  
+ </body>
+</html>

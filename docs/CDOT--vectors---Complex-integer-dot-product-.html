@@ -1,0 +1,267 @@
+<html>
+ <head>  <link rel="stylesheet" href="../def-style.css"></head> 
+ <body> 
+  <h2>CDOT (vectors)</h2> 
+  <p>Complex integer dot product</p> 
+  <p>The complex integer dot product instructions delimit the source vectors into pairs of 8-bit or 16-bit signed integer complex numbers. Within each pair, the complex numbers in the first source vector are multiplied by the corresponding complex numbers in the second source vector and the resulting wide real or wide imaginary part of the product is accumulated into a 32-bit or 64-bit destination vector element which overlaps all four of the elements that comprise a pair of complex number values in the first source vector.</p> 
+  <p>As a result each instruction implicitly deinterleaves the real and imaginary components of their complex number inputs, so that the destination vector accumulates 4×wide real sums or 4×wide imaginary sums.</p> 
+  <p>The complex numbers in the second source vector are rotated by 0, 90, 180 or 270 degrees in the direction from the positive real axis towards the positive imaginary axis, when considered in polar representation, by performing the following transformations prior to the dot product operations:</p> 
+  <ul> 
+   <li> If the rotation is #0, the imaginary parts of the complex numbers in the second source vector are negated. The destination vector therefore accumulates the real parts of a complex dot product. </li> 
+   <li> If the rotation is #90, the real and imaginary parts of the complex numbers the second source vector are swapped. The destination vector therefore accumulates the imaginary parts of a complex dot product. </li> 
+   <li> If the rotation is #180, there is no transformation. The destination vector therefore accumulates the real parts of a complex conjugate dot product. </li> 
+   <li> If the rotation is #270, the real parts of the complex numbers in the second source vector are negated and then swapped with the imaginary parts. The destination vector therefore accumulates the imaginary parts of a complex conjugate dot product. </li> 
+  </ul> 
+  <p></p> 
+  <p>Each complex number is represented in a vector register as an even/odd pair of elements with the real part in the even-numbered element and the imaginary part in the odd-numbered element.</p> 
+  <p></p> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td colspan="2">size</td> 
+      <td>0</td> 
+      <td colspan="5">Zm</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td colspan="2">rot</td> 
+      <td colspan="5">Zn</td> 
+      <td colspan="5">Zda</td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4></h4> 
+   <a id="cdot_z_zzz_"></a> 
+   <p>CDOT <a title="Third source and destination scalable vector register (field &quot;Zda&quot;)" class="document-topic">&lt;Zda&gt;</a>.<a title="Size specifier (field &quot;size<0>&quot;) [D,S]" class="document-topic">&lt;T&gt;</a>, <a title="First source scalable vector register (field &quot;Zn&quot;)" class="document-topic">&lt;Zn&gt;</a>.<a title="Size specifier (field &quot;size<0>&quot;) [B,H]" class="document-topic">&lt;Tb&gt;</a>, <a title="Second source scalable vector register (field &quot;Zm&quot;)" class="document-topic">&lt;Zm&gt;</a>.<a title="Size specifier (field &quot;size<0>&quot;) [B,H]" class="document-topic">&lt;Tb&gt;</a>, <a title="Const specifier (field &quot;rot&quot;) [#0,#90,#180,#270]" class="document-topic">&lt;const&gt;</a></p> 
+  </div> 
+  <pre>if !<a title="function: boolean HaveSVE2()" class="document-topic">HaveSVE2</a>() &amp;&amp; !<a title="function: boolean HaveSME()" class="document-topic">HaveSME</a>() then UNDEFINED;
+if size IN {'0x'} then UNDEFINED;
+constant integer esize = 8 &lt;&lt; <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(size);
+integer n = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Zn);
+integer m = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Zm);
+integer da = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Zda);
+integer sel_a = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(rot&lt;0&gt;);
+integer sel_b = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(NOT(rot&lt;0&gt;));
+boolean sub_i = (rot&lt;0&gt; == rot&lt;1&gt;);</pre> 
+  <div></div> 
+  <h3>Assembler Symbols</h3> 
+  <div> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Zda&gt;</td> 
+      <td><a id="sa_zda"></a> <p>Is the name of the third source and destination scalable vector register, encoded in the "Zda" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;T&gt;</td> 
+      <td><a id="sa_t"></a> <p>Is the size specifier, encoded in <q>size&lt;0&gt;</q>: </p> 
+       <table> 
+        <thead> 
+         <tr> 
+          <th>size&lt;0&gt;</th> 
+          <th>&lt;T&gt;</th> 
+         </tr> 
+        </thead> 
+        <tbody> 
+         <tr> 
+          <td>0</td> 
+          <td>S</td> 
+         </tr> 
+         <tr> 
+          <td>1</td> 
+          <td>D</td> 
+         </tr> 
+        </tbody> 
+       </table> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Zn&gt;</td> 
+      <td><a id="sa_zn"></a> <p>Is the name of the first source scalable vector register, encoded in the "Zn" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Tb&gt;</td> 
+      <td><a id="sa_tb"></a> <p>Is the size specifier, encoded in <q>size&lt;0&gt;</q>: </p> 
+       <table> 
+        <thead> 
+         <tr> 
+          <th>size&lt;0&gt;</th> 
+          <th>&lt;Tb&gt;</th> 
+         </tr> 
+        </thead> 
+        <tbody> 
+         <tr> 
+          <td>0</td> 
+          <td>B</td> 
+         </tr> 
+         <tr> 
+          <td>1</td> 
+          <td>H</td> 
+         </tr> 
+        </tbody> 
+       </table> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Zm&gt;</td> 
+      <td><a id="sa_zm"></a> <p>Is the name of the second source scalable vector register, encoded in the "Zm" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;const&gt;</td> 
+      <td><a id="sa_const"></a> <p>Is the const specifier, encoded in <q>rot</q>: </p> 
+       <table> 
+        <thead> 
+         <tr> 
+          <th>rot</th> 
+          <th>&lt;const&gt;</th> 
+         </tr> 
+        </thead> 
+        <tbody> 
+         <tr> 
+          <td>00</td> 
+          <td>#0</td> 
+         </tr> 
+         <tr> 
+          <td>01</td> 
+          <td>#90</td> 
+         </tr> 
+         <tr> 
+          <td>10</td> 
+          <td>#180</td> 
+         </tr> 
+         <tr> 
+          <td>11</td> 
+          <td>#270</td> 
+         </tr> 
+        </tbody> 
+       </table> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div></div> 
+  <div> 
+   <a id="execute"></a> 
+   <h3>Operation</h3> 
+   <pre><a title="function: CheckSVEEnabled()" class="document-topic">CheckSVEEnabled</a>();
+constant integer VL = <a title="accessor: integer CurrentVL" class="document-topic">CurrentVL</a>;
+constant integer elements = VL DIV esize;
+bits(VL) operand1 = <a title="accessor: bits(width) Z[integer n, integer width]" class="document-topic">Z</a>[n, VL];
+bits(VL) operand2 = <a title="accessor: bits(width) Z[integer n, integer width]" class="document-topic">Z</a>[m, VL];
+bits(VL) operand3 = <a title="accessor: bits(width) Z[integer n, integer width]" class="document-topic">Z</a>[da, VL];
+bits(VL) result;
+
+for e = 0 to elements-1
+    bits(esize) res = <a title="accessor: bits(size) Elem[bits(N) vector, integer e, integer size]" class="document-topic">Elem</a>[operand3, e, esize];
+    for i = 0 to 1
+        integer elt1_r = <a title="function: integer SInt(bits(N) x)" class="document-topic">SInt</a>(<a title="accessor: bits(size) Elem[bits(N) vector, integer e, integer size]" class="document-topic">Elem</a>[operand1, 4 * e + 2 * i + 0, esize DIV 4]);
+        integer elt1_i = <a title="function: integer SInt(bits(N) x)" class="document-topic">SInt</a>(<a title="accessor: bits(size) Elem[bits(N) vector, integer e, integer size]" class="document-topic">Elem</a>[operand1, 4 * e + 2 * i + 1, esize DIV 4]);
+        integer elt2_a = <a title="function: integer SInt(bits(N) x)" class="document-topic">SInt</a>(<a title="accessor: bits(size) Elem[bits(N) vector, integer e, integer size]" class="document-topic">Elem</a>[operand2, 4 * e + 2 * i + sel_a, esize DIV 4]);
+        integer elt2_b = <a title="function: integer SInt(bits(N) x)" class="document-topic">SInt</a>(<a title="accessor: bits(size) Elem[bits(N) vector, integer e, integer size]" class="document-topic">Elem</a>[operand2, 4 * e + 2 * i + sel_b, esize DIV 4]);
+        if sub_i then
+            res = (res + (elt1_r * elt2_a)) - (elt1_i * elt2_b);
+        else
+            res = res + (elt1_r * elt2_a) + (elt1_i * elt2_b);
+    <a title="accessor: Elem[bits(N) &amp;vector, integer e, integer size] = bits(size) value" class="document-topic">Elem</a>[result, e, esize] = res;
+
+<a title="accessor: Z[integer n, integer width] = bits(width) value" class="document-topic">Z</a>[da, VL] = result;</pre> 
+  </div> 
+  <h3>Operational information</h3> 
+  <p> This instruction might be immediately preceded in program order by a <span>MOVPRFX</span> instruction. The <span>MOVPRFX</span> instruction must conform to all of the following requirements, otherwise the behavior of the <span>MOVPRFX</span> and this instruction is <small>unpredictable</small>: </p> 
+  <ul> 
+   <li>The <span>MOVPRFX</span> instruction must be unpredicated.</li> 
+   <li>The <span>MOVPRFX</span> instruction must specify the same destination register as this instruction.</li> 
+   <li>The destination register must not refer to architectural register state referenced by any other source operand register of this instruction.</li> 
+  </ul>  
+ </body>
+</html>

@@ -1,0 +1,157 @@
+<html>
+ <head>  <link rel="stylesheet" href="../def-style.css"></head> 
+ <body> 
+  <h2>TSTART</h2> 
+  <p>This instruction starts a new transaction. If the transaction started successfully, the destination register is set to zero. If the transaction failed or was canceled, then all state modifications that were performed transactionally are discarded and the destination register is written with a non-zero value that encodes the cause of the failure.</p> 
+  <h3><a id="iclass_system"></a>System<span><br></br>(FEAT_TME) </span></h3> 
+  <p></p> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td colspan="5">Rt</td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4></h4> 
+   <a id="TSTART_BR_systemresult"></a> 
+   <p>TSTART <a title="64-bit general-purpose destination register (field &quot;Rt&quot;)" class="document-topic">&lt;Xt&gt;</a></p> 
+  </div> 
+  <pre>if !<a title="function: boolean HaveTME()" class="document-topic">HaveTME</a>() then UNDEFINED;
+integer t = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Rt);</pre> 
+  <div></div> 
+  <h3>Assembler Symbols</h3> 
+  <div> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Xt&gt;</td> 
+      <td><a id="sa_xt"></a> <p>Is the 64-bit name of the general-purpose destination register, encoded in the "Rt" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div></div> 
+  <div> 
+   <a id="execute"></a> 
+   <h3>Operation</h3> 
+   <pre>if !<a title="function: boolean IsTMEEnabled()" class="document-topic">IsTMEEnabled</a>() then UNDEFINED;
+
+boolean IsEL1Regime;
+bit tme;
+bit tmt;
+case PSTATE.EL of
+    when <a title="constant bits(2) EL0 = '00'" class="document-topic">EL0</a>
+        IsEL1Regime = <a title="function: bits(2) S1TranslationRegime()" class="document-topic">S1TranslationRegime</a>() == <a title="constant bits(2) EL1 = '01'" class="document-topic">EL1</a>;
+        if IsEL1Regime then
+            tme = SCTLR_EL1.TME0;
+            tmt = SCTLR_EL1.TMT0;
+        else
+            tme = SCTLR_EL2.TME0;
+            tmt = SCTLR_EL2.TMT0;
+    when <a title="constant bits(2) EL1 = '01'" class="document-topic">EL1</a>
+        tme = SCTLR_EL1.TME;
+        tmt = SCTLR_EL1.TMT;
+    when <a title="constant bits(2) EL2 = '10'" class="document-topic">EL2</a>
+        tme = SCTLR_EL2.TME;
+        tmt = SCTLR_EL2.TMT;
+    when <a title="constant bits(2) EL3 = '11'" class="document-topic">EL3</a>
+        tme = SCTLR_EL3.TME;
+        tmt = SCTLR_EL3.TMT;
+    otherwise
+        <a title="function: Unreachable()" class="document-topic">Unreachable</a>();
+
+enable  = tme == '1';
+trivial = tmt == '1';
+
+if !enable then
+    <a title="function: TransactionStartTrap(integer dreg)" class="document-topic">TransactionStartTrap</a>(t);
+elsif trivial then
+    TSTATE.nPC = <a title="function: bits(N) NextInstrAddr(integer N)" class="document-topic">NextInstrAddr</a>(64);
+    TSTATE.Rt = t;
+    <a title="function: FailTransaction(TMFailure cause, boolean retry)" class="document-topic">FailTransaction</a>(<a title="enumeration TMFailure { TMFailure_CNCL, TMFailure_DBG, TMFailure_ERR, TMFailure_NEST, TMFailure_SIZE, TMFailure_MEM, TMFailure_TRIVIAL, TMFailure_IMP }" class="document-topic">TMFailure_TRIVIAL</a>, FALSE);
+elsif <a title="function: boolean HaveSME()" class="document-topic">HaveSME</a>() &amp;&amp; PSTATE.SM == '1' then
+    <a title="function: FailTransaction(TMFailure cause, boolean retry)" class="document-topic">FailTransaction</a>(<a title="enumeration TMFailure { TMFailure_CNCL, TMFailure_DBG, TMFailure_ERR, TMFailure_NEST, TMFailure_SIZE, TMFailure_MEM, TMFailure_TRIVIAL, TMFailure_IMP }" class="document-topic">TMFailure_ERR</a>, FALSE);
+elsif TSTATE.depth == 255 then
+    <a title="function: FailTransaction(TMFailure cause, boolean retry)" class="document-topic">FailTransaction</a>(<a title="enumeration TMFailure { TMFailure_CNCL, TMFailure_DBG, TMFailure_ERR, TMFailure_NEST, TMFailure_SIZE, TMFailure_MEM, TMFailure_TRIVIAL, TMFailure_IMP }" class="document-topic">TMFailure_NEST</a>, FALSE);
+elsif TSTATE.depth == 0 then
+    TSTATE.nPC = <a title="function: bits(N) NextInstrAddr(integer N)" class="document-topic">NextInstrAddr</a>(64);
+    TSTATE.Rt = t;
+    <a title="function: ClearExclusiveLocal(integer processorid)" class="document-topic">ClearExclusiveLocal</a>(<a title="function: integer ProcessorID()" class="document-topic">ProcessorID</a>());
+    <a title="function: TakeTransactionCheckpoint()" class="document-topic">TakeTransactionCheckpoint</a>();
+    <a title="function: StartTrackingTransactionalReadsWrites()" class="document-topic">StartTrackingTransactionalReadsWrites</a>();
+
+TSTATE.depth = TSTATE.depth + 1;
+<a title="accessor: X[integer n, integer width] = bits(width) value" class="document-topic">X</a>[t, 64] = <a title="function: bits(N) Zeros(integer N)" class="document-topic">Zeros</a>(64);</pre> 
+  </div>  
+ </body>
+</html>

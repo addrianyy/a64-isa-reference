@@ -1,0 +1,153 @@
+<html>
+ <head>  <link rel="stylesheet" href="../def-style.css"></head> 
+ <body> 
+  <h2>STSMAXH, STSMAXLH</h2> 
+  <p>Atomic signed maximum on halfword in memory, without return, atomically loads a 16-bit halfword from memory, compares it against the value held in a register, and stores the larger value back to memory, treating the values as signed numbers.</p> 
+  <ul> 
+   <li><span>STSMAXH</span> does not have release semantics.</li> 
+   <li><span>STSMAXLH</span> stores to memory with release semantics, as described in <em>Load-Acquire, Store-Release</em>.</li> 
+  </ul> 
+  <p>For information about memory accesses see <em>Load/Store addressing modes</em>.</p> 
+  <p> This is an alias of <a href="LDSMAXH--LDSMAXAH--LDSMAXALH--LDSMAXLH--Atomic-signed-maximum-on-halfword-in-memory-.html" class="document-topic">LDSMAXH, LDSMAXAH, LDSMAXALH, LDSMAXLH</a>. This means: </p> 
+  <ul> 
+   <li> The encodings in this description are named to match the encodings of <a href="LDSMAXH--LDSMAXAH--LDSMAXALH--LDSMAXLH--Atomic-signed-maximum-on-halfword-in-memory-.html" class="document-topic">LDSMAXH, LDSMAXAH, LDSMAXALH, LDSMAXLH</a>. </li> 
+   <li>The description of <a href="LDSMAXH--LDSMAXAH--LDSMAXALH--LDSMAXLH--Atomic-signed-maximum-on-halfword-in-memory-.html" class="document-topic">LDSMAXH, LDSMAXAH, LDSMAXALH, LDSMAXLH</a> gives the operational pseudocode, any <small>constrained unpredictable</small> behavior, and any operational information for this instruction.</li> 
+  </ul> 
+  <h3><a id="iclass_general"></a>Integer<span><br></br>(FEAT_LSE) </span></h3> 
+  <p></p> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>R</td> 
+      <td>1</td> 
+      <td colspan="5">Rs</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td colspan="5">Rn</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+     </tr> 
+     <tr> 
+      <td colspan="2">size</td> 
+      <td colspan="3"></td> 
+      <td></td> 
+      <td colspan="2"></td> 
+      <td>A</td> 
+      <td></td> 
+      <td></td> 
+      <td colspan="5"></td> 
+      <td></td> 
+      <td colspan="3">opc</td> 
+      <td colspan="2"></td> 
+      <td colspan="5"></td> 
+      <td colspan="5">Rt</td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4>No memory ordering<span> (R == 0)</span></h4> 
+   <a id="STSMAXH_LDSMAXH_32_memop"></a> 
+   <p>STSMAXH <a title="32-bit general-purpose register holding data value to be operated on with the contents of memory location (field &quot;Rs&quot;)" class="document-topic">&lt;Ws&gt;</a>, [<a title="64-bit general-purpose base register or SP (field &quot;Rn&quot;)" class="document-topic">&lt;Xn|SP&gt;</a>]</p> 
+   <p> is equivalent to </p> 
+   <p><a href="LDSMAXH--LDSMAXAH--LDSMAXALH--LDSMAXLH--Atomic-signed-maximum-on-halfword-in-memory-.html" class="document-topic">LDSMAXH</a> <a title="32-bit general-purpose register holding data value to be operated on with the contents of memory location (field &quot;Rs&quot;)" class="document-topic">&lt;Ws&gt;</a>, WZR, [<a title="64-bit general-purpose base register or SP (field &quot;Rn&quot;)" class="document-topic">&lt;Xn|SP&gt;</a>]</p> 
+   <p> and is always the preferred disassembly. </p> 
+  </div> 
+  <div> 
+   <h4>Release<span> (R == 1)</span></h4> 
+   <a id="STSMAXLH_LDSMAXLH_32_memop"></a> 
+   <p>STSMAXLH <a title="32-bit general-purpose register holding data value to be operated on with the contents of memory location (field &quot;Rs&quot;)" class="document-topic">&lt;Ws&gt;</a>, [<a title="64-bit general-purpose base register or SP (field &quot;Rn&quot;)" class="document-topic">&lt;Xn|SP&gt;</a>]</p> 
+   <p> is equivalent to </p> 
+   <p><a href="LDSMAXH--LDSMAXAH--LDSMAXALH--LDSMAXLH--Atomic-signed-maximum-on-halfword-in-memory-.html" class="document-topic">LDSMAXLH</a> <a title="32-bit general-purpose register holding data value to be operated on with the contents of memory location (field &quot;Rs&quot;)" class="document-topic">&lt;Ws&gt;</a>, WZR, [<a title="64-bit general-purpose base register or SP (field &quot;Rn&quot;)" class="document-topic">&lt;Xn|SP&gt;</a>]</p> 
+   <p> and is always the preferred disassembly. </p> 
+  </div> 
+  <div></div> 
+  <h3>Assembler Symbols</h3> 
+  <div> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Ws&gt;</td> 
+      <td><a id="sa_ws"></a> <p>Is the 32-bit name of the general-purpose register holding the data value to be operated on with the contents of the memory location, encoded in the "Rs" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Xn|SP&gt;</td> 
+      <td><a id="sa_xn_sp"></a> <p>Is the 64-bit name of the general-purpose base register or stack pointer, encoded in the "Rn" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div></div> 
+  <div> 
+   <h3>Operation</h3> 
+   <p>The description of <a href="LDSMAXH--LDSMAXAH--LDSMAXALH--LDSMAXLH--Atomic-signed-maximum-on-halfword-in-memory-.html" class="document-topic">LDSMAXH, LDSMAXAH, LDSMAXALH, LDSMAXLH</a> gives the operational pseudocode for this instruction.</p> 
+  </div> 
+  <h3>Operational information</h3> 
+  <p>If PSTATE.DIT is 1, the timing of this instruction is insensitive to the value of the data being loaded or stored.</p>  
+ </body>
+</html>

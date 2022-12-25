@@ -1,0 +1,408 @@
+<html>
+ <head>  <link rel="stylesheet" href="../def-style.css"></head> 
+ <body> 
+  <h2>FCVTXN, FCVTXN2</h2> 
+  <p>Floating-point Convert to lower precision Narrow, rounding to odd (vector). This instruction reads each vector element in the source SIMD&amp;FP register, narrows each value to half the precision of the source element using the Round to Odd rounding mode, writes the result to a vector, and writes the vector to the destination SIMD&amp;FP register.</p> 
+  <blockquote title="Note info"> 
+   <h4>Note</h4> 
+   <p>This instruction uses the Round to Odd rounding mode which is not defined by the IEEE 754-2008 standard. This rounding mode ensures that if the result of the conversion is inexact the least significant bit of the mantissa is forced to 1. This rounding mode enables a floating-point value to be converted to a lower precision format via an intermediate precision format while avoiding double rounding errors. For example, a 64-bit floating-point value can be converted to a correctly rounded 16-bit floating-point value by first using this instruction to produce a 32-bit value and then using another instruction with the wanted rounding mode to convert the 32-bit value to the final 16-bit floating-point value.</p> 
+  </blockquote> 
+  <p>The <span>FCVTXN</span> instruction writes the vector to the lower half of the destination register and clears the upper half, while the <span>FCVTXN2</span> instruction writes the vector to the upper half of the destination register without affecting the other bits of the register.</p> 
+  <p>This instruction can generate a floating-point exception. Depending on the settings in <em>FPCR</em>, the exception results in either a flag being set in <em>FPSR</em> or a synchronous exception being generated. For more information, see <em>Floating-point exception traps</em>.</p> 
+  <p>Depending on the settings in the <em>CPACR_EL1</em>, <em>CPTR_EL2</em>, and <em>CPTR_EL3</em> registers, and the current Security state and Exception level, an attempt to execute the instruction might be trapped.</p> 
+  <p> It has encodings from 2 classes: <a class="document-topic">Scalar</a> and <a class="document-topic">Vector</a> </p> 
+  <h3><a id="iclass_sisd"></a>Scalar</h3> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>sz</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td colspan="5">Rn</td> 
+      <td colspan="5">Rd</td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4></h4> 
+   <a id="FCVTXN_asisdmisc_N"></a> 
+   <p>FCVTXN <a title="Destination width specifier (field &quot;sz&quot;) [S]" class="document-topic">&lt;Vb&gt;</a><a title="SIMD&amp;FP destination register number (field &quot;Rd&quot;)" class="document-topic">&lt;d&gt;</a>, <a title="Source width specifier (field &quot;sz&quot;) [D]" class="document-topic">&lt;Va&gt;</a><a title="SIMD&amp;FP source register number (field &quot;Rn&quot;)" class="document-topic">&lt;n&gt;</a></p> 
+  </div> 
+  <pre>integer d = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Rd);
+integer n = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Rn);
+
+if sz == '0' then UNDEFINED;
+integer esize = 32;
+integer datasize = esize;
+integer elements = 1;
+integer part = 0;</pre> 
+  <h3><a id="iclass_simd"></a>Vector</h3> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>0</td> 
+      <td>Q</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>sz</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td colspan="5">Rn</td> 
+      <td colspan="5">Rd</td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4></h4> 
+   <a id="FCVTXN_asimdmisc_N"></a> 
+   <p>FCVTXN<a title="Second and upper half specifier (field &quot;Q&quot;)" class="document-topic">{2}</a> <a title="SIMD&amp;FP destination register (field &quot;Rd&quot;)" class="document-topic">&lt;Vd&gt;</a>.<a title="Arrangement specifier (field &quot;sz:Q&quot;) [2S,4S]" class="document-topic">&lt;Tb&gt;</a>, <a title="SIMD&amp;FP source register (field &quot;Rn&quot;)" class="document-topic">&lt;Vn&gt;</a>.<a title="Arrangement specifier (field &quot;sz&quot;) [2D]" class="document-topic">&lt;Ta&gt;</a></p> 
+  </div> 
+  <pre>integer d = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Rd);
+integer n = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Rn);
+
+if sz == '0' then UNDEFINED;
+integer esize = 32;
+integer datasize = 64;
+integer elements = 2;
+integer part = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Q);</pre> 
+  <div></div> 
+  <h3>Assembler Symbols</h3> 
+  <div> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>2</td> 
+      <td><a id="sa_2"></a> <p>Is the second and upper half specifier. If present it causes the operation to be performed on the upper 64 bits of the registers holding the narrower elements, and is encoded in <q>Q</q>: </p> 
+       <table> 
+        <thead> 
+         <tr> 
+          <th>Q</th> 
+          <th>2</th> 
+         </tr> 
+        </thead> 
+        <tbody> 
+         <tr> 
+          <td>0</td> 
+          <td>[absent]</td> 
+         </tr> 
+         <tr> 
+          <td>1</td> 
+          <td>[present]</td> 
+         </tr> 
+        </tbody> 
+       </table> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Vd&gt;</td> 
+      <td><a id="sa_vd"></a> <p>Is the name of the SIMD&amp;FP destination register, encoded in the "Rd" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Tb&gt;</td> 
+      <td><a id="sa_tb"></a> <p>Is an arrangement specifier, encoded in <q>sz:Q</q>: </p> 
+       <table> 
+        <thead> 
+         <tr> 
+          <th>sz</th> 
+          <th>Q</th> 
+          <th>&lt;Tb&gt;</th> 
+         </tr> 
+        </thead> 
+        <tbody> 
+         <tr> 
+          <td>0</td> 
+          <td>x</td> 
+          <td>RESERVED</td> 
+         </tr> 
+         <tr> 
+          <td>1</td> 
+          <td>0</td> 
+          <td>2S</td> 
+         </tr> 
+         <tr> 
+          <td>1</td> 
+          <td>1</td> 
+          <td>4S</td> 
+         </tr> 
+        </tbody> 
+       </table> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Vn&gt;</td> 
+      <td><a id="sa_vn"></a> <p>Is the name of the SIMD&amp;FP source register, encoded in the "Rn" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Ta&gt;</td> 
+      <td><a id="sa_ta"></a> <p>Is an arrangement specifier, encoded in <q>sz</q>: </p> 
+       <table> 
+        <thead> 
+         <tr> 
+          <th>sz</th> 
+          <th>&lt;Ta&gt;</th> 
+         </tr> 
+        </thead> 
+        <tbody> 
+         <tr> 
+          <td>0</td> 
+          <td>RESERVED</td> 
+         </tr> 
+         <tr> 
+          <td>1</td> 
+          <td>2D</td> 
+         </tr> 
+        </tbody> 
+       </table> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Vb&gt;</td> 
+      <td><a id="sa_vb"></a> <p>Is the destination width specifier, encoded in <q>sz</q>: </p> 
+       <table> 
+        <thead> 
+         <tr> 
+          <th>sz</th> 
+          <th>&lt;Vb&gt;</th> 
+         </tr> 
+        </thead> 
+        <tbody> 
+         <tr> 
+          <td>0</td> 
+          <td>RESERVED</td> 
+         </tr> 
+         <tr> 
+          <td>1</td> 
+          <td>S</td> 
+         </tr> 
+        </tbody> 
+       </table> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;d&gt;</td> 
+      <td><a id="sa_d"></a> <p>Is the number of the SIMD&amp;FP destination register, encoded in the "Rd" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Va&gt;</td> 
+      <td><a id="sa_va"></a> <p>Is the source width specifier, encoded in <q>sz</q>: </p> 
+       <table> 
+        <thead> 
+         <tr> 
+          <th>sz</th> 
+          <th>&lt;Va&gt;</th> 
+         </tr> 
+        </thead> 
+        <tbody> 
+         <tr> 
+          <td>0</td> 
+          <td>RESERVED</td> 
+         </tr> 
+         <tr> 
+          <td>1</td> 
+          <td>D</td> 
+         </tr> 
+        </tbody> 
+       </table> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;n&gt;</td> 
+      <td><a id="sa_n"></a> <p>Is the number of the SIMD&amp;FP source register, encoded in the "Rn" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div></div> 
+  <div> 
+   <a id="execute"></a> 
+   <h3>Operation</h3> 
+   <pre><a title="function: CheckFPAdvSIMDEnabled64()" class="document-topic">CheckFPAdvSIMDEnabled64</a>();
+
+bits(2*datasize) operand = <a title="accessor: bits(width) V[integer n, integer width]" class="document-topic">V</a>[n, 2*datasize];
+<a title="type FPCRType" class="document-topic">FPCRType</a> fpcr    = FPCR[];
+boolean merge    = elements == 1 &amp;&amp; <a title="function: boolean IsMerging(FPCRType fpcr)" class="document-topic">IsMerging</a>(fpcr);
+bits(128) result = if merge then <a title="accessor: bits(width) V[integer n, integer width]" class="document-topic">V</a>[d, 128] else <a title="function: bits(N) Zeros(integer N)" class="document-topic">Zeros</a>(128);
+
+for e = 0 to elements-1
+    <a title="accessor: Elem[bits(N) &amp;vector, integer e, integer size] = bits(size) value" class="document-topic">Elem</a>[result, e, esize] = <a title="function: bits(M) FPConvert(bits(N) op, FPCRType fpcr, FPRounding rounding, integer M)" class="document-topic">FPConvert</a>(<a title="accessor: bits(size) Elem[bits(N) vector, integer e, integer size]" class="document-topic">Elem</a>[operand, e, 2*esize], fpcr, <a title="enumeration FPRounding  {FPRounding_TIEEVEN, FPRounding_POSINF, FPRounding_NEGINF,  FPRounding_ZERO, FPRounding_TIEAWAY, FPRounding_ODD}" class="document-topic">FPRounding_ODD</a>, esize);
+
+if merge then
+    <a title="accessor: V[integer n, integer width] = bits(width) value" class="document-topic">V</a>[d, 128] = result;
+else
+    <a title="accessor: Vpart[integer n, integer part, integer width] = bits(width) value" class="document-topic">Vpart</a>[d, part, datasize] = <a title="accessor: bits(size) Elem[bits(N) vector, integer e, integer size]" class="document-topic">Elem</a>[result, 0, datasize];</pre> 
+  </div>  
+ </body>
+</html>

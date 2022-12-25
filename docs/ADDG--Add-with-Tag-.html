@@ -1,0 +1,171 @@
+<html>
+ <head>  <link rel="stylesheet" href="../def-style.css"></head> 
+ <body> 
+  <h2>ADDG</h2> 
+  <p>Add with Tag adds an immediate value scaled by the Tag granule to the address in the source register, modifies the Logical Address Tag of the address using an immediate value, and writes the result to the destination register. Tags specified in GCR_EL1.Exclude are excluded from the possible outputs when modifying the Logical Address Tag.</p> 
+  <h3><a id="iclass_general"></a>Integer<span><br></br>(FEAT_MTE) </span></h3> 
+  <p></p> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td colspan="6">uimm6</td> 
+      <td>(0)</td> 
+      <td>(0)</td> 
+      <td colspan="4">uimm4</td> 
+      <td colspan="5">Xn</td> 
+      <td colspan="5">Xd</td> 
+     </tr> 
+     <tr> 
+      <td></td> 
+      <td></td> 
+      <td></td> 
+      <td colspan="6"></td> 
+      <td></td> 
+      <td colspan="6"></td> 
+      <td colspan="2">op3</td> 
+      <td colspan="4"></td> 
+      <td colspan="5"></td> 
+      <td colspan="5"></td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4></h4> 
+   <a id="ADDG_64_addsub_immtags"></a> 
+   <p>ADDG <a title="64-bit destination general-purpose register or SP (field &quot;Xd&quot;)" class="document-topic">&lt;Xd|SP&gt;</a>, <a title="64-bit source general-purpose register or SP (field &quot;Xn&quot;)" class="document-topic">&lt;Xn|SP&gt;</a>, #<a title="Unsigned immediate, multiple of 16 [0-1008] (field &quot;uimm6&quot;)" class="document-topic">&lt;uimm6&gt;</a>, #<a title="Unsigned immediate [0-15] (field &quot;uimm4&quot;)" class="document-topic">&lt;uimm4&gt;</a></p> 
+  </div> 
+  <pre>if !<a title="function: boolean HaveMTEExt()" class="document-topic">HaveMTEExt</a>() then UNDEFINED;
+integer d = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Xd);
+integer n = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Xn);
+bits(4) tag_offset = uimm4;
+bits(64) offset = <a title="function: bits(N) LSL(bits(N) x, integer shift)" class="document-topic">LSL</a>(<a title="function: bits(N) ZeroExtend(bits(M) x, integer N)" class="document-topic">ZeroExtend</a>(uimm6, 64), <a title="constant integer LOG2_TAG_GRANULE = 4" class="document-topic">LOG2_TAG_GRANULE</a>);
+boolean ADD = TRUE;</pre> 
+  <div></div> 
+  <h3>Assembler Symbols</h3> 
+  <div> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Xd|SP&gt;</td> 
+      <td><a id="sa_xd_sp"></a> <p>Is the 64-bit name of the destination general-purpose register or stack pointer, encoded in the "Xd" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Xn|SP&gt;</td> 
+      <td><a id="sa_xn_sp"></a> <p>Is the 64-bit name of the source general-purpose register or stack pointer, encoded in the "Xn" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;uimm6&gt;</td> 
+      <td><a id="sa_uimm6"></a> <p>Is an unsigned immediate, a multiple of 16 in the range 0 to 1008, encoded in the "uimm6" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;uimm4&gt;</td> 
+      <td><a id="sa_uimm4"></a> <p>Is an unsigned immediate, in the range 0 to 15, encoded in the "uimm4" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div></div> 
+  <div> 
+   <a id="execute"></a> 
+   <h3>Operation</h3> 
+   <pre>bits(64) operand1 = if n == 31 then <a title="accessor: bits(64) SP[]" class="document-topic">SP</a>[] else <a title="accessor: bits(width) X[integer n, integer width]" class="document-topic">X</a>[n, 64];
+bits(4) start_tag = <a title="function: bits(4) AArch64.AllocationTagFromAddress(bits(64) tagged_address)" class="document-topic">AArch64.AllocationTagFromAddress</a>(operand1);
+bits(16) exclude = GCR_EL1.Exclude;
+bits(64) result;
+bits(4) rtag;
+
+if <a title="function: boolean AArch64.AllocationTagAccessIsEnabled(bits(2) el)" class="document-topic">AArch64.AllocationTagAccessIsEnabled</a>(PSTATE.EL) then
+    rtag = <a title="function: bits(4) AArch64.ChooseNonExcludedTag(bits(4) tag_in, bits(4) offset_in, bits(16) exclude)" class="document-topic">AArch64.ChooseNonExcludedTag</a>(start_tag, tag_offset, exclude);
+else
+    rtag = '0000';
+
+if ADD then
+    (result, -) = <a title="function: (bits(N), bits(4)) AddWithCarry(bits(N) x, bits(N) y, bit carry_in)" class="document-topic">AddWithCarry</a>(operand1, offset, '0');
+else
+    (result, -) = <a title="function: (bits(N), bits(4)) AddWithCarry(bits(N) x, bits(N) y, bit carry_in)" class="document-topic">AddWithCarry</a>(operand1, NOT(offset), '1');
+
+result = <a title="function: bits(64) AArch64.AddressWithAllocationTag(bits(64) address, bits(4) allocation_tag)" class="document-topic">AArch64.AddressWithAllocationTag</a>(result, rtag);
+
+if d == 31 then
+    <a title="accessor: SP[] = bits(64) value" class="document-topic">SP</a>[] = result;
+else
+    <a title="accessor: X[integer n, integer width] = bits(width) value" class="document-topic">X</a>[d, 64] = result;</pre> 
+  </div>  
+ </body>
+</html>

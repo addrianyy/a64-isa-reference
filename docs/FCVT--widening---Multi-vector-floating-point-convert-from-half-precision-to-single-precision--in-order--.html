@@ -1,0 +1,154 @@
+<html>
+ <head>  <link rel="stylesheet" href="../def-style.css"></head> 
+ <body> 
+  <h2>FCVT (widening)</h2> 
+  <p>Multi-vector floating-point convert from half-precision to single-precision (in-order)</p> 
+  <p>Convert to single-precision from half-precision, each element of the source vector, and place the results in the double-width destination elements of the destination vectors.</p> 
+  <p>This instruction follows SME2 floating-point numerical behaviors corresponding to instructions that place their results in one or more SVE Z vectors.</p> 
+  <p>This instruction is unpredicated.</p> 
+  <p>ID_AA64SMFR0_EL1.F16F16 indicates whether this instruction is implemented.</p> 
+  <h3><a id="iclass_mortlach2"></a>SME2<span><br></br>(FEAT_SME_F16F16) </span></h3> 
+  <p></p> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td colspan="5">Zn</td> 
+      <td colspan="4">Zd</td> 
+      <td>0</td> 
+     </tr> 
+     <tr> 
+      <td colspan="22"></td> 
+      <td colspan="5"></td> 
+      <td colspan="4"></td> 
+      <td>L</td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4></h4> 
+   <a id="fcvt_mz2_z_"></a> 
+   <p>FCVT { <a title="First destination scalable vector register of a multi-vector sequence (field Zd)" class="document-topic">&lt;Zd1&gt;</a>.S-<a title="Second destination scalable vector register of a multi-vector sequence (field Zd)" class="document-topic">&lt;Zd2&gt;</a>.S }, <a title="Source scalable vector register (field &quot;Zn&quot;)" class="document-topic">&lt;Zn&gt;</a>.H</p> 
+  </div> 
+  <pre>if !<a title="function: boolean HaveSMEF16F16()" class="document-topic">HaveSMEF16F16</a>() then UNDEFINED;
+integer n = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Zn);
+integer d = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Zd:'0');</pre> 
+  <div></div> 
+  <h3>Assembler Symbols</h3> 
+  <div> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Zd1&gt;</td> 
+      <td><a id="sa_zd1"></a> <p>Is the name of the first destination scalable vector register of a multi-vector sequence, encoded as "Zd" times 2.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Zd2&gt;</td> 
+      <td><a id="sa_zd2"></a> <p>Is the name of the second destination scalable vector register of a multi-vector sequence, encoded as "Zd" times 2 plus 1.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Zn&gt;</td> 
+      <td><a id="sa_zn"></a> <p>Is the name of the source scalable vector register, encoded in the "Zn" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div></div> 
+  <div> 
+   <a id="execute"></a> 
+   <h3>Operation</h3> 
+   <pre><a title="function: CheckStreamingSVEEnabled()" class="document-topic">CheckStreamingSVEEnabled</a>();
+constant integer VL = <a title="accessor: integer CurrentVL" class="document-topic">CurrentVL</a>;
+constant integer elements = VL DIV 16;
+bits(VL) operand = <a title="accessor: bits(width) Z[integer n, integer width]" class="document-topic">Z</a>[n, VL];
+bits(2*VL) result;
+
+for e = 0 to elements-1
+    bits(16) element = <a title="accessor: bits(size) Elem[bits(N) vector, integer e, integer size]" class="document-topic">Elem</a>[operand, e, 16];
+    bits(32) res = <a title="function: bits(M) FPConvertSVE(bits(N) op, FPCRType fpcr_in, integer M)" class="document-topic">FPConvertSVE</a>(element, FPCR[], 32);
+    <a title="accessor: Elem[bits(N) &amp;vector, integer e, integer size] = bits(size) value" class="document-topic">Elem</a>[result, e, 32] = res;
+
+<a title="accessor: Z[integer n, integer width] = bits(width) value" class="document-topic">Z</a>[d+0, VL] = result&lt;VL-1:0&gt;;
+<a title="accessor: Z[integer n, integer width] = bits(width) value" class="document-topic">Z</a>[d+1, VL] = result&lt;2*VL-1:VL&gt;;</pre> 
+  </div>  
+ </body>
+</html>

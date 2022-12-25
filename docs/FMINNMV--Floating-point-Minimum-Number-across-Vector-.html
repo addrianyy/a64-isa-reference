@@ -1,0 +1,336 @@
+<html>
+ <head>  <link rel="stylesheet" href="../def-style.css"></head> 
+ <body> 
+  <h2>FMINNMV</h2> 
+  <p>Floating-point Minimum Number across Vector. This instruction compares all the vector elements in the source SIMD&amp;FP register, and writes the smallest of the values as a scalar to the destination SIMD&amp;FP register. All the values in this instruction are floating-point values.</p> 
+  <p>NaNs are handled according to the IEEE 754-2008 standard. If one vector element is numeric and the other is a quiet NaN, the result of the comparison is the numerical value, otherwise the result is identical to <em>FMIN (scalar)</em>.</p> 
+  <p>This instruction can generate a floating-point exception. Depending on the settings in <em>FPCR</em>, the exception results in either a flag being set in <em>FPSR</em> or a synchronous exception being generated. For more information, see <em>Floating-point exception traps</em>.</p> 
+  <p>Depending on the settings in the <em>CPACR_EL1</em>, <em>CPTR_EL2</em>, and <em>CPTR_EL3</em> registers, and the current Security state and Exception level, an attempt to execute the instruction might be trapped.</p> 
+  <p> It has encodings from 2 classes: <a class="document-topic">Half-precision</a> and <a class="document-topic">Single-precision and double-precision</a> </p> 
+  <h3><a id="iclass_half"></a>Half-precision<span><br></br>(FEAT_FP16) </span></h3> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>0</td> 
+      <td>Q</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td colspan="5">Rn</td> 
+      <td colspan="5">Rd</td> 
+     </tr> 
+     <tr> 
+      <td></td> 
+      <td></td> 
+      <td></td> 
+      <td colspan="5"></td> 
+      <td>o1</td> 
+      <td></td> 
+      <td colspan="5"></td> 
+      <td colspan="5"></td> 
+      <td colspan="2"></td> 
+      <td colspan="5"></td> 
+      <td colspan="5"></td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4></h4> 
+   <a id="FMINNMV_asimdall_only_H"></a> 
+   <p>FMINNMV <a title="Destination width specifier, H" class="document-topic">&lt;V&gt;</a><a title="SIMD&amp;FP destination register number (field &quot;Rd&quot;)" class="document-topic">&lt;d&gt;</a>, <a title="SIMD&amp;FP source register (field &quot;Rn&quot;)" class="document-topic">&lt;Vn&gt;</a>.<a title="Arrangement specifier (field &quot;Q&quot;) [4H,8H]" class="document-topic">&lt;T&gt;</a></p> 
+  </div> 
+  <pre>if !<a title="function: boolean HaveFP16Ext()" class="document-topic">HaveFP16Ext</a>() then UNDEFINED;
+
+integer d = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Rd);
+integer n = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Rn);
+
+integer esize = 16;
+integer datasize = if Q == '1' then 128 else 64;
+integer elements = datasize DIV esize;
+
+<a title="enumeration ReduceOp {ReduceOp_FMINNUM, ReduceOp_FMAXNUM, ReduceOp_FMIN, ReduceOp_FMAX, ReduceOp_FADD, ReduceOp_ADD}" class="document-topic">ReduceOp</a> op = if o1 == '1' then <a title="enumeration ReduceOp {ReduceOp_FMINNUM, ReduceOp_FMAXNUM, ReduceOp_FMIN, ReduceOp_FMAX, ReduceOp_FADD, ReduceOp_ADD}" class="document-topic">ReduceOp_FMINNUM</a> else <a title="enumeration ReduceOp {ReduceOp_FMINNUM, ReduceOp_FMAXNUM, ReduceOp_FMIN, ReduceOp_FMAX, ReduceOp_FADD, ReduceOp_ADD}" class="document-topic">ReduceOp_FMAXNUM</a>;</pre> 
+  <h3><a id="iclass_single_and_double"></a>Single-precision and double-precision</h3> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>0</td> 
+      <td>Q</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>sz</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td colspan="5">Rn</td> 
+      <td colspan="5">Rd</td> 
+     </tr> 
+     <tr> 
+      <td></td> 
+      <td></td> 
+      <td></td> 
+      <td colspan="5"></td> 
+      <td>o1</td> 
+      <td></td> 
+      <td colspan="5"></td> 
+      <td colspan="5"></td> 
+      <td colspan="2"></td> 
+      <td colspan="5"></td> 
+      <td colspan="5"></td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4></h4> 
+   <a id="FMINNMV_asimdall_only_SD"></a> 
+   <p>FMINNMV <a title="Destination width specifier (field &quot;sz&quot;) [S]" class="document-topic">&lt;V&gt;</a><a title="SIMD&amp;FP destination register number (field &quot;Rd&quot;)" class="document-topic">&lt;d&gt;</a>, <a title="SIMD&amp;FP source register (field &quot;Rn&quot;)" class="document-topic">&lt;Vn&gt;</a>.<a title="Arrangement specifier (field &quot;Q:sz&quot;) [4S]" class="document-topic">&lt;T&gt;</a></p> 
+  </div> 
+  <pre>integer d = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Rd);
+integer n = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Rn);
+
+if sz:Q != '01' then UNDEFINED;    // .4S only
+
+integer esize = 32 &lt;&lt; <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(sz);
+integer datasize = if Q == '1' then 128 else 64;
+integer elements = datasize DIV esize;
+
+<a title="enumeration ReduceOp {ReduceOp_FMINNUM, ReduceOp_FMAXNUM, ReduceOp_FMIN, ReduceOp_FMAX, ReduceOp_FADD, ReduceOp_ADD}" class="document-topic">ReduceOp</a> op = if o1 == '1' then <a title="enumeration ReduceOp {ReduceOp_FMINNUM, ReduceOp_FMAXNUM, ReduceOp_FMIN, ReduceOp_FMAX, ReduceOp_FADD, ReduceOp_ADD}" class="document-topic">ReduceOp_FMINNUM</a> else <a title="enumeration ReduceOp {ReduceOp_FMINNUM, ReduceOp_FMAXNUM, ReduceOp_FMIN, ReduceOp_FMAX, ReduceOp_FADD, ReduceOp_ADD}" class="document-topic">ReduceOp_FMAXNUM</a>;</pre> 
+  <div></div> 
+  <h3>Assembler Symbols</h3> 
+  <div> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;V&gt;</td> 
+      <td><a id="sa_v"></a> <p>For the half-precision variant: is the destination width specifier, H.</p> </td> 
+     </tr> 
+     <tr> 
+      <td></td> 
+      <td><a id="sa_v_1"></a> <p>For the single-precision and double-precision variant: is the destination width specifier, encoded in <q>sz</q>: </p> 
+       <table> 
+        <thead> 
+         <tr> 
+          <th>sz</th> 
+          <th>&lt;V&gt;</th> 
+         </tr> 
+        </thead> 
+        <tbody> 
+         <tr> 
+          <td>0</td> 
+          <td>S</td> 
+         </tr> 
+         <tr> 
+          <td>1</td> 
+          <td>RESERVED</td> 
+         </tr> 
+        </tbody> 
+       </table> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;d&gt;</td> 
+      <td><a id="sa_d"></a> <p>Is the number of the SIMD&amp;FP destination register, encoded in the "Rd" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Vn&gt;</td> 
+      <td><a id="sa_vn"></a> <p>Is the name of the SIMD&amp;FP source register, encoded in the "Rn" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;T&gt;</td> 
+      <td><a id="sa_t"></a> <p>For the half-precision variant: is an arrangement specifier, encoded in <q>Q</q>: </p> 
+       <table> 
+        <thead> 
+         <tr> 
+          <th>Q</th> 
+          <th>&lt;T&gt;</th> 
+         </tr> 
+        </thead> 
+        <tbody> 
+         <tr> 
+          <td>0</td> 
+          <td>4H</td> 
+         </tr> 
+         <tr> 
+          <td>1</td> 
+          <td>8H</td> 
+         </tr> 
+        </tbody> 
+       </table> </td> 
+     </tr> 
+     <tr> 
+      <td></td> 
+      <td><a id="sa_t_1"></a> <p>For the single-precision and double-precision variant: is an arrangement specifier, encoded in <q>Q:sz</q>: </p> 
+       <table> 
+        <thead> 
+         <tr> 
+          <th>Q</th> 
+          <th>sz</th> 
+          <th>&lt;T&gt;</th> 
+         </tr> 
+        </thead> 
+        <tbody> 
+         <tr> 
+          <td>0</td> 
+          <td>x</td> 
+          <td>RESERVED</td> 
+         </tr> 
+         <tr> 
+          <td>1</td> 
+          <td>0</td> 
+          <td>4S</td> 
+         </tr> 
+         <tr> 
+          <td>1</td> 
+          <td>1</td> 
+          <td>RESERVED</td> 
+         </tr> 
+        </tbody> 
+       </table> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div></div> 
+  <div> 
+   <a id="execute"></a> 
+   <h3>Operation</h3> 
+   <pre><a title="function: CheckFPAdvSIMDEnabled64()" class="document-topic">CheckFPAdvSIMDEnabled64</a>();
+bits(datasize) operand = <a title="accessor: bits(width) V[integer n, integer width]" class="document-topic">V</a>[n, datasize];
+boolean altfp = FALSE;
+<a title="accessor: V[integer n, integer width] = bits(width) value" class="document-topic">V</a>[d, esize] = <a title="function: bits(esize) Reduce(ReduceOp op, bits(N) input, integer esize, boolean altfp)" class="document-topic">Reduce</a>(op, operand, esize, altfp);</pre> 
+  </div>  
+ </body>
+</html>

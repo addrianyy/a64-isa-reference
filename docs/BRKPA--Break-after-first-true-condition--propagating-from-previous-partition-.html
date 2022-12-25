@@ -1,0 +1,176 @@
+<html>
+ <head>  <link rel="stylesheet" href="../def-style.css"></head> 
+ <body> 
+  <h2>BRKPA</h2> 
+  <p>Break after first true condition, propagating from previous partition</p> 
+  <p>If the last active element of the first source predicate is false then set the destination predicate to all-false. Otherwise sets destination predicate elements up to and including the first active and true source element to true, then sets subsequent elements to false. Inactive elements in the destination predicate register are set to zero. Does not set the condition flags.</p> 
+  <p></p> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td colspan="4">Pm</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td colspan="4">Pg</td> 
+      <td>0</td> 
+      <td colspan="4">Pn</td> 
+      <td>0</td> 
+      <td colspan="4">Pd</td> 
+     </tr> 
+     <tr> 
+      <td colspan="8"></td> 
+      <td></td> 
+      <td>S</td> 
+      <td colspan="2"></td> 
+      <td colspan="4"></td> 
+      <td colspan="2"></td> 
+      <td colspan="4"></td> 
+      <td></td> 
+      <td colspan="4"></td> 
+      <td>B</td> 
+      <td colspan="4"></td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4></h4> 
+   <a id="brkpa_p_p_pp_"></a> 
+   <p>BRKPA <a title="Destination scalable predicate register (field &quot;Pd&quot;)" class="document-topic">&lt;Pd&gt;</a>.B, <a title="Governing scalable predicate register (field &quot;Pg&quot;)" class="document-topic">&lt;Pg&gt;</a>/Z, <a title="First source scalable predicate register (field &quot;Pn&quot;)" class="document-topic">&lt;Pn&gt;</a>.B, <a title="Second source scalable predicate register (field &quot;Pm&quot;)" class="document-topic">&lt;Pm&gt;</a>.B</p> 
+  </div> 
+  <pre>if !<a title="function: boolean HaveSVE()" class="document-topic">HaveSVE</a>() &amp;&amp; !<a title="function: boolean HaveSME()" class="document-topic">HaveSME</a>() then UNDEFINED;
+constant integer esize = 8;
+integer g = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Pg);
+integer n = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Pn);
+integer m = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Pm);
+integer d = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Pd);
+boolean setflags = FALSE;</pre> 
+  <div></div> 
+  <h3>Assembler Symbols</h3> 
+  <div> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Pd&gt;</td> 
+      <td><a id="sa_pd"></a> <p>Is the name of the destination scalable predicate register, encoded in the "Pd" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Pg&gt;</td> 
+      <td><a id="sa_pg"></a> <p>Is the name of the governing scalable predicate register, encoded in the "Pg" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Pn&gt;</td> 
+      <td><a id="sa_pn"></a> <p>Is the name of the first source scalable predicate register, encoded in the "Pn" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Pm&gt;</td> 
+      <td><a id="sa_pm"></a> <p>Is the name of the second source scalable predicate register, encoded in the "Pm" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div></div> 
+  <div> 
+   <a id="execute"></a> 
+   <h3>Operation</h3> 
+   <pre><a title="function: CheckSVEEnabled()" class="document-topic">CheckSVEEnabled</a>();
+constant integer VL = <a title="accessor: integer CurrentVL" class="document-topic">CurrentVL</a>;
+constant integer PL = VL DIV 8;
+constant integer elements = VL DIV esize;
+bits(PL) mask = <a title="accessor: bits(width) P[integer n, integer width]" class="document-topic">P</a>[g, PL];
+bits(PL) operand1 = <a title="accessor: bits(width) P[integer n, integer width]" class="document-topic">P</a>[n, PL];
+bits(PL) operand2 = <a title="accessor: bits(width) P[integer n, integer width]" class="document-topic">P</a>[m, PL];
+bits(PL) result;
+boolean last = (<a title="function: bit LastActive(bits(N) mask, bits(N) x, integer esize)" class="document-topic">LastActive</a>(mask, operand1, 8) == '1');
+
+for e = 0 to elements-1
+    if <a title="function: boolean ActivePredicateElement(bits(N) pred, integer e, integer esize)" class="document-topic">ActivePredicateElement</a>(mask, e, 8) then
+        bit pbit = if last then '1' else '0';
+        <a title="accessor: Elem[bits(N) &amp;vector, integer e, integer size] = bits(size) value" class="document-topic">Elem</a>[result, e, 1] = <a title="function: bits(N) ZeroExtend(bits(M) x, integer N)" class="document-topic">ZeroExtend</a>(pbit, 1);
+        last = last &amp;&amp; (!<a title="function: boolean ActivePredicateElement(bits(N) pred, integer e, integer esize)" class="document-topic">ActivePredicateElement</a>(operand2, e, 8));
+    else
+        <a title="accessor: Elem[bits(N) &amp;vector, integer e, integer size] = bits(size) value" class="document-topic">Elem</a>[result, e, 1] = <a title="function: bits(N) ZeroExtend(bits(M) x, integer N)" class="document-topic">ZeroExtend</a>('0', 1);
+
+if setflags then
+    PSTATE.&lt;N,Z,C,V&gt; = <a title="function: bits(4) PredTest(bits(N) mask, bits(N) result, integer esize)" class="document-topic">PredTest</a>(mask, result, esize);
+<a title="accessor: P[integer n, integer width] = bits(width) value" class="document-topic">P</a>[d, PL] = result;</pre> 
+  </div>  
+ </body>
+</html>

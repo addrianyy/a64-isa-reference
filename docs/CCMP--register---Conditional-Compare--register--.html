@@ -1,0 +1,203 @@
+<html>
+ <head>  <link rel="stylesheet" href="../def-style.css"></head> 
+ <body> 
+  <h2>CCMP (register)</h2> 
+  <p>Conditional Compare (register) sets the value of the condition flags to the result of the comparison of two registers if the condition is TRUE, and an immediate value otherwise.</p> 
+  <p></p> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>sf</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td colspan="5">Rm</td> 
+      <td colspan="4">cond</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td colspan="5">Rn</td> 
+      <td>0</td> 
+      <td colspan="4">nzcv</td> 
+     </tr> 
+     <tr> 
+      <td></td> 
+      <td>op</td> 
+      <td></td> 
+      <td colspan="8"></td> 
+      <td colspan="5"></td> 
+      <td colspan="4"></td> 
+      <td></td> 
+      <td></td> 
+      <td colspan="5"></td> 
+      <td></td> 
+      <td colspan="4"></td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4>32-bit<span> (sf == 0)</span></h4> 
+   <a id="CCMP_32_condcmp_reg"></a> 
+   <p>CCMP <a title="First 32-bit general-purpose source register (field &quot;Rn&quot;)" class="document-topic">&lt;Wn&gt;</a>, <a title="Second 32-bit general-purpose source register (field &quot;Rm&quot;)" class="document-topic">&lt;Wm&gt;</a>, #<a title="Flag bit specifier, an immediate [0-15], giving the alternative state for 4-bit NZCV condition flags (field &quot;nzcv&quot;)" class="document-topic">&lt;nzcv&gt;</a>, <a title="Standard condition (field &quot;cond&quot;)" class="document-topic">&lt;cond&gt;</a></p> 
+  </div> 
+  <div> 
+   <h4>64-bit<span> (sf == 1)</span></h4> 
+   <a id="CCMP_64_condcmp_reg"></a> 
+   <p>CCMP <a title="First 64-bit general-purpose source register (field &quot;Rn&quot;)" class="document-topic">&lt;Xn&gt;</a>, <a title="Second 64-bit general-purpose source register (field &quot;Rm&quot;)" class="document-topic">&lt;Xm&gt;</a>, #<a title="Flag bit specifier, an immediate [0-15], giving the alternative state for 4-bit NZCV condition flags (field &quot;nzcv&quot;)" class="document-topic">&lt;nzcv&gt;</a>, <a title="Standard condition (field &quot;cond&quot;)" class="document-topic">&lt;cond&gt;</a></p> 
+  </div> 
+  <pre>integer n = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Rn);
+integer m = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Rm);
+integer datasize = if sf == '1' then 64 else 32;
+boolean sub_op = (op == '1');
+bits(4) condition = cond;
+bits(4) flags = nzcv;</pre> 
+  <div></div> 
+  <h3>Assembler Symbols</h3> 
+  <div> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Wn&gt;</td> 
+      <td><a id="sa_wn"></a> <p>Is the 32-bit name of the first general-purpose source register, encoded in the "Rn" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Wm&gt;</td> 
+      <td><a id="sa_wm"></a> <p>Is the 32-bit name of the second general-purpose source register, encoded in the "Rm" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Xn&gt;</td> 
+      <td><a id="sa_xn"></a> <p>Is the 64-bit name of the first general-purpose source register, encoded in the "Rn" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Xm&gt;</td> 
+      <td><a id="sa_xm"></a> <p>Is the 64-bit name of the second general-purpose source register, encoded in the "Rm" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;nzcv&gt;</td> 
+      <td><a id="sa_nzcv"></a> <p>Is the flag bit specifier, an immediate in the range 0 to 15, giving the alternative state for the 4-bit NZCV condition flags, encoded in the "nzcv" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;cond&gt;</td> 
+      <td><a id="sa_cond"></a> <p>Is one of the standard conditions, encoded in the "cond" field in the standard way.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div></div> 
+  <div> 
+   <a id="execute"></a> 
+   <h3>Operation</h3> 
+   <pre>if <a title="function: boolean ConditionHolds(bits(4) cond)" class="document-topic">ConditionHolds</a>(condition) then
+    bits(datasize) operand1 = <a title="accessor: bits(width) X[integer n, integer width]" class="document-topic">X</a>[n, datasize];
+    bits(datasize) operand2 = <a title="accessor: bits(width) X[integer n, integer width]" class="document-topic">X</a>[m, datasize];
+    bit carry_in = '0';
+    if sub_op then
+        operand2 = NOT(operand2);
+        carry_in = '1';
+    (-, flags) = <a title="function: (bits(N), bits(4)) AddWithCarry(bits(N) x, bits(N) y, bit carry_in)" class="document-topic">AddWithCarry</a>(operand1, operand2, carry_in);
+PSTATE.&lt;N,Z,C,V&gt; = flags;</pre> 
+  </div> 
+  <h3>Operational information</h3> 
+  <p>If PSTATE.DIT is 1:</p> 
+  <ul> 
+   <li>The execution time of this instruction is independent of: 
+    <ul> 
+     <li>The values of the data supplied in any of its registers.</li> 
+     <li>The values of the NZCV flags.</li> 
+    </ul></li> 
+   <li>The response of this instruction to asynchronous exceptions does not vary based on: 
+    <ul> 
+     <li>The values of the data supplied in any of its registers.</li> 
+     <li>The values of the NZCV flags.</li> 
+    </ul></li> 
+  </ul>  
+ </body>
+</html>

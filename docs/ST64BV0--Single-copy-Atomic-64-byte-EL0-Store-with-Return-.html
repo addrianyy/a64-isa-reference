@@ -1,0 +1,172 @@
+<html>
+ <head>  <link rel="stylesheet" href="../def-style.css"></head> 
+ <body> 
+  <h2>ST64BV0</h2> 
+  <p>Single-copy Atomic 64-byte EL0 Store with Return stores eight 64-bit doublewords from consecutive registers, Xt to X(t+7), to a memory location, with the bottom 32 bits taken from <em>ACCDATA_EL1</em>, and writes the status result of the store to a register. The data that is stored is atomic and is required to be 64-byte aligned.</p> 
+  <h3><a id="iclass_general"></a>Integer<span><br></br>(FEAT_LS64_ACCDATA) </span></h3> 
+  <p></p> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td colspan="5">Rs</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td colspan="5">Rn</td> 
+      <td colspan="5">Rt</td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4></h4> 
+   <a id="ST64BV0_64_memop"></a> 
+   <p>ST64BV0 <a title="64-bit general-purpose register into which the status result of this instruction is written (field &quot;Rs&quot;)" class="document-topic">&lt;Xs&gt;</a>, <a title="First 64-bit general-purpose register to be transferred (field &quot;Rt&quot;)" class="document-topic">&lt;Xt&gt;</a>, [<a title="64-bit general-purpose base register or SP (field &quot;Rn&quot;)" class="document-topic">&lt;Xn|SP&gt;</a>]</p> 
+  </div> 
+  <pre>if !<a title="function: boolean HaveFeatLS64_ACCDATA()" class="document-topic">HaveFeatLS64_ACCDATA</a>() then UNDEFINED;
+if Rt&lt;4:3&gt; == '11' || Rt&lt;0&gt; == '1' then UNDEFINED;
+
+integer n = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Rn);
+integer t = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Rt);
+<a title="enumeration MemOp {MemOp_LOAD, MemOp_STORE, MemOp_PREFETCH}" class="document-topic">MemOp</a> memop = <a title="enumeration MemOp {MemOp_LOAD, MemOp_STORE, MemOp_PREFETCH}" class="document-topic">MemOp_STORE</a>;
+integer s = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Rs);
+boolean tagchecked = n != 31;</pre> 
+  <div></div> 
+  <h3>Assembler Symbols</h3> 
+  <div> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Xs&gt;</td> 
+      <td><a id="sa_xs"></a> <p>Is the 64-bit name of the general-purpose register into which the status result of this instruction is written, encoded in the "Rs" field.</p> <p>The value returned is:</p> 
+       <dl> 
+        <dt>
+          0xFFFFFFFF_FFFFFFFF 
+        </dt> 
+        <dd>
+          If the memory location accessed does not support this instruction. In this case, the value at the memory location is UNKNOWN. 
+        </dd> 
+        <dt>
+          != 0xFFFFFFFF_FFFFFFFF 
+        </dt> 
+        <dd>
+          If the memory location accessed does support this instruction. In this case, the peripheral that provides the response defines the returned value and provides information on the state of the memory update at the memory location. 
+        </dd> 
+       </dl> <p>If XZR is used, then the return value is ignored.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Xt&gt;</td> 
+      <td><a id="sa_xt"></a> <p>Is the 64-bit name of the first general-purpose register to be transferred, encoded in the "Rt" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Xn|SP&gt;</td> 
+      <td><a id="sa_xn_sp"></a> <p>Is the 64-bit name of the general-purpose base register or stack pointer, encoded in the "Rn" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div></div> 
+  <div> 
+   <a id="execute"></a> 
+   <h3>Operation</h3> 
+   <pre><a title="function: CheckST64BV0Enabled()" class="document-topic">CheckST64BV0Enabled</a>();
+
+bits(512) data;
+bits(64) address;
+bits(64) value;
+bits(64) status;
+
+<a title="type AccessDescriptor is ( AccessType acctype, bits(2) el, SecurityState ss, boolean acqsc, boolean acqpc, boolean relsc, boolean limitedordered, boolean exclusive, boolean atomicop, MemAtomicOp modop, boolean nontemporal, boolean read, boolean write, CacheOp cacheop, CacheOpScope opscope, CacheType cachetype, boolean pan, boolean transactional, boolean nonfault, boolean firstfault, boolean first, boolean contiguous, boolean streamingsve, boolean ls64, boolean mops, boolean rcw, boolean rcws, boolean toplevel, VARange varange, boolean a32lsmd, boolean tagchecked, boolean tagaccess, MPAMinfo mpam )" class="document-topic">AccessDescriptor</a> accdesc = <a title="function: AccessDescriptor CreateAccDescLS64(MemOp memop, boolean tagchecked)" class="document-topic">CreateAccDescLS64</a>(memop, tagchecked);
+bits(64) Xt = <a title="accessor: bits(width) X[integer n, integer width]" class="document-topic">X</a>[t, 64];
+value&lt;31:0&gt;  = ACCDATA_EL1&lt;31:0&gt;;
+value&lt;63:32&gt; = Xt&lt;63:32&gt;;
+if <a title="function: boolean BigEndian(AccessType acctype)" class="document-topic">BigEndian</a>(accdesc.acctype) then value = <a title="function: bits(width) BigEndianReverse (bits(width) value)" class="document-topic">BigEndianReverse</a>(value);
+data&lt;63:0&gt; = value;
+for i = 1 to 7
+    value = <a title="accessor: bits(width) X[integer n, integer width]" class="document-topic">X</a>[t+i, 64];
+    if <a title="function: boolean BigEndian(AccessType acctype)" class="document-topic">BigEndian</a>(accdesc.acctype) then value = <a title="function: bits(width) BigEndianReverse (bits(width) value)" class="document-topic">BigEndianReverse</a>(value);
+    data&lt;63+64*i : 64*i&gt; = value;
+
+if n == 31 then
+    <a title="function: CheckSPAlignment()" class="document-topic">CheckSPAlignment</a>();
+    address = <a title="accessor: bits(64) SP[]" class="document-topic">SP</a>[];
+else
+    address = <a title="accessor: bits(width) X[integer n, integer width]" class="document-topic">X</a>[n, 64];
+
+status = <a title="function: bits(64) MemStore64BWithRet(bits(64) address, bits(512) value, AccessDescriptor accdesc_in)" class="document-topic">MemStore64BWithRet</a>(address, data, accdesc);
+
+if s != 31 then <a title="accessor: X[integer n, integer width] = bits(width) value" class="document-topic">X</a>[s, 64] = status;</pre> 
+  </div>  
+ </body>
+</html>

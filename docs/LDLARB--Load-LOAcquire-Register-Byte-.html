@@ -1,0 +1,181 @@
+<html>
+ <head>  <link rel="stylesheet" href="../def-style.css"></head> 
+ <body> 
+  <h2>LDLARB</h2> 
+  <p>Load LOAcquire Register Byte loads a byte from memory, zero-extends it and writes it to a register. The instruction also has memory ordering semantics as described in <em>Load LOAcquire, Store LORelease</em>. For information about memory accesses, see <em>Load/Store addressing modes</em>.</p> 
+  <blockquote title="Note info"> 
+   <h4>Note</h4> 
+   <p>For this instruction, if the destination is WZR/XZR, it is impossible for software to observe the presence of the acquire semantic other than its effect on the arrival at endpoints.</p> 
+  </blockquote> 
+  <h3><a id="iclass_base_register"></a>No offset<span><br></br>(FEAT_LOR) </span></h3> 
+  <p></p> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>(1)</td> 
+      <td>(1)</td> 
+      <td>(1)</td> 
+      <td>(1)</td> 
+      <td>(1)</td> 
+      <td>0</td> 
+      <td>(1)</td> 
+      <td>(1)</td> 
+      <td>(1)</td> 
+      <td>(1)</td> 
+      <td>(1)</td> 
+      <td colspan="5">Rn</td> 
+      <td colspan="5">Rt</td> 
+     </tr> 
+     <tr> 
+      <td colspan="2">size</td> 
+      <td colspan="6"></td> 
+      <td></td> 
+      <td>L</td> 
+      <td></td> 
+      <td colspan="5">Rs</td> 
+      <td>o0</td> 
+      <td colspan="5">Rt2</td> 
+      <td colspan="5"></td> 
+      <td colspan="5"></td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4></h4> 
+   <a id="LDLARB_LR32_ldstord"></a> 
+   <p>LDLARB <a title="32-bit general-purpose register to be transferred (field &quot;Rt&quot;)" class="document-topic">&lt;Wt&gt;</a>, [<a title="64-bit general-purpose base register or SP (field &quot;Rn&quot;)" class="document-topic">&lt;Xn|SP&gt;</a>{,#0}]</p> 
+  </div> 
+  <pre>integer n = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Rn);
+integer t = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Rt);
+integer t2 = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Rt2); // ignored by load/store single register
+integer s = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Rs);   // ignored by all loads and store-release
+boolean wback = FALSE;
+integer offset   = 0;
+boolean rt_unknown = FALSE;
+
+limitedordered = o0 == '0';
+
+<a title="enumeration MemOp {MemOp_LOAD, MemOp_STORE, MemOp_PREFETCH}" class="document-topic">MemOp</a> memop = if L == '1' then <a title="enumeration MemOp {MemOp_LOAD, MemOp_STORE, MemOp_PREFETCH}" class="document-topic">MemOp_LOAD</a> else <a title="enumeration MemOp {MemOp_LOAD, MemOp_STORE, MemOp_PREFETCH}" class="document-topic">MemOp_STORE</a>;
+integer elsize = 8 &lt;&lt; <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(size);
+integer regsize = if elsize == 64 then 64 else 32;
+integer datasize = elsize;
+boolean tagchecked = n != 31;</pre> 
+  <div></div> 
+  <h3>Assembler Symbols</h3> 
+  <div> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Wt&gt;</td> 
+      <td><a id="sa_wt"></a> <p>Is the 32-bit name of the general-purpose register to be transferred, encoded in the "Rt" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Xn|SP&gt;</td> 
+      <td><a id="sa_xn_sp"></a> <p>Is the 64-bit name of the general-purpose base register or stack pointer, encoded in the "Rn" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div></div> 
+  <div> 
+   <a id="execute"></a> 
+   <h3>Operation</h3> 
+   <pre>bits(64) address;
+bits(datasize) data;
+constant integer dbytes = datasize DIV 8;
+
+<a title="type AccessDescriptor is ( AccessType acctype, bits(2) el, SecurityState ss, boolean acqsc, boolean acqpc, boolean relsc, boolean limitedordered, boolean exclusive, boolean atomicop, MemAtomicOp modop, boolean nontemporal, boolean read, boolean write, CacheOp cacheop, CacheOpScope opscope, CacheType cachetype, boolean pan, boolean transactional, boolean nonfault, boolean firstfault, boolean first, boolean contiguous, boolean streamingsve, boolean ls64, boolean mops, boolean rcw, boolean rcws, boolean toplevel, VARange varange, boolean a32lsmd, boolean tagchecked, boolean tagaccess, MPAMinfo mpam )" class="document-topic">AccessDescriptor</a> accdesc;
+if limitedordered then
+    accdesc = <a title="function: AccessDescriptor CreateAccDescLOR(MemOp memop, boolean tagchecked)" class="document-topic">CreateAccDescLOR</a>(memop, tagchecked);
+else
+    accdesc = <a title="function: AccessDescriptor CreateAccDescAcqRel(MemOp memop, boolean tagchecked)" class="document-topic">CreateAccDescAcqRel</a>(memop, tagchecked);
+
+if n == 31 then
+    <a title="function: CheckSPAlignment()" class="document-topic">CheckSPAlignment</a>();
+    address = <a title="accessor: bits(64) SP[]" class="document-topic">SP</a>[];
+else
+    address = <a title="accessor: bits(width) X[integer n, integer width]" class="document-topic">X</a>[n, 64];
+
+case memop of
+    when <a title="enumeration MemOp {MemOp_LOAD, MemOp_STORE, MemOp_PREFETCH}" class="document-topic">MemOp_STORE</a>
+        address = address + offset;
+        if rt_unknown then
+            data = bits(datasize) UNKNOWN;
+        else
+            data = <a title="accessor: bits(width) X[integer n, integer width]" class="document-topic">X</a>[t, datasize];
+        Mem[address, dbytes, accdesc] = data;
+
+        if wback then
+            if n == 31 then
+                <a title="accessor: SP[] = bits(64) value" class="document-topic">SP</a>[] = address;
+            else
+                <a title="accessor: X[integer n, integer width] = bits(width) value" class="document-topic">X</a>[n, 64] = address;
+    when <a title="enumeration MemOp {MemOp_LOAD, MemOp_STORE, MemOp_PREFETCH}" class="document-topic">MemOp_LOAD</a>
+        data = <a title="accessor: bits(size*8) Mem[bits(64) address, integer size, AccessDescriptor accdesc]" class="document-topic">Mem</a>[address, dbytes, accdesc];
+        <a title="accessor: X[integer n, integer width] = bits(width) value" class="document-topic">X</a>[t, regsize] = <a title="function: bits(N) ZeroExtend(bits(M) x, integer N)" class="document-topic">ZeroExtend</a>(data, regsize);</pre> 
+  </div> 
+  <h3>Operational information</h3> 
+  <p>If PSTATE.DIT is 1, the timing of this instruction is insensitive to the value of the data being loaded or stored.</p>  
+ </body>
+</html>

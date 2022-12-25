@@ -1,0 +1,189 @@
+<html>
+ <head>  <link rel="stylesheet" href="../def-style.css"></head> 
+ <body> 
+  <h2>CMN (immediate)</h2> 
+  <p>Compare Negative (immediate) adds a register value and an optionally-shifted immediate value. It updates the condition flags based on the result, and discards the result.</p> 
+  <p> This is an alias of <a href="ADDS--immediate---Add--immediate---setting-flags-.html" class="document-topic">ADDS (immediate)</a>. This means: </p> 
+  <ul> 
+   <li> The encodings in this description are named to match the encodings of <a href="ADDS--immediate---Add--immediate---setting-flags-.html" class="document-topic">ADDS (immediate)</a>. </li> 
+   <li>The description of <a href="ADDS--immediate---Add--immediate---setting-flags-.html" class="document-topic">ADDS (immediate)</a> gives the operational pseudocode, any <small>constrained unpredictable</small> behavior, and any operational information for this instruction.</li> 
+  </ul> 
+  <p></p> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>sf</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>sh</td> 
+      <td colspan="12">imm12</td> 
+      <td colspan="5">Rn</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+     </tr> 
+     <tr> 
+      <td></td> 
+      <td>op</td> 
+      <td>S</td> 
+      <td colspan="6"></td> 
+      <td></td> 
+      <td colspan="12"></td> 
+      <td colspan="5"></td> 
+      <td colspan="5">Rd</td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4>32-bit<span> (sf == 0)</span></h4> 
+   <a id="CMN_ADDS_32S_addsub_imm"></a> 
+   <p>CMN <a title="32-bit source general-purpose register or WSP (field &quot;Rn&quot;)" class="document-topic">&lt;Wn|WSP&gt;</a>, #<a title="Unsigned immediate [0-4095] (field &quot;imm12&quot;)" class="document-topic">&lt;imm&gt;</a>{, <a title="Optional left shift to apply to the immediate, default LSL #0 (field &quot;sh&quot;) [LSL #0,LSL #12]" class="document-topic">&lt;shift&gt;</a>}</p> 
+   <p> is equivalent to </p> 
+   <p><a href="ADDS--immediate---Add--immediate---setting-flags-.html" class="document-topic">ADDS</a> WZR, <a title="32-bit source general-purpose register or WSP (field &quot;Rn&quot;)" class="document-topic">&lt;Wn|WSP&gt;</a>, #<a title="Unsigned immediate [0-4095] (field &quot;imm12&quot;)" class="document-topic">&lt;imm&gt;</a> {, <a title="Optional left shift to apply to the immediate, default LSL #0 (field &quot;sh&quot;) [LSL #0,LSL #12]" class="document-topic">&lt;shift&gt;</a>}</p> 
+   <p> and is always the preferred disassembly. </p> 
+  </div> 
+  <div> 
+   <h4>64-bit<span> (sf == 1)</span></h4> 
+   <a id="CMN_ADDS_64S_addsub_imm"></a> 
+   <p>CMN <a title="64-bit source general-purpose register or SP (field &quot;Rn&quot;)" class="document-topic">&lt;Xn|SP&gt;</a>, #<a title="Unsigned immediate [0-4095] (field &quot;imm12&quot;)" class="document-topic">&lt;imm&gt;</a>{, <a title="Optional left shift to apply to the immediate, default LSL #0 (field &quot;sh&quot;) [LSL #0,LSL #12]" class="document-topic">&lt;shift&gt;</a>}</p> 
+   <p> is equivalent to </p> 
+   <p><a href="ADDS--immediate---Add--immediate---setting-flags-.html" class="document-topic">ADDS</a> XZR, <a title="64-bit source general-purpose register or SP (field &quot;Rn&quot;)" class="document-topic">&lt;Xn|SP&gt;</a>, #<a title="Unsigned immediate [0-4095] (field &quot;imm12&quot;)" class="document-topic">&lt;imm&gt;</a> {, <a title="Optional left shift to apply to the immediate, default LSL #0 (field &quot;sh&quot;) [LSL #0,LSL #12]" class="document-topic">&lt;shift&gt;</a>}</p> 
+   <p> and is always the preferred disassembly. </p> 
+  </div> 
+  <div></div> 
+  <h3>Assembler Symbols</h3> 
+  <div> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Wn|WSP&gt;</td> 
+      <td><a id="sa_wn_wsp"></a> <p>Is the 32-bit name of the source general-purpose register or stack pointer, encoded in the "Rn" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Xn|SP&gt;</td> 
+      <td><a id="sa_xn_sp"></a> <p>Is the 64-bit name of the source general-purpose register or stack pointer, encoded in the "Rn" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;imm&gt;</td> 
+      <td><a id="sa_imm"></a> <p>Is an unsigned immediate, in the range 0 to 4095, encoded in the "imm12" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;shift&gt;</td> 
+      <td><a id="sa_shift"></a> <p>Is the optional left shift to apply to the immediate, defaulting to LSL #0 and encoded in <q>sh</q>: </p> 
+       <table> 
+        <thead> 
+         <tr> 
+          <th>sh</th> 
+          <th>&lt;shift&gt;</th> 
+         </tr> 
+        </thead> 
+        <tbody> 
+         <tr> 
+          <td>0</td> 
+          <td>LSL #0</td> 
+         </tr> 
+         <tr> 
+          <td>1</td> 
+          <td>LSL #12</td> 
+         </tr> 
+        </tbody> 
+       </table> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div></div> 
+  <div> 
+   <h3>Operation</h3> 
+   <p>The description of <a href="ADDS--immediate---Add--immediate---setting-flags-.html" class="document-topic">ADDS (immediate)</a> gives the operational pseudocode for this instruction.</p> 
+  </div> 
+  <h3>Operational information</h3> 
+  <p>If PSTATE.DIT is 1:</p> 
+  <ul> 
+   <li>The execution time of this instruction is independent of: 
+    <ul> 
+     <li>The values of the data supplied in any of its registers.</li> 
+     <li>The values of the NZCV flags.</li> 
+    </ul></li> 
+   <li>The response of this instruction to asynchronous exceptions does not vary based on: 
+    <ul> 
+     <li>The values of the data supplied in any of its registers.</li> 
+     <li>The values of the NZCV flags.</li> 
+    </ul></li> 
+  </ul>  
+ </body>
+</html>

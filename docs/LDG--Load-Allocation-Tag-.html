@@ -1,0 +1,138 @@
+<html>
+ <head>  <link rel="stylesheet" href="../def-style.css"></head> 
+ <body> 
+  <h2>LDG</h2> 
+  <p>Load Allocation Tag loads an Allocation Tag from a memory address, generates a Logical Address Tag from the Allocation Tag and merges it into the destination register. The address used for the load is calculated from the base register and an immediate signed offset scaled by the Tag granule.</p> 
+  <h3><a id="iclass_general"></a>Integer<span><br></br>(FEAT_MTE) </span></h3> 
+  <p></p> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td colspan="9">imm9</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td colspan="5">Xn</td> 
+      <td colspan="5">Xt</td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4></h4> 
+   <a id="LDG_64Loffset_ldsttags"></a> 
+   <p>LDG <a title="64-bit general-purpose destination register (field &quot;Xt&quot;)" class="document-topic">&lt;Xt&gt;</a>, [<a title="64-bit general-purpose base register or SP (field &quot;Xn&quot;)" class="document-topic">&lt;Xn|SP&gt;</a>{, #<a title="Optional signed immediate offset, multiple of 16 [-4096-4080], default 0 (field &quot;imm9&quot;)" class="document-topic">&lt;simm&gt;</a>}]</p> 
+  </div> 
+  <pre>if !<a title="function: boolean HaveMTEExt()" class="document-topic">HaveMTEExt</a>() then UNDEFINED;
+integer t = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Xt);
+integer n = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Xn);
+bits(64) offset = <a title="function: bits(N) LSL(bits(N) x, integer shift)" class="document-topic">LSL</a>(<a title="function: bits(N) SignExtend(bits(M) x, integer N)" class="document-topic">SignExtend</a>(imm9, 64), <a title="constant integer LOG2_TAG_GRANULE = 4" class="document-topic">LOG2_TAG_GRANULE</a>);</pre> 
+  <div></div> 
+  <h3>Assembler Symbols</h3> 
+  <div> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Xt&gt;</td> 
+      <td><a id="sa_xt"></a> <p>Is the 64-bit name of the general-purpose destination register, encoded in the "Xt" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Xn|SP&gt;</td> 
+      <td><a id="sa_xn_sp"></a> <p>Is the 64-bit name of the general-purpose base register or stack pointer, encoded in the "Xn" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;simm&gt;</td> 
+      <td><a id="sa_simm"></a> <p>Is the optional signed immediate offset, a multiple of 16 in the range -4096 to 4080, defaulting to 0 and encoded in the "imm9" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div></div> 
+  <div> 
+   <a id="execute"></a> 
+   <h3>Operation</h3> 
+   <pre>bits(64) address;
+bits(4) tag;
+
+if n == 31 then
+    <a title="function: CheckSPAlignment()" class="document-topic">CheckSPAlignment</a>();
+    address = <a title="accessor: bits(64) SP[]" class="document-topic">SP</a>[];
+else
+    address = <a title="accessor: bits(width) X[integer n, integer width]" class="document-topic">X</a>[n, 64];
+
+address = address + offset;
+address = <a title="function: integer Align(integer x, integer y)" class="document-topic">Align</a>(address, <a title="constant integer TAG_GRANULE = 1 << LOG2_TAG_GRANULE" class="document-topic">TAG_GRANULE</a>);
+
+<a title="type AccessDescriptor is ( AccessType acctype, bits(2) el, SecurityState ss, boolean acqsc, boolean acqpc, boolean relsc, boolean limitedordered, boolean exclusive, boolean atomicop, MemAtomicOp modop, boolean nontemporal, boolean read, boolean write, CacheOp cacheop, CacheOpScope opscope, CacheType cachetype, boolean pan, boolean transactional, boolean nonfault, boolean firstfault, boolean first, boolean contiguous, boolean streamingsve, boolean ls64, boolean mops, boolean rcw, boolean rcws, boolean toplevel, VARange varange, boolean a32lsmd, boolean tagchecked, boolean tagaccess, MPAMinfo mpam )" class="document-topic">AccessDescriptor</a> accdesc = <a title="function: AccessDescriptor CreateAccDescLDGSTG(MemOp memop)" class="document-topic">CreateAccDescLDGSTG</a>(<a title="enumeration MemOp {MemOp_LOAD, MemOp_STORE, MemOp_PREFETCH}" class="document-topic">MemOp_LOAD</a>);
+tag = <a title="accessor: bits(4) AArch64.MemTag[bits(64) address, AccessDescriptor accdesc_in]" class="document-topic">AArch64.MemTag</a>[address, accdesc];
+<a title="accessor: X[integer n, integer width] = bits(width) value" class="document-topic">X</a>[t, 64] = AArch64.AddressWithAllocationTag(X[t, 64], tag);</pre> 
+  </div>  
+ </body>
+</html>

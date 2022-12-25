@@ -1,0 +1,217 @@
+<html>
+ <head>  <link rel="stylesheet" href="../def-style.css"></head> 
+ <body> 
+  <h2>SQCVTN</h2> 
+  <p>Multi-vector signed saturating extract narrow and interleave</p> 
+  <p>Saturate the signed integer value in each element of the four source vectors to quarter the orginal source element width, and place the four-way interleaved results in the quarter-width destination elements.</p> 
+  <p>This instruction is unpredicated.</p> 
+  <h3><a id="iclass_mortlach2"></a>SME2<span><br></br>(FEAT_SME2) </span></h3> 
+  <p></p> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>sz</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td colspan="3">Zn</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td colspan="5">Zd</td> 
+     </tr> 
+     <tr> 
+      <td colspan="8"></td> 
+      <td></td> 
+      <td></td> 
+      <td colspan="12"></td> 
+      <td colspan="3"></td> 
+      <td>N</td> 
+      <td>U</td> 
+      <td colspan="5"></td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4></h4> 
+   <a id="sqcvtn_z_mz4_"></a> 
+   <p>SQCVTN <a title="Destination scalable vector register (field &quot;Zd&quot;)" class="document-topic">&lt;Zd&gt;</a>.<a title="Size specifier (field &quot;sz&quot;) [B,H]" class="document-topic">&lt;T&gt;</a>, { <a title="First scalable vector register of a multi-vector sequence (field Zn)" class="document-topic">&lt;Zn1&gt;</a>.<a title="Size specifier (field &quot;sz&quot;) [D,S]" class="document-topic">&lt;Tb&gt;</a>-<a title="Fourth scalable vector register of a multi-vector sequence (field Zn)" class="document-topic">&lt;Zn4&gt;</a>.<a title="Size specifier (field &quot;sz&quot;) [D,S]" class="document-topic">&lt;Tb&gt;</a> }</p> 
+  </div> 
+  <pre>if !<a title="function: boolean HaveSME2()" class="document-topic">HaveSME2</a>() then UNDEFINED;
+constant integer esize = 8 &lt;&lt; <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(sz);
+integer n = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Zn:'00');
+integer d = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Zd);</pre> 
+  <div></div> 
+  <h3>Assembler Symbols</h3> 
+  <div> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Zd&gt;</td> 
+      <td><a id="sa_zd"></a> <p>Is the name of the destination scalable vector register, encoded in the "Zd" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;T&gt;</td> 
+      <td><a id="sa_t"></a> <p>Is the size specifier, encoded in <q>sz</q>: </p> 
+       <table> 
+        <thead> 
+         <tr> 
+          <th>sz</th> 
+          <th>&lt;T&gt;</th> 
+         </tr> 
+        </thead> 
+        <tbody> 
+         <tr> 
+          <td>0</td> 
+          <td>B</td> 
+         </tr> 
+         <tr> 
+          <td>1</td> 
+          <td>H</td> 
+         </tr> 
+        </tbody> 
+       </table> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Zn1&gt;</td> 
+      <td><a id="sa_zn1"></a> <p>Is the name of the first scalable vector register of a multi-vector sequence, encoded as "Zn" times 4.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Tb&gt;</td> 
+      <td><a id="sa_tb"></a> <p>Is the size specifier, encoded in <q>sz</q>: </p> 
+       <table> 
+        <thead> 
+         <tr> 
+          <th>sz</th> 
+          <th>&lt;Tb&gt;</th> 
+         </tr> 
+        </thead> 
+        <tbody> 
+         <tr> 
+          <td>0</td> 
+          <td>S</td> 
+         </tr> 
+         <tr> 
+          <td>1</td> 
+          <td>D</td> 
+         </tr> 
+        </tbody> 
+       </table> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Zn4&gt;</td> 
+      <td><a id="sa_zn4"></a> <p>Is the name of the fourth scalable vector register of a multi-vector sequence, encoded as "Zn" times 4 plus 3.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div></div> 
+  <div> 
+   <a id="execute"></a> 
+   <h3>Operation</h3> 
+   <pre><a title="function: CheckStreamingSVEEnabled()" class="document-topic">CheckStreamingSVEEnabled</a>();
+constant integer VL = <a title="accessor: integer CurrentVL" class="document-topic">CurrentVL</a>;
+constant integer elements = VL DIV (4 * esize);
+bits(VL) result;
+
+for e = 0 to elements-1
+    for i = 0 to 3
+        bits(VL) operand = <a title="accessor: bits(width) Z[integer n, integer width]" class="document-topic">Z</a>[n+i, VL];
+        integer element = <a title="function: integer SInt(bits(N) x)" class="document-topic">SInt</a>(<a title="accessor: bits(size) Elem[bits(N) vector, integer e, integer size]" class="document-topic">Elem</a>[operand, e, 4 * esize]);
+        <a title="accessor: Elem[bits(N) &amp;vector, integer e, integer size] = bits(size) value" class="document-topic">Elem</a>[result, 4*e + i, esize] = <a title="function: bits(N) SignedSat(integer i, integer N)" class="document-topic">SignedSat</a>(element, esize);
+
+<a title="accessor: Z[integer n, integer width] = bits(width) value" class="document-topic">Z</a>[d, VL] = result;</pre> 
+  </div>  
+ </body>
+</html>

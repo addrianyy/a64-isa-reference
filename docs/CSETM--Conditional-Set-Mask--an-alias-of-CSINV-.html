@@ -1,0 +1,169 @@
+<html>
+ <head>  <link rel="stylesheet" href="../def-style.css"></head> 
+ <body> 
+  <h2>CSETM</h2> 
+  <p>Conditional Set Mask sets all bits of the destination register to 1 if the condition is TRUE, and otherwise sets all bits to 0.</p> 
+  <p> This is an alias of <a href="CSINV--Conditional-Select-Invert-.html" class="document-topic">CSINV</a>. This means: </p> 
+  <ul> 
+   <li> The encodings in this description are named to match the encodings of <a href="CSINV--Conditional-Select-Invert-.html" class="document-topic">CSINV</a>. </li> 
+   <li>The description of <a href="CSINV--Conditional-Select-Invert-.html" class="document-topic">CSINV</a> gives the operational pseudocode, any <small>constrained unpredictable</small> behavior, and any operational information for this instruction.</li> 
+  </ul> 
+  <p></p> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>sf</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td colspan="4">!= 111x</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td colspan="5">Rd</td> 
+     </tr> 
+     <tr> 
+      <td></td> 
+      <td>op</td> 
+      <td></td> 
+      <td colspan="8"></td> 
+      <td colspan="5">Rm</td> 
+      <td colspan="4">cond</td> 
+      <td></td> 
+      <td>o2</td> 
+      <td colspan="5">Rn</td> 
+      <td colspan="5"></td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4>32-bit<span> (sf == 0)</span></h4> 
+   <a id="CSETM_CSINV_32_condsel"></a> 
+   <p>CSETM <a title="32-bit general-purpose destination register (field &quot;Rd&quot;)" class="document-topic">&lt;Wd&gt;</a>, <a title="Standard condition, excluding AL and NV (field &quot;cond&quot;)" class="document-topic">&lt;cond&gt;</a></p> 
+   <p> is equivalent to </p> 
+   <p><a href="CSINV--Conditional-Select-Invert-.html" class="document-topic">CSINV</a> <a title="32-bit general-purpose destination register (field &quot;Rd&quot;)" class="document-topic">&lt;Wd&gt;</a>, WZR, WZR, invert(<a title="Standard condition, excluding AL and NV (field &quot;cond&quot;)" class="document-topic">&lt;cond&gt;</a>)</p> 
+   <p> and is always the preferred disassembly. </p> 
+  </div> 
+  <div> 
+   <h4>64-bit<span> (sf == 1)</span></h4> 
+   <a id="CSETM_CSINV_64_condsel"></a> 
+   <p>CSETM <a title="64-bit general-purpose destination register (field &quot;Rd&quot;)" class="document-topic">&lt;Xd&gt;</a>, <a title="Standard condition, excluding AL and NV (field &quot;cond&quot;)" class="document-topic">&lt;cond&gt;</a></p> 
+   <p> is equivalent to </p> 
+   <p><a href="CSINV--Conditional-Select-Invert-.html" class="document-topic">CSINV</a> <a title="64-bit general-purpose destination register (field &quot;Rd&quot;)" class="document-topic">&lt;Xd&gt;</a>, XZR, XZR, invert(<a title="Standard condition, excluding AL and NV (field &quot;cond&quot;)" class="document-topic">&lt;cond&gt;</a>)</p> 
+   <p> and is always the preferred disassembly. </p> 
+  </div> 
+  <div></div> 
+  <h3>Assembler Symbols</h3> 
+  <div> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Wd&gt;</td> 
+      <td><a id="sa_wd"></a> <p>Is the 32-bit name of the general-purpose destination register, encoded in the "Rd" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Xd&gt;</td> 
+      <td><a id="sa_xd"></a> <p>Is the 64-bit name of the general-purpose destination register, encoded in the "Rd" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;cond&gt;</td> 
+      <td><a id="sa_cond_1"></a> <p>Is one of the standard conditions, excluding AL and NV, encoded in the "cond" field with its least significant bit inverted.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div></div> 
+  <div> 
+   <h3>Operation</h3> 
+   <p>The description of <a href="CSINV--Conditional-Select-Invert-.html" class="document-topic">CSINV</a> gives the operational pseudocode for this instruction.</p> 
+  </div> 
+  <h3>Operational information</h3> 
+  <p>If PSTATE.DIT is 1:</p> 
+  <ul> 
+   <li>The execution time of this instruction is independent of: 
+    <ul> 
+     <li>The values of the data supplied in any of its registers.</li> 
+     <li>The values of the NZCV flags.</li> 
+    </ul></li> 
+   <li>The response of this instruction to asynchronous exceptions does not vary based on: 
+    <ul> 
+     <li>The values of the data supplied in any of its registers.</li> 
+     <li>The values of the NZCV flags.</li> 
+    </ul></li> 
+  </ul>  
+ </body>
+</html>

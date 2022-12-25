@@ -1,0 +1,207 @@
+<html>
+ <head>  <link rel="stylesheet" href="../def-style.css"></head> 
+ <body> 
+  <h2>ORRS</h2> 
+  <p>Bitwise inclusive OR predicates, setting the condition flags</p> 
+  <p>Bitwise inclusive OR active elements of the second source predicate with corresponding elements of the first source predicate and place the results in the corresponding elements of the destination predicate. Inactive elements in the destination predicate register are set to zero. Sets the <small>First</small> (N), <small>None</small> (Z), <small>!Last</small> (C) condition flags based on the predicate result, and the V flag to zero.</p> 
+  <p>This instruction is used by the alias <a title="Move predicate (unpredicated)" href="MOVS--unpredicated---Move-predicate--unpredicated---setting-the-condition-flags--an-alias-of-ORRS-.html" class="document-topic">MOVS (unpredicated)</a>.</p> 
+  <p></p> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td colspan="4">Pm</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td colspan="4">Pg</td> 
+      <td>0</td> 
+      <td colspan="4">Pn</td> 
+      <td>0</td> 
+      <td colspan="4">Pd</td> 
+     </tr> 
+     <tr> 
+      <td colspan="8"></td> 
+      <td></td> 
+      <td>S</td> 
+      <td colspan="2"></td> 
+      <td colspan="4"></td> 
+      <td colspan="2"></td> 
+      <td colspan="4"></td> 
+      <td></td> 
+      <td colspan="4"></td> 
+      <td></td> 
+      <td colspan="4"></td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4></h4> 
+   <a id="orrs_p_p_pp_z"></a> 
+   <p>ORRS <a title="Destination scalable predicate register (field &quot;Pd&quot;)" class="document-topic">&lt;Pd&gt;</a>.B, <a title="Governing scalable predicate register (field &quot;Pg&quot;)" class="document-topic">&lt;Pg&gt;</a>/Z, <a title="First source scalable predicate register (field &quot;Pn&quot;)" class="document-topic">&lt;Pn&gt;</a>.B, <a title="Second source scalable predicate register (field &quot;Pm&quot;)" class="document-topic">&lt;Pm&gt;</a>.B</p> 
+  </div> 
+  <pre>if !<a title="function: boolean HaveSVE()" class="document-topic">HaveSVE</a>() &amp;&amp; !<a title="function: boolean HaveSME()" class="document-topic">HaveSME</a>() then UNDEFINED;
+constant integer esize = 8;
+integer g = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Pg);
+integer n = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Pn);
+integer m = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Pm);
+integer d = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Pd);
+boolean setflags = TRUE;</pre> 
+  <div></div> 
+  <h3>Assembler Symbols</h3> 
+  <div> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Pd&gt;</td> 
+      <td><a id="sa_pd"></a> <p>Is the name of the destination scalable predicate register, encoded in the "Pd" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Pg&gt;</td> 
+      <td><a id="sa_pg"></a> <p>Is the name of the governing scalable predicate register, encoded in the "Pg" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Pn&gt;</td> 
+      <td><a id="sa_pn"></a> <p>Is the name of the first source scalable predicate register, encoded in the "Pn" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Pm&gt;</td> 
+      <td><a id="sa_pm"></a> <p>Is the name of the second source scalable predicate register, encoded in the "Pm" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div></div> 
+  <h3>Alias Conditions</h3> 
+  <table> 
+   <thead> 
+    <tr> 
+     <th>Alias</th> 
+     <th>Is preferred when</th> 
+    </tr> 
+   </thead> 
+   <tbody> 
+    <tr> 
+     <td><a title="Move predicate (unpredicated)" href="MOVS--unpredicated---Move-predicate--unpredicated---setting-the-condition-flags--an-alias-of-ORRS-.html" class="document-topic">MOVS (unpredicated)</a></td> 
+     <td><span>S == '1' &amp;&amp; Pn == Pm &amp;&amp; Pm == Pg</span></td> 
+    </tr> 
+   </tbody> 
+  </table> 
+  <div> 
+   <a id="execute"></a> 
+   <h3>Operation</h3> 
+   <pre><a title="function: CheckSVEEnabled()" class="document-topic">CheckSVEEnabled</a>();
+constant integer VL = <a title="accessor: integer CurrentVL" class="document-topic">CurrentVL</a>;
+constant integer PL = VL DIV 8;
+constant integer elements = VL DIV esize;
+bits(PL) mask = <a title="accessor: bits(width) P[integer n, integer width]" class="document-topic">P</a>[g, PL];
+bits(PL) operand1 = <a title="accessor: bits(width) P[integer n, integer width]" class="document-topic">P</a>[n, PL];
+bits(PL) operand2 = <a title="accessor: bits(width) P[integer n, integer width]" class="document-topic">P</a>[m, PL];
+bits(PL) result;
+constant integer psize = esize DIV 8;
+
+for e = 0 to elements-1
+    bit element1 = <a title="function: bit PredicateElement(bits(N) pred, integer e, integer esize)" class="document-topic">PredicateElement</a>(operand1, e, esize);
+    bit element2 = <a title="function: bit PredicateElement(bits(N) pred, integer e, integer esize)" class="document-topic">PredicateElement</a>(operand2, e, esize);
+    if <a title="function: boolean ActivePredicateElement(bits(N) pred, integer e, integer esize)" class="document-topic">ActivePredicateElement</a>(mask, e, esize) then
+        <a title="accessor: Elem[bits(N) &amp;vector, integer e, integer size] = bits(size) value" class="document-topic">Elem</a>[result, e, psize] = <a title="function: bits(N) ZeroExtend(bits(M) x, integer N)" class="document-topic">ZeroExtend</a>(element1 OR element2, psize);
+    else
+        <a title="accessor: Elem[bits(N) &amp;vector, integer e, integer size] = bits(size) value" class="document-topic">Elem</a>[result, e, psize] = <a title="function: bits(N) ZeroExtend(bits(M) x, integer N)" class="document-topic">ZeroExtend</a>('0', psize);
+
+if setflags then
+    PSTATE.&lt;N,Z,C,V&gt; = <a title="function: bits(4) PredTest(bits(N) mask, bits(N) result, integer esize)" class="document-topic">PredTest</a>(mask, result, esize);
+<a title="accessor: P[integer n, integer width] = bits(width) value" class="document-topic">P</a>[d, PL] = result;</pre> 
+  </div> 
+  <h3>Operational information</h3> 
+  <p>If FEAT_SVE2 is implemented or FEAT_SME is implemented, then if PSTATE.DIT is 1:</p> 
+  <ul> 
+   <li>The execution time of this instruction is independent of: 
+    <ul> 
+     <li>The values of the data supplied in any of its operand registers when its governing predicate register contains the same value for each execution.</li> 
+     <li>The values of the NZCV flags.</li> 
+    </ul></li> 
+   <li>The response of this instruction to asynchronous exceptions does not vary based on: 
+    <ul> 
+     <li>The values of the data supplied in any of its operand registers when its governing predicate register contains the same value for each execution.</li> 
+     <li>The values of the NZCV flags.</li> 
+    </ul></li> 
+  </ul> 
+  <p>If FEAT_SME is implemented and the PE is in Streaming SVE mode, then any subsequent instruction which is dependent on the NZCV condition flags written by this instruction might be significantly delayed.</p>  
+ </body>
+</html>

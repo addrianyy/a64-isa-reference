@@ -1,0 +1,138 @@
+<html>
+ <head>  <link rel="stylesheet" href="../def-style.css"></head> 
+ <body> 
+  <h2>CMPP</h2> 
+  <p>Compare with Tag subtracts the 56-bit address held in the second source register from the 56-bit address held in the first source register, updates the condition flags based on the result of the subtraction, and discards the result.</p> 
+  <p> This is an alias of <a href="SUBPS--Subtract-Pointer--setting-Flags-.html" class="document-topic">SUBPS</a>. This means: </p> 
+  <ul> 
+   <li> The encodings in this description are named to match the encodings of <a href="SUBPS--Subtract-Pointer--setting-Flags-.html" class="document-topic">SUBPS</a>. </li> 
+   <li>The description of <a href="SUBPS--Subtract-Pointer--setting-Flags-.html" class="document-topic">SUBPS</a> gives the operational pseudocode, any <small>constrained unpredictable</small> behavior, and any operational information for this instruction.</li> 
+  </ul> 
+  <h3><a id="iclass_general"></a>Integer<span><br></br>(FEAT_MTE) </span></h3> 
+  <p></p> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td colspan="5">Xm</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td colspan="5">Xn</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+     </tr> 
+     <tr> 
+      <td></td> 
+      <td></td> 
+      <td></td> 
+      <td colspan="8"></td> 
+      <td colspan="5"></td> 
+      <td></td> 
+      <td></td> 
+      <td></td> 
+      <td></td> 
+      <td></td> 
+      <td></td> 
+      <td colspan="5"></td> 
+      <td colspan="5">Xd</td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4></h4> 
+   <a id="CMPP_SUBPS_64S_dp_2src"></a> 
+   <p>CMPP <a title="First 64-bit source general-purpose register or SP (field &quot;Xn&quot;)" class="document-topic">&lt;Xn|SP&gt;</a>, <a title="Second 64-bit general-purpose source register or SP (field &quot;Xm&quot;)" class="document-topic">&lt;Xm|SP&gt;</a></p> 
+   <p> is equivalent to </p> 
+   <p><a href="SUBPS--Subtract-Pointer--setting-Flags-.html" class="document-topic">SUBPS</a> XZR, <a title="First 64-bit source general-purpose register or SP (field &quot;Xn&quot;)" class="document-topic">&lt;Xn|SP&gt;</a>, <a title="Second 64-bit general-purpose source register or SP (field &quot;Xm&quot;)" class="document-topic">&lt;Xm|SP&gt;</a></p> 
+   <p> and is always the preferred disassembly. </p> 
+  </div> 
+  <div></div> 
+  <h3>Assembler Symbols</h3> 
+  <div> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Xn|SP&gt;</td> 
+      <td><a id="sa_xn_sp"></a> <p>Is the 64-bit name of the first source general-purpose register or stack pointer, encoded in the "Xn" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Xm|SP&gt;</td> 
+      <td><a id="sa_xm_sp"></a> <p>Is the 64-bit name of the second general-purpose source register or stack pointer, encoded in the "Xm" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div></div> 
+  <div> 
+   <h3>Operation</h3> 
+   <p>The description of <a href="SUBPS--Subtract-Pointer--setting-Flags-.html" class="document-topic">SUBPS</a> gives the operational pseudocode for this instruction.</p> 
+  </div>  
+ </body>
+</html>

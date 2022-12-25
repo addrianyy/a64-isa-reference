@@ -1,0 +1,639 @@
+<html>
+ <head>  <link rel="stylesheet" href="../def-style.css"></head> 
+ <body> 
+  <h2>MOVA (tile to vector, single)</h2> 
+  <p>Move ZA tile slice to vector register</p> 
+  <p>The instruction operates on individual horizontal or vertical slices within a named ZA tile of the specified element size. The slice number within the tile is selected by the sum of the slice index register and immediate offset, modulo the number of such elements in a vector. The immediate offset is in the range 0 to the number of elements in a 128-bit vector segment minus 1.</p> 
+  <p>Inactive elements in the destination vector remain unmodified.</p> 
+  <p>This instruction is used by the alias <a title="Move ZA tile slice to vector register" href="MOV--tile-to-vector--single---Move-ZA-tile-slice-to-vector-register--an-alias-of-MOVA--tile-to-vector--single--.html" class="document-topic">MOV (tile to vector, single)</a>.</p> 
+  <p> It has encodings from 5 classes: <a class="document-topic">8-bit</a> , <a class="document-topic">16-bit</a> , <a class="document-topic">32-bit</a> , <a class="document-topic">64-bit</a> and <a class="document-topic">128-bit</a> </p> 
+  <h3><a id="iclass_per_byte"></a>8-bit<span><br></br>(FEAT_SME) </span></h3> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>V</td> 
+      <td colspan="2">Rs</td> 
+      <td colspan="3">Pg</td> 
+      <td>0</td> 
+      <td colspan="4">off4</td> 
+      <td colspan="5">Zd</td> 
+     </tr> 
+     <tr> 
+      <td colspan="8"></td> 
+      <td>size&lt;1&gt;</td> 
+      <td>size&lt;0&gt;</td> 
+      <td colspan="5"></td> 
+      <td>Q</td> 
+      <td></td> 
+      <td colspan="2"></td> 
+      <td colspan="3"></td> 
+      <td></td> 
+      <td colspan="4"></td> 
+      <td colspan="5"></td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4></h4> 
+   <a id="mova_z_p_rza_b"></a> 
+   <p>MOVA <a title="Destination scalable vector register (field &quot;Zd&quot;)" class="document-topic">&lt;Zd&gt;</a>.B, <a title="Governing scalable predicate register P0-P7 (field &quot;Pg&quot;)" class="document-topic">&lt;Pg&gt;</a>/M, ZA0<a title="Horizontal or vertical slice indicator (field &quot;V&quot;) [H,V]" class="document-topic">&lt;HV&gt;</a>.B[<a title="32-bit slice index register W12-W15 (field &quot;Rs&quot;)" class="document-topic">&lt;Ws&gt;</a>, <a title="Slice index offset [0-15] (field &quot;off4&quot;)" class="document-topic">&lt;offs&gt;</a>]</p> 
+  </div> 
+  <pre>if !<a title="function: boolean HaveSME()" class="document-topic">HaveSME</a>() then UNDEFINED;
+integer g = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Pg);
+integer s = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>('011':Rs);
+integer n = 0;
+integer offset = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(off4);
+constant integer esize = 8;
+integer d = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Zd);
+boolean vertical = V == '1';</pre> 
+  <h3><a id="iclass_per_halfword"></a>16-bit<span><br></br>(FEAT_SME) </span></h3> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>V</td> 
+      <td colspan="2">Rs</td> 
+      <td colspan="3">Pg</td> 
+      <td>0</td> 
+      <td>ZAn</td> 
+      <td colspan="3">off3</td> 
+      <td colspan="5">Zd</td> 
+     </tr> 
+     <tr> 
+      <td colspan="8"></td> 
+      <td>size&lt;1&gt;</td> 
+      <td>size&lt;0&gt;</td> 
+      <td colspan="5"></td> 
+      <td>Q</td> 
+      <td></td> 
+      <td colspan="2"></td> 
+      <td colspan="3"></td> 
+      <td></td> 
+      <td></td> 
+      <td colspan="3"></td> 
+      <td colspan="5"></td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4></h4> 
+   <a id="mova_z_p_rza_h"></a> 
+   <p>MOVA <a title="Destination scalable vector register (field &quot;Zd&quot;)" class="document-topic">&lt;Zd&gt;</a>.H, <a title="Governing scalable predicate register P0-P7 (field &quot;Pg&quot;)" class="document-topic">&lt;Pg&gt;</a>/M, <a title="ZA tile ZA0-ZA1 to be accessed (field &quot;ZAn&quot;)" class="document-topic">&lt;ZAn&gt;</a><a title="Horizontal or vertical slice indicator (field &quot;V&quot;) [H,V]" class="document-topic">&lt;HV&gt;</a>.H[<a title="32-bit slice index register W12-W15 (field &quot;Rs&quot;)" class="document-topic">&lt;Ws&gt;</a>, <a title="Slice index offset [0-7] (field &quot;off3&quot;)" class="document-topic">&lt;offs&gt;</a>]</p> 
+  </div> 
+  <pre>if !<a title="function: boolean HaveSME()" class="document-topic">HaveSME</a>() then UNDEFINED;
+integer g = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Pg);
+integer s = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>('011':Rs);
+integer n = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(ZAn);
+integer offset = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(off3);
+constant integer esize = 16;
+integer d = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Zd);
+boolean vertical = V == '1';</pre> 
+  <h3><a id="iclass_per_word"></a>32-bit<span><br></br>(FEAT_SME) </span></h3> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>V</td> 
+      <td colspan="2">Rs</td> 
+      <td colspan="3">Pg</td> 
+      <td>0</td> 
+      <td colspan="2">ZAn</td> 
+      <td colspan="2">off2</td> 
+      <td colspan="5">Zd</td> 
+     </tr> 
+     <tr> 
+      <td colspan="8"></td> 
+      <td>size&lt;1&gt;</td> 
+      <td>size&lt;0&gt;</td> 
+      <td colspan="5"></td> 
+      <td>Q</td> 
+      <td></td> 
+      <td colspan="2"></td> 
+      <td colspan="3"></td> 
+      <td></td> 
+      <td colspan="2"></td> 
+      <td colspan="2"></td> 
+      <td colspan="5"></td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4></h4> 
+   <a id="mova_z_p_rza_w"></a> 
+   <p>MOVA <a title="Destination scalable vector register (field &quot;Zd&quot;)" class="document-topic">&lt;Zd&gt;</a>.S, <a title="Governing scalable predicate register P0-P7 (field &quot;Pg&quot;)" class="document-topic">&lt;Pg&gt;</a>/M, <a title="ZA tile ZA0-ZA3 to be accessed (field &quot;ZAn&quot;)" class="document-topic">&lt;ZAn&gt;</a><a title="Horizontal or vertical slice indicator (field &quot;V&quot;) [H,V]" class="document-topic">&lt;HV&gt;</a>.S[<a title="32-bit slice index register W12-W15 (field &quot;Rs&quot;)" class="document-topic">&lt;Ws&gt;</a>, <a title="Slice index offset [0-3] (field &quot;off2&quot;)" class="document-topic">&lt;offs&gt;</a>]</p> 
+  </div> 
+  <pre>if !<a title="function: boolean HaveSME()" class="document-topic">HaveSME</a>() then UNDEFINED;
+integer g = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Pg);
+integer s = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>('011':Rs);
+integer n = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(ZAn);
+integer offset = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(off2);
+constant integer esize = 32;
+integer d = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Zd);
+boolean vertical = V == '1';</pre> 
+  <h3><a id="iclass_per_doubleword"></a>64-bit<span><br></br>(FEAT_SME) </span></h3> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>V</td> 
+      <td colspan="2">Rs</td> 
+      <td colspan="3">Pg</td> 
+      <td>0</td> 
+      <td colspan="3">ZAn</td> 
+      <td>o1</td> 
+      <td colspan="5">Zd</td> 
+     </tr> 
+     <tr> 
+      <td colspan="8"></td> 
+      <td>size&lt;1&gt;</td> 
+      <td>size&lt;0&gt;</td> 
+      <td colspan="5"></td> 
+      <td>Q</td> 
+      <td></td> 
+      <td colspan="2"></td> 
+      <td colspan="3"></td> 
+      <td></td> 
+      <td colspan="3"></td> 
+      <td></td> 
+      <td colspan="5"></td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4></h4> 
+   <a id="mova_z_p_rza_d"></a> 
+   <p>MOVA <a title="Destination scalable vector register (field &quot;Zd&quot;)" class="document-topic">&lt;Zd&gt;</a>.D, <a title="Governing scalable predicate register P0-P7 (field &quot;Pg&quot;)" class="document-topic">&lt;Pg&gt;</a>/M, <a title="ZA tile ZA0-ZA7 to be accessed (field &quot;ZAn&quot;)" class="document-topic">&lt;ZAn&gt;</a><a title="Horizontal or vertical slice indicator (field &quot;V&quot;) [H,V]" class="document-topic">&lt;HV&gt;</a>.D[<a title="32-bit slice index register W12-W15 (field &quot;Rs&quot;)" class="document-topic">&lt;Ws&gt;</a>, <a title="Slice index offset [0-1] (field &quot;o1&quot;)" class="document-topic">&lt;offs&gt;</a>]</p> 
+  </div> 
+  <pre>if !<a title="function: boolean HaveSME()" class="document-topic">HaveSME</a>() then UNDEFINED;
+integer g = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Pg);
+integer s = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>('011':Rs);
+integer n = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(ZAn);
+integer offset = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(o1);
+constant integer esize = 64;
+integer d = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Zd);
+boolean vertical = V == '1';</pre> 
+  <h3><a id="iclass_per_quadword"></a>128-bit<span><br></br>(FEAT_SME) </span></h3> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>V</td> 
+      <td colspan="2">Rs</td> 
+      <td colspan="3">Pg</td> 
+      <td>0</td> 
+      <td colspan="4">ZAn</td> 
+      <td colspan="5">Zd</td> 
+     </tr> 
+     <tr> 
+      <td colspan="8"></td> 
+      <td>size&lt;1&gt;</td> 
+      <td>size&lt;0&gt;</td> 
+      <td colspan="5"></td> 
+      <td>Q</td> 
+      <td></td> 
+      <td colspan="2"></td> 
+      <td colspan="3"></td> 
+      <td></td> 
+      <td colspan="4"></td> 
+      <td colspan="5"></td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4></h4> 
+   <a id="mova_z_p_rza_q"></a> 
+   <p>MOVA <a title="Destination scalable vector register (field &quot;Zd&quot;)" class="document-topic">&lt;Zd&gt;</a>.Q, <a title="Governing scalable predicate register P0-P7 (field &quot;Pg&quot;)" class="document-topic">&lt;Pg&gt;</a>/M, <a title="ZA tile ZA0-ZA15 to be accessed (field &quot;ZAn&quot;)" class="document-topic">&lt;ZAn&gt;</a><a title="Horizontal or vertical slice indicator (field &quot;V&quot;) [H,V]" class="document-topic">&lt;HV&gt;</a>.Q[<a title="32-bit slice index register W12-W15 (field &quot;Rs&quot;)" class="document-topic">&lt;Ws&gt;</a>, <a title="Slice index offset 0" class="document-topic">&lt;offs&gt;</a>]</p> 
+  </div> 
+  <pre>if !<a title="function: boolean HaveSME()" class="document-topic">HaveSME</a>() then UNDEFINED;
+integer g = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Pg);
+integer s = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>('011':Rs);
+integer n = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(ZAn);
+integer offset = 0;
+constant integer esize = 128;
+integer d = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Zd);
+boolean vertical = V == '1';</pre> 
+  <div></div> 
+  <h3>Assembler Symbols</h3> 
+  <div> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Zd&gt;</td> 
+      <td><a id="sa_zd"></a> <p>Is the name of the destination scalable vector register, encoded in the "Zd" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Pg&gt;</td> 
+      <td><a id="sa_pg"></a> <p>Is the name of the governing scalable predicate register P0-P7, encoded in the "Pg" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;ZAn&gt;</td> 
+      <td><a id="sa_zan_1"></a> <p>For the 16-bit variant: is the name of the ZA tile ZA0-ZA1 to be accessed, encoded in the "ZAn" field.</p> </td> 
+     </tr> 
+     <tr> 
+      <td></td> 
+      <td><a id="sa_zan_3"></a> <p>For the 32-bit variant: is the name of the ZA tile ZA0-ZA3 to be accessed, encoded in the "ZAn" field.</p> </td> 
+     </tr> 
+     <tr> 
+      <td></td> 
+      <td><a id="sa_zan"></a> <p>For the 64-bit variant: is the name of the ZA tile ZA0-ZA7 to be accessed, encoded in the "ZAn" field.</p> </td> 
+     </tr> 
+     <tr> 
+      <td></td> 
+      <td><a id="sa_zan_2"></a> <p>For the 128-bit variant: is the name of the ZA tile ZA0-ZA15 to be accessed, encoded in the "ZAn" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;HV&gt;</td> 
+      <td><a id="sa_hv"></a> <p>Is the horizontal or vertical slice indicator, encoded in <q>V</q>: </p> 
+       <table> 
+        <thead> 
+         <tr> 
+          <th>V</th> 
+          <th>&lt;HV&gt;</th> 
+         </tr> 
+        </thead> 
+        <tbody> 
+         <tr> 
+          <td>0</td> 
+          <td>H</td> 
+         </tr> 
+         <tr> 
+          <td>1</td> 
+          <td>V</td> 
+         </tr> 
+        </tbody> 
+       </table> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Ws&gt;</td> 
+      <td><a id="sa_ws"></a> <p>Is the 32-bit name of the slice index register W12-W15, encoded in the "Rs" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;offs&gt;</td> 
+      <td><a id="sa_offs"></a> <p>For the 8-bit variant: is the slice index offset, in the range 0 to 15, encoded in the "off4" field.</p> </td> 
+     </tr> 
+     <tr> 
+      <td></td> 
+      <td><a id="sa_offs_2"></a> <p>For the 16-bit variant: is the slice index offset, in the range 0 to 7, encoded in the "off3" field.</p> </td> 
+     </tr> 
+     <tr> 
+      <td></td> 
+      <td><a id="sa_offs_4"></a> <p>For the 32-bit variant: is the slice index offset, in the range 0 to 3, encoded in the "off2" field.</p> </td> 
+     </tr> 
+     <tr> 
+      <td></td> 
+      <td><a id="sa_offs_1"></a> <p>For the 64-bit variant: is the slice index offset, in the range 0 to 1, encoded in the "o1" field.</p> </td> 
+     </tr> 
+     <tr> 
+      <td></td> 
+      <td><a id="sa_offs_3"></a> <p>For the 128-bit variant: is the slice index offset 0.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div></div> 
+  <div> 
+   <a id="execute"></a> 
+   <h3>Operation</h3> 
+   <pre><a title="function: CheckStreamingSVEAndZAEnabled()" class="document-topic">CheckStreamingSVEAndZAEnabled</a>();
+constant integer VL = <a title="accessor: integer CurrentVL" class="document-topic">CurrentVL</a>;
+constant integer PL = VL DIV 8;
+constant integer dim = VL DIV esize;
+bits(PL) mask = <a title="accessor: bits(width) P[integer n, integer width]" class="document-topic">P</a>[g, PL];
+bits(32) index = <a title="accessor: bits(width) X[integer n, integer width]" class="document-topic">X</a>[s, 32];
+integer  slice = (<a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(index) + offset) MOD dim;
+bits(VL) operand = <a title="accessor: bits(width) ZAslice[integer tile, integer esize, boolean vertical, integer slice, integer width]" class="document-topic">ZAslice</a>[n, esize, vertical, slice, VL];
+bits(VL) result = <a title="accessor: bits(width) Z[integer n, integer width]" class="document-topic">Z</a>[d, VL];
+
+for e = 0 to dim-1
+    bits(esize) element = <a title="accessor: bits(size) Elem[bits(N) vector, integer e, integer size]" class="document-topic">Elem</a>[operand, e, esize];
+    if <a title="function: boolean ActivePredicateElement(bits(N) pred, integer e, integer esize)" class="document-topic">ActivePredicateElement</a>(mask, e, esize) then
+        <a title="accessor: Elem[bits(N) &amp;vector, integer e, integer size] = bits(size) value" class="document-topic">Elem</a>[result, e, esize] = element;
+
+<a title="accessor: Z[integer n, integer width] = bits(width) value" class="document-topic">Z</a>[d, VL] = result;</pre> 
+  </div> 
+  <h3>Operational information</h3> 
+  <p>If PSTATE.DIT is 1:</p> 
+  <ul> 
+   <li>The execution time of this instruction is independent of: 
+    <ul> 
+     <li>The values of the data supplied in any of its operand registers when its governing predicate register contains the same value for each execution.</li> 
+     <li>The values of the NZCV flags.</li> 
+    </ul></li> 
+   <li>The response of this instruction to asynchronous exceptions does not vary based on: 
+    <ul> 
+     <li>The values of the data supplied in any of its operand registers when its governing predicate register contains the same value for each execution.</li> 
+     <li>The values of the NZCV flags.</li> 
+    </ul></li> 
+  </ul>  
+ </body>
+</html>

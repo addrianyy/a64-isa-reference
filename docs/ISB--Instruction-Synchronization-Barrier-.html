@@ -1,0 +1,142 @@
+<html>
+ <head>  <link rel="stylesheet" href="../def-style.css"></head> 
+ <body> 
+  <h2>ISB</h2> 
+  <p>Instruction Synchronization Barrier flushes the pipeline in the PE and is a context synchronization event. For more information, see <em>Instruction Synchronization Barrier (ISB)</em>.</p> 
+  <p></p> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td colspan="4">CRm</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+     </tr> 
+     <tr> 
+      <td colspan="10"></td> 
+      <td></td> 
+      <td colspan="2"></td> 
+      <td colspan="3"></td> 
+      <td colspan="4"></td> 
+      <td colspan="4"></td> 
+      <td></td> 
+      <td colspan="2">opc</td> 
+      <td colspan="5"></td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4></h4> 
+   <a id="ISB_BI_barriers"></a> 
+   <p>ISB {<a title="Specifies an optional limitation on the barrier operation" class="document-topic">&lt;option&gt;</a>|#<a title="Optional 4-bit unsigned immediate [0-15], default 15 (field &quot;CRm&quot;)" class="document-topic">&lt;imm&gt;</a>}</p> 
+  </div> 
+  <pre>// No additional decoding required</pre> 
+  <div></div> 
+  <h3>Assembler Symbols</h3> 
+  <div> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;option&gt;</td> 
+      <td><a id="sa_option"></a> <p>Specifies an optional limitation on the barrier operation. Values are:</p> 
+       <dl> 
+        <dt>
+          SY 
+        </dt> 
+        <dd>
+          Full system barrier operation, encoded as CRm = 0b1111. Can be omitted. 
+        </dd> 
+       </dl> <p>All other encodings of CRm are reserved. The corresponding instructions execute as full system barrier operations, but must not be relied upon by software.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;imm&gt;</td> 
+      <td><a id="sa_imm"></a> <p>Is an optional 4-bit unsigned immediate, in the range 0 to 15, defaulting to 15 and encoded in the "CRm" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div></div> 
+  <div> 
+   <a id="execute"></a> 
+   <h3>Operation</h3> 
+   <pre><a title="function: InstructionSynchronizationBarrier()" class="document-topic">InstructionSynchronizationBarrier</a>();
+if <a title="function: boolean HaveBRBExt()" class="document-topic">HaveBRBExt</a>() &amp;&amp; <a title="function: boolean BRBEBranchOnISB()" class="document-topic">BRBEBranchOnISB</a>() then
+    <a title="function: BRBEISB()" class="document-topic">BRBEISB</a>();</pre> 
+  </div>  
+ </body>
+</html>

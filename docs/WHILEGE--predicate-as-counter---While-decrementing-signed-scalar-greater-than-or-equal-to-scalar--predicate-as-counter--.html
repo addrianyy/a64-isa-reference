@@ -1,0 +1,258 @@
+<html>
+ <head>  <link rel="stylesheet" href="../def-style.css"></head> 
+ <body> 
+  <h2>WHILEGE (predicate as counter)</h2> 
+  <p>While decrementing signed scalar greater than or equal to scalar (predicate-as-counter)</p> 
+  <p>Generate a predicate for a group of two or four vectors that starting from the highest numbered element of the group is true while the decrementing value of the first, signed scalar operand is greater than or equal to the second scalar operand and false thereafter down to the lowest numbered element of the group.</p> 
+  <p>If the second scalar operand is equal to the minimum signed integer value then a condition which includes an equality test can never fail and the result will be an all-true predicate.</p> 
+  <p>The full width of the scalar operands is significant for the purposes of comparison, and the full width first operand is decremented by one for each destination predicate element, irrespective of the predicate result element size.</p> 
+  <p>The predicate result is placed in the predicate destination register using the predicate-as-counter encoding. Sets the <small>First</small> (N), <small>None</small> (Z), <small>!Last</small> (C) condition flags based on the predicate result, and the V flag to zero.</p> 
+  <h3><a id="iclass_sve2"></a>SVE2<span><br></br>(FEAT_SVE2p1) </span></h3> 
+  <p></p> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td colspan="2">size</td> 
+      <td>1</td> 
+      <td colspan="5">Rm</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>vl</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td colspan="5">Rn</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td colspan="3">PNd</td> 
+     </tr> 
+     <tr> 
+      <td colspan="8"></td> 
+      <td colspan="2"></td> 
+      <td></td> 
+      <td colspan="5"></td> 
+      <td colspan="2"></td> 
+      <td></td> 
+      <td></td> 
+      <td>U</td> 
+      <td>lt</td> 
+      <td colspan="5"></td> 
+      <td></td> 
+      <td>eq</td> 
+      <td colspan="3"></td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4></h4> 
+   <a id="whilege_pn_rr_"></a> 
+   <p>WHILEGE <a title="Destination scalable predicate register PN8-PN15 (field &quot;PNd&quot;)" class="document-topic">&lt;PNd&gt;</a>.<a title="Size specifier (field &quot;size&quot;) [B,D,H,S]" class="document-topic">&lt;T&gt;</a>, <a title="First 64-bit source general-purpose register (field &quot;Rn&quot;)" class="document-topic">&lt;Xn&gt;</a>, <a title="Second 64-bit source general-purpose register (field &quot;Rm&quot;)" class="document-topic">&lt;Xm&gt;</a>, <a title="Vl specifier (field &quot;vl&quot;) [VLx2,VLx4]" class="document-topic">&lt;vl&gt;</a></p> 
+  </div> 
+  <pre>if !<a title="function: boolean HaveSME2()" class="document-topic">HaveSME2</a>() &amp;&amp; !<a title="function: boolean HaveSVE2p1()" class="document-topic">HaveSVE2p1</a>() then UNDEFINED;
+constant integer esize = 8 &lt;&lt; <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(size);
+constant integer rsize = 64;
+integer n = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Rn);
+integer m = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Rm);
+integer d = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>('1':PNd);
+boolean unsigned = FALSE;
+boolean invert = TRUE;
+<a title="enumeration SVECmp { Cmp_EQ, Cmp_NE, Cmp_GE, Cmp_GT, Cmp_LT, Cmp_LE, Cmp_UN }" class="document-topic">SVECmp</a> op = <a title="enumeration SVECmp { Cmp_EQ, Cmp_NE, Cmp_GE, Cmp_GT, Cmp_LT, Cmp_LE, Cmp_UN }" class="document-topic">Cmp_GE</a>;
+integer width = 2 &lt;&lt; <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(vl);</pre> 
+  <div></div> 
+  <h3>Assembler Symbols</h3> 
+  <div> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;PNd&gt;</td> 
+      <td><a id="sa_pnd"></a> <p>Is the name of the destination scalable predicate register PN8-PN15, with predicate-as-counter encoding, encoded in the "PNd" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;T&gt;</td> 
+      <td><a id="sa_t"></a> <p>Is the size specifier, encoded in <q>size</q>: </p> 
+       <table> 
+        <thead> 
+         <tr> 
+          <th>size</th> 
+          <th>&lt;T&gt;</th> 
+         </tr> 
+        </thead> 
+        <tbody> 
+         <tr> 
+          <td>00</td> 
+          <td>B</td> 
+         </tr> 
+         <tr> 
+          <td>01</td> 
+          <td>H</td> 
+         </tr> 
+         <tr> 
+          <td>10</td> 
+          <td>S</td> 
+         </tr> 
+         <tr> 
+          <td>11</td> 
+          <td>D</td> 
+         </tr> 
+        </tbody> 
+       </table> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Xn&gt;</td> 
+      <td><a id="sa_xn"></a> <p>Is the 64-bit name of the first source general-purpose register, encoded in the "Rn" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Xm&gt;</td> 
+      <td><a id="sa_xm"></a> <p>Is the 64-bit name of the second source general-purpose register, encoded in the "Rm" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;vl&gt;</td> 
+      <td><a id="sa_vl"></a> <p>Is the vl specifier, encoded in <q>vl</q>: </p> 
+       <table> 
+        <thead> 
+         <tr> 
+          <th>vl</th> 
+          <th>&lt;vl&gt;</th> 
+         </tr> 
+        </thead> 
+        <tbody> 
+         <tr> 
+          <td>0</td> 
+          <td>VLx2</td> 
+         </tr> 
+         <tr> 
+          <td>1</td> 
+          <td>VLx4</td> 
+         </tr> 
+        </tbody> 
+       </table> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div></div> 
+  <div> 
+   <a id="execute"></a> 
+   <h3>Operation</h3> 
+   <pre>if <a title="function: boolean HaveSVE2p1()" class="document-topic">HaveSVE2p1</a>() then <a title="function: CheckSVEEnabled()" class="document-topic">CheckSVEEnabled</a>(); else <a title="function: CheckStreamingSVEEnabled()" class="document-topic">CheckStreamingSVEEnabled</a>();
+constant integer VL = <a title="accessor: integer CurrentVL" class="document-topic">CurrentVL</a>;
+constant integer PL = VL DIV 8;
+constant integer elements = width * (VL DIV esize);
+bits(rsize) operand1 = <a title="accessor: bits(width) X[integer n, integer width]" class="document-topic">X</a>[n, rsize];
+bits(rsize) operand2 = <a title="accessor: bits(width) X[integer n, integer width]" class="document-topic">X</a>[m, rsize];
+bits(PL) result;
+boolean last = TRUE;
+integer count = 0;
+
+for e = elements-1 downto 0
+    boolean cond;
+    case op of
+        when <a title="enumeration SVECmp { Cmp_EQ, Cmp_NE, Cmp_GE, Cmp_GT, Cmp_LT, Cmp_LE, Cmp_UN }" class="document-topic">Cmp_GT</a> cond = (<a title="function: integer Int(bits(N) x, boolean unsigned)" class="document-topic">Int</a>(operand1, unsigned) &gt;  <a title="function: integer Int(bits(N) x, boolean unsigned)" class="document-topic">Int</a>(operand2, unsigned));
+        when <a title="enumeration SVECmp { Cmp_EQ, Cmp_NE, Cmp_GE, Cmp_GT, Cmp_LT, Cmp_LE, Cmp_UN }" class="document-topic">Cmp_GE</a> cond = (<a title="function: integer Int(bits(N) x, boolean unsigned)" class="document-topic">Int</a>(operand1, unsigned) &gt;= <a title="function: integer Int(bits(N) x, boolean unsigned)" class="document-topic">Int</a>(operand2, unsigned));
+
+    last = last &amp;&amp; cond;
+    if last then count = count + 1;
+    operand1 = operand1 - 1;
+
+result = <a title="function: bits(width) EncodePredCount(integer esize, integer elements, integer count_in, boolean invert_in, integer width)" class="document-topic">EncodePredCount</a>(esize, elements, count, invert, PL);
+PSTATE.&lt;N,Z,C,V&gt; = <a title="function: bits(4) PredCountTest(integer elements, integer count, boolean invert)" class="document-topic">PredCountTest</a>(elements, count, invert);
+<a title="accessor: P[integer n, integer width] = bits(width) value" class="document-topic">P</a>[d, PL] = result;</pre> 
+  </div> 
+  <h3>Operational information</h3> 
+  <p>If PSTATE.DIT is 1:</p> 
+  <ul> 
+   <li>The execution time of this instruction is independent of: 
+    <ul> 
+     <li>The values of the data supplied in any of its registers.</li> 
+     <li>The values of the NZCV flags.</li> 
+    </ul></li> 
+   <li>The response of this instruction to asynchronous exceptions does not vary based on: 
+    <ul> 
+     <li>The values of the data supplied in any of its registers.</li> 
+     <li>The values of the NZCV flags.</li> 
+    </ul></li> 
+  </ul>  
+ </body>
+</html>

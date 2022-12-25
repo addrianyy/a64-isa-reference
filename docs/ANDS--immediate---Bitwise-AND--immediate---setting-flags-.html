@@ -1,0 +1,219 @@
+<html>
+ <head>  <link rel="stylesheet" href="../def-style.css"></head> 
+ <body> 
+  <h2>ANDS (immediate)</h2> 
+  <p>Bitwise AND (immediate), setting flags, performs a bitwise AND of a register value and an immediate value, and writes the result to the destination register. It updates the condition flags based on the result.</p> 
+  <p>This instruction is used by the alias <a href="TST--immediate---Test-bits--immediate---an-alias-of-ANDS--immediate--.html" title="Test bits (immediate)" class="document-topic">TST (immediate)</a>.</p> 
+  <p></p> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>sf</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>N</td> 
+      <td colspan="6">immr</td> 
+      <td colspan="6">imms</td> 
+      <td colspan="5">Rn</td> 
+      <td colspan="5">Rd</td> 
+     </tr> 
+     <tr> 
+      <td></td> 
+      <td colspan="2">opc</td> 
+      <td colspan="6"></td> 
+      <td></td> 
+      <td colspan="6"></td> 
+      <td colspan="6"></td> 
+      <td colspan="5"></td> 
+      <td colspan="5"></td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4>32-bit<span> (sf == 0 &amp;&amp; N == 0)</span></h4> 
+   <a id="ANDS_32S_log_imm"></a> 
+   <p>ANDS <a title="32-bit general-purpose destination register (field &quot;Rd&quot;)" class="document-topic">&lt;Wd&gt;</a>, <a title="32-bit general-purpose source register (field &quot;Rn&quot;)" class="document-topic">&lt;Wn&gt;</a>, #<a title="Bitmask immediate (field &quot;imms:immr&quot;)" class="document-topic">&lt;imm&gt;</a></p> 
+  </div> 
+  <div> 
+   <h4>64-bit<span> (sf == 1)</span></h4> 
+   <a id="ANDS_64S_log_imm"></a> 
+   <p>ANDS <a title="64-bit general-purpose destination register (field &quot;Rd&quot;)" class="document-topic">&lt;Xd&gt;</a>, <a title="64-bit general-purpose source register (field &quot;Rn&quot;)" class="document-topic">&lt;Xn&gt;</a>, #<a title="Bitmask immediate (field &quot;N:imms:immr&quot;)" class="document-topic">&lt;imm&gt;</a></p> 
+  </div> 
+  <pre>integer d = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Rd);
+integer n = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Rn);
+integer datasize = if sf == '1' then 64 else 32;
+boolean setflags;
+<a title="enumeration LogicalOp   {LogicalOp_AND, LogicalOp_EOR, LogicalOp_ORR}" class="document-topic">LogicalOp</a> op;
+case opc of
+    when '00' op = <a title="enumeration LogicalOp   {LogicalOp_AND, LogicalOp_EOR, LogicalOp_ORR}" class="document-topic">LogicalOp_AND</a>; setflags = FALSE;
+    when '01' op = <a title="enumeration LogicalOp   {LogicalOp_AND, LogicalOp_EOR, LogicalOp_ORR}" class="document-topic">LogicalOp_ORR</a>; setflags = FALSE;
+    when '10' op = <a title="enumeration LogicalOp   {LogicalOp_AND, LogicalOp_EOR, LogicalOp_ORR}" class="document-topic">LogicalOp_EOR</a>; setflags = FALSE;
+    when '11' op = <a title="enumeration LogicalOp   {LogicalOp_AND, LogicalOp_EOR, LogicalOp_ORR}" class="document-topic">LogicalOp_AND</a>; setflags = TRUE;
+
+bits(datasize) imm;
+if sf == '0' &amp;&amp; N != '0' then UNDEFINED;
+(imm, -) = <a title="function: (bits(M), bits(M)) DecodeBitMasks(bit immN, bits(6) imms, bits(6) immr, boolean immediate, integer M)" class="document-topic">DecodeBitMasks</a>(N, imms, immr, TRUE, datasize);</pre> 
+  <div></div> 
+  <h3>Assembler Symbols</h3> 
+  <div> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Wd&gt;</td> 
+      <td><a id="sa_wd"></a> <p>Is the 32-bit name of the general-purpose destination register, encoded in the "Rd" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Wn&gt;</td> 
+      <td><a id="sa_wn"></a> <p>Is the 32-bit name of the general-purpose source register, encoded in the "Rn" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Xd&gt;</td> 
+      <td><a id="sa_xd"></a> <p>Is the 64-bit name of the general-purpose destination register, encoded in the "Rd" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Xn&gt;</td> 
+      <td><a id="sa_xn"></a> <p>Is the 64-bit name of the general-purpose source register, encoded in the "Rn" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;imm&gt;</td> 
+      <td><a id="sa_imm"></a> <p>For the 32-bit variant: is the bitmask immediate, encoded in "imms:immr".</p> </td> 
+     </tr> 
+     <tr> 
+      <td></td> 
+      <td><a id="sa_imm_1"></a> <p>For the 64-bit variant: is the bitmask immediate, encoded in "N:imms:immr".</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div></div> 
+  <h3>Alias Conditions</h3> 
+  <table> 
+   <thead> 
+    <tr> 
+     <th>Alias</th> 
+     <th>Is preferred when</th> 
+    </tr> 
+   </thead> 
+   <tbody> 
+    <tr> 
+     <td><a title="Test bits (immediate)" href="TST--immediate---Test-bits--immediate---an-alias-of-ANDS--immediate--.html" class="document-topic">TST (immediate)</a></td> 
+     <td><span>Rd == '11111'</span></td> 
+    </tr> 
+   </tbody> 
+  </table> 
+  <div> 
+   <a id="execute"></a> 
+   <h3>Operation</h3> 
+   <pre>bits(datasize) result;
+bits(datasize) operand1 = <a title="accessor: bits(width) X[integer n, integer width]" class="document-topic">X</a>[n, datasize];
+bits(datasize) operand2 = imm;
+
+case op of
+    when <a title="enumeration LogicalOp   {LogicalOp_AND, LogicalOp_EOR, LogicalOp_ORR}" class="document-topic">LogicalOp_AND</a> result = operand1 AND operand2;
+    when <a title="enumeration LogicalOp   {LogicalOp_AND, LogicalOp_EOR, LogicalOp_ORR}" class="document-topic">LogicalOp_ORR</a> result = operand1 OR  operand2;
+    when <a title="enumeration LogicalOp   {LogicalOp_AND, LogicalOp_EOR, LogicalOp_ORR}" class="document-topic">LogicalOp_EOR</a> result = operand1 EOR operand2;
+
+if setflags then
+    PSTATE.&lt;N,Z,C,V&gt; = result&lt;datasize-1&gt;:<a title="function: bit IsZeroBit(bits(N) x)" class="document-topic">IsZeroBit</a>(result):'00';
+
+if d == 31 &amp;&amp; !setflags then
+    <a title="accessor: SP[] = bits(64) value" class="document-topic">SP</a>[] = <a title="function: bits(N) ZeroExtend(bits(M) x, integer N)" class="document-topic">ZeroExtend</a>(result, 64);
+else
+    <a title="accessor: X[integer n, integer width] = bits(width) value" class="document-topic">X</a>[d, datasize] = result;</pre> 
+  </div> 
+  <h3>Operational information</h3> 
+  <p>If PSTATE.DIT is 1:</p> 
+  <ul> 
+   <li>The execution time of this instruction is independent of: 
+    <ul> 
+     <li>The values of the data supplied in any of its registers.</li> 
+     <li>The values of the NZCV flags.</li> 
+    </ul></li> 
+   <li>The response of this instruction to asynchronous exceptions does not vary based on: 
+    <ul> 
+     <li>The values of the data supplied in any of its registers.</li> 
+     <li>The values of the NZCV flags.</li> 
+    </ul></li> 
+  </ul>  
+ </body>
+</html>

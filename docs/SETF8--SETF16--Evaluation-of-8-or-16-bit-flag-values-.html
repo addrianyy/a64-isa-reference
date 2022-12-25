@@ -1,0 +1,147 @@
+<html>
+ <head>  <link rel="stylesheet" href="../def-style.css"></head> 
+ <body> 
+  <h2>SETF8, SETF16</h2> 
+  <p>Set the PSTATE.NZV flags based on the value in the specified general-purpose register. <span>SETF8</span> treats the value as an 8 bit value, and <span>SETF16</span> treats the value as an 16 bit value.</p> 
+  <p>The PSTATE.C flag is not affected by these instructions.</p> 
+  <h3><a id="iclass_general"></a>Integer<span><br></br>(FEAT_FlagM) </span></h3> 
+  <p></p> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>sz</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td colspan="5">Rn</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+     </tr> 
+     <tr> 
+      <td>sf</td> 
+      <td></td> 
+      <td></td> 
+      <td colspan="8"></td> 
+      <td colspan="6"></td> 
+      <td></td> 
+      <td colspan="4"></td> 
+      <td colspan="5"></td> 
+      <td></td> 
+      <td colspan="4"></td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4>SETF8<span> (sz == 0)</span></h4> 
+   <a id="SETF8_only_setf"></a> 
+   <p>SETF8 <a title="32-bit general-purpose source register (field &quot;Rn&quot;)" class="document-topic">&lt;Wn&gt;</a></p> 
+  </div> 
+  <div> 
+   <h4>SETF16<span> (sz == 1)</span></h4> 
+   <a id="SETF16_only_setf"></a> 
+   <p>SETF16 <a title="32-bit general-purpose source register (field &quot;Rn&quot;)" class="document-topic">&lt;Wn&gt;</a></p> 
+  </div> 
+  <pre>if !<a title="function: boolean HaveFlagManipulateExt()" class="document-topic">HaveFlagManipulateExt</a>() || sf != '0' then UNDEFINED;
+integer msb = if sz=='1' then 15 else 7;
+integer n = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Rn);</pre> 
+  <div></div> 
+  <h3>Assembler Symbols</h3> 
+  <div> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Wn&gt;</td> 
+      <td><a id="sa_wn"></a> <p>Is the 32-bit name of the general-purpose source register, encoded in the "Rn" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div></div> 
+  <div> 
+   <a id="execute"></a> 
+   <h3>Operation</h3> 
+   <pre>bits(32) tmpreg = <a title="accessor: bits(width) X[integer n, integer width]" class="document-topic">X</a>[n, 32];
+PSTATE.N = tmpreg&lt;msb&gt;;
+PSTATE.Z = if (tmpreg&lt;msb:0&gt; == <a title="function: bits(N) Zeros(integer N)" class="document-topic">Zeros</a>(msb+1)) then '1' else '0';
+PSTATE.V = tmpreg&lt;msb+1&gt; EOR tmpreg&lt;msb&gt;;
+//PSTATE.C unchanged;</pre> 
+  </div> 
+  <h3>Operational information</h3> 
+  <p>If PSTATE.DIT is 1:</p> 
+  <ul> 
+   <li>The execution time of this instruction is independent of: 
+    <ul> 
+     <li>The values of the data supplied in any of its registers.</li> 
+     <li>The values of the NZCV flags.</li> 
+    </ul></li> 
+   <li>The response of this instruction to asynchronous exceptions does not vary based on: 
+    <ul> 
+     <li>The values of the data supplied in any of its registers.</li> 
+     <li>The values of the NZCV flags.</li> 
+    </ul></li> 
+  </ul>  
+ </body>
+</html>

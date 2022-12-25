@@ -1,0 +1,125 @@
+<html>
+ <head>  <link rel="stylesheet" href="../def-style.css"></head> 
+ <body> 
+  <h2>TRCIT</h2> 
+  <p>Trace Instrumentation generates an instrumentation trace packet that contains the value of the provided register.</p> 
+  <p> This is an alias of <a href="SYS--System-instruction-.html" class="document-topic">SYS</a>. This means: </p> 
+  <ul> 
+   <li> The encodings in this description are named to match the encodings of <a href="SYS--System-instruction-.html" class="document-topic">SYS</a>. </li> 
+   <li>The description of <a href="SYS--System-instruction-.html" class="document-topic">SYS</a> gives the operational pseudocode, any <small>constrained unpredictable</small> behavior, and any operational information for this instruction.</li> 
+  </ul> 
+  <h3><a id="iclass_system"></a>System<span><br></br>(FEAT_ITE) </span></h3> 
+  <p></p> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td colspan="5">Rt</td> 
+     </tr> 
+     <tr> 
+      <td colspan="10"></td> 
+      <td>L</td> 
+      <td colspan="2"></td> 
+      <td colspan="3">op1</td> 
+      <td colspan="4">CRn</td> 
+      <td colspan="4">CRm</td> 
+      <td colspan="3">op2</td> 
+      <td colspan="5"></td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4></h4> 
+   <a id="TRCIT_SYS_CR_systeminstrs"></a> 
+   <p>TRCIT <a title="64-bit general-purpose source register (field &quot;Rt&quot;)" class="document-topic">&lt;Xt&gt;</a></p> 
+   <p> is equivalent to </p> 
+   <p><a href="SYS--System-instruction-.html" class="document-topic">SYS</a> #3, C7, C2, #7, <a title="64-bit general-purpose source register (field &quot;Rt&quot;)" class="document-topic">&lt;Xt&gt;</a></p> 
+   <p> and is always the preferred disassembly. </p> 
+  </div> 
+  <div></div> 
+  <h3>Assembler Symbols</h3> 
+  <div> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Xt&gt;</td> 
+      <td><a id="sa_xt_1"></a> <p>Is the 64-bit name of the general-purpose source register, encoded in the "Rt" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div></div> 
+  <div> 
+   <h3>Operation</h3> 
+   <p>The description of <a href="SYS--System-instruction-.html" class="document-topic">SYS</a> gives the operational pseudocode for this instruction.</p> 
+  </div>  
+ </body>
+</html>

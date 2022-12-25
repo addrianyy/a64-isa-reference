@@ -1,0 +1,217 @@
+<html>
+ <head>  <link rel="stylesheet" href="../def-style.css"></head> 
+ <body> 
+  <h2>PRFM (literal)</h2> 
+  <p>Prefetch Memory (literal) signals the memory system that data memory accesses from a specified address are likely to occur in the near future. The memory system can respond by taking actions that are expected to speed up the memory accesses when they do occur, such as preloading the cache line containing the specified address into one or more caches.</p> 
+  <p>The effect of a <span>PRFM</span> instruction is <small>implementation defined</small>. For more information, see <em>Prefetch memory</em>.</p> 
+  <p>For information about memory accesses, see <em>Load/Store addressing modes</em>.</p> 
+  <p></p> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td colspan="19">imm19</td> 
+      <td colspan="5">Rt</td> 
+     </tr> 
+     <tr> 
+      <td colspan="2">opc</td> 
+      <td colspan="3"></td> 
+      <td></td> 
+      <td colspan="2"></td> 
+      <td colspan="19"></td> 
+      <td colspan="5"></td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4></h4> 
+   <a id="PRFM_P_loadlit"></a> 
+   <p>PRFM (<a title="Prefetch operation, defined as {syntax{<type><target><policy>}} (field &quot;Rt<4:3>&quot;)" class="document-topic">&lt;prfop&gt;</a>|#<a title="Prefetch operation encoding as an immediate [0-31] (field &quot;Rt&quot;)" class="document-topic">&lt;imm5&gt;</a>), <a title="Label from which the data is to be loaded (field imm19)" class="document-topic">&lt;label&gt;</a></p> 
+  </div> 
+  <pre>integer t = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Rt);
+<a title="enumeration MemOp {MemOp_LOAD, MemOp_STORE, MemOp_PREFETCH}" class="document-topic">MemOp</a> memop = <a title="enumeration MemOp {MemOp_LOAD, MemOp_STORE, MemOp_PREFETCH}" class="document-topic">MemOp_LOAD</a>;
+boolean signed = FALSE;
+boolean nontemporal = FALSE;
+integer size;
+bits(64) offset;
+
+case opc of
+    when '00'
+        size = 4;
+    when '01'
+        size = 8;
+    when '10'
+        size = 4;
+        signed = TRUE;
+    when '11'
+        memop = <a title="enumeration MemOp {MemOp_LOAD, MemOp_STORE, MemOp_PREFETCH}" class="document-topic">MemOp_PREFETCH</a>;
+
+offset = <a title="function: bits(N) SignExtend(bits(M) x, integer N)" class="document-topic">SignExtend</a>(imm19:'00', 64);
+boolean tagchecked = FALSE;</pre> 
+  <div></div> 
+  <h3>Assembler Symbols</h3> 
+  <div> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;prfop&gt;</td> 
+      <td><a id="sa_prfop"></a> <p>Is the prefetch operation, defined as &lt;type&gt;&lt;target&gt;&lt;policy&gt;.</p> <p>&lt;type&gt; is one of:</p> 
+       <dl> 
+        <dt>
+          PLD 
+        </dt> 
+        <dd>
+          Prefetch for load, encoded in the "Rt&lt;4:3&gt;" field as 0b00. 
+        </dd> 
+        <dt>
+          PLI 
+        </dt> 
+        <dd>
+          Preload instructions, encoded in the "Rt&lt;4:3&gt;" field as 0b01. 
+        </dd> 
+        <dt>
+          PST 
+        </dt> 
+        <dd>
+          Prefetch for store, encoded in the "Rt&lt;4:3&gt;" field as 0b10. 
+        </dd> 
+       </dl> <p>&lt;target&gt; is one of:</p> 
+       <dl> 
+        <dt>
+          L1 
+        </dt> 
+        <dd>
+          Level 1 cache, encoded in the "Rt&lt;2:1&gt;" field as 0b00. 
+        </dd> 
+        <dt>
+          L2 
+        </dt> 
+        <dd>
+          Level 2 cache, encoded in the "Rt&lt;2:1&gt;" field as 0b01. 
+        </dd> 
+        <dt>
+          L3 
+        </dt> 
+        <dd>
+          Level 3 cache, encoded in the "Rt&lt;2:1&gt;" field as 0b10. 
+        </dd> 
+        <dt>
+          SLC 
+        </dt> 
+        <dd>
+          When FEAT_PRFMSLC is implemented, system level cache, encoded in the "Rt&lt;2:1&gt;" field as 0b11. 
+        </dd> 
+       </dl> <p>&lt;policy&gt; is one of:</p> 
+       <dl> 
+        <dt>
+          KEEP 
+        </dt> 
+        <dd>
+          Retained or temporal prefetch, allocated in the cache normally. Encoded in the "Rt&lt;0&gt;" field as 0. 
+        </dd> 
+        <dt>
+          STRM 
+        </dt> 
+        <dd>
+          Streaming or non-temporal prefetch, for data that is used only once. Encoded in the "Rt&lt;0&gt;" field as 1. 
+        </dd> 
+       </dl> <p>For more information on these prefetch operations, see <em>Prefetch memory</em>.</p> <p>For other encodings of the "Rt" field, use &lt;imm5&gt;.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;imm5&gt;</td> 
+      <td><a id="sa_imm5"></a> <p>Is the prefetch operation encoding as an immediate, in the range 0 to 31, encoded in the "Rt" field.</p> <p>This syntax is only for encodings that are not accessible using &lt;prfop&gt;.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;label&gt;</td> 
+      <td><a id="sa_label"></a> <p>Is the program label from which the data is to be loaded. Its offset from the address of this instruction, in the range +/-1MB, is encoded as "imm19" times 4.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div></div> 
+  <div> 
+   <a id="execute"></a> 
+   <h3>Operation</h3> 
+   <pre>bits(64) address = <a title="accessor: bits(64) PC[]" class="document-topic">PC</a>[] + offset;
+bits(size*8) data;
+boolean privileged = PSTATE.EL != <a title="constant bits(2) EL0 = '00'" class="document-topic">EL0</a>;
+
+<a title="type AccessDescriptor is ( AccessType acctype, bits(2) el, SecurityState ss, boolean acqsc, boolean acqpc, boolean relsc, boolean limitedordered, boolean exclusive, boolean atomicop, MemAtomicOp modop, boolean nontemporal, boolean read, boolean write, CacheOp cacheop, CacheOpScope opscope, CacheType cachetype, boolean pan, boolean transactional, boolean nonfault, boolean firstfault, boolean first, boolean contiguous, boolean streamingsve, boolean ls64, boolean mops, boolean rcw, boolean rcws, boolean toplevel, VARange varange, boolean a32lsmd, boolean tagchecked, boolean tagaccess, MPAMinfo mpam )" class="document-topic">AccessDescriptor</a> accdesc = <a title="function: AccessDescriptor CreateAccDescGPR(MemOp memop, boolean nontemporal, boolean privileged, boolean tagchecked)" class="document-topic">CreateAccDescGPR</a>(memop, nontemporal, privileged, tagchecked);
+case memop of
+    when <a title="enumeration MemOp {MemOp_LOAD, MemOp_STORE, MemOp_PREFETCH}" class="document-topic">MemOp_LOAD</a>
+        data = <a title="accessor: bits(size*8) Mem[bits(64) address, integer size, AccessDescriptor accdesc]" class="document-topic">Mem</a>[address, size, accdesc];
+        if signed then
+            <a title="accessor: X[integer n, integer width] = bits(width) value" class="document-topic">X</a>[t, 64] = <a title="function: bits(N) SignExtend(bits(M) x, integer N)" class="document-topic">SignExtend</a>(data, 64);
+        else
+            <a title="accessor: X[integer n, integer width] = bits(width) value" class="document-topic">X</a>[t, size*8] = data;
+
+    when <a title="enumeration MemOp {MemOp_LOAD, MemOp_STORE, MemOp_PREFETCH}" class="document-topic">MemOp_PREFETCH</a>
+        <a title="function: Prefetch(bits(64) address, bits(5) prfop)" class="document-topic">Prefetch</a>(address, t&lt;4:0&gt;);</pre> 
+  </div>  
+ </body>
+</html>

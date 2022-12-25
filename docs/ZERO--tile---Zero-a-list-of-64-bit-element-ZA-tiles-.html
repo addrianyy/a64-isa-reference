@@ -1,0 +1,138 @@
+<html>
+ <head>  <link rel="stylesheet" href="../def-style.css"></head> 
+ <body> 
+  <h2>ZERO (tile)</h2> 
+  <p>Zero a list of 64-bit element ZA tiles</p> 
+  <p>Zeroes all bytes within each of the up to eight listed 64-bit element tiles named ZA0.D to ZA7.D, leaving the other 64-bit element tiles unmodified.</p> 
+  <p>This instruction does not require the PE to be in Streaming SVE mode, and it is expected that this instruction will not experience a significant slowdown due to contention with other PEs that are executing in Streaming SVE mode.</p> 
+  <p>For programmer convenience an assembler must also accept the names of 32-bit, 16-bit, and 8-bit element tiles which are converted into the corresponding set of 64-bit element tiles.</p> 
+  <p>In accordance with the architecturally defined mapping between different element size tiles:</p> 
+  <ul> 
+   <li> Zeroing the 8-bit element tile name ZA0.B, or the entire array name ZA, is equivalent to zeroing all eight 64-bit element tiles named ZA0.D to ZA7.D. </li> 
+   <li> Zeroing the 16-bit element tile name ZA0.H is equivalent to zeroing 64-bit element tiles named ZA0.D, ZA2.D, ZA4.D, and ZA6.D. </li> 
+   <li> Zeroing the 16-bit element tile name ZA1.H is equivalent to zeroing 64-bit element tiles named ZA1.D, ZA3.D, ZA5.D, and ZA7.D. </li> 
+   <li> Zeroing the 32-bit element tile name ZA0.S is equivalent to zeroing 64-bit element tiles named ZA0.D and ZA4.D. </li> 
+   <li> Zeroing the 32-bit element tile name ZA1.S is equivalent to zeroing 64-bit element tiles named ZA1.D and ZA5.D. </li> 
+   <li> Zeroing the 32-bit element tile name ZA2.S is equivalent to zeroing 64-bit element tiles named ZA2.D and ZA6.D. </li> 
+   <li> Zeroing the 32-bit element tile name ZA3.S is equivalent to zeroing 64-bit element tiles named ZA3.D and ZA7.D. </li> 
+  </ul> 
+  <p>The preferred disassembly of this instruction uses the shortest list of tile names that represent the encoded immediate mask.</p> 
+  <p>For example:</p> 
+  <ul> 
+   <li> An immediate which encodes 64-bit element tiles ZA0.D, ZA1.D, ZA4.D, and ZA5.D is disassembled as {ZA0.S, ZA1.S}. </li> 
+   <li> An immediate which encodes 64-bit element tiles ZA0.D, ZA2.D, ZA4.D, and ZA6.D is disassembled as {ZA0.H}. </li> 
+   <li> An all-ones immediate is disassembled as {ZA}. </li> 
+   <li> An all-zeros immediate is disassembled as an empty list { }. </li> 
+  </ul> 
+  <h3><a id="iclass_mortlach"></a>SME<span><br></br>(FEAT_SME) </span></h3> 
+  <p></p> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td colspan="8">imm8</td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4></h4> 
+   <a id="zero_za_i_"></a> 
+   <p>ZERO { <a title="List of up to eight 64-bit element tile names separated by commas (field &quot;imm8&quot;)" class="document-topic">&lt;mask&gt;</a> }</p> 
+  </div> 
+  <pre>if !<a title="function: boolean HaveSME()" class="document-topic">HaveSME</a>() then UNDEFINED;
+bits(8) mask = imm8;
+constant integer esize = 64;</pre> 
+  <div></div> 
+  <h3>Assembler Symbols</h3> 
+  <div> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;mask&gt;</td> 
+      <td><a id="sa_mask"></a> <p>Is a list of up to eight 64-bit element tile names separated by commas, encoded in the "imm8" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div></div> 
+  <div> 
+   <a id="execute"></a> 
+   <h3>Operation</h3> 
+   <pre><a title="function: CheckSMEAndZAEnabled()" class="document-topic">CheckSMEAndZAEnabled</a>();
+constant integer SVL = <a title="accessor: integer CurrentSVL" class="document-topic">CurrentSVL</a>;
+constant integer dim = SVL DIV esize;
+bits(dim*dim*esize) result = <a title="function: bits(N) Zeros(integer N)" class="document-topic">Zeros</a>(dim*dim*esize);
+
+if <a title="function: boolean HaveTME()" class="document-topic">HaveTME</a>() &amp;&amp; TSTATE.depth &gt; 0 then
+    <a title="function: FailTransaction(TMFailure cause, boolean retry)" class="document-topic">FailTransaction</a>(<a title="enumeration TMFailure { TMFailure_CNCL, TMFailure_DBG, TMFailure_ERR, TMFailure_NEST, TMFailure_SIZE, TMFailure_MEM, TMFailure_TRIVIAL, TMFailure_IMP }" class="document-topic">TMFailure_ERR</a>, FALSE);
+
+for i = 0 to 7
+    if mask&lt;i&gt; == '1' then <a title="accessor: ZAtile[integer tile, integer esize, integer width] = bits(width) value" class="document-topic">ZAtile</a>[i, esize, dim*dim*esize] = result;</pre> 
+  </div>  
+ </body>
+</html>

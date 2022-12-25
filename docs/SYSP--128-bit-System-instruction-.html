@@ -1,0 +1,196 @@
+<html>
+ <head>  <link rel="stylesheet" href="../def-style.css"></head> 
+ <body> 
+  <h2>SYSP</h2> 
+  <p>128-bit System instruction.</p> 
+  <p>This instruction is used by the alias <a title="TLB invalidate pair operation" href="TLBIP--TLB-Invalidate-Pair-operation--an-alias-of-SYSP-.html" class="document-topic">TLBIP</a>.</p> 
+  <h3><a id="iclass_system"></a>System<span><br></br>(FEAT_SYSINSTR128) </span></h3> 
+  <p></p> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td colspan="3">op1</td> 
+      <td colspan="4">CRn</td> 
+      <td colspan="4">CRm</td> 
+      <td colspan="3">op2</td> 
+      <td colspan="5">Rt</td> 
+     </tr> 
+     <tr> 
+      <td colspan="10"></td> 
+      <td>L</td> 
+      <td colspan="2"></td> 
+      <td colspan="3"></td> 
+      <td colspan="4"></td> 
+      <td colspan="4"></td> 
+      <td colspan="3"></td> 
+      <td colspan="5"></td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4></h4> 
+   <a id="SYSP_CR_syspairinstrs"></a> 
+   <p>SYSP #<a title="3-bit unsigned immediate [0-6] (field &quot;op1&quot;)" class="document-topic">&lt;op1&gt;</a>, <a title="Name 'Cn', with 'n' [8-9] (field &quot;CRn&quot;)" class="document-topic">&lt;Cn&gt;</a>, <a title="Name 'Cm', with 'm' [0-7] (field &quot;CRm&quot;)" class="document-topic">&lt;Cm&gt;</a>, #<a title="3-bit unsigned immediate [0-7] (field &quot;op2&quot;)" class="document-topic">&lt;op2&gt;</a>{, <a title="First 64-bit optional general-purpose source register, default '11111' (field &quot;Rt&quot;)" class="document-topic">&lt;Xt1&gt;</a>, <a title="Second 64-bit optional general-purpose source register (field Rt)" class="document-topic">&lt;Xt2&gt;</a>}</p> 
+  </div> 
+  <pre>if !<a title="function: boolean HaveSysInstr128()" class="document-topic">HaveSysInstr128</a>() then UNDEFINED;
+if Rt&lt;0&gt; == '1' &amp;&amp; Rt != '11111' then UNDEFINED;
+<a title="function: AArch64.CheckSystemAccess(bits(2) op0, bits(3) op1, bits(4) crn, bits(4) crm, bits(3) op2, bits(5) rt, bit read)" class="document-topic">AArch64.CheckSystemAccess</a>('01', op1, CRn, CRm, op2, Rt, L);
+
+integer t = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Rt);
+integer t2 = if t == 31 then 31 else <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Rt)+1;
+
+integer sys_op0 = 1;
+integer sys_op1 = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(op1);
+integer sys_op2 = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(op2);
+integer sys_crn = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(CRn);
+integer sys_crm = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(CRm);</pre> 
+  <div></div> 
+  <h3>Assembler Symbols</h3> 
+  <div> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;op1&gt;</td> 
+      <td><a id="sa_op1"></a> <p>Is a 3-bit unsigned immediate, in the range 0 to 6, encoded in the "op1" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Cn&gt;</td> 
+      <td><a id="sa_cn"></a> <p>Is a name 'Cn', with 'n' in the range 8 to 9, encoded in the "CRn" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Cm&gt;</td> 
+      <td><a id="sa_cm"></a> <p>Is a name 'Cm', with 'm' in the range 0 to 7, encoded in the "CRm" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;op2&gt;</td> 
+      <td><a id="sa_op2"></a> <p>Is a 3-bit unsigned immediate, in the range 0 to 7, encoded in the "op2" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Xt1&gt;</td> 
+      <td><a id="sa_xt1"></a> <p>Is the 64-bit name of the first optional general-purpose source register, defaulting to '11111', encoded in the "Rt" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Xt2&gt;</td> 
+      <td><a id="sa_xt2"></a> <p>Is the 64-bit name of the second optional general-purpose source register, defaulting to '11111', encoded as "Rt" +1. Defaults to '11111' if "Rt" = '11111'.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div></div> 
+  <h3>Alias Conditions</h3> 
+  <table> 
+   <thead> 
+    <tr> 
+     <th>Alias</th> 
+     <th>Is preferred when</th> 
+    </tr> 
+   </thead> 
+   <tbody> 
+    <tr> 
+     <td><a title="TLB invalidate pair operation" href="TLBIP--TLB-Invalidate-Pair-operation--an-alias-of-SYSP-.html" class="document-topic">TLBIP</a></td> 
+     <td><span>CRn == '100x' &amp;&amp; <a title="function: SystemOp SysOp(bits(3) op1, bits(4) CRn, bits(4) CRm, bits(3) op2)" class="document-topic">SysOp</a>(op1,CRn,CRm,op2) == <a title="enumeration SystemOp128 {Sys_TLBIP, Sys_SYSP}" class="document-topic">Sys_TLBIP</a></span></td> 
+    </tr> 
+   </tbody> 
+  </table> 
+  <div> 
+   <a id="execute"></a> 
+   <h3>Operation</h3> 
+   <pre><a title="function: AArch64.SysInstr128(integer op0, integer op1, integer crn, integer crm, integer op2, integer t, integer t2)" class="document-topic">AArch64.SysInstr128</a>(sys_op0, sys_op1, sys_crn, sys_crm, sys_op2, t, t2);</pre> 
+  </div>  
+ </body>
+</html>

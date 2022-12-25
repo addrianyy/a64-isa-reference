@@ -1,0 +1,185 @@
+<html>
+ <head>  <link rel="stylesheet" href="../def-style.css"></head> 
+ <body> 
+  <h2>RCWSCAS, RCWSCASA, RCWSCASL, RCWSCASAL</h2> 
+  <p>Read Check Write Software Compare and Swap doubleword in memory reads a 64-bit doubleword from memory, and compares it against the value held in a register. If the comparison is equal, the value in a second register is conditionally written to memory. Storing back to memory is conditional on RCW Checks and RCWS Checks. If the write is performed, the read and the write occur atomically such that no other modification of the memory location can take place between the read and the write. This instruction updates the condition flags based on the result of the update of memory.</p> 
+  <ul> 
+   <li><span>RCWSCASA</span> and <span>RCWSCASAL</span> load from memory with acquire semantics.</li> 
+   <li><span>RCWSCASL</span> and <span>RCWSCASAL</span> store to memory with release semantics.</li> 
+   <li><span>RCWSCAS</span> has neither acquire nor release semantics.</li> 
+  </ul> 
+  <h3><a id="iclass_general"></a>Integer<span><br></br>(FEAT_THE) </span></h3> 
+  <p></p> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>A</td> 
+      <td>R</td> 
+      <td>1</td> 
+      <td colspan="5">Rs</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td colspan="5">Rn</td> 
+      <td colspan="5">Rt</td> 
+     </tr> 
+     <tr> 
+      <td></td> 
+      <td>S</td> 
+      <td colspan="6"></td> 
+      <td></td> 
+      <td></td> 
+      <td></td> 
+      <td colspan="5"></td> 
+      <td colspan="6"></td> 
+      <td colspan="5"></td> 
+      <td colspan="5"></td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4>RCWSCAS<span> (A == 0 &amp;&amp; R == 0)</span></h4> 
+   <a id="RCWSCAS_C64_rcwcomswap"></a> 
+   <p>RCWSCAS <a title="64-bit general-purpose register to be compared and loaded (field &quot;Rs&quot;)" class="document-topic">&lt;Xs&gt;</a>, <a title="64-bit general-purpose register to be conditionally stored (field &quot;Rt&quot;)" class="document-topic">&lt;Xt&gt;</a>, [<a title="64-bit general-purpose base register or SP (field &quot;Rn&quot;)" class="document-topic">&lt;Xn|SP&gt;</a>]</p> 
+  </div> 
+  <div> 
+   <h4>RCWSCASA<span> (A == 1 &amp;&amp; R == 0)</span></h4> 
+   <a id="RCWSCASA_C64_rcwcomswap"></a> 
+   <p>RCWSCASA <a title="64-bit general-purpose register to be compared and loaded (field &quot;Rs&quot;)" class="document-topic">&lt;Xs&gt;</a>, <a title="64-bit general-purpose register to be conditionally stored (field &quot;Rt&quot;)" class="document-topic">&lt;Xt&gt;</a>, [<a title="64-bit general-purpose base register or SP (field &quot;Rn&quot;)" class="document-topic">&lt;Xn|SP&gt;</a>]</p> 
+  </div> 
+  <div> 
+   <h4>RCWSCASAL<span> (A == 1 &amp;&amp; R == 1)</span></h4> 
+   <a id="RCWSCASAL_C64_rcwcomswap"></a> 
+   <p>RCWSCASAL <a title="64-bit general-purpose register to be compared and loaded (field &quot;Rs&quot;)" class="document-topic">&lt;Xs&gt;</a>, <a title="64-bit general-purpose register to be conditionally stored (field &quot;Rt&quot;)" class="document-topic">&lt;Xt&gt;</a>, [<a title="64-bit general-purpose base register or SP (field &quot;Rn&quot;)" class="document-topic">&lt;Xn|SP&gt;</a>]</p> 
+  </div> 
+  <div> 
+   <h4>RCWSCASL<span> (A == 0 &amp;&amp; R == 1)</span></h4> 
+   <a id="RCWSCASL_C64_rcwcomswap"></a> 
+   <p>RCWSCASL <a title="64-bit general-purpose register to be compared and loaded (field &quot;Rs&quot;)" class="document-topic">&lt;Xs&gt;</a>, <a title="64-bit general-purpose register to be conditionally stored (field &quot;Rt&quot;)" class="document-topic">&lt;Xt&gt;</a>, [<a title="64-bit general-purpose base register or SP (field &quot;Rn&quot;)" class="document-topic">&lt;Xn|SP&gt;</a>]</p> 
+  </div> 
+  <pre>if !<a title="function: boolean HaveTHExt()" class="document-topic">HaveTHExt</a>() then UNDEFINED;
+integer t = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Rt);
+integer n = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Rn);
+integer s = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Rs);
+boolean soft = TRUE;
+
+boolean acquire = A == '1';
+boolean release = R == '1';
+boolean tagchecked = n != 31;</pre> 
+  <div></div> 
+  <h3>Assembler Symbols</h3> 
+  <div> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Xs&gt;</td> 
+      <td><a id="sa_xs"></a> <p>Is the 64-bit name of the general-purpose register to be compared and loaded, encoded in the "Rs" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Xt&gt;</td> 
+      <td><a id="sa_xt"></a> <p>Is the 64-bit name of the general-purpose register to be conditionally stored, encoded in the "Rt" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Xn|SP&gt;</td> 
+      <td><a id="sa_xn_sp"></a> <p>Is the 64-bit name of the general-purpose base register or stack pointer, encoded in the "Rn" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div></div> 
+  <div> 
+   <a id="execute"></a> 
+   <h3>Operation</h3> 
+   <pre>if <a title="function: boolean IsD128Enabled(bits(2) el)" class="document-topic">IsD128Enabled</a>(PSTATE.EL) then UNDEFINED;
+bits(64) address;
+bits(64) newdata = <a title="accessor: bits(width) X[integer n, integer width]" class="document-topic">X</a>[t, 64];
+bits(64) compdata = <a title="accessor: bits(width) X[integer n, integer width]" class="document-topic">X</a>[s, 64];
+bits(64) readdata;
+bits(4) nzcv;
+
+<a title="type AccessDescriptor is ( AccessType acctype, bits(2) el, SecurityState ss, boolean acqsc, boolean acqpc, boolean relsc, boolean limitedordered, boolean exclusive, boolean atomicop, MemAtomicOp modop, boolean nontemporal, boolean read, boolean write, CacheOp cacheop, CacheOpScope opscope, CacheType cachetype, boolean pan, boolean transactional, boolean nonfault, boolean firstfault, boolean first, boolean contiguous, boolean streamingsve, boolean ls64, boolean mops, boolean rcw, boolean rcws, boolean toplevel, VARange varange, boolean a32lsmd, boolean tagchecked, boolean tagaccess, MPAMinfo mpam )" class="document-topic">AccessDescriptor</a> accdesc = <a title="function: AccessDescriptor CreateAccDescRCW(MemAtomicOp modop, boolean soft, boolean acquire, boolean release, boolean tagchecked)" class="document-topic">CreateAccDescRCW</a>(<a title="enumeration MemAtomicOp { MemAtomicOp_GCSSS1, MemAtomicOp_ADD, MemAtomicOp_BIC, MemAtomicOp_EOR, MemAtomicOp_ORR, MemAtomicOp_SMAX, MemAtomicOp_SMIN, MemAtomicOp_UMAX, MemAtomicOp_UMIN, MemAtomicOp_SWP, MemAtomicOp_CAS }" class="document-topic">MemAtomicOp_CAS</a>, soft, acquire, release, tagchecked);
+
+if n == 31 then
+    <a title="function: CheckSPAlignment()" class="document-topic">CheckSPAlignment</a>();
+    address = <a title="accessor: bits(64) SP[]" class="document-topic">SP</a>[];
+else
+    address = <a title="accessor: bits(width) X[integer n, integer width]" class="document-topic">X</a>[n, 64];
+
+(nzcv, readdata) = <a title="function: (bits(4), bits(size)) MemAtomicRCW(bits(64) address, bits(size) cmpoperand, bits(size) operand, AccessDescriptor accdesc_in)" class="document-topic">MemAtomicRCW</a>(address, compdata, newdata, accdesc);
+
+PSTATE.&lt;N,Z,C,V&gt; = nzcv;
+<a title="accessor: X[integer n, integer width] = bits(width) value" class="document-topic">X</a>[s, 64] = readdata;   // Return the old value when s!=31</pre> 
+  </div> 
+  <h3>Operational information</h3> 
+  <p>If PSTATE.DIT is 1, the timing of this instruction is insensitive to the value of the data being loaded or stored.</p>  
+ </body>
+</html>

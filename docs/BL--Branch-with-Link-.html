@@ -1,0 +1,99 @@
+<html>
+ <head>  <link rel="stylesheet" href="../def-style.css"></head> 
+ <body> 
+  <h2>BL</h2> 
+  <p>Branch with Link branches to a PC-relative offset, setting the register X30 to PC+4. It provides a hint that this is a subroutine call.</p> 
+  <p></p> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td colspan="26">imm26</td> 
+     </tr> 
+     <tr> 
+      <td>op</td> 
+      <td colspan="5"></td> 
+      <td colspan="26"></td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4></h4> 
+   <a id="BL_only_branch_imm"></a> 
+   <p>BL <a title="Label to be unconditionally branched to (field imm26)" class="document-topic">&lt;label&gt;</a></p> 
+  </div> 
+  <pre><a title="enumeration BranchType { BranchType_DIRCALL, BranchType_INDCALL, BranchType_ERET, BranchType_DBGEXIT, BranchType_RET, BranchType_DIR, BranchType_INDIR, BranchType_EXCEPTION, BranchType_TMFAIL, BranchType_RESET, BranchType_UNKNOWN}" class="document-topic">BranchType</a> branch_type = if op == '1' then <a title="enumeration BranchType { BranchType_DIRCALL, BranchType_INDCALL, BranchType_ERET, BranchType_DBGEXIT, BranchType_RET, BranchType_DIR, BranchType_INDIR, BranchType_EXCEPTION, BranchType_TMFAIL, BranchType_RESET, BranchType_UNKNOWN}" class="document-topic">BranchType_DIRCALL</a> else <a title="enumeration BranchType { BranchType_DIRCALL, BranchType_INDCALL, BranchType_ERET, BranchType_DBGEXIT, BranchType_RET, BranchType_DIR, BranchType_INDIR, BranchType_EXCEPTION, BranchType_TMFAIL, BranchType_RESET, BranchType_UNKNOWN}" class="document-topic">BranchType_DIR</a>;
+bits(64) offset = <a title="function: bits(N) SignExtend(bits(M) x, integer N)" class="document-topic">SignExtend</a>(imm26:'00', 64);</pre> 
+  <div></div> 
+  <h3>Assembler Symbols</h3> 
+  <div> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;label&gt;</td> 
+      <td><a id="sa_label"></a> <p>Is the program label to be unconditionally branched to. Its offset from the address of this instruction, in the range +/-128MB, is encoded as "imm26" times 4.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div></div> 
+  <div> 
+   <a id="execute"></a> 
+   <h3>Operation</h3> 
+   <pre>if branch_type == <a title="enumeration BranchType { BranchType_DIRCALL, BranchType_INDCALL, BranchType_ERET, BranchType_DBGEXIT, BranchType_RET, BranchType_DIR, BranchType_INDIR, BranchType_EXCEPTION, BranchType_TMFAIL, BranchType_RESET, BranchType_UNKNOWN}" class="document-topic">BranchType_DIRCALL</a> then
+    if <a title="function: boolean HaveGCS()" class="document-topic">HaveGCS</a>() &amp;&amp; <a title="function: boolean GCSPCREnabled(bits(2) el)" class="document-topic">GCSPCREnabled</a>(PSTATE.EL) then
+        <a title="function: AddGCSRecord(bits(64) vaddress)" class="document-topic">AddGCSRecord</a>(<a title="accessor: bits(64) PC[]" class="document-topic">PC</a>[] + 4);
+    <a title="accessor: X[integer n, integer width] = bits(width) value" class="document-topic">X</a>[30, 64] = <a title="accessor: bits(64) PC[]" class="document-topic">PC</a>[] + 4;
+
+boolean branch_conditional = FALSE;
+<a title="function: BranchTo(bits(N) target, BranchType branch_type, boolean branch_conditional)" class="document-topic">BranchTo</a>(<a title="accessor: bits(64) PC[]" class="document-topic">PC</a>[] + offset, branch_type, branch_conditional);</pre> 
+  </div>  
+ </body>
+</html>

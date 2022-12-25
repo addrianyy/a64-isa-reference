@@ -1,0 +1,145 @@
+<html>
+ <head>  <link rel="stylesheet" href="../def-style.css"></head> 
+ <body> 
+  <h2>AUTDB, AUTDZB</h2> 
+  <p>Authenticate Data address, using key B. This instruction authenticates a data address, using a modifier and key B.</p> 
+  <p>The address is in the general-purpose register that is specified by &lt;Xd&gt;.</p> 
+  <p>The modifier is:</p> 
+  <ul> 
+   <li>In the general-purpose register or stack pointer that is specified by &lt;Xn|SP&gt; for <span>AUTDB</span>.</li> 
+   <li>The value zero, for <span>AUTDZB</span>.</li> 
+  </ul> 
+  <p>If the authentication passes, the upper bits of the address are restored to enable subsequent use of the address. For information on behavior if the authentication fails, see <em>Faulting on pointer authentication</em>.</p> 
+  <h3><a id="iclass_general"></a>Integer<span><br></br>(FEAT_PAuth) </span></h3> 
+  <p></p> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>Z</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td colspan="5">Rn</td> 
+      <td colspan="5">Rd</td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4>AUTDB<span> (Z == 0)</span></h4> 
+   <a id="AUTDB_64P_dp_1src"></a> 
+   <p>AUTDB <a title="64-bit general-purpose destination register (field &quot;Rd&quot;)" class="document-topic">&lt;Xd&gt;</a>, <a title="64-bit general-purpose source register or SP (field &quot;Rn&quot;)" class="document-topic">&lt;Xn|SP&gt;</a></p> 
+  </div> 
+  <div> 
+   <h4>AUTDZB<span> (Z == 1 &amp;&amp; Rn == 11111)</span></h4> 
+   <a id="AUTDZB_64Z_dp_1src"></a> 
+   <p>AUTDZB <a title="64-bit general-purpose destination register (field &quot;Rd&quot;)" class="document-topic">&lt;Xd&gt;</a></p> 
+  </div> 
+  <pre>boolean source_is_sp = FALSE;
+integer d = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Rd);
+integer n = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Rn);
+
+if !<a title="function: boolean HavePACExt()" class="document-topic">HavePACExt</a>() then
+    UNDEFINED;
+
+if Z == '0' then // AUTDB
+    if n == 31 then source_is_sp = TRUE;
+else // AUTDZB
+    if n != 31 then UNDEFINED;</pre> 
+  <div></div> 
+  <h3>Assembler Symbols</h3> 
+  <div> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Xd&gt;</td> 
+      <td><a id="sa_xd"></a> <p>Is the 64-bit name of the general-purpose destination register, encoded in the "Rd" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Xn|SP&gt;</td> 
+      <td><a id="sa_xn_sp"></a> <p>Is the 64-bit name of the general-purpose source register or stack pointer, encoded in the "Rn" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div></div> 
+  <div> 
+   <a id="execute"></a> 
+   <h3>Operation</h3> 
+   <pre>auth_then_branch = FALSE;
+
+if <a title="function: boolean HavePACExt()" class="document-topic">HavePACExt</a>() then
+    if source_is_sp then
+        <a title="accessor: X[integer n, integer width] = bits(width) value" class="document-topic">X</a>[d, 64] = AuthDB(X[d, 64], SP[], auth_then_branch);
+    else
+        <a title="accessor: X[integer n, integer width] = bits(width) value" class="document-topic">X</a>[d, 64] = AuthDB(X[d, 64], X[n, 64], auth_then_branch);</pre> 
+  </div>  
+ </body>
+</html>

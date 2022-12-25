@@ -1,0 +1,189 @@
+<html>
+ <head>  <link rel="stylesheet" href="../def-style.css"></head> 
+ <body> 
+  <h2>RET</h2> 
+  <p>Return from subroutine branches unconditionally to an address in a register, with a hint that this is a subroutine return.</p> 
+  <p></p> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td colspan="5">Rn</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+     </tr> 
+     <tr> 
+      <td colspan="7"></td> 
+      <td>Z</td> 
+      <td></td> 
+      <td colspan="2">op</td> 
+      <td colspan="5"></td> 
+      <td colspan="4"></td> 
+      <td>A</td> 
+      <td>M</td> 
+      <td colspan="5"></td> 
+      <td colspan="5">Rm</td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4></h4> 
+   <a id="RET_64R_branch_reg"></a> 
+   <p>RET {<a title="64-bit general-purpose register holding address to be branched to (field &quot;Rn&quot;)" class="document-topic">&lt;Xn&gt;</a>}</p> 
+  </div> 
+  <pre>integer n = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Rn);
+<a title="enumeration BranchType { BranchType_DIRCALL, BranchType_INDCALL, BranchType_ERET, BranchType_DBGEXIT, BranchType_RET, BranchType_DIR, BranchType_INDIR, BranchType_EXCEPTION, BranchType_TMFAIL, BranchType_RESET, BranchType_UNKNOWN}" class="document-topic">BranchType</a> branch_type;
+integer m = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Rm);
+boolean pac = (A == '1');
+boolean use_key_a = (M == '0');
+boolean source_is_sp = ((Z == '1') &amp;&amp; (m == 31));
+
+if !pac &amp;&amp; m != 0 then 
+    UNDEFINED;
+elsif pac &amp;&amp; !<a title="function: boolean HavePACExt()" class="document-topic">HavePACExt</a>() then 
+    UNDEFINED;
+
+case op of
+    when '00' branch_type = <a title="enumeration BranchType { BranchType_DIRCALL, BranchType_INDCALL, BranchType_ERET, BranchType_DBGEXIT, BranchType_RET, BranchType_DIR, BranchType_INDIR, BranchType_EXCEPTION, BranchType_TMFAIL, BranchType_RESET, BranchType_UNKNOWN}" class="document-topic">BranchType_INDIR</a>;
+    when '01' branch_type = <a title="enumeration BranchType { BranchType_DIRCALL, BranchType_INDCALL, BranchType_ERET, BranchType_DBGEXIT, BranchType_RET, BranchType_DIR, BranchType_INDIR, BranchType_EXCEPTION, BranchType_TMFAIL, BranchType_RESET, BranchType_UNKNOWN}" class="document-topic">BranchType_INDCALL</a>;
+    when '10' branch_type = <a title="enumeration BranchType { BranchType_DIRCALL, BranchType_INDCALL, BranchType_ERET, BranchType_DBGEXIT, BranchType_RET, BranchType_DIR, BranchType_INDIR, BranchType_EXCEPTION, BranchType_TMFAIL, BranchType_RESET, BranchType_UNKNOWN}" class="document-topic">BranchType_RET</a>;
+    otherwise UNDEFINED;
+
+if pac then
+    if Z == '0' &amp;&amp; m != 31 then
+        UNDEFINED;
+
+    if branch_type == <a title="enumeration BranchType { BranchType_DIRCALL, BranchType_INDCALL, BranchType_ERET, BranchType_DBGEXIT, BranchType_RET, BranchType_DIR, BranchType_INDIR, BranchType_EXCEPTION, BranchType_TMFAIL, BranchType_RESET, BranchType_UNKNOWN}" class="document-topic">BranchType_RET</a> then
+        if n != 31 then UNDEFINED;
+        n = 30;
+        source_is_sp = TRUE;</pre> 
+  <div></div> 
+  <h3>Assembler Symbols</h3> 
+  <div> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Xn&gt;</td> 
+      <td><a id="sa_xn"></a> <p>Is the 64-bit name of the general-purpose register holding the address to be branched to, encoded in the "Rn" field. Defaults to X30 if absent.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div></div> 
+  <div> 
+   <a id="execute"></a> 
+   <h3>Operation</h3> 
+   <pre><a title="enumeration GCSInstruction { GCSInstType_PRET, GCSInstType_POPM, GCSInstType_PRETAA, GCSInstType_PRETAB, GCSInstType_SS1, GCSInstType_SS2, GCSInstType_POPCX, GCSInstType_POPX }" class="document-topic">GCSInstruction</a> inst_type;
+bits(64) target = <a title="accessor: bits(width) X[integer n, integer width]" class="document-topic">X</a>[n, 64];
+boolean auth_then_branch = TRUE;
+
+if pac then
+    bits(64) modifier = if source_is_sp then <a title="accessor: bits(64) SP[]" class="document-topic">SP</a>[] else <a title="accessor: bits(width) X[integer n, integer width]" class="document-topic">X</a>[m, 64];
+
+    if use_key_a then
+        target = <a title="function: bits(64) AuthIA(bits(64) x, bits(64) y, boolean is_combined)" class="document-topic">AuthIA</a>(target, modifier, auth_then_branch);
+    else
+        target = <a title="function: bits(64) AuthIB(bits(64) x, bits(64) y, boolean is_combined)" class="document-topic">AuthIB</a>(target, modifier, auth_then_branch);
+
+if branch_type == <a title="enumeration BranchType { BranchType_DIRCALL, BranchType_INDCALL, BranchType_ERET, BranchType_DBGEXIT, BranchType_RET, BranchType_DIR, BranchType_INDIR, BranchType_EXCEPTION, BranchType_TMFAIL, BranchType_RESET, BranchType_UNKNOWN}" class="document-topic">BranchType_RET</a> &amp;&amp;  <a title="function: boolean HaveGCS()" class="document-topic">HaveGCS</a>() &amp;&amp; <a title="function: boolean GCSPCREnabled(bits(2) el)" class="document-topic">GCSPCREnabled</a>(PSTATE.EL) then
+    if !pac then
+        inst_type = <a title="enumeration GCSInstruction { GCSInstType_PRET, GCSInstType_POPM, GCSInstType_PRETAA, GCSInstType_PRETAB, GCSInstType_SS1, GCSInstType_SS2, GCSInstType_POPCX, GCSInstType_POPX }" class="document-topic">GCSInstType_PRET</a>;
+    else
+        if use_key_a then
+            inst_type = <a title="enumeration GCSInstruction { GCSInstType_PRET, GCSInstType_POPM, GCSInstType_PRETAA, GCSInstType_PRETAB, GCSInstType_SS1, GCSInstType_SS2, GCSInstType_POPCX, GCSInstType_POPX }" class="document-topic">GCSInstType_PRETAA</a>;
+        else
+            inst_type = <a title="enumeration GCSInstruction { GCSInstType_PRET, GCSInstType_POPM, GCSInstType_PRETAA, GCSInstType_PRETAB, GCSInstType_SS1, GCSInstType_SS2, GCSInstType_POPCX, GCSInstType_POPX }" class="document-topic">GCSInstType_PRETAB</a>;
+    target = <a title="function: bits(64) LoadCheckGCSRecord(bits(64) vaddress, GCSInstruction gcsinst_type)" class="document-topic">LoadCheckGCSRecord</a>(target, inst_type);
+    <a title="function: SetCurrentGCSPointer(bits(64) ptr)" class="document-topic">SetCurrentGCSPointer</a>(<a title="function: bits(64) GetCurrentGCSPointer()" class="document-topic">GetCurrentGCSPointer</a>() + 8);
+
+if branch_type == <a title="enumeration BranchType { BranchType_DIRCALL, BranchType_INDCALL, BranchType_ERET, BranchType_DBGEXIT, BranchType_RET, BranchType_DIR, BranchType_INDIR, BranchType_EXCEPTION, BranchType_TMFAIL, BranchType_RESET, BranchType_UNKNOWN}" class="document-topic">BranchType_INDCALL</a> then
+    if <a title="function: boolean HaveGCS()" class="document-topic">HaveGCS</a>() &amp;&amp; <a title="function: boolean GCSPCREnabled(bits(2) el)" class="document-topic">GCSPCREnabled</a>(PSTATE.EL) then
+        <a title="function: AddGCSRecord(bits(64) vaddress)" class="document-topic">AddGCSRecord</a>(<a title="accessor: bits(64) PC[]" class="document-topic">PC</a>[] + 4);
+    <a title="accessor: X[integer n, integer width] = bits(width) value" class="document-topic">X</a>[30, 64] = <a title="accessor: bits(64) PC[]" class="document-topic">PC</a>[] + 4;
+
+// Value in BTypeNext will be used to set PSTATE.BTYPE
+case branch_type of
+    when <a title="enumeration BranchType { BranchType_DIRCALL, BranchType_INDCALL, BranchType_ERET, BranchType_DBGEXIT, BranchType_RET, BranchType_DIR, BranchType_INDIR, BranchType_EXCEPTION, BranchType_TMFAIL, BranchType_RESET, BranchType_UNKNOWN}" class="document-topic">BranchType_INDIR</a>           // BR, BRAA, BRAB, BRAAZ, BRABZ
+        if InGuardedPage then
+            if n == 16 || n == 17 then
+                BTypeNext = '01';
+            else
+                BTypeNext = '11';
+        else
+            BTypeNext = '01';
+    when <a title="enumeration BranchType { BranchType_DIRCALL, BranchType_INDCALL, BranchType_ERET, BranchType_DBGEXIT, BranchType_RET, BranchType_DIR, BranchType_INDIR, BranchType_EXCEPTION, BranchType_TMFAIL, BranchType_RESET, BranchType_UNKNOWN}" class="document-topic">BranchType_INDCALL</a>         // BLR, BLRAA, BLRAB, BLRAAZ, BLRABZ
+        BTypeNext = '10';
+    when <a title="enumeration BranchType { BranchType_DIRCALL, BranchType_INDCALL, BranchType_ERET, BranchType_DBGEXIT, BranchType_RET, BranchType_DIR, BranchType_INDIR, BranchType_EXCEPTION, BranchType_TMFAIL, BranchType_RESET, BranchType_UNKNOWN}" class="document-topic">BranchType_RET</a>             // RET, RETAA, RETAB
+        BTypeNext = '00';
+
+boolean branch_conditional = FALSE;
+<a title="function: BranchTo(bits(N) target, BranchType branch_type, boolean branch_conditional)" class="document-topic">BranchTo</a>(target, branch_type, branch_conditional);</pre> 
+  </div>  
+ </body>
+</html>

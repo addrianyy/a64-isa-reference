@@ -1,0 +1,232 @@
+<html>
+ <head>  <link rel="stylesheet" href="../def-style.css"></head> 
+ <body> 
+  <h2>CAS, CASA, CASAL, CASL</h2> 
+  <p>Compare and Swap word or doubleword in memory reads a 32-bit word or 64-bit doubleword from memory, and compares it against the value held in a first register. If the comparison is equal, the value in a second register is written to memory. If the write is performed, the read and write occur atomically such that no other modification of the memory location can take place between the read and write.</p> 
+  <ul> 
+   <li><span>CASA</span> and <span>CASAL</span> load from memory with acquire semantics.</li> 
+   <li><span>CASL</span> and <span>CASAL</span> store to memory with release semantics.</li> 
+   <li><span>CAS</span> has neither acquire nor release semantics.</li> 
+  </ul> 
+  <p>For more information about memory ordering semantics see <em>Load-Acquire, Store-Release</em>.</p> 
+  <p>For information about memory accesses see <em>Load/Store addressing modes</em>.</p> 
+  <p>The architecture permits that the data read clears any exclusive monitors associated with that location, even if the compare subsequently fails.</p> 
+  <p>If the instruction generates a synchronous Data Abort, the register which is compared and loaded, that is &lt;Ws&gt;, or &lt;Xs&gt;, is restored to the value held in the register before the instruction was executed.</p> 
+  <h3><a id="iclass_base_register"></a>No offset<span><br></br>(FEAT_LSE) </span></h3> 
+  <p></p> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>1</td> 
+      <td>x</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>L</td> 
+      <td>1</td> 
+      <td colspan="5">Rs</td> 
+      <td>o0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td colspan="5">Rn</td> 
+      <td colspan="5">Rt</td> 
+     </tr> 
+     <tr> 
+      <td colspan="2">size</td> 
+      <td colspan="7"></td> 
+      <td></td> 
+      <td></td> 
+      <td colspan="5"></td> 
+      <td></td> 
+      <td colspan="5"></td> 
+      <td colspan="5"></td> 
+      <td colspan="5"></td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4>32-bit CAS<span> (size == 10 &amp;&amp; L == 0 &amp;&amp; o0 == 0)</span></h4> 
+   <a id="CAS_C32_comswap"></a> 
+   <p>CAS <a title="32-bit general-purpose register to be compared and loaded (field &quot;Rs&quot;)" class="document-topic">&lt;Ws&gt;</a>, <a title="32-bit general-purpose register to be conditionally stored (field &quot;Rt&quot;)" class="document-topic">&lt;Wt&gt;</a>, [<a title="64-bit general-purpose base register or SP (field &quot;Rn&quot;)" class="document-topic">&lt;Xn|SP&gt;</a>{,#0}]</p> 
+  </div> 
+  <div> 
+   <h4>32-bit CASA<span> (size == 10 &amp;&amp; L == 1 &amp;&amp; o0 == 0)</span></h4> 
+   <a id="CASA_C32_comswap"></a> 
+   <p>CASA <a title="32-bit general-purpose register to be compared and loaded (field &quot;Rs&quot;)" class="document-topic">&lt;Ws&gt;</a>, <a title="32-bit general-purpose register to be conditionally stored (field &quot;Rt&quot;)" class="document-topic">&lt;Wt&gt;</a>, [<a title="64-bit general-purpose base register or SP (field &quot;Rn&quot;)" class="document-topic">&lt;Xn|SP&gt;</a>{,#0}]</p> 
+  </div> 
+  <div> 
+   <h4>32-bit CASAL<span> (size == 10 &amp;&amp; L == 1 &amp;&amp; o0 == 1)</span></h4> 
+   <a id="CASAL_C32_comswap"></a> 
+   <p>CASAL <a title="32-bit general-purpose register to be compared and loaded (field &quot;Rs&quot;)" class="document-topic">&lt;Ws&gt;</a>, <a title="32-bit general-purpose register to be conditionally stored (field &quot;Rt&quot;)" class="document-topic">&lt;Wt&gt;</a>, [<a title="64-bit general-purpose base register or SP (field &quot;Rn&quot;)" class="document-topic">&lt;Xn|SP&gt;</a>{,#0}]</p> 
+  </div> 
+  <div> 
+   <h4>32-bit CASL<span> (size == 10 &amp;&amp; L == 0 &amp;&amp; o0 == 1)</span></h4> 
+   <a id="CASL_C32_comswap"></a> 
+   <p>CASL <a title="32-bit general-purpose register to be compared and loaded (field &quot;Rs&quot;)" class="document-topic">&lt;Ws&gt;</a>, <a title="32-bit general-purpose register to be conditionally stored (field &quot;Rt&quot;)" class="document-topic">&lt;Wt&gt;</a>, [<a title="64-bit general-purpose base register or SP (field &quot;Rn&quot;)" class="document-topic">&lt;Xn|SP&gt;</a>{,#0}]</p> 
+  </div> 
+  <div> 
+   <h4>64-bit CAS<span> (size == 11 &amp;&amp; L == 0 &amp;&amp; o0 == 0)</span></h4> 
+   <a id="CAS_C64_comswap"></a> 
+   <p>CAS <a title="64-bit general-purpose register to be compared and loaded (field &quot;Rs&quot;)" class="document-topic">&lt;Xs&gt;</a>, <a title="64-bit general-purpose register to be conditionally stored (field &quot;Rt&quot;)" class="document-topic">&lt;Xt&gt;</a>, [<a title="64-bit general-purpose base register or SP (field &quot;Rn&quot;)" class="document-topic">&lt;Xn|SP&gt;</a>{,#0}]</p> 
+  </div> 
+  <div> 
+   <h4>64-bit CASA<span> (size == 11 &amp;&amp; L == 1 &amp;&amp; o0 == 0)</span></h4> 
+   <a id="CASA_C64_comswap"></a> 
+   <p>CASA <a title="64-bit general-purpose register to be compared and loaded (field &quot;Rs&quot;)" class="document-topic">&lt;Xs&gt;</a>, <a title="64-bit general-purpose register to be conditionally stored (field &quot;Rt&quot;)" class="document-topic">&lt;Xt&gt;</a>, [<a title="64-bit general-purpose base register or SP (field &quot;Rn&quot;)" class="document-topic">&lt;Xn|SP&gt;</a>{,#0}]</p> 
+  </div> 
+  <div> 
+   <h4>64-bit CASAL<span> (size == 11 &amp;&amp; L == 1 &amp;&amp; o0 == 1)</span></h4> 
+   <a id="CASAL_C64_comswap"></a> 
+   <p>CASAL <a title="64-bit general-purpose register to be compared and loaded (field &quot;Rs&quot;)" class="document-topic">&lt;Xs&gt;</a>, <a title="64-bit general-purpose register to be conditionally stored (field &quot;Rt&quot;)" class="document-topic">&lt;Xt&gt;</a>, [<a title="64-bit general-purpose base register or SP (field &quot;Rn&quot;)" class="document-topic">&lt;Xn|SP&gt;</a>{,#0}]</p> 
+  </div> 
+  <div> 
+   <h4>64-bit CASL<span> (size == 11 &amp;&amp; L == 0 &amp;&amp; o0 == 1)</span></h4> 
+   <a id="CASL_C64_comswap"></a> 
+   <p>CASL <a title="64-bit general-purpose register to be compared and loaded (field &quot;Rs&quot;)" class="document-topic">&lt;Xs&gt;</a>, <a title="64-bit general-purpose register to be conditionally stored (field &quot;Rt&quot;)" class="document-topic">&lt;Xt&gt;</a>, [<a title="64-bit general-purpose base register or SP (field &quot;Rn&quot;)" class="document-topic">&lt;Xn|SP&gt;</a>{,#0}]</p> 
+  </div> 
+  <pre>if !<a title="function: boolean HaveAtomicExt()" class="document-topic">HaveAtomicExt</a>() then UNDEFINED;
+
+integer n = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Rn);
+integer t = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Rt);
+integer s = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Rs);
+
+integer datasize = 8 &lt;&lt; <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(size);
+integer regsize = if datasize == 64 then 64 else 32;
+boolean acquire = L == '1';
+boolean release = o0 == '1';
+boolean tagchecked = n != 31;</pre> 
+  <div></div> 
+  <h3>Assembler Symbols</h3> 
+  <div> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Ws&gt;</td> 
+      <td><a id="sa_ws"></a> <p>Is the 32-bit name of the general-purpose register to be compared and loaded, encoded in the "Rs" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Wt&gt;</td> 
+      <td><a id="sa_wt"></a> <p>Is the 32-bit name of the general-purpose register to be conditionally stored, encoded in the "Rt" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Xs&gt;</td> 
+      <td><a id="sa_xs"></a> <p>Is the 64-bit name of the general-purpose register to be compared and loaded, encoded in the "Rs" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Xt&gt;</td> 
+      <td><a id="sa_xt"></a> <p>Is the 64-bit name of the general-purpose register to be conditionally stored, encoded in the "Rt" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Xn|SP&gt;</td> 
+      <td><a id="sa_xn_sp"></a> <p>Is the 64-bit name of the general-purpose base register or stack pointer, encoded in the "Rn" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div></div> 
+  <div> 
+   <a id="execute"></a> 
+   <h3>Operation</h3> 
+   <pre>bits(64) address;
+bits(datasize) comparevalue;
+bits(datasize) newvalue;
+bits(datasize) data;
+
+<a title="type AccessDescriptor is ( AccessType acctype, bits(2) el, SecurityState ss, boolean acqsc, boolean acqpc, boolean relsc, boolean limitedordered, boolean exclusive, boolean atomicop, MemAtomicOp modop, boolean nontemporal, boolean read, boolean write, CacheOp cacheop, CacheOpScope opscope, CacheType cachetype, boolean pan, boolean transactional, boolean nonfault, boolean firstfault, boolean first, boolean contiguous, boolean streamingsve, boolean ls64, boolean mops, boolean rcw, boolean rcws, boolean toplevel, VARange varange, boolean a32lsmd, boolean tagchecked, boolean tagaccess, MPAMinfo mpam )" class="document-topic">AccessDescriptor</a> accdesc = <a title="function: AccessDescriptor CreateAccDescAtomicOp(MemAtomicOp modop, boolean acquire, boolean release, boolean tagchecked)" class="document-topic">CreateAccDescAtomicOp</a>(<a title="enumeration MemAtomicOp { MemAtomicOp_GCSSS1, MemAtomicOp_ADD, MemAtomicOp_BIC, MemAtomicOp_EOR, MemAtomicOp_ORR, MemAtomicOp_SMAX, MemAtomicOp_SMIN, MemAtomicOp_UMAX, MemAtomicOp_UMIN, MemAtomicOp_SWP, MemAtomicOp_CAS }" class="document-topic">MemAtomicOp_CAS</a>, acquire, release, tagchecked);
+
+comparevalue = <a title="accessor: bits(width) X[integer n, integer width]" class="document-topic">X</a>[s, datasize];
+newvalue = <a title="accessor: bits(width) X[integer n, integer width]" class="document-topic">X</a>[t, datasize];
+
+if n == 31 then
+    <a title="function: CheckSPAlignment()" class="document-topic">CheckSPAlignment</a>();
+    address = <a title="accessor: bits(64) SP[]" class="document-topic">SP</a>[];
+else
+    address = <a title="accessor: bits(width) X[integer n, integer width]" class="document-topic">X</a>[n, 64];
+
+data = <a title="function: bits(size) MemAtomic(bits(64) address, bits(size) cmpoperand, bits(size) operand, AccessDescriptor accdesc_in)" class="document-topic">MemAtomic</a>(address, comparevalue, newvalue, accdesc);
+
+<a title="accessor: X[integer n, integer width] = bits(width) value" class="document-topic">X</a>[s, regsize] = <a title="function: bits(N) ZeroExtend(bits(M) x, integer N)" class="document-topic">ZeroExtend</a>(data, regsize);</pre> 
+  </div>  
+ </body>
+</html>

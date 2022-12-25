@@ -1,0 +1,291 @@
+<html>
+ <head>  <link rel="stylesheet" href="../def-style.css"></head> 
+ <body> 
+  <h2>SMOV</h2> 
+  <p>Signed Move vector element to general-purpose register. This instruction reads the signed integer from the source SIMD&amp;FP register, sign-extends it to form a 32-bit or 64-bit value, and writes the result to destination general-purpose register.</p> 
+  <p>Depending on the settings in the <em>CPACR_EL1</em>, <em>CPTR_EL2</em>, and <em>CPTR_EL3</em> registers, and the current Security state and Exception level, an attempt to execute the instruction might be trapped.</p> 
+  <p></p> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>0</td> 
+      <td>Q</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td colspan="5">imm5</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td colspan="5">Rn</td> 
+      <td colspan="5">Rd</td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4>32-bit<span> (Q == 0)</span></h4> 
+   <a id="SMOV_asimdins_W_w"></a> 
+   <p>SMOV <a title="32-bit general-purpose destination register (field &quot;Rd&quot;)" class="document-topic">&lt;Wd&gt;</a>, <a title="SIMD&amp;FP source register (field &quot;Rn&quot;)" class="document-topic">&lt;Vn&gt;</a>.<a title="Element size specifier (field &quot;imm5&quot;) [B,H]" class="document-topic">&lt;Ts&gt;</a>[<a title="Element index (field &quot;imm5&quot;)" class="document-topic">&lt;index&gt;</a>]</p> 
+  </div> 
+  <div> 
+   <h4>64-bit<span> (Q == 1)</span></h4> 
+   <a id="SMOV_asimdins_X_x"></a> 
+   <p>SMOV <a title="64-bit general-purpose destination register (field &quot;Rd&quot;)" class="document-topic">&lt;Xd&gt;</a>, <a title="SIMD&amp;FP source register (field &quot;Rn&quot;)" class="document-topic">&lt;Vn&gt;</a>.<a title="Element size specifier (field &quot;imm5&quot;) [B,H,S]" class="document-topic">&lt;Ts&gt;</a>[<a title="Element index (field &quot;imm5&quot;)" class="document-topic">&lt;index&gt;</a>]</p> 
+  </div> 
+  <pre>integer d = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Rd);
+integer n = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Rn);
+
+integer size;
+case Q:imm5 of
+    when 'xxxxx1' size = 0;    // SMOV [WX]d, Vn.B
+    when 'xxxx10' size = 1;    // SMOV [WX]d, Vn.H
+    when '1xx100' size = 2;    // SMOV Xd, Vn.S
+    otherwise     UNDEFINED;
+
+integer idxdsize = if imm5&lt;4&gt; == '1' then 128 else 64;
+integer index = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(imm5&lt;4:size+1&gt;);
+integer esize = 8 &lt;&lt; size;
+integer datasize = if Q == '1' then 64 else 32;</pre> 
+  <div></div> 
+  <h3>Assembler Symbols</h3> 
+  <div> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Wd&gt;</td> 
+      <td><a id="sa_wd"></a> <p>Is the 32-bit name of the general-purpose destination register, encoded in the "Rd" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Xd&gt;</td> 
+      <td><a id="sa_xd"></a> <p>Is the 64-bit name of the general-purpose destination register, encoded in the "Rd" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Vn&gt;</td> 
+      <td><a id="sa_vn"></a> <p>Is the name of the SIMD&amp;FP source register, encoded in the "Rn" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Ts&gt;</td> 
+      <td><a id="sa_ts"></a> <p>For the 32-bit variant: is an element size specifier, encoded in <q>imm5</q>: </p> 
+       <table> 
+        <thead> 
+         <tr> 
+          <th>imm5</th> 
+          <th>&lt;Ts&gt;</th> 
+         </tr> 
+        </thead> 
+        <tbody> 
+         <tr> 
+          <td>xxx00</td> 
+          <td>RESERVED</td> 
+         </tr> 
+         <tr> 
+          <td>xxxx1</td> 
+          <td>B</td> 
+         </tr> 
+         <tr> 
+          <td>xxx10</td> 
+          <td>H</td> 
+         </tr> 
+        </tbody> 
+       </table> </td> 
+     </tr> 
+     <tr> 
+      <td></td> 
+      <td><a id="sa_ts_1"></a> <p>For the 64-bit variant: is an element size specifier, encoded in <q>imm5</q>: </p> 
+       <table> 
+        <thead> 
+         <tr> 
+          <th>imm5</th> 
+          <th>&lt;Ts&gt;</th> 
+         </tr> 
+        </thead> 
+        <tbody> 
+         <tr> 
+          <td>xx000</td> 
+          <td>RESERVED</td> 
+         </tr> 
+         <tr> 
+          <td>xxxx1</td> 
+          <td>B</td> 
+         </tr> 
+         <tr> 
+          <td>xxx10</td> 
+          <td>H</td> 
+         </tr> 
+         <tr> 
+          <td>xx100</td> 
+          <td>S</td> 
+         </tr> 
+        </tbody> 
+       </table> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;index&gt;</td> 
+      <td><a id="sa_index"></a> <p>For the 32-bit variant: is the element index encoded in <q>imm5</q>: </p> 
+       <table> 
+        <thead> 
+         <tr> 
+          <th>imm5</th> 
+          <th>&lt;index&gt;</th> 
+         </tr> 
+        </thead> 
+        <tbody> 
+         <tr> 
+          <td>xxx00</td> 
+          <td>RESERVED</td> 
+         </tr> 
+         <tr> 
+          <td>xxxx1</td> 
+          <td>imm5&lt;4:1&gt;</td> 
+         </tr> 
+         <tr> 
+          <td>xxx10</td> 
+          <td>imm5&lt;4:2&gt;</td> 
+         </tr> 
+        </tbody> 
+       </table> </td> 
+     </tr> 
+     <tr> 
+      <td></td> 
+      <td><a id="sa_index_1"></a> <p>For the 64-bit variant: is the element index encoded in <q>imm5</q>: </p> 
+       <table> 
+        <thead> 
+         <tr> 
+          <th>imm5</th> 
+          <th>&lt;index&gt;</th> 
+         </tr> 
+        </thead> 
+        <tbody> 
+         <tr> 
+          <td>xx000</td> 
+          <td>RESERVED</td> 
+         </tr> 
+         <tr> 
+          <td>xxxx1</td> 
+          <td>imm5&lt;4:1&gt;</td> 
+         </tr> 
+         <tr> 
+          <td>xxx10</td> 
+          <td>imm5&lt;4:2&gt;</td> 
+         </tr> 
+         <tr> 
+          <td>xx100</td> 
+          <td>imm5&lt;4:3&gt;</td> 
+         </tr> 
+        </tbody> 
+       </table> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div></div> 
+  <div> 
+   <a id="execute"></a> 
+   <h3>Operation</h3> 
+   <pre>if index == 0 then
+    <a title="function: CheckFPEnabled64()" class="document-topic">CheckFPEnabled64</a>();
+else
+    <a title="function: CheckFPAdvSIMDEnabled64()" class="document-topic">CheckFPAdvSIMDEnabled64</a>();
+bits(idxdsize) operand = <a title="accessor: bits(width) V[integer n, integer width]" class="document-topic">V</a>[n, idxdsize];
+
+<a title="accessor: X[integer n, integer width] = bits(width) value" class="document-topic">X</a>[d, datasize] = <a title="function: bits(N) SignExtend(bits(M) x, integer N)" class="document-topic">SignExtend</a>(<a title="accessor: bits(size) Elem[bits(N) vector, integer e, integer size]" class="document-topic">Elem</a>[operand, index, esize], datasize);</pre> 
+  </div> 
+  <h3>Operational information</h3> 
+  <p>If PSTATE.DIT is 1:</p> 
+  <ul> 
+   <li>The execution time of this instruction is independent of: 
+    <ul> 
+     <li>The values of the data supplied in any of its registers.</li> 
+     <li>The values of the NZCV flags.</li> 
+    </ul></li> 
+   <li>The response of this instruction to asynchronous exceptions does not vary based on: 
+    <ul> 
+     <li>The values of the data supplied in any of its registers.</li> 
+     <li>The values of the NZCV flags.</li> 
+    </ul></li> 
+  </ul>  
+ </body>
+</html>

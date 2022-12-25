@@ -1,0 +1,102 @@
+@import url('https://fonts.googleapis.com/css?family=Fira+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Source+Code+Pro&display=swap');
+
+body {
+    font-family: "Fira Sans", arial, sans-serif;
+
+    background-color: #353535;
+    color: rgb(221,221,221);
+
+    margin: 0;
+    padding: 0;
+    padding-right: 1.5em;
+}
+
+:root {
+    color-scheme: dark;
+}
+
+p {
+    margin-top: 0.1em;
+}
+
+h2 {
+    margin-top: 0;
+    color: rgb(210,153,29);
+    font-size: 2.2em;
+}
+
+h3 {
+    color: rgb(210,153,29);
+    font-size: 1.5em;
+    margin-top: 1.6em;
+    margin-bottom: 0.7em;
+}
+
+h4 {
+    color: rgb(210,153,29);
+    font-size: 1.25em;
+    margin-top: 1em;
+    margin-bottom: 0.6em;
+}
+
+pre a {
+    color: inherit;
+}
+
+a {
+    color: #2dbfb8;
+}
+
+a[href] {
+    color: rgb(210, 153, 29);
+    text-decoration: none;
+}
+
+a:hover[href] {
+    color: rgb(210, 153, 29);
+    text-decoration: underline;
+}
+
+pre {
+    font-family: 'Source Code Pro', Courier;
+    background-color: rgb(42,42,42);
+    padding: 0.7em;
+    font-size: 0.9em;
+}
+
+table {
+    box-sizing: border-box;
+    border-collapse: collapse;
+    width: 100%;
+    text-align: left;
+    margin-bottom: 1em;
+
+    background-color: #454545;
+}
+
+thead {
+    background-color: #555555;
+}
+
+table p {
+    margin-bottom: 0;
+}
+
+table table {
+    margin-top: 0.5em;
+    margin-bottom: 0.3em;
+    border-radius: 100px;
+}
+
+tr {
+    border: 2px solid #aaaaaa;
+}
+
+td, th {
+    padding: 0.5em;
+}
+
+small {
+    font-size: inherit;
+}

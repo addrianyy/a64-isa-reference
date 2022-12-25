@@ -1,0 +1,217 @@
+<html>
+ <head>  <link rel="stylesheet" href="../def-style.css"></head> 
+ <body> 
+  <h2>LDSETH, LDSETAH, LDSETALH, LDSETLH</h2> 
+  <p>Atomic bit set on halfword in memory atomically loads a 16-bit halfword from memory, performs a bitwise OR with the value held in a register on it, and stores the result back to memory. The value initially loaded from memory is returned in the destination register.</p> 
+  <ul> 
+   <li>If the destination register is not WZR, <span>LDSETAH</span> and <span>LDSETALH</span> load from memory with acquire semantics.</li> 
+   <li><span>LDSETLH</span> and <span>LDSETALH</span> store to memory with release semantics.</li> 
+   <li><span>LDSETH</span> has neither acquire nor release semantics.</li> 
+  </ul> 
+  <p>For more information about memory ordering semantics see <em>Load-Acquire, Store-Release</em>.</p> 
+  <p>For information about memory accesses see <em>Load/Store addressing modes</em>.</p> 
+  <p>This instruction is used by the alias <a title="Atomic bit set on halfword in memory" href="STSETH--STSETLH--Atomic-bit-set-on-halfword-in-memory--without-return--an-alias-of-LDSETH--LDSETAH--LDSETALH--LDSETLH-.html" class="document-topic">STSETH, STSETLH</a>.</p> 
+  <h3><a id="iclass_general"></a>Integer<span><br></br>(FEAT_LSE) </span></h3> 
+  <p></p> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>A</td> 
+      <td>R</td> 
+      <td>1</td> 
+      <td colspan="5">Rs</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td colspan="5">Rn</td> 
+      <td colspan="5">Rt</td> 
+     </tr> 
+     <tr> 
+      <td colspan="2">size</td> 
+      <td colspan="3"></td> 
+      <td></td> 
+      <td colspan="2"></td> 
+      <td></td> 
+      <td></td> 
+      <td></td> 
+      <td colspan="5"></td> 
+      <td></td> 
+      <td colspan="3">opc</td> 
+      <td colspan="2"></td> 
+      <td colspan="5"></td> 
+      <td colspan="5"></td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4>LDSETAH<span> (A == 1 &amp;&amp; R == 0)</span></h4> 
+   <a id="LDSETAH_32_memop"></a> 
+   <p>LDSETAH <a title="32-bit general-purpose register holding data value to be operated on with the contents of memory location (field &quot;Rs&quot;)" class="document-topic">&lt;Ws&gt;</a>, <a title="32-bit general-purpose register to be loaded (field &quot;Rt&quot;)" class="document-topic">&lt;Wt&gt;</a>, [<a title="64-bit general-purpose base register or SP (field &quot;Rn&quot;)" class="document-topic">&lt;Xn|SP&gt;</a>]</p> 
+  </div> 
+  <div> 
+   <h4>LDSETALH<span> (A == 1 &amp;&amp; R == 1)</span></h4> 
+   <a id="LDSETALH_32_memop"></a> 
+   <p>LDSETALH <a title="32-bit general-purpose register holding data value to be operated on with the contents of memory location (field &quot;Rs&quot;)" class="document-topic">&lt;Ws&gt;</a>, <a title="32-bit general-purpose register to be loaded (field &quot;Rt&quot;)" class="document-topic">&lt;Wt&gt;</a>, [<a title="64-bit general-purpose base register or SP (field &quot;Rn&quot;)" class="document-topic">&lt;Xn|SP&gt;</a>]</p> 
+  </div> 
+  <div> 
+   <h4>LDSETH<span> (A == 0 &amp;&amp; R == 0)</span></h4> 
+   <a id="LDSETH_32_memop"></a> 
+   <p>LDSETH <a title="32-bit general-purpose register holding data value to be operated on with the contents of memory location (field &quot;Rs&quot;)" class="document-topic">&lt;Ws&gt;</a>, <a title="32-bit general-purpose register to be loaded (field &quot;Rt&quot;)" class="document-topic">&lt;Wt&gt;</a>, [<a title="64-bit general-purpose base register or SP (field &quot;Rn&quot;)" class="document-topic">&lt;Xn|SP&gt;</a>]</p> 
+  </div> 
+  <div> 
+   <h4>LDSETLH<span> (A == 0 &amp;&amp; R == 1)</span></h4> 
+   <a id="LDSETLH_32_memop"></a> 
+   <p>LDSETLH <a title="32-bit general-purpose register holding data value to be operated on with the contents of memory location (field &quot;Rs&quot;)" class="document-topic">&lt;Ws&gt;</a>, <a title="32-bit general-purpose register to be loaded (field &quot;Rt&quot;)" class="document-topic">&lt;Wt&gt;</a>, [<a title="64-bit general-purpose base register or SP (field &quot;Rn&quot;)" class="document-topic">&lt;Xn|SP&gt;</a>]</p> 
+  </div> 
+  <pre>if !<a title="function: boolean HaveAtomicExt()" class="document-topic">HaveAtomicExt</a>() then UNDEFINED;
+
+integer t = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Rt);
+integer n = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Rn);
+integer s = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Rs);
+
+integer datasize = 8 &lt;&lt; <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(size);
+integer regsize = if datasize == 64 then 64 else 32;
+boolean acquire = A == '1' &amp;&amp; Rt != '11111';
+boolean release = R == '1';
+<a title="enumeration MemAtomicOp { MemAtomicOp_GCSSS1, MemAtomicOp_ADD, MemAtomicOp_BIC, MemAtomicOp_EOR, MemAtomicOp_ORR, MemAtomicOp_SMAX, MemAtomicOp_SMIN, MemAtomicOp_UMAX, MemAtomicOp_UMIN, MemAtomicOp_SWP, MemAtomicOp_CAS }" class="document-topic">MemAtomicOp</a> op;
+case opc of
+    when '000' op = <a title="enumeration MemAtomicOp { MemAtomicOp_GCSSS1, MemAtomicOp_ADD, MemAtomicOp_BIC, MemAtomicOp_EOR, MemAtomicOp_ORR, MemAtomicOp_SMAX, MemAtomicOp_SMIN, MemAtomicOp_UMAX, MemAtomicOp_UMIN, MemAtomicOp_SWP, MemAtomicOp_CAS }" class="document-topic">MemAtomicOp_ADD</a>;
+    when '001' op = <a title="enumeration MemAtomicOp { MemAtomicOp_GCSSS1, MemAtomicOp_ADD, MemAtomicOp_BIC, MemAtomicOp_EOR, MemAtomicOp_ORR, MemAtomicOp_SMAX, MemAtomicOp_SMIN, MemAtomicOp_UMAX, MemAtomicOp_UMIN, MemAtomicOp_SWP, MemAtomicOp_CAS }" class="document-topic">MemAtomicOp_BIC</a>;
+    when '010' op = <a title="enumeration MemAtomicOp { MemAtomicOp_GCSSS1, MemAtomicOp_ADD, MemAtomicOp_BIC, MemAtomicOp_EOR, MemAtomicOp_ORR, MemAtomicOp_SMAX, MemAtomicOp_SMIN, MemAtomicOp_UMAX, MemAtomicOp_UMIN, MemAtomicOp_SWP, MemAtomicOp_CAS }" class="document-topic">MemAtomicOp_EOR</a>;
+    when '011' op = <a title="enumeration MemAtomicOp { MemAtomicOp_GCSSS1, MemAtomicOp_ADD, MemAtomicOp_BIC, MemAtomicOp_EOR, MemAtomicOp_ORR, MemAtomicOp_SMAX, MemAtomicOp_SMIN, MemAtomicOp_UMAX, MemAtomicOp_UMIN, MemAtomicOp_SWP, MemAtomicOp_CAS }" class="document-topic">MemAtomicOp_ORR</a>;
+    when '100' op = <a title="enumeration MemAtomicOp { MemAtomicOp_GCSSS1, MemAtomicOp_ADD, MemAtomicOp_BIC, MemAtomicOp_EOR, MemAtomicOp_ORR, MemAtomicOp_SMAX, MemAtomicOp_SMIN, MemAtomicOp_UMAX, MemAtomicOp_UMIN, MemAtomicOp_SWP, MemAtomicOp_CAS }" class="document-topic">MemAtomicOp_SMAX</a>;
+    when '101' op = <a title="enumeration MemAtomicOp { MemAtomicOp_GCSSS1, MemAtomicOp_ADD, MemAtomicOp_BIC, MemAtomicOp_EOR, MemAtomicOp_ORR, MemAtomicOp_SMAX, MemAtomicOp_SMIN, MemAtomicOp_UMAX, MemAtomicOp_UMIN, MemAtomicOp_SWP, MemAtomicOp_CAS }" class="document-topic">MemAtomicOp_SMIN</a>;
+    when '110' op = <a title="enumeration MemAtomicOp { MemAtomicOp_GCSSS1, MemAtomicOp_ADD, MemAtomicOp_BIC, MemAtomicOp_EOR, MemAtomicOp_ORR, MemAtomicOp_SMAX, MemAtomicOp_SMIN, MemAtomicOp_UMAX, MemAtomicOp_UMIN, MemAtomicOp_SWP, MemAtomicOp_CAS }" class="document-topic">MemAtomicOp_UMAX</a>;
+    when '111' op = <a title="enumeration MemAtomicOp { MemAtomicOp_GCSSS1, MemAtomicOp_ADD, MemAtomicOp_BIC, MemAtomicOp_EOR, MemAtomicOp_ORR, MemAtomicOp_SMAX, MemAtomicOp_SMIN, MemAtomicOp_UMAX, MemAtomicOp_UMIN, MemAtomicOp_SWP, MemAtomicOp_CAS }" class="document-topic">MemAtomicOp_UMIN</a>;
+boolean tagchecked = n != 31;</pre> 
+  <div></div> 
+  <h3>Assembler Symbols</h3> 
+  <div> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Ws&gt;</td> 
+      <td><a id="sa_ws"></a> <p>Is the 32-bit name of the general-purpose register holding the data value to be operated on with the contents of the memory location, encoded in the "Rs" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Wt&gt;</td> 
+      <td><a id="sa_wt"></a> <p>Is the 32-bit name of the general-purpose register to be loaded, encoded in the "Rt" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Xn|SP&gt;</td> 
+      <td><a id="sa_xn_sp"></a> <p>Is the 64-bit name of the general-purpose base register or stack pointer, encoded in the "Rn" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div></div> 
+  <h3>Alias Conditions</h3> 
+  <table> 
+   <thead> 
+    <tr> 
+     <th>Alias</th> 
+     <th>Is preferred when</th> 
+    </tr> 
+   </thead> 
+   <tbody> 
+    <tr> 
+     <td><a href="STSETH--STSETLH--Atomic-bit-set-on-halfword-in-memory--without-return--an-alias-of-LDSETH--LDSETAH--LDSETALH--LDSETLH-.html" title="Atomic bit set on halfword in memory" class="document-topic">STSETH, STSETLH</a></td> 
+     <td><span>A == '0' &amp;&amp; Rt == '11111'</span></td> 
+    </tr> 
+   </tbody> 
+  </table> 
+  <div> 
+   <a id="execute"></a> 
+   <h3>Operation</h3> 
+   <pre>bits(64) address;
+bits(datasize) value;
+bits(datasize) data;
+
+<a title="type AccessDescriptor is ( AccessType acctype, bits(2) el, SecurityState ss, boolean acqsc, boolean acqpc, boolean relsc, boolean limitedordered, boolean exclusive, boolean atomicop, MemAtomicOp modop, boolean nontemporal, boolean read, boolean write, CacheOp cacheop, CacheOpScope opscope, CacheType cachetype, boolean pan, boolean transactional, boolean nonfault, boolean firstfault, boolean first, boolean contiguous, boolean streamingsve, boolean ls64, boolean mops, boolean rcw, boolean rcws, boolean toplevel, VARange varange, boolean a32lsmd, boolean tagchecked, boolean tagaccess, MPAMinfo mpam )" class="document-topic">AccessDescriptor</a> accdesc = <a title="function: AccessDescriptor CreateAccDescAtomicOp(MemAtomicOp modop, boolean acquire, boolean release, boolean tagchecked)" class="document-topic">CreateAccDescAtomicOp</a>(op, acquire, release, tagchecked);
+
+value = <a title="accessor: bits(width) X[integer n, integer width]" class="document-topic">X</a>[s, datasize];
+if n == 31 then
+    <a title="function: CheckSPAlignment()" class="document-topic">CheckSPAlignment</a>();
+    address = <a title="accessor: bits(64) SP[]" class="document-topic">SP</a>[];
+else
+    address = <a title="accessor: bits(width) X[integer n, integer width]" class="document-topic">X</a>[n, 64];
+
+bits(datasize) comparevalue = bits(datasize) UNKNOWN; // Irrelevant when not executing CAS
+data = <a title="function: bits(size) MemAtomic(bits(64) address, bits(size) cmpoperand, bits(size) operand, AccessDescriptor accdesc_in)" class="document-topic">MemAtomic</a>(address, comparevalue, value, accdesc);
+
+if t != 31 then
+    <a title="accessor: X[integer n, integer width] = bits(width) value" class="document-topic">X</a>[t, regsize] = <a title="function: bits(N) ZeroExtend(bits(M) x, integer N)" class="document-topic">ZeroExtend</a>(data, regsize);</pre> 
+  </div> 
+  <h3>Operational information</h3> 
+  <p>If PSTATE.DIT is 1, the timing of this instruction is insensitive to the value of the data being loaded or stored.</p>  
+ </body>
+</html>

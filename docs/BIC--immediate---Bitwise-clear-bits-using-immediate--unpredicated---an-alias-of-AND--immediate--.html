@@ -1,0 +1,198 @@
+<html>
+ <head>  <link rel="stylesheet" href="../def-style.css"></head> 
+ <body> 
+  <h2>BIC (immediate)</h2> 
+  <p>Bitwise clear bits using immediate (unpredicated)</p> 
+  <p>Bitwise clear bits using immediate with each 64-bit element of the source vector, and destructively place the results in the corresponding elements of the source vector. The immediate is a 64-bit value consisting of a single run of ones or zeros repeating every 2, 4, 8, 16, 32 or 64 bits. This instruction is unpredicated.</p> 
+  <p> This is a pseudo-instruction of <a href="AND--immediate---Bitwise-AND-with-immediate--unpredicated--.html" class="document-topic">AND (immediate)</a>. This means: </p> 
+  <ul> 
+   <li> The encodings in this description are named to match the encodings of <a href="AND--immediate---Bitwise-AND-with-immediate--unpredicated--.html" class="document-topic">AND (immediate)</a>. </li> 
+   <li> The assembler syntax is used only for assembly, and is not used on disassembly. </li> 
+   <li>The description of <a href="AND--immediate---Bitwise-AND-with-immediate--unpredicated--.html" class="document-topic">AND (immediate)</a> gives the operational pseudocode, any <small>constrained unpredictable</small> behavior, and any operational information for this instruction.</li> 
+  </ul> 
+  <p></p> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td colspan="13">imm13</td> 
+      <td colspan="5">Zdn</td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4></h4> 
+   <a id="BIC_and_z_zi_"></a> 
+   <p>BIC <a title="Source and destination scalable vector register (field &quot;Zdn&quot;)" class="document-topic">&lt;Zdn&gt;</a>.<a title="Size specifier (field &quot;imm13<12>:imm13<5:0>&quot;) [B,D,H,S]" class="document-topic">&lt;T&gt;</a>, <a title="Source and destination scalable vector register (field &quot;Zdn&quot;)" class="document-topic">&lt;Zdn&gt;</a>.<a title="Size specifier (field &quot;imm13<12>:imm13<5:0>&quot;) [B,D,H,S]" class="document-topic">&lt;T&gt;</a>, #<a title="64, 32, 16 or 8-bit bitmask consisting of replicated 2, 4, 8, 16, 32 or 64 bit fields, each field containing a rotated run of non-zero bits (field &quot;imm13&quot;)" class="document-topic">&lt;const&gt;</a></p> 
+   <p> is equivalent to </p> 
+   <p><a href="AND--immediate---Bitwise-AND-with-immediate--unpredicated--.html" class="document-topic">AND</a> <a title="Source and destination scalable vector register (field &quot;Zdn&quot;)" class="document-topic">&lt;Zdn&gt;</a>.<a title="Size specifier (field &quot;imm13<12>:imm13<5:0>&quot;) [B,D,H,S]" class="document-topic">&lt;T&gt;</a>, <a title="Source and destination scalable vector register (field &quot;Zdn&quot;)" class="document-topic">&lt;Zdn&gt;</a>.<a title="Size specifier (field &quot;imm13<12>:imm13<5:0>&quot;) [B,D,H,S]" class="document-topic">&lt;T&gt;</a>, #(-<a title="64, 32, 16 or 8-bit bitmask consisting of replicated 2, 4, 8, 16, 32 or 64 bit fields, each field containing a rotated run of non-zero bits (field &quot;imm13&quot;)" class="document-topic">&lt;const&gt;</a> - 1)</p> 
+  </div> 
+  <div></div> 
+  <h3>Assembler Symbols</h3> 
+  <div> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Zdn&gt;</td> 
+      <td><a id="sa_zdn"></a> <p>Is the name of the source and destination scalable vector register, encoded in the "Zdn" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;T&gt;</td> 
+      <td><a id="sa_t"></a> <p>Is the size specifier, encoded in <q>imm13&lt;12&gt;:imm13&lt;5:0&gt;</q>: </p> 
+       <table> 
+        <thead> 
+         <tr> 
+          <th>imm13&lt;12&gt;</th> 
+          <th>imm13&lt;5:0&gt;</th> 
+          <th>&lt;T&gt;</th> 
+         </tr> 
+        </thead> 
+        <tbody> 
+         <tr> 
+          <td>0</td> 
+          <td>0xxxxx</td> 
+          <td>S</td> 
+         </tr> 
+         <tr> 
+          <td>0</td> 
+          <td>10xxxx</td> 
+          <td>H</td> 
+         </tr> 
+         <tr> 
+          <td>0</td> 
+          <td>110xxx</td> 
+          <td>B</td> 
+         </tr> 
+         <tr> 
+          <td>0</td> 
+          <td>1110xx</td> 
+          <td>B</td> 
+         </tr> 
+         <tr> 
+          <td>0</td> 
+          <td>11110x</td> 
+          <td>B</td> 
+         </tr> 
+         <tr> 
+          <td>0</td> 
+          <td>111110</td> 
+          <td>RESERVED</td> 
+         </tr> 
+         <tr> 
+          <td>0</td> 
+          <td>111111</td> 
+          <td>RESERVED</td> 
+         </tr> 
+         <tr> 
+          <td>1</td> 
+          <td>xxxxxx</td> 
+          <td>D</td> 
+         </tr> 
+        </tbody> 
+       </table> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;const&gt;</td> 
+      <td><a id="sa_const"></a> <p>Is a 64, 32, 16 or 8-bit bitmask consisting of replicated 2, 4, 8, 16, 32 or 64 bit fields, each field containing a rotated run of non-zero bits, encoded in the "imm13" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div></div> 
+  <div> 
+   <h3>Operation</h3> 
+   <p>The description of <a href="AND--immediate---Bitwise-AND-with-immediate--unpredicated--.html" class="document-topic">AND (immediate)</a> gives the operational pseudocode for this instruction.</p> 
+  </div> 
+  <h3>Operational information</h3> 
+  <p>If FEAT_SVE2 is implemented or FEAT_SME is implemented, then if PSTATE.DIT is 1:</p> 
+  <ul> 
+   <li>The execution time of this instruction is independent of: 
+    <ul> 
+     <li>The values of the data supplied in any of its registers.</li> 
+     <li>The values of the NZCV flags.</li> 
+    </ul></li> 
+   <li>The response of this instruction to asynchronous exceptions does not vary based on: 
+    <ul> 
+     <li>The values of the data supplied in any of its registers.</li> 
+     <li>The values of the NZCV flags.</li> 
+    </ul></li> 
+  </ul> 
+  <p> This instruction might be immediately preceded in program order by a <span>MOVPRFX</span> instruction. The <span>MOVPRFX</span> instruction must conform to all of the following requirements, otherwise the behavior of the <span>MOVPRFX</span> and this instruction is <small>unpredictable</small>: </p> 
+  <ul> 
+   <li>The <span>MOVPRFX</span> instruction must be unpredicated.</li> 
+   <li>The <span>MOVPRFX</span> instruction must specify the same destination register as this instruction.</li> 
+   <li>The destination register must not refer to architectural register state referenced by any other source operand register of this instruction.</li> 
+  </ul>  
+ </body>
+</html>

@@ -1,0 +1,308 @@
+<html>
+ <head>  <link rel="stylesheet" href="../def-style.css"></head> 
+ <body> 
+  <h2>PTRUES</h2> 
+  <p>Initialise predicate from named constraint and set the condition flags</p> 
+  <p>Set elements of the destination predicate to true if the element number satisfies the named predicate constraint, or to false otherwise. If the constraint specifies more elements than are available at the current vector length then all elements of the destination predicate are set to false.</p> 
+  <p>The named predicate constraint limits the number of active elements in a single predicate to:</p> 
+  <ul> 
+   <li> A fixed number (VL1 to VL256) </li> 
+   <li> The largest power of two (POW2) </li> 
+   <li> The largest multiple of three or four (MUL3 or MUL4) </li> 
+   <li> All available, implicitly a multiple of two (ALL). </li> 
+  </ul> 
+  <p>Unspecified or out of range constraint encodings generate an empty predicate or zero element count rather than Undefined Instruction exception. Sets the <small>First</small> (N), <small>None</small> (Z), <small>!Last</small> (C) condition flags based on the predicate result, and the V flag to zero.</p> 
+  <p></p> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td colspan="2">size</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td colspan="5">pattern</td> 
+      <td>0</td> 
+      <td colspan="4">Pd</td> 
+     </tr> 
+     <tr> 
+      <td colspan="8"></td> 
+      <td colspan="2"></td> 
+      <td colspan="5"></td> 
+      <td>S</td> 
+      <td colspan="6"></td> 
+      <td colspan="5"></td> 
+      <td></td> 
+      <td colspan="4"></td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4></h4> 
+   <a id="ptrues_p_s_"></a> 
+   <p>PTRUES <a title="Destination scalable predicate register (field &quot;Pd&quot;)" class="document-topic">&lt;Pd&gt;</a>.<a title="Size specifier (field &quot;size&quot;) [B,D,H,S]" class="document-topic">&lt;T&gt;</a>{, <a title="Optional pattern specifier, default ALL (field &quot;pattern&quot;) [#uimm5,ALL,MUL3,MUL4,POW2,VL1,VL2,VL3,VL4,VL5,VL6,VL7,VL8,VL16,VL32,VL64,VL128,VL256]" class="document-topic">&lt;pattern&gt;</a>}</p> 
+  </div> 
+  <pre>if !<a title="function: boolean HaveSVE()" class="document-topic">HaveSVE</a>() &amp;&amp; !<a title="function: boolean HaveSME()" class="document-topic">HaveSME</a>() then UNDEFINED;
+constant integer esize = 8 &lt;&lt; <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(size);
+integer d = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Pd);
+boolean setflags = TRUE;
+bits(5) pat = pattern;</pre> 
+  <div></div> 
+  <h3>Assembler Symbols</h3> 
+  <div> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Pd&gt;</td> 
+      <td><a id="sa_pd"></a> <p>Is the name of the destination scalable predicate register, encoded in the "Pd" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;T&gt;</td> 
+      <td><a id="sa_t"></a> <p>Is the size specifier, encoded in <q>size</q>: </p> 
+       <table> 
+        <thead> 
+         <tr> 
+          <th>size</th> 
+          <th>&lt;T&gt;</th> 
+         </tr> 
+        </thead> 
+        <tbody> 
+         <tr> 
+          <td>00</td> 
+          <td>B</td> 
+         </tr> 
+         <tr> 
+          <td>01</td> 
+          <td>H</td> 
+         </tr> 
+         <tr> 
+          <td>10</td> 
+          <td>S</td> 
+         </tr> 
+         <tr> 
+          <td>11</td> 
+          <td>D</td> 
+         </tr> 
+        </tbody> 
+       </table> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;pattern&gt;</td> 
+      <td><a id="sa_pattern"></a> <p>Is the optional pattern specifier, defaulting to ALL, encoded in <q>pattern</q>: </p> 
+       <table> 
+        <thead> 
+         <tr> 
+          <th>pattern</th> 
+          <th>&lt;pattern&gt;</th> 
+         </tr> 
+        </thead> 
+        <tbody> 
+         <tr> 
+          <td>00000</td> 
+          <td>POW2</td> 
+         </tr> 
+         <tr> 
+          <td>00001</td> 
+          <td>VL1</td> 
+         </tr> 
+         <tr> 
+          <td>00010</td> 
+          <td>VL2</td> 
+         </tr> 
+         <tr> 
+          <td>00011</td> 
+          <td>VL3</td> 
+         </tr> 
+         <tr> 
+          <td>00100</td> 
+          <td>VL4</td> 
+         </tr> 
+         <tr> 
+          <td>00101</td> 
+          <td>VL5</td> 
+         </tr> 
+         <tr> 
+          <td>00110</td> 
+          <td>VL6</td> 
+         </tr> 
+         <tr> 
+          <td>00111</td> 
+          <td>VL7</td> 
+         </tr> 
+         <tr> 
+          <td>01000</td> 
+          <td>VL8</td> 
+         </tr> 
+         <tr> 
+          <td>01001</td> 
+          <td>VL16</td> 
+         </tr> 
+         <tr> 
+          <td>01010</td> 
+          <td>VL32</td> 
+         </tr> 
+         <tr> 
+          <td>01011</td> 
+          <td>VL64</td> 
+         </tr> 
+         <tr> 
+          <td>01100</td> 
+          <td>VL128</td> 
+         </tr> 
+         <tr> 
+          <td>01101</td> 
+          <td>VL256</td> 
+         </tr> 
+         <tr> 
+          <td>0111x</td> 
+          <td>#uimm5</td> 
+         </tr> 
+         <tr> 
+          <td>101x1</td> 
+          <td>#uimm5</td> 
+         </tr> 
+         <tr> 
+          <td>10110</td> 
+          <td>#uimm5</td> 
+         </tr> 
+         <tr> 
+          <td>1x0x1</td> 
+          <td>#uimm5</td> 
+         </tr> 
+         <tr> 
+          <td>1x010</td> 
+          <td>#uimm5</td> 
+         </tr> 
+         <tr> 
+          <td>1xx00</td> 
+          <td>#uimm5</td> 
+         </tr> 
+         <tr> 
+          <td>11101</td> 
+          <td>MUL4</td> 
+         </tr> 
+         <tr> 
+          <td>11110</td> 
+          <td>MUL3</td> 
+         </tr> 
+         <tr> 
+          <td>11111</td> 
+          <td>ALL</td> 
+         </tr> 
+        </tbody> 
+       </table> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div></div> 
+  <div> 
+   <a id="execute"></a> 
+   <h3>Operation</h3> 
+   <pre><a title="function: CheckSVEEnabled()" class="document-topic">CheckSVEEnabled</a>();
+constant integer VL = <a title="accessor: integer CurrentVL" class="document-topic">CurrentVL</a>;
+constant integer PL = VL DIV 8;
+constant integer elements = VL DIV esize;
+integer count = <a title="function: integer DecodePredCount(bits(5) pattern, integer esize)" class="document-topic">DecodePredCount</a>(pat, esize);
+bits(PL) result;
+constant integer psize = esize DIV 8;
+
+for e = 0 to elements-1
+    bit pbit = if e &lt; count then '1' else '0';
+    <a title="accessor: Elem[bits(N) &amp;vector, integer e, integer size] = bits(size) value" class="document-topic">Elem</a>[result, e, psize] = <a title="function: bits(N) ZeroExtend(bits(M) x, integer N)" class="document-topic">ZeroExtend</a>(pbit, psize);
+
+if setflags then
+    PSTATE.&lt;N,Z,C,V&gt; = <a title="function: bits(4) PredTest(bits(N) mask, bits(N) result, integer esize)" class="document-topic">PredTest</a>(result, result, esize);
+<a title="accessor: P[integer n, integer width] = bits(width) value" class="document-topic">P</a>[d, PL] = result;</pre> 
+  </div> 
+  <h3>Operational information</h3> 
+  <p>If FEAT_SVE2 is implemented or FEAT_SME is implemented, then if PSTATE.DIT is 1:</p> 
+  <ul> 
+   <li>The execution time of this instruction is independent of: 
+    <ul> 
+     <li>The values of the data supplied in any of its registers.</li> 
+     <li>The values of the NZCV flags.</li> 
+    </ul></li> 
+   <li>The response of this instruction to asynchronous exceptions does not vary based on: 
+    <ul> 
+     <li>The values of the data supplied in any of its registers.</li> 
+     <li>The values of the NZCV flags.</li> 
+    </ul></li> 
+  </ul> 
+  <p>If FEAT_SME is implemented and the PE is in Streaming SVE mode, then any subsequent instruction which is dependent on the NZCV condition flags written by this instruction might be significantly delayed.</p>  
+ </body>
+</html>

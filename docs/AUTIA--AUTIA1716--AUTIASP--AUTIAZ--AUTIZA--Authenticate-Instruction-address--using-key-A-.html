@@ -1,0 +1,278 @@
+<html>
+ <head>  <link rel="stylesheet" href="../def-style.css"></head> 
+ <body> 
+  <h2>AUTIA, AUTIA1716, AUTIASP, AUTIAZ, AUTIZA</h2> 
+  <p>Authenticate Instruction address, using key A. This instruction authenticates an instruction address, using a modifier and key A.</p> 
+  <p>The address is:</p> 
+  <ul> 
+   <li>In the general-purpose register that is specified by &lt;Xd&gt; for <span>AUTIA</span> and <span>AUTIZA</span>.</li> 
+   <li>In X17, for <span>AUTIA1716</span>.</li> 
+   <li>In X30, for <span>AUTIASP</span> and <span>AUTIAZ</span>.</li> 
+  </ul> 
+  <p>The modifier is:</p> 
+  <ul> 
+   <li>In the general-purpose register or stack pointer that is specified by &lt;Xn|SP&gt; for <span>AUTIA</span>.</li> 
+   <li>The value zero, for <span>AUTIZA</span> and <span>AUTIAZ</span>.</li> 
+   <li>In X16, for <span>AUTIA1716</span>.</li> 
+   <li>In SP, for <span>AUTIASP</span>.</li> 
+  </ul> 
+  <p>If the authentication passes, the upper bits of the address are restored to enable subsequent use of the address. For information on behavior if the authentication fails, see <em>Faulting on pointer authentication</em>.</p> 
+  <p> It has encodings from 2 classes: <a class="document-topic">Integer</a> and <a class="document-topic">System</a> </p> 
+  <h3><a id="iclass_general"></a>Integer<span><br></br>(FEAT_PAuth) </span></h3> 
+  <p></p> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>Z</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td colspan="5">Rn</td> 
+      <td colspan="5">Rd</td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4>AUTIA<span> (Z == 0)</span></h4> 
+   <a id="AUTIA_64P_dp_1src"></a> 
+   <p>AUTIA <a title="64-bit general-purpose destination register (field &quot;Rd&quot;)" class="document-topic">&lt;Xd&gt;</a>, <a title="64-bit general-purpose source register or SP (field &quot;Rn&quot;)" class="document-topic">&lt;Xn|SP&gt;</a></p> 
+  </div> 
+  <div> 
+   <h4>AUTIZA<span> (Z == 1 &amp;&amp; Rn == 11111)</span></h4> 
+   <a id="AUTIZA_64Z_dp_1src"></a> 
+   <p>AUTIZA <a title="64-bit general-purpose destination register (field &quot;Rd&quot;)" class="document-topic">&lt;Xd&gt;</a></p> 
+  </div> 
+  <pre>boolean source_is_sp = FALSE;
+integer d = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Rd);
+integer n = <a title="function: integer UInt(bits(N) x)" class="document-topic">UInt</a>(Rn);
+
+if !<a title="function: boolean HavePACExt()" class="document-topic">HavePACExt</a>() then
+    UNDEFINED;
+
+if Z == '0' then // AUTIA
+    if n == 31 then source_is_sp = TRUE;
+else // AUTIZA
+    if n != 31 then UNDEFINED;</pre> 
+  <h3><a id="iclass_system"></a>System<span><br></br>(FEAT_PAuth) </span></h3> 
+  <p></p> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>x</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>x</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+     </tr> 
+     <tr> 
+      <td colspan="10"></td> 
+      <td></td> 
+      <td colspan="2"></td> 
+      <td colspan="3"></td> 
+      <td colspan="4"></td> 
+      <td colspan="4">CRm</td> 
+      <td colspan="3">op2</td> 
+      <td colspan="5"></td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4>AUTIA1716<span> (CRm == 0001 &amp;&amp; op2 == 100)</span></h4> 
+   <a id="AUTIA1716_HI_hints"></a> 
+   <p>AUTIA1716</p> 
+  </div> 
+  <div> 
+   <h4>AUTIASP<span> (CRm == 0011 &amp;&amp; op2 == 101)</span></h4> 
+   <a id="AUTIASP_HI_hints"></a> 
+   <p>AUTIASP</p> 
+  </div> 
+  <div> 
+   <h4>AUTIAZ<span> (CRm == 0011 &amp;&amp; op2 == 100)</span></h4> 
+   <a id="AUTIAZ_HI_hints"></a> 
+   <p>AUTIAZ</p> 
+  </div> 
+  <pre>integer d;
+integer n;
+boolean source_is_sp = FALSE;
+
+case CRm:op2 of
+    when '0011 100' // AUTIAZ
+        d = 30;
+        n = 31;
+    when '0011 101' // AUTIASP
+        d = 30;
+        source_is_sp = TRUE;
+    when '0001 100' // AUTIA1716
+        d = 17;
+        n = 16;
+    when '0001 000' SEE "PACIA";
+    when '0001 010' SEE "PACIB";
+    when '0001 110' SEE "AUTIB";
+    when '0011 00x' SEE "PACIA";
+    when '0011 01x' SEE "PACIB";
+    when '0011 11x' SEE "AUTIB";
+    when '0000 111' SEE "XPACLRI";
+    otherwise       SEE "HINT";</pre> 
+  <div></div> 
+  <h3>Assembler Symbols</h3> 
+  <div> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Xd&gt;</td> 
+      <td><a id="sa_xd"></a> <p>Is the 64-bit name of the general-purpose destination register, encoded in the "Rd" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <table> 
+    <colgroup> 
+     <col></col> 
+     <col></col> 
+    </colgroup> 
+    <tbody> 
+     <tr> 
+      <td>&lt;Xn|SP&gt;</td> 
+      <td><a id="sa_xn_sp"></a> <p>Is the 64-bit name of the general-purpose source register or stack pointer, encoded in the "Rn" field.</p> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div></div> 
+  <div> 
+   <a id="execute"></a> 
+   <h3>Operation</h3> 
+   <pre>auth_then_branch = FALSE;
+
+if <a title="function: boolean HavePACExt()" class="document-topic">HavePACExt</a>() then
+    if source_is_sp then
+        <a title="accessor: X[integer n, integer width] = bits(width) value" class="document-topic">X</a>[d, 64] = AuthIA(X[d, 64], SP[], auth_then_branch);
+    else
+        <a title="accessor: X[integer n, integer width] = bits(width) value" class="document-topic">X</a>[d, 64] = AuthIA(X[d, 64], X[n, 64], auth_then_branch);</pre> 
+  </div>  
+ </body>
+</html>

@@ -1,0 +1,211 @@
+<html>
+ <head>  <link rel="stylesheet" href="../def-style.css"></head> 
+ <body> 
+  <h2>CLRBHB</h2> 
+  <p>Clear Branch History clears the branch history for the current context to the extent that branch history information created before the <span>CLRBHB</span> instruction cannot be used by code before the <span>CLRBHB</span> instruction to exploitatively control the execution of any indirect branches in code in the current context that appear in program order after the instruction.</p> 
+  <h3><a id="iclass_system"></a>System<span><br></br>(FEAT_CLRBHB) </span></h3> 
+  <p></p> 
+  <div> 
+   <table> 
+    <thead> 
+     <tr> 
+      <td>31</td> 
+      <td>30</td> 
+      <td>29</td> 
+      <td>28</td> 
+      <td>27</td> 
+      <td>26</td> 
+      <td>25</td> 
+      <td>24</td> 
+      <td>23</td> 
+      <td>22</td> 
+      <td>21</td> 
+      <td>20</td> 
+      <td>19</td> 
+      <td>18</td> 
+      <td>17</td> 
+      <td>16</td> 
+      <td>15</td> 
+      <td>14</td> 
+      <td>13</td> 
+      <td>12</td> 
+      <td>11</td> 
+      <td>10</td> 
+      <td>9</td> 
+      <td>8</td> 
+      <td>7</td> 
+      <td>6</td> 
+      <td>5</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>2</td> 
+      <td>1</td> 
+      <td>0</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+     </tr> 
+     <tr> 
+      <td colspan="10"></td> 
+      <td></td> 
+      <td colspan="2"></td> 
+      <td colspan="3"></td> 
+      <td colspan="4"></td> 
+      <td colspan="4">CRm</td> 
+      <td colspan="3">op2</td> 
+      <td colspan="5"></td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <div> 
+   <h4></h4> 
+   <a id="CLRBHB_HI_hints"></a> 
+   <p>CLRBHB</p> 
+  </div> 
+  <pre><a title="enumeration SystemHintOp { SystemHintOp_NOP, SystemHintOp_YIELD, SystemHintOp_WFE, SystemHintOp_WFI, SystemHintOp_SEV, SystemHintOp_SEVL, SystemHintOp_DGH, SystemHintOp_ESB, SystemHintOp_PSB, SystemHintOp_TSB, SystemHintOp_BTI, SystemHintOp_WFET, SystemHintOp_WFIT, SystemHintOp_CLRBHB, SystemHintOp_GCSB, SystemHintOp_CHKFEAT, SystemHintOp_CSDB }" class="document-topic">SystemHintOp</a> op;
+
+case CRm:op2 of
+    when '0000 000' op = <a title="enumeration SystemHintOp { SystemHintOp_NOP, SystemHintOp_YIELD, SystemHintOp_WFE, SystemHintOp_WFI, SystemHintOp_SEV, SystemHintOp_SEVL, SystemHintOp_DGH, SystemHintOp_ESB, SystemHintOp_PSB, SystemHintOp_TSB, SystemHintOp_BTI, SystemHintOp_WFET, SystemHintOp_WFIT, SystemHintOp_CLRBHB, SystemHintOp_GCSB, SystemHintOp_CHKFEAT, SystemHintOp_CSDB }" class="document-topic">SystemHintOp_NOP</a>;
+    when '0000 001' op = <a title="enumeration SystemHintOp { SystemHintOp_NOP, SystemHintOp_YIELD, SystemHintOp_WFE, SystemHintOp_WFI, SystemHintOp_SEV, SystemHintOp_SEVL, SystemHintOp_DGH, SystemHintOp_ESB, SystemHintOp_PSB, SystemHintOp_TSB, SystemHintOp_BTI, SystemHintOp_WFET, SystemHintOp_WFIT, SystemHintOp_CLRBHB, SystemHintOp_GCSB, SystemHintOp_CHKFEAT, SystemHintOp_CSDB }" class="document-topic">SystemHintOp_YIELD</a>;
+    when '0000 010' op = <a title="enumeration SystemHintOp { SystemHintOp_NOP, SystemHintOp_YIELD, SystemHintOp_WFE, SystemHintOp_WFI, SystemHintOp_SEV, SystemHintOp_SEVL, SystemHintOp_DGH, SystemHintOp_ESB, SystemHintOp_PSB, SystemHintOp_TSB, SystemHintOp_BTI, SystemHintOp_WFET, SystemHintOp_WFIT, SystemHintOp_CLRBHB, SystemHintOp_GCSB, SystemHintOp_CHKFEAT, SystemHintOp_CSDB }" class="document-topic">SystemHintOp_WFE</a>;
+    when '0000 011' op = <a title="enumeration SystemHintOp { SystemHintOp_NOP, SystemHintOp_YIELD, SystemHintOp_WFE, SystemHintOp_WFI, SystemHintOp_SEV, SystemHintOp_SEVL, SystemHintOp_DGH, SystemHintOp_ESB, SystemHintOp_PSB, SystemHintOp_TSB, SystemHintOp_BTI, SystemHintOp_WFET, SystemHintOp_WFIT, SystemHintOp_CLRBHB, SystemHintOp_GCSB, SystemHintOp_CHKFEAT, SystemHintOp_CSDB }" class="document-topic">SystemHintOp_WFI</a>;
+    when '0000 100' op = <a title="enumeration SystemHintOp { SystemHintOp_NOP, SystemHintOp_YIELD, SystemHintOp_WFE, SystemHintOp_WFI, SystemHintOp_SEV, SystemHintOp_SEVL, SystemHintOp_DGH, SystemHintOp_ESB, SystemHintOp_PSB, SystemHintOp_TSB, SystemHintOp_BTI, SystemHintOp_WFET, SystemHintOp_WFIT, SystemHintOp_CLRBHB, SystemHintOp_GCSB, SystemHintOp_CHKFEAT, SystemHintOp_CSDB }" class="document-topic">SystemHintOp_SEV</a>;
+    when '0000 101' op = <a title="enumeration SystemHintOp { SystemHintOp_NOP, SystemHintOp_YIELD, SystemHintOp_WFE, SystemHintOp_WFI, SystemHintOp_SEV, SystemHintOp_SEVL, SystemHintOp_DGH, SystemHintOp_ESB, SystemHintOp_PSB, SystemHintOp_TSB, SystemHintOp_BTI, SystemHintOp_WFET, SystemHintOp_WFIT, SystemHintOp_CLRBHB, SystemHintOp_GCSB, SystemHintOp_CHKFEAT, SystemHintOp_CSDB }" class="document-topic">SystemHintOp_SEVL</a>;
+    when '0000 110'
+        if !<a title="function: boolean HaveDGHExt()" class="document-topic">HaveDGHExt</a>() then <a title="function: EndOfInstruction()" class="document-topic">EndOfInstruction</a>();                   // Instruction executes as NOP
+        op = <a title="enumeration SystemHintOp { SystemHintOp_NOP, SystemHintOp_YIELD, SystemHintOp_WFE, SystemHintOp_WFI, SystemHintOp_SEV, SystemHintOp_SEVL, SystemHintOp_DGH, SystemHintOp_ESB, SystemHintOp_PSB, SystemHintOp_TSB, SystemHintOp_BTI, SystemHintOp_WFET, SystemHintOp_WFIT, SystemHintOp_CLRBHB, SystemHintOp_GCSB, SystemHintOp_CHKFEAT, SystemHintOp_CSDB }" class="document-topic">SystemHintOp_DGH</a>;
+    when '0000 111' SEE "XPACLRI";
+    when '0001 xxx'
+        case op2 of
+            when '000' SEE "PACIA1716";
+            when '010' SEE "PACIB1716";
+            when '100' SEE "AUTIA1716";
+            when '110' SEE "AUTIB1716";
+            otherwise <a title="function: EndOfInstruction()" class="document-topic">EndOfInstruction</a>();                           // Instruction executes as NOP
+    when '0010 000'
+        if !<a title="function: boolean HaveRASExt()" class="document-topic">HaveRASExt</a>() then <a title="function: EndOfInstruction()" class="document-topic">EndOfInstruction</a>();                   // Instruction executes as NOP
+        op = <a title="enumeration SystemHintOp { SystemHintOp_NOP, SystemHintOp_YIELD, SystemHintOp_WFE, SystemHintOp_WFI, SystemHintOp_SEV, SystemHintOp_SEVL, SystemHintOp_DGH, SystemHintOp_ESB, SystemHintOp_PSB, SystemHintOp_TSB, SystemHintOp_BTI, SystemHintOp_WFET, SystemHintOp_WFIT, SystemHintOp_CLRBHB, SystemHintOp_GCSB, SystemHintOp_CHKFEAT, SystemHintOp_CSDB }" class="document-topic">SystemHintOp_ESB</a>;
+    when '0010 001'
+        if !<a title="function: boolean HaveStatisticalProfiling()" class="document-topic">HaveStatisticalProfiling</a>() then <a title="function: EndOfInstruction()" class="document-topic">EndOfInstruction</a>();     // Instruction executes as NOP
+        op = <a title="enumeration SystemHintOp { SystemHintOp_NOP, SystemHintOp_YIELD, SystemHintOp_WFE, SystemHintOp_WFI, SystemHintOp_SEV, SystemHintOp_SEVL, SystemHintOp_DGH, SystemHintOp_ESB, SystemHintOp_PSB, SystemHintOp_TSB, SystemHintOp_BTI, SystemHintOp_WFET, SystemHintOp_WFIT, SystemHintOp_CLRBHB, SystemHintOp_GCSB, SystemHintOp_CHKFEAT, SystemHintOp_CSDB }" class="document-topic">SystemHintOp_PSB</a>;
+    when '0010 010'
+        if !<a title="function: boolean HaveSelfHostedTrace()" class="document-topic">HaveSelfHostedTrace</a>() then <a title="function: EndOfInstruction()" class="document-topic">EndOfInstruction</a>();          // Instruction executes as NOP
+        op = <a title="enumeration SystemHintOp { SystemHintOp_NOP, SystemHintOp_YIELD, SystemHintOp_WFE, SystemHintOp_WFI, SystemHintOp_SEV, SystemHintOp_SEVL, SystemHintOp_DGH, SystemHintOp_ESB, SystemHintOp_PSB, SystemHintOp_TSB, SystemHintOp_BTI, SystemHintOp_WFET, SystemHintOp_WFIT, SystemHintOp_CLRBHB, SystemHintOp_GCSB, SystemHintOp_CHKFEAT, SystemHintOp_CSDB }" class="document-topic">SystemHintOp_TSB</a>;
+    when '0010 011'
+        if !IsFeatureImplemented(FEAT_GCS) then <a title="function: EndOfInstruction()" class="document-topic">EndOfInstruction</a>(); // Instruction executes as NOP
+        op = <a title="enumeration SystemHintOp { SystemHintOp_NOP, SystemHintOp_YIELD, SystemHintOp_WFE, SystemHintOp_WFI, SystemHintOp_SEV, SystemHintOp_SEVL, SystemHintOp_DGH, SystemHintOp_ESB, SystemHintOp_PSB, SystemHintOp_TSB, SystemHintOp_BTI, SystemHintOp_WFET, SystemHintOp_WFIT, SystemHintOp_CLRBHB, SystemHintOp_GCSB, SystemHintOp_CHKFEAT, SystemHintOp_CSDB }" class="document-topic">SystemHintOp_GCSB</a>;
+    when '0010 100'
+        op = <a title="enumeration SystemHintOp { SystemHintOp_NOP, SystemHintOp_YIELD, SystemHintOp_WFE, SystemHintOp_WFI, SystemHintOp_SEV, SystemHintOp_SEVL, SystemHintOp_DGH, SystemHintOp_ESB, SystemHintOp_PSB, SystemHintOp_TSB, SystemHintOp_BTI, SystemHintOp_WFET, SystemHintOp_WFIT, SystemHintOp_CLRBHB, SystemHintOp_GCSB, SystemHintOp_CHKFEAT, SystemHintOp_CSDB }" class="document-topic">SystemHintOp_CSDB</a>;
+    when '0010 110'
+        if !<a title="function: boolean HaveFeatCLRBHB()" class="document-topic">HaveFeatCLRBHB</a>() then <a title="function: EndOfInstruction()" class="document-topic">EndOfInstruction</a>();               // Instruction executes as NOP
+        op = <a title="enumeration SystemHintOp { SystemHintOp_NOP, SystemHintOp_YIELD, SystemHintOp_WFE, SystemHintOp_WFI, SystemHintOp_SEV, SystemHintOp_SEVL, SystemHintOp_DGH, SystemHintOp_ESB, SystemHintOp_PSB, SystemHintOp_TSB, SystemHintOp_BTI, SystemHintOp_WFET, SystemHintOp_WFIT, SystemHintOp_CLRBHB, SystemHintOp_GCSB, SystemHintOp_CHKFEAT, SystemHintOp_CSDB }" class="document-topic">SystemHintOp_CLRBHB</a>;
+    when '0011 xxx'
+        case op2 of
+            when '000' SEE "PACIAZ";
+            when '001' SEE "PACIASP";
+            when '010' SEE "PACIBZ";
+            when '011' SEE "PACIBSP";
+            when '100' SEE "AUTIAZ";
+            when '101' SEE "AUTIASP";
+            when '110' SEE "AUTIBZ";
+            when '111' SEE "AUTIBSP";
+    when '0100 xx0'
+        op = <a title="enumeration SystemHintOp { SystemHintOp_NOP, SystemHintOp_YIELD, SystemHintOp_WFE, SystemHintOp_WFI, SystemHintOp_SEV, SystemHintOp_SEVL, SystemHintOp_DGH, SystemHintOp_ESB, SystemHintOp_PSB, SystemHintOp_TSB, SystemHintOp_BTI, SystemHintOp_WFET, SystemHintOp_WFIT, SystemHintOp_CLRBHB, SystemHintOp_GCSB, SystemHintOp_CHKFEAT, SystemHintOp_CSDB }" class="document-topic">SystemHintOp_BTI</a>;
+        // Check branch target compatibility between BTI instruction and PSTATE.BTYPE
+        <a title="function: SetBTypeCompatible(boolean x)" class="document-topic">SetBTypeCompatible</a>(<a title="function: boolean BTypeCompatible_BTI(bits(2) hintcode)" class="document-topic">BTypeCompatible_BTI</a>(op2&lt;2:1&gt;));
+    when '0101 000'
+        if !IsFeatureImplemented(FEAT_CHK) then <a title="function: EndOfInstruction()" class="document-topic">EndOfInstruction</a>(); // Instruction executes as NOP
+        op = <a title="enumeration SystemHintOp { SystemHintOp_NOP, SystemHintOp_YIELD, SystemHintOp_WFE, SystemHintOp_WFI, SystemHintOp_SEV, SystemHintOp_SEVL, SystemHintOp_DGH, SystemHintOp_ESB, SystemHintOp_PSB, SystemHintOp_TSB, SystemHintOp_BTI, SystemHintOp_WFET, SystemHintOp_WFIT, SystemHintOp_CLRBHB, SystemHintOp_GCSB, SystemHintOp_CHKFEAT, SystemHintOp_CSDB }" class="document-topic">SystemHintOp_CHKFEAT</a>;
+    otherwise <a title="function: EndOfInstruction()" class="document-topic">EndOfInstruction</a>();                                   // Instruction executes as NOP</pre> 
+  <div></div> 
+  <div> 
+   <a id="execute"></a> 
+   <h3>Operation</h3> 
+   <pre>case op of
+    when <a title="enumeration SystemHintOp { SystemHintOp_NOP, SystemHintOp_YIELD, SystemHintOp_WFE, SystemHintOp_WFI, SystemHintOp_SEV, SystemHintOp_SEVL, SystemHintOp_DGH, SystemHintOp_ESB, SystemHintOp_PSB, SystemHintOp_TSB, SystemHintOp_BTI, SystemHintOp_WFET, SystemHintOp_WFIT, SystemHintOp_CLRBHB, SystemHintOp_GCSB, SystemHintOp_CHKFEAT, SystemHintOp_CSDB }" class="document-topic">SystemHintOp_YIELD</a>
+        <a title="function: Hint_Yield()" class="document-topic">Hint_Yield</a>();
+
+    when <a title="enumeration SystemHintOp { SystemHintOp_NOP, SystemHintOp_YIELD, SystemHintOp_WFE, SystemHintOp_WFI, SystemHintOp_SEV, SystemHintOp_SEVL, SystemHintOp_DGH, SystemHintOp_ESB, SystemHintOp_PSB, SystemHintOp_TSB, SystemHintOp_BTI, SystemHintOp_WFET, SystemHintOp_WFIT, SystemHintOp_CLRBHB, SystemHintOp_GCSB, SystemHintOp_CHKFEAT, SystemHintOp_CSDB }" class="document-topic">SystemHintOp_DGH</a>
+        <a title="function: Hint_DGH()" class="document-topic">Hint_DGH</a>();
+
+    when <a title="enumeration SystemHintOp { SystemHintOp_NOP, SystemHintOp_YIELD, SystemHintOp_WFE, SystemHintOp_WFI, SystemHintOp_SEV, SystemHintOp_SEVL, SystemHintOp_DGH, SystemHintOp_ESB, SystemHintOp_PSB, SystemHintOp_TSB, SystemHintOp_BTI, SystemHintOp_WFET, SystemHintOp_WFIT, SystemHintOp_CLRBHB, SystemHintOp_GCSB, SystemHintOp_CHKFEAT, SystemHintOp_CSDB }" class="document-topic">SystemHintOp_WFE</a>
+        integer localtimeout = 1 &lt;&lt; 64;  // No local timeout event is generated
+        <a title="function: Hint_WFE(integer localtimeout, WFxType wfxtype)" class="document-topic">Hint_WFE</a>(localtimeout, <a title="enumeration WFxType {WFxType_WFE, WFxType_WFI, WFxType_WFET, WFxType_WFIT}" class="document-topic">WFxType_WFE</a>);
+
+    when <a title="enumeration SystemHintOp { SystemHintOp_NOP, SystemHintOp_YIELD, SystemHintOp_WFE, SystemHintOp_WFI, SystemHintOp_SEV, SystemHintOp_SEVL, SystemHintOp_DGH, SystemHintOp_ESB, SystemHintOp_PSB, SystemHintOp_TSB, SystemHintOp_BTI, SystemHintOp_WFET, SystemHintOp_WFIT, SystemHintOp_CLRBHB, SystemHintOp_GCSB, SystemHintOp_CHKFEAT, SystemHintOp_CSDB }" class="document-topic">SystemHintOp_WFI</a>
+        integer localtimeout = 1 &lt;&lt; 64;  // No local timeout event is generated
+        <a title="function: Hint_WFI(integer localtimeout, WFxType wfxtype)" class="document-topic">Hint_WFI</a>(localtimeout, <a title="enumeration WFxType {WFxType_WFE, WFxType_WFI, WFxType_WFET, WFxType_WFIT}" class="document-topic">WFxType_WFI</a>);
+
+    when <a title="enumeration SystemHintOp { SystemHintOp_NOP, SystemHintOp_YIELD, SystemHintOp_WFE, SystemHintOp_WFI, SystemHintOp_SEV, SystemHintOp_SEVL, SystemHintOp_DGH, SystemHintOp_ESB, SystemHintOp_PSB, SystemHintOp_TSB, SystemHintOp_BTI, SystemHintOp_WFET, SystemHintOp_WFIT, SystemHintOp_CLRBHB, SystemHintOp_GCSB, SystemHintOp_CHKFEAT, SystemHintOp_CSDB }" class="document-topic">SystemHintOp_SEV</a>
+        <a title="function: SendEvent()" class="document-topic">SendEvent</a>();
+
+    when <a title="enumeration SystemHintOp { SystemHintOp_NOP, SystemHintOp_YIELD, SystemHintOp_WFE, SystemHintOp_WFI, SystemHintOp_SEV, SystemHintOp_SEVL, SystemHintOp_DGH, SystemHintOp_ESB, SystemHintOp_PSB, SystemHintOp_TSB, SystemHintOp_BTI, SystemHintOp_WFET, SystemHintOp_WFIT, SystemHintOp_CLRBHB, SystemHintOp_GCSB, SystemHintOp_CHKFEAT, SystemHintOp_CSDB }" class="document-topic">SystemHintOp_SEVL</a>
+        <a title="function: SendEventLocal()" class="document-topic">SendEventLocal</a>();
+
+    when <a title="enumeration SystemHintOp { SystemHintOp_NOP, SystemHintOp_YIELD, SystemHintOp_WFE, SystemHintOp_WFI, SystemHintOp_SEV, SystemHintOp_SEVL, SystemHintOp_DGH, SystemHintOp_ESB, SystemHintOp_PSB, SystemHintOp_TSB, SystemHintOp_BTI, SystemHintOp_WFET, SystemHintOp_WFIT, SystemHintOp_CLRBHB, SystemHintOp_GCSB, SystemHintOp_CHKFEAT, SystemHintOp_CSDB }" class="document-topic">SystemHintOp_ESB</a>
+        if <a title="function: boolean HaveTME()" class="document-topic">HaveTME</a>() &amp;&amp; TSTATE.depth &gt; 0 then
+            <a title="function: FailTransaction(TMFailure cause, boolean retry)" class="document-topic">FailTransaction</a>(<a title="enumeration TMFailure { TMFailure_CNCL, TMFailure_DBG, TMFailure_ERR, TMFailure_NEST, TMFailure_SIZE, TMFailure_MEM, TMFailure_TRIVIAL, TMFailure_IMP }" class="document-topic">TMFailure_ERR</a>, FALSE);
+        <a title="function: SynchronizeErrors()" class="document-topic">SynchronizeErrors</a>();
+        <a title="function: AArch64.ESBOperation()" class="document-topic">AArch64.ESBOperation</a>();
+        if PSTATE.EL IN {<a title="constant bits(2) EL0 = '00'" class="document-topic">EL0</a>, <a title="constant bits(2) EL1 = '01'" class="document-topic">EL1</a>} &amp;&amp; <a title="function: boolean EL2Enabled()" class="document-topic">EL2Enabled</a>() then <a title="function: AArch64.vESBOperation()" class="document-topic">AArch64.vESBOperation</a>();
+        <a title="function: TakeUnmaskedSErrorInterrupts()" class="document-topic">TakeUnmaskedSErrorInterrupts</a>();
+
+    when <a title="enumeration SystemHintOp { SystemHintOp_NOP, SystemHintOp_YIELD, SystemHintOp_WFE, SystemHintOp_WFI, SystemHintOp_SEV, SystemHintOp_SEVL, SystemHintOp_DGH, SystemHintOp_ESB, SystemHintOp_PSB, SystemHintOp_TSB, SystemHintOp_BTI, SystemHintOp_WFET, SystemHintOp_WFIT, SystemHintOp_CLRBHB, SystemHintOp_GCSB, SystemHintOp_CHKFEAT, SystemHintOp_CSDB }" class="document-topic">SystemHintOp_PSB</a>
+        <a title="function: ProfilingSynchronizationBarrier()" class="document-topic">ProfilingSynchronizationBarrier</a>();
+
+    when <a title="enumeration SystemHintOp { SystemHintOp_NOP, SystemHintOp_YIELD, SystemHintOp_WFE, SystemHintOp_WFI, SystemHintOp_SEV, SystemHintOp_SEVL, SystemHintOp_DGH, SystemHintOp_ESB, SystemHintOp_PSB, SystemHintOp_TSB, SystemHintOp_BTI, SystemHintOp_WFET, SystemHintOp_WFIT, SystemHintOp_CLRBHB, SystemHintOp_GCSB, SystemHintOp_CHKFEAT, SystemHintOp_CSDB }" class="document-topic">SystemHintOp_TSB</a>
+        <a title="function: TraceSynchronizationBarrier()" class="document-topic">TraceSynchronizationBarrier</a>();
+
+    when <a title="enumeration SystemHintOp { SystemHintOp_NOP, SystemHintOp_YIELD, SystemHintOp_WFE, SystemHintOp_WFI, SystemHintOp_SEV, SystemHintOp_SEVL, SystemHintOp_DGH, SystemHintOp_ESB, SystemHintOp_PSB, SystemHintOp_TSB, SystemHintOp_BTI, SystemHintOp_WFET, SystemHintOp_WFIT, SystemHintOp_CLRBHB, SystemHintOp_GCSB, SystemHintOp_CHKFEAT, SystemHintOp_CSDB }" class="document-topic">SystemHintOp_GCSB</a>
+        <a title="function: GCSSynchronizationBarrier()" class="document-topic">GCSSynchronizationBarrier</a>();
+
+    when <a title="enumeration SystemHintOp { SystemHintOp_NOP, SystemHintOp_YIELD, SystemHintOp_WFE, SystemHintOp_WFI, SystemHintOp_SEV, SystemHintOp_SEVL, SystemHintOp_DGH, SystemHintOp_ESB, SystemHintOp_PSB, SystemHintOp_TSB, SystemHintOp_BTI, SystemHintOp_WFET, SystemHintOp_WFIT, SystemHintOp_CLRBHB, SystemHintOp_GCSB, SystemHintOp_CHKFEAT, SystemHintOp_CSDB }" class="document-topic">SystemHintOp_CHKFEAT</a>
+        <a title="accessor: X[integer n, integer width] = bits(width) value" class="document-topic">X</a>[16, 64] = AArch64.ChkFeat(X[16, 64]);
+
+    when <a title="enumeration SystemHintOp { SystemHintOp_NOP, SystemHintOp_YIELD, SystemHintOp_WFE, SystemHintOp_WFI, SystemHintOp_SEV, SystemHintOp_SEVL, SystemHintOp_DGH, SystemHintOp_ESB, SystemHintOp_PSB, SystemHintOp_TSB, SystemHintOp_BTI, SystemHintOp_WFET, SystemHintOp_WFIT, SystemHintOp_CLRBHB, SystemHintOp_GCSB, SystemHintOp_CHKFEAT, SystemHintOp_CSDB }" class="document-topic">SystemHintOp_CSDB</a>
+        <a title="function: ConsumptionOfSpeculativeDataBarrier()" class="document-topic">ConsumptionOfSpeculativeDataBarrier</a>();
+
+    when <a title="enumeration SystemHintOp { SystemHintOp_NOP, SystemHintOp_YIELD, SystemHintOp_WFE, SystemHintOp_WFI, SystemHintOp_SEV, SystemHintOp_SEVL, SystemHintOp_DGH, SystemHintOp_ESB, SystemHintOp_PSB, SystemHintOp_TSB, SystemHintOp_BTI, SystemHintOp_WFET, SystemHintOp_WFIT, SystemHintOp_CLRBHB, SystemHintOp_GCSB, SystemHintOp_CHKFEAT, SystemHintOp_CSDB }" class="document-topic">SystemHintOp_CLRBHB</a>
+        <a title="function: Hint_CLRBHB()" class="document-topic">Hint_CLRBHB</a>();
+
+    when <a title="enumeration SystemHintOp { SystemHintOp_NOP, SystemHintOp_YIELD, SystemHintOp_WFE, SystemHintOp_WFI, SystemHintOp_SEV, SystemHintOp_SEVL, SystemHintOp_DGH, SystemHintOp_ESB, SystemHintOp_PSB, SystemHintOp_TSB, SystemHintOp_BTI, SystemHintOp_WFET, SystemHintOp_WFIT, SystemHintOp_CLRBHB, SystemHintOp_GCSB, SystemHintOp_CHKFEAT, SystemHintOp_CSDB }" class="document-topic">SystemHintOp_BTI</a>
+        <a title="function: SetBTypeNext(bits(2) x)" class="document-topic">SetBTypeNext</a>('00');
+
+    otherwise // do nothing</pre> 
+  </div>  
+ </body>
+</html>
