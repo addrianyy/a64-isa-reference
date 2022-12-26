@@ -64,13 +64,23 @@ html, body {
     padding-right: 0.2em;
 }
 
-a {
+a.base-instruction {
     color: rgb(210, 153, 29);
     text-decoration: none;
 }
 
-a:hover {
+a.base-instruction:hover {
     color: rgb(210, 153, 29);
+    text-decoration: underline;
+}
+
+a.simd-fp-instruction {
+    color: rgb(45, 191, 184);
+    text-decoration: none;
+}
+
+a.simd-fp-instruction:hover {
+    color: rgb(45, 191, 184);
     text-decoration: underline;
 }
 
@@ -91,8 +101,9 @@ iframe {
 }
 
 a.currentlySelected {
-    color: red;
     font-weight: bold;
     font-size: 1.2em;
+    text-decoration: underline;
+    filter: brightness(150%);
 }
 

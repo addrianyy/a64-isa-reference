@@ -1,5 +1,13 @@
+const BASE_CATEGORY = 0;
+const SIMD_FP_CATEGORY = 1;
+
 function setupInstructions() {
     const instructions = [];
+
+    const categoryClasses = [
+        "base-instruction",
+        "simd-fp-instruction",
+    ];
 
     for (const key in instructionDefinitions) {
         const value = instructionDefinitions[key];
@@ -7,26 +15,37 @@ function setupInstructions() {
         const slash = key.lastIndexOf("/");
         const category = key.substring(0, slash);
 
-        // TODO
-        if (category != "Base-Instructions") {
+        let categoryIndex = -1;
+        if (category == "Base-Instructions") {
+            categoryIndex = BASE_CATEGORY;
+        } else if (category == "SIMD-FP-Instructions") { 
+            categoryIndex = SIMD_FP_CATEGORY;
+        } else {
             continue;
         }
 
         const path = "docs/" + key.substring(slash + 1) + ".html";
         const name = value.substring(0, value.indexOf(":"));
-        const lowercaseName = name.toLowerCase();
+
+        let searchableName = name.toLowerCase();
+        {
+            const openParen = searchableName.indexOf("(");
+            if (openParen != -1) {
+                searchableName = searchableName.substr(0, openParen);
+            }
+        }
 
         instructions.push({
             name,
             path,
-            lowercaseName,
-            category,
+            searchableName: searchableName.trim(),
+            categoryIndex,
         });
     }
 
     instructions.sort((a, b) => {
-        const nameA = a.lowercaseName;
-        const nameB = b.lowercaseName;
+        const nameA = a.searchableName;
+        const nameB = b.searchableName;
 
         if (nameA < nameB) {
             return -1;
@@ -50,6 +69,7 @@ function setupInstructions() {
 
         a.href = instruction.path;
         a.target = "instruction-description";
+        a.classList.add(categoryClasses[instruction.categoryIndex]);
         
         a.addEventListener("click", () => {
             if (previousSelected) {
@@ -71,16 +91,32 @@ function setupInstructions() {
 }
 
 const instructions = setupInstructions();
-const searchBox = document.getElementById("search-box");
+let lastFilterText = "";
+let lastEnableSimd = true;
 
-searchBox.oninput = () => {
-    const text = searchBox.value.toLowerCase().trim();
+function filter(text, enableSimd) {
+    lastFilterText = text;
+    lastEnableSimd = enableSimd;
 
     for (const instruction of instructions) {
-        if (instruction.lowercaseName.includes(text)) {
+        if ((enableSimd || instruction.categoryIndex != SIMD_FP_CATEGORY) &&
+            instruction.searchableName.includes(text)) {
             instruction.element.style.display = ""; 
         } else {
             instruction.element.style.display = "none"; 
         }
+    }
+}
+
+const searchBox = document.getElementById("search-box");
+
+searchBox.oninput = () => {
+    const text = searchBox.value.toLowerCase().trim();
+    filter(text, lastEnableSimd);
+};
+
+document.onkeydown = (event) => {
+    if (event.key == "F1") {
+        filter(lastFilterText, !lastEnableSimd);
     }
 };
